@@ -752,3 +752,12 @@ msgstr "Hill, banked turn, jump and loop."
 
 msgid "I18N_STUNT_MODEL_FALLBACK"
 msgstr "Using a basic track model."
+
+msgid "I18N_CONTROL_DIRECTION_EXECUTED"
+msgstr "Your direction is active."
+
+msgid "I18N_CONTROL_RECOMMENDED_SPEED"
+msgstr "Recommended assist speed: %d km/h"
+
+msgid "I18N_CONTROL_SPEED_BOUNDS_UNKNOWN"
+msgstr "No checked speed range is available."

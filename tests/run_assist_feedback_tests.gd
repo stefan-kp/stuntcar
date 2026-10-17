@@ -12,7 +12,7 @@ func check(ok: bool, text: String) -> void:
 func run() -> void:
 	var model = Drive.new(Track.new());var session = Router.new(model)
 	var ui = UI.new();root.add_child(ui);session.restart();model.reset(70.0)
-	model.request_turn(1);ui.render(session)
+	session.press(1);session.refresh_control_hints();ui.render(session)
 	check("saved" in ui.hint_detail.text, "Die vorgemerkte Eingabe ist sichtbar.")
 	model.target_speed_mps = 46.0
 	var sway := false;var max_lateral := 0.0
@@ -24,17 +24,17 @@ func run() -> void:
 	check(sway, "Vollgas erzeugt nach der Freigabe ein Schlingern.")
 	check(not model.off_road and max_lateral <= model.assist_profile.sway_limit_m, "Das Schlingern bleibt sicher.")
 	check(not model.assist_state().authorized, "Die Folgekurve braucht eine neue Eingabe.")
-	model.reset(95);model.request_turn(1);model.step(1.0/60.0);ui.render(session)
+	model.reset(95);session.ensure_controls();session.press(1);model.step(1.0/60.0);session.refresh_control_hints();ui.render(session)
 	check("help" in ui.hint_detail.text.to_lower(), "Die spaete Hilfe ist sichtbar.")
-	model.reset(70);model.refresh_assist();model.curve_assist.close("expired");ui.render(session)
+	model.reset(70);model.refresh_assist();model.curve_assist.close("expired");session.refresh_control_hints();ui.render(session)
 	check("missed" in ui.hint_label.text.to_lower(), "Ein geschlossenes Fenster bleibt sichtbar.")
 	model.reset(70);model.set_assist_level("easy");model.request_turn(1);model.target_speed_mps=46
 	var easy_sway := false
 	for i in range(300):
 		model.step(1.0/60.0);easy_sway = easy_sway or model.motion == "safe_sway"
 	check(not easy_sway,"Leicht hat keinen zusaetzlichen Schlingerimpuls.")
-	model.reset(70);model.set_assist_level("easy");session.press(-1);ui.render(session)
-	check(model.active_curve_id == -1 and "Wrong direction" in ui.hint_detail.text, "Leicht bestaetigt die abgelehnte Richtung sichtbar.")
-	session.press(1);ui.render(session)
-	check(model.active_curve_id == 0 and "Wrong direction" not in ui.hint_detail.text, "Die richtige Eingabe entfernt die Ablehnung.")
+	model.reset(70);model.set_assist_level("easy");session.ensure_controls();session.press(-1);session.refresh_control_hints();ui.render(session)
+	check(model.active_curve_id == -1 and "Left" in ui.hint_label.text, "Leicht bestaetigt die abgelehnte Richtung sichtbar.")
+	session.press(1);session.refresh_control_hints();ui.render(session)
+	check(model.active_curve_id == 0 and "Right" in ui.hint_label.text, "Die richtige Eingabe entfernt die Ablehnung.")
 	ui.free();print("HILFSANZEIGE: %d Bedingungen, %d Fehler"%[checks,failures]);quit(0 if failures==0 else 1)

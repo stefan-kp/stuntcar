@@ -37,6 +37,7 @@ func ensure_controls()->void:
 	keyboard_source.configure(control_session,controller.catalog);voice_source.configure(control_session,controller.catalog)
 	control_hints.clear();control_confirmation.clear()
 func suspend_controls(reason:String)->void:
+	control_hints.clear();control_confirmation.clear()
 	if controller!=null:controller.suspend(reason,control_now_ms())
 	keyboard_source.reset()
 func lose_control_source(source:String)->void:
@@ -169,6 +170,7 @@ func entries() -> Array[String]:
 
 func press(direction: int, strength: float = VoiceStrength.NORMAL) -> void:
 	if state == "RUNNING":
+		ensure_controls()
 		last_key = direction
 		compatibility_serial+=1
 		var event=keyboard_source.source.begin(control_session,"explicit",[{"action_id":"turn_left" if direction==-1 else "turn_right","parameters":{"strength":strength},"duration_ms":0}],control_now_ms(),250)
@@ -341,11 +343,17 @@ func pause() -> void:
 		menu_index = 0
 		last_key = 0
 
+func refresh_control_hints()->void:
+	model.refresh_assist()
+	control_hints.assign(controller.read_hints(control_now_ms()))
+	if model.requested_direction==0:
+		control_confirmation.actions=control_confirmation.get("actions",[]).filter(func(a):return not a.action_id.begins_with("turn_"))
+
 func step(delta: float, process_controls: bool = true) -> void:
 	if state == "RUNNING":
 		if process_controls:advance_controls(delta)
 		model.step(delta)
-		control_hints.assign(controller.read_hints(control_now_ms()))
+		refresh_control_hints()
 		if remembered_curve >= 0 and model.active_curve_id == -1:
 			last_key = 0
 			remembered_curve = -1

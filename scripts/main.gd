@@ -43,6 +43,7 @@ var binding_stage := 0
 var candidate_keys: Array[int] = []
 var bind_timeout := 0.0
 var hinted_ids: Dictionary = {}
+var hint_tone_count:=0
 var previous_state := "MENU"
 var voice
 var voice_context := ""
@@ -246,12 +247,18 @@ func _physics_process(delta: float) -> void:
 		car.apply_motion_feedback(model.feedback_state(), motion_events, delta)
 		race_audio.apply_motion_events(motion_events, session)
 	race_audio.update(model, session, delta)
-	for event in model.take_assist_events():
-		if session.state == "RUNNING" and event.type == "opened" and session.sound_enabled:
-			race_audio.play_hint()
+	model.take_assist_events()
+	emit_control_hint_tones()
 	previous_state = session.state
 	sync_voice_context()
 	if voice_diagnostics != null: voice_diagnostics.observe_state(self)
+
+func emit_control_hint_tones()->void:
+	if session.state!="RUNNING" or not session.sound_enabled:return
+	for hint in session.control_hints:
+		var id:String=hint.get("hint_id","")
+		if id.is_empty() or hint.get("phase")=="closed" or hinted_ids.has(id):continue
+		hinted_ids[id]=true;hint_tone_count+=1;race_audio.play_hint()
 
 func confirm_voice(packet:Dictionary,strength:float,accepted:bool)->void:
 	if voice_diagnostics!=null:voice_diagnostics.observe_command(packet,strength,accepted,self)
