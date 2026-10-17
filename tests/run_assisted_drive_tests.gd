@@ -15,7 +15,7 @@ func _initialize() -> void:
 		quit(1)
 		return
 	for level in ["very_easy","easy"]:
-		for route in Track.catalog():
+		for route in preload("res://tests/helpers/legacy_routes.gd").catalog():
 			for speed in [14.0,22.0,28.0,46.0,58.0]:
 				var d = Drive.new(Track.new(route.path))
 				d.set_assist_level(level)

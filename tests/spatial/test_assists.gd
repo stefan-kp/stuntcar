@@ -32,10 +32,10 @@ func _initialize()->void:
 	var assisted_track=Fixtures.make(["straight_24","loop_12"])
 	var bounded=Drive.new(assisted_track)
 	bounded.target_speed_mps=0
-	bounded.state.help_used["e1"]=3.999
+	bounded.state.help_used["e1"]=bounded.spatial_profile.help_seconds-0.001
 	bounded.step(1.0/60.0)
-	check(bounded.state.help_used.e1<=4.000001,"help stops exactly at budget boundary")
+	check(bounded.state.help_used.e1<=bounded.spatial_profile.help_seconds+0.000001,"help stops exactly at budget boundary")
 	var assist=load("res://scripts/vehicle/spatial/stunt_assist.gd")
-	bounded.state.help_used.e1=4.0
+	bounded.state.help_used.e1=bounded.spatial_profile.help_seconds
 	check(not assist.evaluate(assisted_track,bounded.state,bounded.spatial_profile,0).active,"expired help remains off")
 	done()

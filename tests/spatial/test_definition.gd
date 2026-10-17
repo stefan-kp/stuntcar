@@ -31,4 +31,8 @@ func _initialize() -> void:
 	check(Definition.validate(invalid,forms).is_empty(),"small connector tolerance")
 	var loop:Dictionary=forms.loop_12
 	check(loop.ups[80][1]<-0.99,"inverted loop top retained")
+	invalid=valid.duplicate(true);invalid.elements[0].assist={"min_mps":1}
+	check(not Definition.validate(invalid,forms).is_empty(),"incomplete assist rejected")
+	invalid=valid.duplicate(true);invalid.landings=[{"launch_id":"start","target_ids":["start"],"max_angle_degrees":181,"max_impact_mps":12}]
+	check(not Definition.validate(invalid,forms).is_empty(),"invalid landing type and angle rejected")
 	done()

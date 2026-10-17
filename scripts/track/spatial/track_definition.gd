@@ -17,6 +17,7 @@ static func validate(data: Dictionary, forms: Dictionary) -> Array[String]:
 		if not landing is Dictionary or not landing.get("launch_id") is String or not landing.get("target_ids") is Array or landing.target_ids.is_empty():errors.append("landing_fields");continue
 		for key in ["max_angle_degrees","max_impact_mps"]:
 			if not Forms.number(landing.get(key)) or landing[key]<=0:errors.append("landing_bounds")
+		if Forms.number(landing.get("max_angle_degrees")) and landing.max_angle_degrees>90:errors.append("landing_angle")
 		landing_ids.append_array(landing.target_ids);launch_ids.append(landing.launch_id)
 	var ids: Dictionary={}
 	var previous: Dictionary={}
@@ -29,8 +30,14 @@ static func validate(data: Dictionary, forms: Dictionary) -> Array[String]:
 		if e.get("form_version")!=form.version:errors.append("form_version")
 		if not Forms.valid_pose(e.get("entry_transform")):errors.append("transform");continue
 		if not e.get("input") is Dictionary or e.input.get("kind") not in ["none","turn"]:errors.append("input")
-		elif e.input.kind=="turn" and e.input.get("direction") not in [-1,1]:errors.append("direction")
+		elif e.input.kind=="turn" and e.input.get("direction") not in [-1.0,1.0,-1,1]:errors.append("direction")
 		if not e.get("assist") is Dictionary or not e.get("visual_id") is String:errors.append("element_fields")
+		if e.get("assist") is Dictionary and not e.assist.is_empty():
+			var complete:=true
+			for key in ["min_mps","max_mps","target_mps","approach_m"]:
+				if not Forms.number(e.assist.get(key)) or e.assist[key]<0:errors.append("assist_bounds");complete=false
+			if complete and (e.assist.min_mps>e.assist.target_mps or e.assist.target_mps>e.assist.max_mps or e.assist.max_mps>58):errors.append("assist_order")
+		if form.kind in ["curve","bank"] and e.get("input") is Dictionary and e.input.get("kind")!="turn":errors.append("curve_input")
 		if form.has("kind") and e.get("kind")!=form.kind:errors.append("element_kind")
 		var entry: Transform3D=Forms.pose(e.entry_transform)
 		if not previous.is_empty() and e.id not in landing_ids:
@@ -41,4 +48,11 @@ static func validate(data: Dictionary, forms: Dictionary) -> Array[String]:
 			previous={"exit":entry*Forms.pose(form.entry).affine_inverse()*Forms.pose(form.exit)}
 	for id in landing_ids+launch_ids:
 		if not ids.has(id):errors.append("landing_reference")
+	for landing in data.landings:
+		if not landing is Dictionary:continue
+		if ids.has(landing.get("launch_id")) and ids[landing.launch_id].get("kind")!="launch":errors.append("launch_kind")
+		if not landing.get("target_ids") is Array:continue
+		for id in landing.target_ids:
+			if not id is String:errors.append("landing_reference");continue
+			if ids.has(id) and ids[id].get("kind")!="landing":errors.append("landing_kind")
 	return errors

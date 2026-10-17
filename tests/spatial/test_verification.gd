@@ -8,10 +8,13 @@ func _initialize()->void:
 	check(digest.length()==64,"digest identifies complete driving data")
 	var changed:Dictionary=profile.duplicate();changed.hold_mps2+=1
 	check(Verification.digest(track,changed)!=digest,"changed force invalidates report")
-	var report:={"digest":digest,"status":"tested_samples","samples":[{"element_id":"e0","speed_mps":22.0,"lateral_m":0.0,"mode":"grounded","min_mps":20.0,"max_mps":25.0,"target_mps":22.0}]}
-	var state:={"speed_mps":22.0,"lateral_m":0.0,"mode":"grounded"}
+	var report:={"digest":digest,"status":"tested_samples","samples":[{"condition":"state0","element_id":"e0","speed_mps":22.0,"lateral_m":0.0,"mode":"grounded","min_mps":20.0,"max_mps":25.0,"target_mps":22.0}]}
+	var state:={"condition":"state0","speed_mps":22.0,"lateral_m":0.0,"mode":"grounded"}
 	check(not Verification.speed_hint(report,digest,"e0",state).is_empty(),"matching measured sample provides hint")
 	check(Verification.speed_hint(report,"other","e0",state).is_empty(),"stale report gives no hint")
+	state.condition="state1"
+	check(Verification.speed_hint(report,digest,"e0",state).is_empty(),"different budgets and orientation do not reuse hint")
+	state.condition="state0"
 	state.speed_mps=23.0
 	check(Verification.speed_hint(report,digest,"e0",state).is_empty(),"unmeasured speed not promised")
 	track.definition.styles.road="contrast"

@@ -1,0 +1,626 @@
+{
+	"description": "Kuppe, Steilkurve, Sprung und Looping.",
+	"elements": [
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					0.0,
+					12.0,
+					0.0
+				],
+				"rotation": [
+					0.0,
+					0.0,
+					0.0,
+					1.0
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e0",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					0.0,
+					12.0,
+					-24.0
+				],
+				"rotation": [
+					0.0,
+					0.0,
+					0.0,
+					1.0
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e1",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					0.0,
+					12.0,
+					-48.0
+				],
+				"rotation": [
+					0.0,
+					0.0,
+					0.0,
+					1.0
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e2",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					0.0,
+					12.0,
+					-72.0
+				],
+				"rotation": [
+					0.0,
+					0.0,
+					0.0,
+					1.0
+				]
+			},
+			"form_id": "hill_32",
+			"form_version": 1,
+			"id": "e3",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "hill",
+			"visual_id": "hill_32"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					0.0,
+					12.0,
+					-104.0
+				],
+				"rotation": [
+					-0.000000000000000030000001167616,
+					0.0,
+					0.0,
+					1.0
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e4",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					0.0,
+					12.0,
+					-128.0
+				],
+				"rotation": [
+					-0.000000000000000030000001167616,
+					0.0,
+					0.0,
+					1.0
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e5",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					0.0,
+					12.0,
+					-152.0
+				],
+				"rotation": [
+					-0.000000000000000030000001167616,
+					0.0,
+					0.0,
+					1.0
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e6",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					0.0,
+					12.0,
+					-176.0
+				],
+				"rotation": [
+					-0.000000000000000030000001167616,
+					0.0,
+					0.0,
+					1.0
+				]
+			},
+			"form_id": "bank_left_90",
+			"form_version": 1,
+			"id": "e7",
+			"input": {
+				"direction": -1,
+				"kind": "turn"
+			},
+			"kind": "bank",
+			"visual_id": "bank_left_90"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-28.0,
+					12.0,
+					-204.0
+				],
+				"rotation": [
+					-0.00000000000000002121320397323878,
+					0.70710676908493042,
+					-0.00000000000000002121320397323878,
+					0.70710676908493042
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e8",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-52.0,
+					12.0,
+					-204.0
+				],
+				"rotation": [
+					-0.00000000000000002121320397323878,
+					0.70710676908493042,
+					-0.00000000000000002121320397323878,
+					0.70710676908493042
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e9",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-76.0,
+					12.0,
+					-204.0
+				],
+				"rotation": [
+					-0.00000000000000002121320397323878,
+					0.70710676908493042,
+					-0.00000000000000002121320397323878,
+					0.70710676908493042
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e10",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+				"approach_m": 60.0,
+				"max_mps": 21.5,
+				"min_mps": 20.5,
+				"target_mps": 21.0
+			},
+			"entry_transform": {
+				"position": [
+					-100.0,
+					12.0,
+					-204.0
+				],
+				"rotation": [
+					-0.00000000000000002121320397323878,
+					0.70710676908493042,
+					-0.00000000000000002121320397323878,
+					0.70710676908493042
+				]
+			},
+			"form_id": "jump_launch",
+			"form_version": 1,
+			"id": "e11",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "launch",
+			"visual_id": "jump_launch"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-142.0,
+					14.9242773056030273,
+					-204.0
+				],
+				"rotation": [
+					-0.11061587929725647,
+					0.698401153087615967,
+					0.11061587929725647,
+					0.698401093482971191
+				]
+			},
+			"form_id": "jump_landing",
+			"form_version": 1,
+			"id": "e12",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "landing",
+			"visual_id": "jump_landing"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-160.0,
+					12.0,
+					-204.0
+				],
+				"rotation": [
+					-0.00000000000000002121320397323878,
+					0.70710676908493042,
+					-0.00000000000000002121320397323878,
+					0.70710676908493042
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e13",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-184.0,
+					12.0,
+					-204.0
+				],
+				"rotation": [
+					-0.00000000000000002121320397323878,
+					0.70710676908493042,
+					-0.00000000000000002121320397323878,
+					0.70710676908493042
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e14",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-208.0,
+					12.0,
+					-204.0
+				],
+				"rotation": [
+					-0.00000000000000002121320397323878,
+					0.70710676908493042,
+					-0.00000000000000002121320397323878,
+					0.70710676908493042
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e15",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-232.0,
+					12.0,
+					-204.0
+				],
+				"rotation": [
+					-0.00000000000000002121320397323878,
+					0.70710676908493042,
+					-0.00000000000000002121320397323878,
+					0.70710676908493042
+				]
+			},
+			"form_id": "loop_12",
+			"form_version": 1,
+			"id": "e16",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "loop",
+			"visual_id": "loop_12"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-232.0,
+					12.0,
+					-213.0
+				],
+				"rotation": [
+					-0.00000000000000010606602152055512,
+					0.70710676908493042,
+					0.00000000000000006363961026535511,
+					0.70710676908493042
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e17",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-256.0,
+					12.0,
+					-213.0
+				],
+				"rotation": [
+					-0.00000000000000010606602152055512,
+					0.70710676908493042,
+					0.00000000000000006363961026535511,
+					0.70710676908493042
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e18",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-280.0,
+					12.0,
+					-213.0
+				],
+				"rotation": [
+					-0.00000000000000010606602152055512,
+					0.70710676908493042,
+					0.00000000000000006363961026535511,
+					0.70710676908493042
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e19",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-304.0,
+					12.0,
+					-213.0
+				],
+				"rotation": [
+					-0.00000000000000010606602152055512,
+					0.70710676908493042,
+					0.00000000000000006363961026535511,
+					0.70710676908493042
+				]
+			},
+			"form_id": "curve_right_45",
+			"form_version": 1,
+			"id": "e20",
+			"input": {
+				"direction": 1,
+				"kind": "turn"
+			},
+			"kind": "curve",
+			"visual_id": "curve_right_45"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-323.798980712890625,
+					12.0,
+					-221.201004028320312
+				],
+				"rotation": [
+					-0.0000000000000000736384040737736,
+					0.382683455944061279,
+					0.00000000000000009938503591419703,
+					0.923879504203796387
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e21",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		},
+		{
+			"assist": {
+
+			},
+			"entry_transform": {
+				"position": [
+					-340.76953125,
+					12.0,
+					-238.17156982421875
+				],
+				"rotation": [
+					-0.0000000000000000736384040737736,
+					0.382683455944061279,
+					0.00000000000000009938503591419703,
+					0.923879504203796387
+				]
+			},
+			"form_id": "straight_24",
+			"form_version": 1,
+			"id": "e22",
+			"input": {
+				"kind": "none"
+			},
+			"kind": "straight",
+			"visual_id": "straight_24"
+		}
+	],
+	"format_version": 2.0,
+	"landings": [
+		{
+			"launch_id": "e11",
+			"max_angle_degrees": 20.0,
+			"max_impact_mps": 12.0,
+			"target_ids": [
+				"e12"
+			]
+		}
+	],
+	"name": "Stuntlabor",
+	"report": "reports/06_stuntlabor.json",
+	"scenario": "forest",
+	"styles": {
+		"road": "neutral",
+		"scenery": "neutral"
+	}
+}

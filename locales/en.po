@@ -743,3 +743,9 @@ msgstr "Speed range not checked for this approach."
 
 msgid "I18N_STUNT_SPEED_TARGET"
 msgstr "Checked approach: target %d km/h."
+
+msgid "Stuntlabor"
+msgstr "Stunt course"
+
+msgid "Kuppe, Steilkurve, Sprung und Looping."
+msgstr "Hill, banked turn, jump and loop."

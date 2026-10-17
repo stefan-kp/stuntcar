@@ -10,7 +10,7 @@ static func run(track,profile:Dictionary,inputs:Array[Dictionary],max_ticks:int,
 	var model=Drive.new(track);model.set_assist_level(profile.id);model.spatial_profile=profile.duplicate(true)
 	if initial.has("distance_m"):model.reset(initial.distance_m)
 	if initial.has("speed_mps"):
-		model.state.velocity=-model.state.basis.z*float(initial.speed_mps);model.target_speed_mps=initial.speed_mps;model.sync_fields()
+		model.state.velocity=-model.state.basis.z*float(initial.speed_mps);model.target_speed_mps=initial.get("target_speed_mps",22.0);model.sync_fields()
 	var start:Dictionary=model.state.snapshot();var events:Array[Dictionary]=[];var trace:Array[Dictionary]=[]
 	var held:=0;var by_tick:Dictionary={}
 	for event in inputs:

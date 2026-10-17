@@ -27,7 +27,7 @@ func _initialize() -> void:
 	invalid.heights[0].at_m = 10
 	check(not probe.validate_definition(invalid).is_empty(), "Ein fehlender Höhenwert am Start wird abgewiesen")
 	check(not probe.validate_definition({}).is_empty(), "Eine leere Datei wird abgewiesen")
-	var routes: Array = probe.catalog()
+	var routes: Array = preload("res://tests/helpers/legacy_routes.gd").catalog()
 	check(routes.size() >= 3, "Drei Strecken stehen zur Auswahl")
 	for route in routes:
 		var track = Track.new(route.path)

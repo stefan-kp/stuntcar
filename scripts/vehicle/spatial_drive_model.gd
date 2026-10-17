@@ -3,6 +3,8 @@ const State=preload("res://scripts/vehicle/spatial/drive_state.gd")
 const Surface=preload("res://scripts/vehicle/spatial/surface_motion.gd")
 const Flight=preload("res://scripts/vehicle/spatial/flight_motion.gd")
 const StuntAssist=preload("res://scripts/vehicle/spatial/stunt_assist.gd")
+var hint_report:Dictionary={}
+var hint_digest:=""
 var state
 var motion_events:Array[Dictionary]=[]
 var spatial_profile:Dictionary={}
@@ -25,6 +27,9 @@ func reset(checkpoint_m:float=0)->void:
 func set_assist_level(id:String)->void:
 	super.set_assist_level(id)
 	spatial_profile=StuntAssist.profile(assist_id)
+	var verification=load("res://scripts/track/spatial/verification.gd")
+	hint_digest=verification.digest(track,spatial_profile)
+	hint_report=verification.read_report(track).get("profiles",{}).get(assist_id,{})
 func sync_fields()->void:
 	position=state.position;speed_mps=state.speed_mps;distance_m=state.distance_m;elapsed_s=state.tick/60.0
 	lateral=state.lateral_m;airborne=state.mode=="airborne";off_road=state.mode=="crashed";finished=state.mode=="finished"
@@ -114,5 +119,4 @@ func feedback_state()->Dictionary:
 
 func verified_speed_hint()->Dictionary:
 	var verification=load("res://scripts/track/spatial/verification.gd")
-	var report:Dictionary=verification.read_report(track).get("profiles",{}).get(assist_id,{})
-	return verification.speed_hint(report,verification.digest(track,spatial_profile),state.element_id,{"speed_mps":speed_mps,"lateral_m":lateral,"mode":state.mode})
+	return verification.speed_hint(hint_report,hint_digest,state.element_id,{"condition":verification.condition(self),"speed_mps":speed_mps,"lateral_m":lateral,"mode":state.mode})

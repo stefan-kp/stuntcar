@@ -36,7 +36,7 @@ func run_drive(track, level: String, hint: float, speed: float, timing: String, 
 		print("Fahrt fehlgeschlagen: %s %s %.0f %.0f %s %s bei%.2f lateral%.2f"%[track.source_path,level,hint,speed,timing,throttle,d.distance_m,d.lateral])
 	results.append({"track":track.source_path,"level":level,"hint_s":hint,"initial_speed_mps":speed,"initial_position_m":0,"timing":timing,"throttle":throttle,"passed":passed,"minimum_edge_margin_m":gap,"end_m":d.distance_m,"seconds":d.elapsed_s,"extra_turn_inputs":0,"inputs":events})
 func _initialize() -> void:
-	for route in Track.catalog():
+	for route in preload("res://tests/helpers/legacy_routes.gd").catalog():
 		var track = Track.new(route.path)
 		for level in ["very_easy","easy"]:
 			for hint in [3.0,5.0,8.0]:
@@ -51,7 +51,11 @@ func _initialize() -> void:
 	var hashes := {}
 	for path in ["res://scripts/vehicle/drive_model.gd","res://scripts/vehicle/curve_assist.gd","res://scripts/vehicle/assist_profile.gd","res://scripts/track/track_data.gd"]:
 		hashes[path] = FileAccess.get_sha256(path)
-	for route in Track.catalog(): hashes[route.path] = FileAccess.get_sha256(route.path)
+	for route in preload("res://tests/helpers/legacy_routes.gd").catalog(): hashes[route.path] = FileAccess.get_sha256(route.path)
 	report["source_sha256"] = hashes
-	var file := FileAccess.open("res://docs/untere-hilfestufen-testresultate.json",FileAccess.WRITE);file.store_string(JSON.stringify(report,"\t")+"\n")
+	var output := "/private/tmp/stuntcar-legacy-matrix.json"
+	var args := OS.get_cmdline_user_args()
+	for i in range(args.size()-1):
+		if args[i]=="--output": output=args[i+1]
+	var file := FileAccess.open(output,FileAccess.WRITE);file.store_string(JSON.stringify(report,"\t")+"\n")
 	print("STRECKENMATRIX: %d Fahrten, %d Fehler"%[results.size(),failures]);quit(0 if failures==0 else 1)

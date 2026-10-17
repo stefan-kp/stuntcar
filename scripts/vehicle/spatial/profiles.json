@@ -1,6 +1,30 @@
 {
-  "version": 1,
-  "status": "unverified",
-  "very_easy": {"id":"very_easy","version":1,"accel_mps2":10.0,"brake_mps2":18.0,"max_mps":58.0,"assist_accel_mps2":32.0,"assist_brake_mps2":120.0,"hold_mps2":9.81,"help_seconds":4.0,"thrust_mps2":8.0,"thrust_seconds":0.5},
-  "easy": {"id":"easy","version":1,"accel_mps2":10.0,"brake_mps2":18.0,"max_mps":58.0,"assist_accel_mps2":24.0,"assist_brake_mps2":80.0,"hold_mps2":4.905,"help_seconds":2.0,"thrust_mps2":4.0,"thrust_seconds":0.25}
+  "version": 2,
+  "status": "tested_samples",
+  "very_easy": {
+    "id": "very_easy",
+    "version": 2,
+    "accel_mps2": 10.0,
+    "brake_mps2": 18.0,
+    "max_mps": 58.0,
+    "assist_accel_mps2": 32.0,
+    "assist_brake_mps2": 120.0,
+    "hold_mps2": 9.81,
+    "help_seconds": 10,
+    "thrust_mps2": 8.0,
+    "thrust_seconds": 0.5
+  },
+  "easy": {
+    "id": "easy",
+    "version": 2,
+    "accel_mps2": 10.0,
+    "brake_mps2": 18.0,
+    "max_mps": 58.0,
+    "assist_accel_mps2": 24.0,
+    "assist_brake_mps2": 80.0,
+    "hold_mps2": 4.905,
+    "help_seconds": 9,
+    "thrust_mps2": 4.0,
+    "thrust_seconds": 0.25
+  }
 }

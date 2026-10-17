@@ -15,7 +15,7 @@ func run() -> void:
 	scene.set_physics_process(false)
 	scene.set_process(false)
 	scene.session.sound_enabled = false
-	for route in scene.track.catalog():
+	for route in preload("res://tests/helpers/legacy_routes.gd").catalog():
 		scene.select_track(route.path)
 		for speed in [14.0, 22.0, 28.0, 46.0]:
 			scene.session.restart()

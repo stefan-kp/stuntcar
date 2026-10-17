@@ -16,7 +16,7 @@ func run() -> void:
 	scene.set_physics_process(false)
 	check(scene.car.body.has_meta("quality_source"), "Das Spiel nutzt das Auto aus der Qualitätsprobe.")
 	check(scene.car.wheels.size() == 4, "Das neue Auto besitzt vier getrennte Räder.")
-	for route in scene.track.catalog():
+	for route in preload("res://tests/helpers/legacy_routes.gd").catalog():
 		scene.select_track(route.path)
 		check(scene.find_children("*", "WorldEnvironment", true, false).size() == 1, "Der Landschaftswechsel hinterlässt keine zweite Umgebung.")
 		var landscape = scene.builder.landscape

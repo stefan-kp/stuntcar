@@ -4,6 +4,7 @@ var definition:Dictionary
 var forms:Dictionary
 var elements:Array[Dictionary]=[]
 var by_id:Dictionary={}
+var triangle_cache:Dictionary={}
 var length_m:=0.0
 var format_version:=2
 var source_path:=""
@@ -86,6 +87,7 @@ func landing_candidates(id:String)->Array[String]:
 	return result
 
 func triangles(id:String)->Array[Dictionary]:
+	if triangle_cache.has(id):return triangle_cache[id]
 	var e:Dictionary=by_id[id];var result:Array[Dictionary]=[]
 	for i in range(e.points.size()-1):
 		var a:Vector3=e.points[i]-e.bases[i].x*3;var b:Vector3=e.points[i]+e.bases[i].x*3
@@ -93,6 +95,7 @@ func triangles(id:String)->Array[Dictionary]:
 		var normal:Vector3=(e.bases[i].y+e.bases[i+1].y).normalized()
 		result.append({"a":a,"b":c,"c":b,"normal":normal,"local_m":e.distances[i]})
 		result.append({"a":a,"b":d,"c":c,"normal":normal,"local_m":e.distances[i]})
+	triangle_cache[id]=result
 	return result
 
 func surface_point(id:String,local:float,lateral:float)->Vector3:

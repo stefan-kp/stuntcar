@@ -1,0 +1,365 @@
+{
+	"limits": [
+		"Discrete samples only; no continuous speed envelope proven.",
+		"No human microphone or comfort trial."
+	],
+	"profiles": {
+		"easy": {
+			"clean_completed": true,
+			"clean_run": {
+				"crashed": false,
+				"error": "",
+				"events": [
+					{
+						"attempt_id": 2,
+						"element_id": "e11",
+						"id": "2:1124:1",
+						"magnitude": 0.0,
+						"normal": "(0.309017, 0.951057, -0.0)",
+						"position": "(-118.0, 14.92428, -204.0)",
+						"tick": 1124,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 2,
+						"element_id": "e12",
+						"id": "2:1217:2",
+						"magnitude": 4.83402919769287109,
+						"normal": "(-0.19257, 0.981283, 0.0)",
+						"position": "(-149.1284, 13.06683, -204.0)",
+						"tick": 1217,
+						"type": "landing"
+					}
+				],
+				"final": {
+					"attempt_id": 2,
+					"basis": [
+						0.707106709480285645,
+						0.00000000000000011272262845990006,
+						-0.707106828689575195,
+						-0.00000000000000021987399035346356,
+						1.0,
+						-0.00000000000000006046010666171359,
+						0.707106828689575195,
+						0.00000000000000019822615756224859,
+						0.707106709480285645
+					],
+					"distance_m": 619.313178867101669,
+					"element_id": "e22",
+					"help_used": {
+						"e11": 5.28282331108224135,
+						"e16": 5.24999999999998668,
+						"e3": 8.34999999999999432
+					},
+					"lateral_m": 0.00000000000000000000000463840315,
+					"lateral_speed": -0.00000000000000000000001757668949,
+					"local_m": 23.9999929070472717,
+					"mode": "finished",
+					"position": [
+						-357.740081787109375,
+						12.0,
+						-255.142135620117188
+					],
+					"thrust_used": 0.0,
+					"tick": 1981,
+					"velocity": [
+						-15.5563507080078125,
+						-0.00000000000000436097538696013018,
+						-15.5563478469848633
+					]
+				},
+				"finished": true,
+				"help_used": {
+					"e11": 5.28282331108224135,
+					"e16": 5.24999999999998668,
+					"e3": 8.34999999999999432
+				},
+				"initial": {
+					"attempt_id": 2,
+					"basis": [
+						1.0,
+						0.0,
+						0.0,
+						0.0,
+						1.0,
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					],
+					"distance_m": 0.0,
+					"element_id": "e0",
+					"help_used": {
+
+					},
+					"lateral_m": 0.0,
+					"lateral_speed": 0.0,
+					"local_m": 0.0,
+					"mode": "grounded",
+					"position": [
+						0.0,
+						12.0,
+						0.0
+					],
+					"thrust_used": 0.0,
+					"tick": 0,
+					"velocity": [
+						0.0,
+						0.0,
+						-22.0
+					]
+				},
+				"inputs": [
+					{
+						"event_id": "turn:20001",
+						"kind": "turn",
+						"tick": 327,
+						"value": -1.0
+					},
+					{
+						"event_id": "turn:20002",
+						"kind": "turn",
+						"tick": 1463,
+						"value": 1.0
+					}
+				],
+				"mode": "finished",
+				"seconds": 33.0166666666666657,
+				"trace_digest": "464c41e613dbab16e1c18e09d73a629a528d6811d9d58e519bf080899b9bcd64"
+			},
+			"digest": "18982e941273c5dcc6a84712c8e24ed69525d1ca52b5a65f7ea6767c4721ae12",
+			"samples": [
+				{
+					"condition": "459f77f880b6e4a6c1a69510d561a4aed20cddee561f5589b65ff5cade0f9308",
+					"element_id": "e3",
+					"lateral_m": 0.0,
+					"max_mps": null,
+					"min_mps": null,
+					"mode": "grounded",
+					"speed_mps": 11.0,
+					"target_mps": 11.0
+				},
+				{
+					"condition": "8e61f17d2428462ce5af745b834d7e29f6a3ed70f8b4b98e2b7f74b35f16ae6c",
+					"element_id": "e7",
+					"lateral_m": 0.0,
+					"max_mps": null,
+					"min_mps": null,
+					"mode": "grounded",
+					"speed_mps": 22.0000019073486328,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "2c9fa94f216a70cab10403c89af337bf82972450cf719527507ec9ee4e953d10",
+					"element_id": "e11",
+					"lateral_m": 0.0,
+					"max_mps": null,
+					"min_mps": null,
+					"mode": "grounded",
+					"speed_mps": 21.0,
+					"target_mps": 21.0
+				},
+				{
+					"condition": "2ad125dd9d42745974b708fc1c8e3a80856eb01ca0f1fb58b4f58029cb8656df",
+					"element_id": "e16",
+					"lateral_m": -0.0000000000239708515207713609,
+					"max_mps": null,
+					"min_mps": null,
+					"mode": "grounded",
+					"speed_mps": 26.0000019073486328,
+					"target_mps": 26.0
+				},
+				{
+					"condition": "e105a25c6aa959641370044eb8809b0be5972c1a3dc4bac270d26519d3addaa4",
+					"element_id": "e20",
+					"lateral_m": 0.00000000000000000001518572293935,
+					"max_mps": null,
+					"min_mps": null,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				}
+			],
+			"status": "tested_samples"
+		},
+		"very_easy": {
+			"clean_completed": true,
+			"clean_run": {
+				"crashed": false,
+				"error": "",
+				"events": [
+					{
+						"attempt_id": 2,
+						"element_id": "e11",
+						"id": "2:1125:1",
+						"magnitude": 0.0,
+						"normal": "(0.309017, 0.951057, -0.0)",
+						"position": "(-118.0, 14.92428, -204.0)",
+						"tick": 1125,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 2,
+						"element_id": "e12",
+						"id": "2:1219:2",
+						"magnitude": 4.83393669128417969,
+						"normal": "(-0.192573, 0.981283, 0.0)",
+						"position": "(-149.1283, 13.06687, -204.0)",
+						"tick": 1219,
+						"type": "landing"
+					}
+				],
+				"final": {
+					"attempt_id": 2,
+					"basis": [
+						0.707106709480285645,
+						0.00000000000000011272262845990006,
+						-0.707106828689575195,
+						-0.00000000000000021987399035346356,
+						1.0,
+						-0.00000000000000006046010666171359,
+						0.707106828689575195,
+						0.00000000000000019822615756224859,
+						0.707106709480285645
+					],
+					"distance_m": 619.313178867101669,
+					"element_id": "e22",
+					"help_used": {
+						"e11": 5.27725758270891454,
+						"e16": 5.23333333333332007,
+						"e3": 8.38333333333332931
+					},
+					"lateral_m": -0.00000000000000000000000005882758,
+					"lateral_speed": 0.00000000000000000000000022280038,
+					"local_m": 23.9999929070472717,
+					"mode": "finished",
+					"position": [
+						-357.740081787109375,
+						12.0,
+						-255.142135620117188
+					],
+					"thrust_used": 0.0,
+					"tick": 1982,
+					"velocity": [
+						-15.5563507080078125,
+						-0.00000000000000436097538696013018,
+						-15.5563478469848633
+					]
+				},
+				"finished": true,
+				"help_used": {
+					"e11": 5.27725758270891454,
+					"e16": 5.23333333333332007,
+					"e3": 8.38333333333332931
+				},
+				"initial": {
+					"attempt_id": 2,
+					"basis": [
+						1.0,
+						0.0,
+						0.0,
+						0.0,
+						1.0,
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					],
+					"distance_m": 0.0,
+					"element_id": "e0",
+					"help_used": {
+
+					},
+					"lateral_m": 0.0,
+					"lateral_speed": 0.0,
+					"local_m": 0.0,
+					"mode": "grounded",
+					"position": [
+						0.0,
+						12.0,
+						0.0
+					],
+					"thrust_used": 0.0,
+					"tick": 0,
+					"velocity": [
+						0.0,
+						0.0,
+						-22.0
+					]
+				},
+				"inputs": [
+					{
+						"event_id": "turn:20001",
+						"kind": "turn",
+						"tick": 328,
+						"value": -1.0
+					},
+					{
+						"event_id": "turn:20002",
+						"kind": "turn",
+						"tick": 1465,
+						"value": 1.0
+					}
+				],
+				"mode": "finished",
+				"seconds": 33.0333333333333314,
+				"trace_digest": "1ab59f21356211d23044c1a55c5804c20185c9ea5692531a610c3eda193e521b"
+			},
+			"digest": "80841affd2dc75298fb05df90d7680e2a2f94a2161a8b75adf0321c9614dd9ea",
+			"samples": [
+				{
+					"condition": "0ac7d6b15dd024f6da5cad2630e3a094cc0649ef588eec39eb12eccb99050bb6",
+					"element_id": "e3",
+					"lateral_m": 0.0,
+					"max_mps": null,
+					"min_mps": null,
+					"mode": "grounded",
+					"speed_mps": 11.0,
+					"target_mps": 11.0
+				},
+				{
+					"condition": "ad2df2de4e1c1eaf74ee72fe12929ea365da5815218caba83833d2d5f5f290db",
+					"element_id": "e7",
+					"lateral_m": 0.0,
+					"max_mps": null,
+					"min_mps": null,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "2e5b312a4e654e8b83dbfb603b3556933c1c0324f775a77b930422a819c801cd",
+					"element_id": "e11",
+					"lateral_m": 0.0,
+					"max_mps": null,
+					"min_mps": null,
+					"mode": "grounded",
+					"speed_mps": 21.0,
+					"target_mps": 21.0
+				},
+				{
+					"condition": "f334e7ce3586acdda0a1f12d9362f1b2848173133fe8353ac5b80f0e4b6b3d56",
+					"element_id": "e16",
+					"lateral_m": 0.000000000000295285662890959078,
+					"max_mps": null,
+					"min_mps": null,
+					"mode": "grounded",
+					"speed_mps": 26.0000019073486328,
+					"target_mps": 26.0
+				},
+				{
+					"condition": "6106d90d0da723a0c24ee8a984a361c750bb54715937f520269131c9954fb496",
+					"element_id": "e20",
+					"lateral_m": -0.00000000000000000000022290870776,
+					"max_mps": null,
+					"min_mps": null,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				}
+			],
+			"status": "tested_samples"
+		}
+	},
+	"version": 1
+}

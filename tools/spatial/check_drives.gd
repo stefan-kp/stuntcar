@@ -23,7 +23,7 @@ func _initialize()->void:
 			var e:Dictionary=track.by_id[model.state.element_id]
 			var limits:Dictionary=Assist.limits(e)
 			if not seen.has(e.id) and not limits.is_empty():
-				seen[e.id]=true;samples.append({"element_id":e.id,"speed_mps":model.speed_mps,"lateral_m":model.lateral,"mode":model.state.mode,"min_mps":null,"max_mps":null,"target_mps":limits.target_mps})
+				seen[e.id]=true;samples.append({"condition":Verification.condition(model),"element_id":e.id,"speed_mps":model.speed_mps,"lateral_m":model.lateral,"mode":model.state.mode,"min_mps":null,"max_mps":null,"target_mps":limits.target_mps})
 			model.step(1.0/60.0);model.take_motion_events()
 			if model.state.mode in ["finished","crashed"]:break
 		var result:Dictionary=Runner.run(track,profile,inputs,18000)
