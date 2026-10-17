@@ -25,7 +25,7 @@ func reset(checkpoint_m:float=0)->void:
 	actual_boost=false;holding=false;last_acceleration=Vector3.ZERO;rejection_until_s=-1
 	motion="normal";steering_input=0;assist_speed_active=false;assist_target_mps=22;assist_reason=""
 	speed_feedback="";speed_feedback_seconds=0;landing_pulse=0;drift_angle=0
-	requested_direction=0;steering_expires_at_s=-1
+	active_pedal=0;requested_direction=0;steering_expires_at_s=-1
 	manual_remaining=0;manual_direction=0;correction_remaining=0;guide_offset=0
 	sway_remaining=0;sway_used=false;speed_strength=1;turn_strength=1;jump_assist_until=-1
 	set_assist_level(assist_id);sync_fields()
@@ -74,17 +74,17 @@ func step(delta:float)->void:
 	refresh_assist();state.tick+=1
 	boost_remaining=maxf(0,boost_remaining-delta);boost_cooldown=maxf(0,boost_cooldown-delta)
 	speed_feedback_seconds=maxf(0,speed_feedback_seconds-delta);landing_pulse=maxf(0,landing_pulse-delta*3)
-	var aid:Dictionary=StuntAssist.evaluate(track,state,spatial_profile,effective_target_speed())
+	var aid:Dictionary=pedal_aware_assistance()
 	if aid.get("invalid",false):state.mode="crashed";emit_motion("crash");sync_fields();return
 	assist_speed_active=aid.active;assist_target_mps=aid.target_speed_mps;assist_reason="stunt_speed" if aid.active else ""
 	var before_velocity:Vector3=state.velocity
 	var remaining:=delta;var iterations:=0;var hold_used:=false;var boosted:=false
 	while remaining>0.000001 and iterations<8 and state.mode not in ["crashed","finished"]:
 		iterations+=1
-		aid=StuntAssist.evaluate(track,state,spatial_profile,effective_target_speed())
+		aid=pedal_aware_assistance()
 		var slice:=remaining
 		if aid.remaining_s>0:slice=minf(slice,aid.remaining_s)
-		var recovering:=recovery_remaining>0
+		var recovering:=recovery_remaining>0 and active_pedal!=1
 		if recovering:
 			slice=minf(slice,recovery_remaining)
 			aid.target_speed_mps=minf(aid.target_speed_mps,10);aid.brake_cap_mps2=spatial_profile.assist_brake_mps2
@@ -123,6 +123,12 @@ func step(delta:float)->void:
 	if recovery_remaining<=0:motion="normal"
 	holding=hold_used;actual_boost=boosted;last_acceleration=(state.velocity-before_velocity)/delta
 	sync_fields();refresh_assist()
+func pedal_aware_assistance()->Dictionary:
+	var aid:Dictionary=StuntAssist.evaluate(track,state,spatial_profile,effective_target_speed())
+	if not aid.get("invalid",false) and active_pedal!=0 and (aid.target_speed_mps-effective_target_speed())*active_pedal<0:
+		aid.active=false;aid.target_speed_mps=effective_target_speed();aid.accel_cap_mps2=spatial_profile.accel_mps2;aid.brake_cap_mps2=spatial_profile.brake_mps2
+	return aid
+
 func feedback_state()->Dictionary:
 	var contacts:Array[Vector3]=[]
 	if state.mode=="grounded":

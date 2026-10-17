@@ -36,6 +36,7 @@ var lateral := 0.0
 var hint_seconds := 5.0
 var manual_remaining := 0.0
 var manual_direction := 0
+var active_pedal := 0
 var requested_direction := 0
 var steering_expires_at_s := -1.0
 var last_command := 0
@@ -95,6 +96,7 @@ func reset(checkpoint_m: float = 0.0) -> void:
 	off_road = false
 	finished = false
 	lateral = 0.0
+	active_pedal = 0
 	requested_direction = 0
 	steering_expires_at_s = -1.0
 	manual_remaining = 0.0
@@ -253,6 +255,9 @@ func keyboard_speed(direction: int, delta: float) -> void:
 		target_speed_mps = maxf(0.0, minf(target_speed_mps, speed_mps) - 18.0 * delta)
 	speed_feedback_seconds = 0.0
 
+func set_active_pedal(direction: int) -> void:
+	active_pedal = direction if direction in [-1,1] else 0
+
 func effective_target_speed() -> float:
 	return minf(MAX_SPEED + BOOST_BONUS, target_speed_mps + BOOST_BONUS) if boost_remaining > 0.0 else target_speed_mps
 
@@ -277,6 +282,9 @@ func step(delta: float) -> void:
 				assist_speed_active = true
 				assist_reason = "curve_speed" if recovery_remaining <= 0.0 else "late_turn"
 				assist_target_mps = minf(assist_target_mps, float(speed_hint.max_mps))
+	if active_pedal != 0 and (assist_target_mps - desired_speed) * active_pedal < 0:
+		assist_speed_active = false
+		assist_reason = ""
 	if assist_speed_active: desired_speed = assist_target_mps
 	if assist_speed_active != was_assisting: _emit_assist("speed_help" if assist_speed_active else "speed_help_end", assist_reason)
 	recovery_remaining = maxf(0.0,recovery_remaining-delta)
