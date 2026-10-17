@@ -734,3 +734,12 @@ msgstr "Fixed jump path. No tested minimum speed."
 
 msgid "I18N_ASSIST_WRONG_DIRECTION"
 msgstr "Wrong direction. Follow the curve arrow."
+
+msgid "I18N_STUNT_UNVERIFIED"
+msgstr "This track needs a current drive check for the selected assist level."
+
+msgid "I18N_STUNT_SPEED_UNKNOWN"
+msgstr "Speed range not checked for this approach."
+
+msgid "I18N_STUNT_SPEED_TARGET"
+msgstr "Checked approach: target %d km/h."

@@ -111,3 +111,8 @@ func feedback_state()->Dictionary:
 		for z in [-1.0,1.0]:
 			for x in [-0.85,0.85]:contacts.append(state.position+state.basis*Vector3(x,0,z))
 	return {"grounded":state.mode=="grounded","accel_local":state.basis.inverse()*last_acceleration,"slip_mps":absf(state.lateral_speed),"braking":last_acceleration.dot(-state.basis.z)<-2,"boosting":actual_boost,"surface_kind":"asphalt","wheel_contacts":contacts,"paused":false}
+
+func verified_speed_hint()->Dictionary:
+	var verification=load("res://scripts/track/spatial/verification.gd")
+	var report:Dictionary=verification.read_report(track).get("profiles",{}).get(assist_id,{})
+	return verification.speed_hint(report,verification.digest(track,spatial_profile),state.element_id,{"speed_mps":speed_mps,"lateral_m":lateral,"mode":state.mode})

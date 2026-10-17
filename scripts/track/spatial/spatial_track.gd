@@ -58,7 +58,7 @@ func sample_element(id:String,local:float)->Dictionary:
 	var qa:Quaternion=e.bases[i].get_rotation_quaternion();var qb:Quaternion=e.bases[i+1].get_rotation_quaternion()
 	if qa.dot(qb)<0:qb=-qb
 	var basis:=Basis(qa.slerp(qb,t)).orthonormalized()
-	return {"position":e.points[i].lerp(e.points[i+1],t),"basis":basis,"distance_m":e.start_m+s,"element_id":id,"local_m":s}
+	return {"position":e.points[i].lerp(e.points[i+1],t),"basis":basis,"distance_m":e.start_m+s,"element_id":id,"local_m":s,"heading":atan2(-basis.z.x,basis.z.z),"bank":basis.get_euler().z,"right":basis.x}
 
 func project_near(p:Vector3,id:String,local:float)->Dictionary:
 	if not by_id.has(id):return {"valid":false}
@@ -102,3 +102,22 @@ func surface_point(id:String,local:float,lateral:float)->Vector3:
 	var a:Vector3=e.points[i]-e.bases[i].x*3;var b:Vector3=e.points[i]+e.bases[i].x*3
 	var c:Vector3=e.points[i+1]+e.bases[i+1].x*3;var d:Vector3=e.points[i+1]-e.bases[i+1].x*3
 	return a*(1-r)+b*(r-t)+c*t if r>=t else a*(1-t)+d*(t-r)+c*r
+
+static func number(value)->bool:return Forms.number(value)
+static func scan_catalog(folder:String="res://tracks")->Dictionary:
+	return load("res://scripts/track/track_data.gd").scan_catalog(folder)
+static func catalog()->Array[Dictionary]:return scan_catalog().routes
+func next_curve(s:float)->Dictionary:
+	for c in curves:
+		if s<c.end_m:return c
+	return {}
+func section_at(s:float)->Dictionary:
+	for c in curves:
+		if s>=c.start_m and s<c.end_m:return c
+	return {"id":-1,"turn_sign":0,"start_m":0.0,"end_m":length_m,"checkpoint_m":0.0}
+func jump_at(s:float,approach:float=0)->Dictionary:
+	for j in jumps:
+		if s>=j.start_m-approach and s<j.end_m:return j
+	return {}
+func jump_for_correction(s:float)->Dictionary:return jump_at(s,55.0)
+func speed_hint_at(_s:float,_approach:float=0)->Dictionary:return {}

@@ -253,6 +253,12 @@ func render(session, rebind_message: String = "") -> void:
 			hint_detail.text = tr("I18N_JUMP_READY")
 	if state == "RUNNING":
 		if assist.wrong_direction: hint_detail.text = tr("I18N_ASSIST_WRONG_DIRECTION")
+		if model.has_method("verified_speed_hint"):
+			var checked: Dictionary = model.verified_speed_hint()
+			if not checked.is_empty() and checked.get("target_mps") != null:
+				hint_detail.text += "\n" + tr("I18N_STUNT_SPEED_TARGET") % roundi(checked.target_mps * 3.6)
+			else:
+				hint_detail.text += "\n" + tr("I18N_STUNT_SPEED_UNKNOWN")
 		var speed_hint: Dictionary = model.track.speed_hint_at(model.distance_m, model.input_window_m())
 		if not speed_hint.is_empty():
 			if speed_hint.status == "assisted_tested" and speed_hint.model == "lower_assist_v1" and speed_hint.max_mps != null:

@@ -235,6 +235,13 @@ func open_tracks() -> void:
 
 
 func restart() -> void:
+	if model.track.get("format_version") == 2:
+		var verification = load("res://scripts/track/spatial/verification.gd")
+		var profile: Dictionary = load("res://scripts/vehicle/spatial/stunt_assist.gd").profile(selected_assist_id)
+		if not verification.playable(model.track, profile):
+			open_tracks()
+			catalog_errors.append(tr("I18N_STUNT_UNVERIFIED"))
+			return
 	model.set_assist_level(selected_assist_id)
 	model.reset(5.0)
 	state = "RUNNING"
@@ -282,6 +289,7 @@ func step(delta: float) -> void:
 			state = "FINISHED"
 			menu_index = 0
 	elif state == "FALLING":
+		if model.has_method("feedback_state"): model.step(delta)
 		fall_time += delta
 		if fall_time >= 1.1:
 			total_time += model.elapsed_s
