@@ -2,7 +2,9 @@
 
 Datum: 17. Oktober 2026
 
-Status: Schriftlicher Entwurf zur Prüfung durch Stefan. Die Umsetzung hat noch nicht begonnen.
+Status: Stefan bestätigte den Aufbau und wählte die mittlere Physikstufe mit sichtbaren Effekten.
+Dieser Stand enthält diese Ergänzung und dient als Grundlage des Umsetzungsplans.
+Die Umsetzung hat noch nicht begonnen.
 
 Branch: `codex/neue-streckenelemente`
 
@@ -21,6 +23,20 @@ Der Austausch verlangt keine Änderung am Fahrprogramm und keine Änderung an de
 
 Der Entwurf übernimmt die bestätigte Trennung von Streckenverlauf, Fahrregeln, Straßenmodellen und Landschaftsmodellen.
 Er konkretisiert die Anschlussbedingungen aus dem [Entwurf zu den Hilfestufen](2026-10-17-hilfestufen-und-streckenpruefung-design.md), besonders dessen Abschnitt 7.
+
+### Gewählte Physikstufe
+
+Stefan wählte glaubwürdige Stunts mit verlässlicher Hilfe und sichtbaren Effekten.
+Die mittlere Physikstufe beschreibt den Umfang der Berechnung. Sie ist keine zusätzliche Hilfestufe im Spiel.
+Das Spiel behält „Sehr leicht“ und „Leicht“.
+Der Ausbau umfasst tempoabhängige Sprünge, räumliche Loopings, Kontaktverlust und begrenzte Rettung.
+Sichtbares Einfedern, Fahrzeugneigung, Reifenspuren, Staub und passende Geräusche verstärken die Wirkung.
+
+Wir verwenden die vorhandene Godot-Version 4.5.1 und die vorhandene Physik-Engine.
+Der Ausbau benötigt weder PhysX noch einen Wechsel zu Jolt.
+Unsere eigene Fahrberechnung bestimmt die Bewegung und die Hilfen.
+Godot übernimmt die Darstellung und die erforderlichen Abfragen von Flächen für Zusammenstöße.
+Der Ausbau enthält kein vollständiges Reifenmodell und keine einzeln physikalisch berechneten Radaufhängungen.
 
 ## 2. Ausgangslage
 
@@ -264,7 +280,7 @@ Er nennt Eingaben, Zeiten, Kontakte, Hilfskräfte und Fehlergründe.
 Die Prüfung ganzer Strecken setzt das Tempo zwischen Elementen nicht zurück.
 Dadurch zeigt sie auch einen zu kurzen Beschleunigungsweg zwischen Kurve und Rampe.
 
-## 9. Auto und Kamera
+## 9. Auto, Kamera und sichtbare Effekte
 
 Das Auto übernimmt die vollständige räumliche Ausrichtung aus dem Fahrzustand.
 Im Looping zeigt seine Oberseite zeitweise nach unten.
@@ -281,6 +297,35 @@ Der erste Ausbau verwendet eine feste Kameraregel für beide unteren Stufen.
 Er erhält keinen zusätzlichen Kameramodus.
 Die Bildprüfung erfasst Einfahrt, senkrechten Abschnitt, höchsten Punkt und Ausfahrt.
 Ein Spielversuch prüft Orientierung und Wohlbefinden während der vollständigen Fahrt.
+
+### 9.1 Effekte aus dem tatsächlichen Fahrzustand
+
+| Wirkung | Auslöser und Grenze |
+|---|---|
+| Einfedern nach einer Landung | Die tatsächliche Aufprallgeschwindigkeit bestimmt die Stärke. Eine weichere Landung erzeugt eine kleinere Bewegung. |
+| Neigung beim Bremsen und Beschleunigen | Die tatsächliche Beschleunigung bestimmt Richtung und Stärke der sichtbaren Bewegung. |
+| Seitliche Fahrzeugneigung | Die seitliche Beschleunigung bestimmt eine kleine zusätzliche Neigung relativ zur Fahrbahn. |
+| Reifenspuren und Reifenrauch | Tatsächlicher Bodenkontakt und Bremsen oder seitliches Gleiten lösen sie aus. Im Flug bleiben sie aus. |
+| Staub beim Aufsetzen | Eine gültige Landung auf einer passenden Oberfläche löst eine begrenzte Staubwolke aus. |
+| Zusatzschub | Ein wirklicher Schub erzeugt gleichzeitig einen sichtbaren Effekt und ein passendes Geräusch. |
+| Landegeräusch | Die Aufprallgeschwindigkeit bestimmt die Stärke innerhalb der gewählten Lautstärke. |
+
+Die Darstellung bewegt nur sichtbare Teile des Autos relativ zum berechneten Fahrzeugzustand.
+Sie verändert weder die Fläche für Zusammenstöße noch die Flugbahn.
+Das sichtbare Einfedern ist eine vereinfachte Darstellung. Es behauptet keine vollständige Federungsberechnung.
+Ein ausgeschalteter Effekt verändert kein Fahrergebnis.
+
+Ein gemeinsames Ereignis beschreibt jede Landung und jeden Beginn einer besonderen Hilfe.
+Es enthält eine eindeutige Kennung, den Zeitpunkt und die gemessene Stärke.
+Bild und Ton verwenden dasselbe Ereignis genau einmal.
+Der erste Ausbau begrenzt die Anzahl und Lebensdauer der Spuren und Partikel.
+Neustart und Streckenwechsel entfernen alte Effekte. Eine Pause hält ihren Ablauf an.
+
+Die Kamerabewegung bleibt ruhig. Der erste Ausbau ergänzt kein zufälliges Kamerazittern.
+Die Effekte verdecken keine Fahrhinweise und keine Landefläche.
+Die bestehenden Lautstärkeregler gelten auch für neue Geräusche.
+Tonabschaltung bleibt vollständig wirksam. Fahrhinweise behalten Vorrang vor den Fahrgeräuschen.
+Die Bildprüfung und der Spielversuch bestimmen die endgültige Abstimmung innerhalb fester Effektgrenzen.
 
 ## 10. Erste Teststrecke und Abnahme
 
@@ -308,6 +353,11 @@ Die Strecke verwendet zunächst die vorhandenen Formen und passende Ersatzmodell
 | Falsche Form | Die Prüfung weist den Modelltausch zurück. |
 | Veränderte Fahrdaten | Der alte Fahrbericht gilt nicht mehr. |
 | Kamera | Kein plötzlicher Seitenwechsel und keine ungültige Ausrichtung im Looping. |
+| Stärke der Landung | Ein stärkerer gültiger Aufprall erzeugt stärkeres Einfedern und einen stärkeren Ton innerhalb der Grenzen. |
+| Effekte aus | Die vollständige Fahrt liefert dieselben Fahrzustände wie mit Effekten. |
+| Reifen im Flug | Es entstehen weder Reifenspuren noch Reifenrauch. |
+| Ereignisse und Tonabschaltung | Jede Landung wirkt höchstens einmal. Pause, Neustart und Tonabschaltung erzeugen keinen alten Ton. |
+| Dauerfahrt | Die Anzahl der Spuren und Partikel bleibt innerhalb der festen Grenzen. |
 
 Die erste Austauschprüfung benötigt keine neue Blender-Datei.
 Zwei vorhandene oder einfache Darstellungen können denselben Austauschweg prüfen.
@@ -327,7 +377,8 @@ Die folgende Reihenfolge beschreibt die Abhängigkeiten. Sie ersetzt keinen deta
 4. Ergänze den tempoabhängigen Flug und die Landungsprüfung.
 5. Ergänze die begrenzten Hilfen und die gültigen Tempoangaben.
 6. Ergänze die Teststrecke und die räumliche Kameraführung.
-7. Prüfe vollständige Fahrten und den Austausch der Darstellungen.
+7. Ergänze die sichtbaren Effekte und die passenden Geräusche aus den Fahrereignissen.
+8. Prüfe vollständige Fahrten und den Austausch der Darstellungen.
 
 Die Arbeit verändert keine Modelle in der laufenden Blender-Sitzung.
 Neue Dateien für diese Aufgabe erhalten eigene Pfade.
@@ -346,6 +397,8 @@ Der Entwurf trennt sichtbare Modelle von Fahrflächen und Fahrregeln.
 Er beschreibt den Austausch aus Blender einschließlich Prüfung und Rückfall auf Ersatzmodelle.
 Er erhält die bisherigen Strecken und die Regeln für leise Eingaben.
 Er verlangt tempoabhängige Sprünge, räumliche Loopings und begrenzte Hilfen.
+Er ergänzt sichtbare Effekte aus dem tatsächlichen Fahrzustand ohne eine zusätzliche Fahrzeugsimulation.
 Er unterscheidet vorgeschlagene Anforderungen von bereits gemessenen Ergebnissen.
 
-Nach Stefans Prüfung dieses Entwurfs folgt der detaillierte Umsetzungsplan.
+Der [Umsetzungsplan](../plans/2026-10-17-neue-streckenelemente.md) beschreibt die Aufgaben und ihre Prüfungen.
+Stefan beauftragte die Erstellung dieses Plans zusammen mit der Ergänzung zur mittleren Physikstufe.
