@@ -217,5 +217,17 @@
       ],
       "fallback_id": "canonical/straight_24"
     }
+  },
+  "scenery": {
+    "neutral": {
+      "scene_path": "res://assets/stuntcar_styles/neutral/scenery.tscn",
+      "radius_m": 4.0,
+      "height_m": 6.0
+    },
+    "contrast": {
+      "scene_path": "res://assets/stuntcar_styles/contrast/scenery.tscn",
+      "radius_m": 4.0,
+      "height_m": 6.0
+    }
   }
 }

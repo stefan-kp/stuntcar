@@ -21,3 +21,22 @@ static func instantiate_model(entry:Dictionary,form:Dictionary)->Dictionary:
 	if not report.errors.is_empty():node.free();return {"node":null,"errors":report.errors,"report":report}
 	remove_collisions(node)
 	return {"node":node,"errors":[],"report":report}
+
+static func instantiate_scenery(style:String)->Dictionary:
+	var data=JSON.parse_string(FileAccess.get_file_as_string("res://assets/stuntcar_styles/catalog.json"))
+	var entry:Dictionary=data.get("scenery",{}).get(style,{})
+	if entry.is_empty() or not ResourceLoader.exists(entry.get("scene_path","")):return {"node":null,"errors":["scenery_unavailable"]}
+	var node=load(entry.scene_path).instantiate()
+	if not node is Node3D or not node.transform.is_equal_approx(Transform3D.IDENTITY):
+		node.free();return {"node":null,"errors":["scenery_transform"]}
+	remove_collisions(node)
+	for mesh in node.find_children("*","MeshInstance3D",true,false):
+		if mesh.mesh==null:continue
+		var transform:=Transform3D.IDENTITY;var part:Node3D=mesh
+		while part!=node:transform=part.transform*transform;part=part.get_parent()
+		var bounds:AABB=mesh.mesh.get_aabb()
+		for index in range(8):
+			var p:Vector3=transform*bounds.get_endpoint(index)
+			if absf(p.x)>entry.radius_m or absf(p.z)>entry.radius_m or p.y<0 or p.y>entry.height_m:
+				node.free();return {"node":null,"errors":["scenery_bounds"]}
+	return {"node":node,"errors":[]}

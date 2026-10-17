@@ -17,6 +17,7 @@ func build(track,style:String)->void:
 				for p in e.points:
 					if Vector2(p.x,p.z).distance_to(Vector2(position.x,position.z))<18:clear=false
 			if not clear:continue
-			var stone:=MeshInstance3D.new();var shape:=CylinderMesh.new();shape.top_radius=1;shape.bottom_radius=4;shape.height=6
-			stone.mesh=shape;stone.material_override=material;stone.position=position;add_child(stone)
+			var model:Dictionary=load("res://scripts/track/visuals/model_catalog.gd").instantiate_scenery(style)
+			if model.node==null:continue
+			model.node.position=position;add_child(model.node)
 func follow(_position:Vector3)->void:pass

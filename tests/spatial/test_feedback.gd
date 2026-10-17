@@ -36,6 +36,18 @@ func run()->void:
 		session.state="PAUSED";audio.apply_motion_events(next,session);check(played.is_empty(),"pause does not play landing")
 		session.state="RUNNING";audio.apply_motion_events(next,session);audio.apply_motion_events(next,session)
 		check(played.size()==1,"resumed landing plays once")
+		var gentle_db:float=audio.landing.volume_db
+		await create_timer(0.1).timeout
+		var stronger:Array[Dictionary]=[{"id":"1:3:1","type":"landing","magnitude":10.0}]
+		audio.apply_motion_events(stronger,session)
+		check(audio.landing.volume_db>gentle_db,"harder impact has stronger audio")
+	var car=load("res://scripts/vehicle/car_view.gd").new();root.add_child(car)
+	var twin=load("res://scripts/vehicle/spatial_drive_model.gd").new(model.track)
+	for tick in range(60):
+		model.step(1.0/60);twin.step(1.0/60)
+		car.apply_motion_feedback(model.feedback_state(),model.take_motion_events(),1.0/60)
+		check(model.state.snapshot()==twin.state.snapshot(),"effects never change movement")
+	car.queue_free();twin=null
 	await create_timer(0.2).timeout
 	audio.reset();await create_timer(0.2).timeout
 	marks.queue_free();audio.queue_free();session=null;model=null;await process_frame;done()

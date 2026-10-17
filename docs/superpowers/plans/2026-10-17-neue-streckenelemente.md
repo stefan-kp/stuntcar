@@ -163,15 +163,15 @@ Die bestehenden `take_assist_events()` bleiben für Kurvenhinweise getrennt best
 
 **Schnittstellen:** Erzeugt `TrackDefinition.validate` und `FormLibrary.load_file` aus dem Abschnitt „Fahrdaten“.
 
-- [ ] Erfasse vor der Änderung den Ausgangsstand mit `tests/run_track_tests.gd`, `tests/run_tests.gd` und `tests/assets/check_kit.gd`.
-- [ ] Schreibe `test_definition.gd` mit gültiger Gerade, doppelter Elementkennung, unbekannter Formversion, unendlicher Zahl und falschem Anschluss.
-- [ ] Prüfe ausdrücklich `validate(valid, forms).is_empty()` und Fehlercodes für jeden ungültigen Fall.
-- [ ] Führe den neuen Test aus und bestätige den fachlichen Fehler.
-- [ ] Implementiere den Lader für `format_version`, `name`, `description`, `scenario`, `styles`, `elements`, `landings` und `report`.
-- [ ] Extrahiere `centerline`, `up_vectors`, `Entry` und `Exit` einmalig aus den neun vorhandenen Streckenszenen.
-- [ ] Speichere die Fahrdaten unabhängig von den Szenen. Verwende Meter, explizite Versionsnummern und die Breite 6,0 m.
-- [ ] Prüfe die Anschlussgrenzen 0,001 m und 0,1 Grad sowie den Erhalt der Looping-Oberseite.
-- [ ] Speichere nur diese Aufgabe in einem Commit.
+- [x] Erfasse vor der Änderung den Ausgangsstand mit `tests/run_track_tests.gd`, `tests/run_tests.gd` und `tests/assets/check_kit.gd`.
+- [x] Schreibe `test_definition.gd` mit gültiger Gerade, doppelter Elementkennung, unbekannter Formversion, unendlicher Zahl und falschem Anschluss.
+- [x] Prüfe ausdrücklich `validate(valid, forms).is_empty()` und Fehlercodes für jeden ungültigen Fall.
+- [x] Führe den neuen Test aus und bestätige den fachlichen Fehler.
+- [x] Implementiere den Lader für `format_version`, `name`, `description`, `scenario`, `styles`, `elements`, `landings` und `report`.
+- [x] Extrahiere `centerline`, `up_vectors`, `Entry` und `Exit` einmalig aus den neun vorhandenen Streckenszenen.
+- [x] Speichere die Fahrdaten unabhängig von den Szenen. Verwende Meter, explizite Versionsnummern und die Breite 6,0 m.
+- [x] Prüfe die Anschlussgrenzen 0,001 m und 0,1 Grad sowie den Erhalt der Looping-Oberseite.
+- [x] Speichere nur diese Aufgabe in einem Commit.
 
 Ausführung: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-definition.log --path . --script tests/spatial/test_definition.gd`.
 Erwartung nach der Umsetzung: Exitcode 0, keine Skriptfehler und null fehlgeschlagene Prüfungen.
@@ -182,16 +182,16 @@ Erwartung nach der Umsetzung: Exitcode 0, keine Skriptfehler und null fehlgeschl
 
 **Schnittstellen:** Verwendet die geprüften Daten aus Aufgabe 1. Erzeugt `sample`, `project_near`, `landing_candidates` und `sweep`.
 
-- [ ] Schreibe Tests für wirkliche Bogenlänge, orthogonale Richtungen, Anschlussstetigkeit und den höchsten Looping-Punkt.
-- [ ] Prüfe dort `frame.basis.y.dot(Vector3.UP) < -0.99` und `abs(frame.basis.determinant() - 1.0) < 0.00001`.
-- [ ] Ergänze `test_nearby_loop_does_not_skip_progress`: Ein Punkt nahe der Einfahrt bleibt seinem aktuellen Looping-Abschnitt zugeordnet.
-- [ ] Ergänze einen Kontakt, der genau zwischen Start und Ende eines Schritts liegt. Prüfe `0.0 < hit.fraction and hit.fraction < 1.0`.
-- [ ] Führe die Tests aus und bestätige die fehlenden Funktionen als Ursache.
-- [ ] Implementiere die Abfragen über vorab berechnete räumliche Abschnitte und deren Bogenlänge.
-- [ ] Interpoliere Ausrichtungen über Quaternionen mit gleicher Vorzeichenhälfte. Verwende keine getrennte Winkelinterpolation für Loopings.
-- [ ] Erzeuge die Fahrflächendreiecke aus derselben Formbeschreibung. Prüfe Sweeps gegen diese Dreiecke einschließlich Fahrbahnbreite.
-- [ ] Begrenze die Fortschrittssuche auf ein lokales Fenster und ausdrücklich erlaubte Nachbarelemente.
-- [ ] Bestätige alle Geometrieprüfungen und speichere den Commit.
+- [x] Schreibe Tests für wirkliche Bogenlänge, orthogonale Richtungen, Anschlussstetigkeit und den höchsten Looping-Punkt.
+- [x] Prüfe dort `frame.basis.y.dot(Vector3.UP) < -0.99` und `abs(frame.basis.determinant() - 1.0) < 0.00001`.
+- [x] Ergänze `test_nearby_loop_does_not_skip_progress`: Ein Punkt nahe der Einfahrt bleibt seinem aktuellen Looping-Abschnitt zugeordnet.
+- [x] Ergänze einen Kontakt, der genau zwischen Start und Ende eines Schritts liegt. Prüfe `0.0 < hit.fraction and hit.fraction < 1.0`.
+- [x] Führe die Tests aus und bestätige die fehlenden Funktionen als Ursache.
+- [x] Implementiere die Abfragen über vorab berechnete räumliche Abschnitte und deren Bogenlänge.
+- [x] Interpoliere Ausrichtungen über Quaternionen mit gleicher Vorzeichenhälfte. Verwende keine getrennte Winkelinterpolation für Loopings.
+- [x] Erzeuge die Fahrflächendreiecke aus derselben Formbeschreibung. Prüfe Sweeps gegen diese Dreiecke einschließlich Fahrbahnbreite.
+- [x] Begrenze die Fortschrittssuche auf ein lokales Fenster und ausdrücklich erlaubte Nachbarelemente.
+- [x] Bestätige alle Geometrieprüfungen und speichere den Commit.
 
 Ausführung: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-geometry.log --path . --script tests/spatial/test_geometry.gd`.
 Erwartung: Exitcode 0; kein Sprung zwischen räumlich benachbarten Looping-Abschnitten.
@@ -202,17 +202,17 @@ Erwartung: Exitcode 0; kein Sprung zwischen räumlich benachbarten Looping-Absch
 
 **Schnittstellen:** `ModelCatalog.resolve(style_id: String, form_id: String, form_version: int) -> Dictionary` liefert `scene_path`, `fallback`, `errors`. `ModelValidator.check_scene(root: Node3D, form: Dictionary) -> Dictionary` liefert Fehler und Messwerte.
 
-- [ ] Schreibe Tests für fehlende Datei, falsche Formversion, verschobenen Anschluss, falsche Oberseite und importierte Kollisionsknoten.
-- [ ] Ergänze `test_same_endpoints_wrong_middle`: Gleiche Endpunkte dürfen eine falsche Fahrfläche nicht freigeben.
-- [ ] Prüfe die Grenzen mit 0,0009/0,0011 m am Anschluss und 0,019/0,021 m an der Fahrfläche.
-- [ ] Führe den Test vor der Umsetzung aus.
-- [ ] Implementiere Einträge mit `id`, `model_version`, `scene_path`, `role`, `form_id`, `form_version`, `surface_meshes` und `fallback_id`.
-- [ ] Erstelle umgebende Godot-Szenen mit `Entry` und `Exit`; referenziere vorhandene Modelle, ohne deren Originaldateien zu überschreiben.
-- [ ] Prüfe importierte Gesamttransformationen einschließlich Achsen, positiver Einheits-Skalierung und einer möglichen Spiegelung. Weise unpassende Transformationen zurück.
-- [ ] Erstelle eine zweite Darstellung mit anderer Oberfläche und identischer Fahrform. Verwende dafür keine Blender-Sitzung.
-- [ ] Prüfe Ränder und Mitte alle 0,25 m sowie alle Formstützpunkte. Dokumentiere diese Stichprobe im Ergebnis.
-- [ ] Entferne oder deaktiviere importierte Kollisionsknoten vor dem Einfügen der sichtbaren Szene.
-- [ ] Bestätige Rückfall auf das passende Ersatzmodell und speichere den Commit.
+- [x] Schreibe Tests für fehlende Datei, falsche Formversion, verschobenen Anschluss, falsche Oberseite und importierte Kollisionsknoten.
+- [x] Ergänze `test_same_endpoints_wrong_middle`: Gleiche Endpunkte dürfen eine falsche Fahrfläche nicht freigeben.
+- [x] Prüfe die Grenzen mit 0,0009/0,0011 m am Anschluss und 0,019/0,021 m an der Fahrfläche.
+- [x] Führe den Test vor der Umsetzung aus.
+- [x] Implementiere Einträge mit `id`, `model_version`, `scene_path`, `role`, `form_id`, `form_version`, `surface_meshes` und `fallback_id`.
+- [x] Erstelle umgebende Godot-Szenen mit `Entry` und `Exit`; referenziere vorhandene Modelle, ohne deren Originaldateien zu überschreiben.
+- [x] Prüfe importierte Gesamttransformationen einschließlich Achsen, positiver Einheits-Skalierung und einer möglichen Spiegelung. Weise unpassende Transformationen zurück.
+- [x] Erstelle eine zweite Darstellung mit anderer Oberfläche und identischer Fahrform. Verwende dafür keine Blender-Sitzung.
+- [x] Prüfe Ränder und Mitte alle 0,25 m sowie alle Formstützpunkte. Dokumentiere diese Stichprobe im Ergebnis.
+- [x] Entferne oder deaktiviere importierte Kollisionsknoten vor dem Einfügen der sichtbaren Szene.
+- [x] Bestätige Rückfall auf das passende Ersatzmodell und speichere den Commit.
 
 Ausführung: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-models.log --path . --script tests/spatial/test_models.gd`.
 Erwartung: Exitcode 0; jeder ungültige Modelleingang liefert einen Fehlercode und ein passendes Ersatzmodell.
@@ -223,17 +223,17 @@ Erwartung: Exitcode 0; jeder ungültige Modelleingang liefert einen Fehlercode u
 
 **Schnittstellen:** `TrackFactory.load_track(path: String) -> Dictionary` liefert `track`, `errors`, `format_version`. `SpatialBuilder.build(track, styles: Dictionary) -> void` verwendet Aufgaben 2 und 3.
 
-- [ ] Schreibe Tests für gemischte Kataloge, ungültige Versionen, fehlende Vorschau und eine weiterhin unveränderte Version-1-Strecke.
-- [ ] Prüfe, dass `TrackFactory.load_track(v1_path).track` das bisherige `TrackData` verwendet.
-- [ ] Führe die Tests vor dem Eingriff aus.
-- [ ] Ergänze im vorhandenen Katalog eine reine Versionsverzweigung. Verändere die Version-1-Prüfung und ihre Bewegungsdaten nicht.
-- [ ] Ergänze `format_version` in Katalogeinträgen. Halte `path`, `name`, `description`, `scenario`, `preview`, `length_m`, `curves` und `jumps` kompatibel.
-- [ ] Implementiere den neuen Builder mit den Fahrflächendreiecken aus Aufgabe 2 und den sichtbaren Modellen aus Aufgabe 3.
-- [ ] Stelle am neuen Builder die bestehende Eigenschaft `landscape` für die Hauptszene bereit. Verwende für neue Landschaften eine eigene Instanz.
-- [ ] Ergänze getrennte Straßen- und Landschaftsstile mit einfachen eigenen Landschaftsmodellen. Halte Fahr- und Landebereiche frei.
-- [ ] Prüfe Kollisionsebene 1 für autorisierte Fahrflächen und keine zusätzlichen Kollisionsflächen aus Darstellungen.
-- [ ] Führe `test_track_loading.gd`, `tests/run_catalog_tests.gd`, `tests/run_track_tests.gd` und `tools/check_tracks.gd` aus.
-- [ ] Speichere den Commit nach erfolgreicher Prüfung.
+- [x] Schreibe Tests für gemischte Kataloge, ungültige Versionen, fehlende Vorschau und eine weiterhin unveränderte Version-1-Strecke.
+- [x] Prüfe, dass `TrackFactory.load_track(v1_path).track` das bisherige `TrackData` verwendet.
+- [x] Führe die Tests vor dem Eingriff aus.
+- [x] Ergänze im vorhandenen Katalog eine reine Versionsverzweigung. Verändere die Version-1-Prüfung und ihre Bewegungsdaten nicht.
+- [x] Ergänze `format_version` in Katalogeinträgen. Halte `path`, `name`, `description`, `scenario`, `preview`, `length_m`, `curves` und `jumps` kompatibel.
+- [x] Implementiere den neuen Builder mit den Fahrflächendreiecken aus Aufgabe 2 und den sichtbaren Modellen aus Aufgabe 3.
+- [x] Stelle am neuen Builder die bestehende Eigenschaft `landscape` für die Hauptszene bereit. Verwende für neue Landschaften eine eigene Instanz.
+- [x] Ergänze getrennte Straßen- und Landschaftsstile mit einfachen eigenen Landschaftsmodellen. Halte Fahr- und Landebereiche frei.
+- [x] Prüfe Kollisionsebene 1 für autorisierte Fahrflächen und keine zusätzlichen Kollisionsflächen aus Darstellungen.
+- [x] Führe `test_track_loading.gd`, `tests/run_catalog_tests.gd`, `tests/run_track_tests.gd` und `tools/check_tracks.gd` aus.
+- [x] Speichere den Commit nach erfolgreicher Prüfung.
 
 Neuer Test: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-loading.log --path . --script tests/spatial/test_track_loading.gd`.
 Erwartung für alle genannten Prüfungen: Exitcode 0 und keine Skriptfehler.
@@ -244,16 +244,16 @@ Erwartung für alle genannten Prüfungen: Exitcode 0 und keine Skriptfehler.
 
 **Schnittstellen:** `SurfaceMotion.step(track, state, controls: Dictionary, assistance: Dictionary, dt: float) -> Dictionary` liefert Kontaktzustand und Messwerte. `DriveState.snapshot` entspricht dem gemeinsamen Vertrag.
 
-- [ ] Schreibe Tests für Stillstand, Beschleunigung, Hangabtrieb, Kuppe, Looping-Oberseite und seitliches Verlassen der Fahrbahn.
-- [ ] Prüfe bei gleicher Anfangsgeschwindigkeit: `uphill.speed_mps < level.speed_mps` ohne Antrieb oder Hilfe.
-- [ ] Prüfe Kontaktverlust bei unzureichender Haltekraft und den Erhalt der Geschwindigkeit am Übergang zum Flug.
-- [ ] Führe die neuen Tests aus.
-- [ ] Implementiere die normale Beschleunigung und die begrenzte seitliche Führung relativ zur örtlichen Fahrbahn.
-- [ ] Verwende für Format 2 die Spielschwerkraft `Vector3(0, -9.81, 0)`. Verändere keine Version-1-Konstante.
-- [ ] Berechne den benötigten normalen Kontakt pro Masseneinheit aus `v² * curvature.dot(up) - gravity.dot(up)`.
-- [ ] Erlaube negativen normalen Kontakt nur bis zur ausdrücklich verfügbaren Haltebeschleunigung. Überschreiten löst Kontaktverlust aus.
-- [ ] Begrenze Antrieb, Bremsung und seitliche Führung über übergebene Werte. Vermeide ein Zurücksetzen auf die Streckenmitte.
-- [ ] Bestätige die Tests einschließlich entgegengesetzter Fahrbahnoberseite und speichere den Commit.
+- [x] Schreibe Tests für Stillstand, Beschleunigung, Hangabtrieb, Kuppe, Looping-Oberseite und seitliches Verlassen der Fahrbahn.
+- [x] Prüfe bei gleicher Anfangsgeschwindigkeit: `uphill.speed_mps < level.speed_mps` ohne Antrieb oder Hilfe.
+- [x] Prüfe Kontaktverlust bei unzureichender Haltekraft und den Erhalt der Geschwindigkeit am Übergang zum Flug.
+- [x] Führe die neuen Tests aus.
+- [x] Implementiere die normale Beschleunigung und die begrenzte seitliche Führung relativ zur örtlichen Fahrbahn.
+- [x] Verwende für Format 2 die Spielschwerkraft `Vector3(0, -9.81, 0)`. Verändere keine Version-1-Konstante.
+- [x] Berechne den benötigten normalen Kontakt pro Masseneinheit aus `v² * curvature.dot(up) - gravity.dot(up)`.
+- [x] Erlaube negativen normalen Kontakt nur bis zur ausdrücklich verfügbaren Haltebeschleunigung. Überschreiten löst Kontaktverlust aus.
+- [x] Begrenze Antrieb, Bremsung und seitliche Führung über übergebene Werte. Vermeide ein Zurücksetzen auf die Streckenmitte.
+- [x] Bestätige die Tests einschließlich entgegengesetzter Fahrbahnoberseite und speichere den Commit.
 
 Ausführung: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-surface.log --path . --script tests/spatial/test_surface_motion.gd`.
 Erwartung: Exitcode 0; Lage, Geschwindigkeit und Kontakt bleiben nachvollziehbar.
@@ -264,16 +264,16 @@ Erwartung: Exitcode 0; Lage, Geschwindigkeit und Kontakt bleiben nachvollziehbar
 
 **Schnittstellen:** `FlightMotion.step(track, state, assistance: Dictionary, dt: float) -> Dictionary` liefert `landed`, `crashed` und `impact_mps`. Verwendet `SurfaceQuery.sweep`.
 
-- [ ] Schreibe Tests für zwei Absprungtempi, zu kurze Flugweite, zu große Flugweite, falsche Ausrichtung und einen gültigen Kontakt zwischen zwei Rechenschritten.
-- [ ] Prüfe `fast.landing_distance_m > slow.landing_distance_m` ohne Schub bei gleicher Rampe.
-- [ ] Prüfe, dass `slower` im Flug keine Reifenbremskraft erzeugt und eine verfehlte Landung kein `landing`-Ereignis erzeugt.
-- [ ] Führe die Tests vor der Umsetzung aus.
-- [ ] Übernimm am Absprung Position, Geschwindigkeit und Ausrichtung ohne Sprung in den Werten.
-- [ ] Integriere die konstante Schwerkraft mit `p += v*dt + 0.5*g*dt*dt` und anschließend `v += g*dt`.
-- [ ] Teile einen Schritt an Absprung oder Kontakt in die verbleibenden Zeitanteile. Begrenze wiederholte Übergänge pro Schritt mit einer Fehlermeldung statt einer Endlosschleife.
-- [ ] Prüfe Kontaktweg, Landefläche, Bewegungsrichtung, Ausrichtungsfehler und Aufprallgeschwindigkeit gegen die Landedaten.
-- [ ] Setze nur bei tatsächlichem gültigem Kontakt auf Bodenkontakt um. Übernimm den verbleibenden Bewegungsanteil.
-- [ ] Bestätige die Flugtests und speichere den Commit.
+- [x] Schreibe Tests für zwei Absprungtempi, zu kurze Flugweite, zu große Flugweite, falsche Ausrichtung und einen gültigen Kontakt zwischen zwei Rechenschritten.
+- [x] Prüfe `fast.landing_distance_m > slow.landing_distance_m` ohne Schub bei gleicher Rampe.
+- [x] Prüfe, dass `slower` im Flug keine Reifenbremskraft erzeugt und eine verfehlte Landung kein `landing`-Ereignis erzeugt.
+- [x] Führe die Tests vor der Umsetzung aus.
+- [x] Übernimm am Absprung Position, Geschwindigkeit und Ausrichtung ohne Sprung in den Werten.
+- [x] Integriere die konstante Schwerkraft mit `p += v*dt + 0.5*g*dt*dt` und anschließend `v += g*dt`.
+- [x] Teile einen Schritt an Absprung oder Kontakt in die verbleibenden Zeitanteile. Begrenze wiederholte Übergänge pro Schritt mit einer Fehlermeldung statt einer Endlosschleife.
+- [x] Prüfe Kontaktweg, Landefläche, Bewegungsrichtung, Ausrichtungsfehler und Aufprallgeschwindigkeit gegen die Landedaten.
+- [x] Setze nur bei tatsächlichem gültigem Kontakt auf Bodenkontakt um. Übernimm den verbleibenden Bewegungsanteil.
+- [x] Bestätige die Flugtests und speichere den Commit.
 
 Ausführung: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-flight.log --path . --script tests/spatial/test_flight.gd`.
 Erwartung: Exitcode 0; keine automatische Platzierung auf der Landerampe.
@@ -284,17 +284,17 @@ Erwartung: Exitcode 0; keine automatische Platzierung auf der Landerampe.
 
 **Schnittstellen:** `StuntAssist.evaluate(track, state, profile: Dictionary, requested_speed_mps: float) -> Dictionary` liefert Zieltempo, begrenzte Beschleunigungen und Restdauer. `SpatialDriveModel` verbindet Aufgaben 5 und 6 mit dem gemeinsamen Vertrag.
 
-- [ ] Schreibe Tests für beide Stufen, fehlende Kurvenfreigabe, falschen Ruf, leisen Ruf, Tempobefehl und wiederholte Ereigniskennung.
-- [ ] Ergänze Grenzen bei maximaler Hilfsdauer sowie unmittelbar davor und danach.
-- [ ] Prüfe, dass ein Looping keine folgende Kurve freigibt und ein Neustart alte Ereignisse verwirft.
-- [ ] Führe die Tests vor der Umsetzung aus.
-- [ ] Implementiere neue Profile getrennt vom bestehenden `assist_profile.gd`. Verwende endliche Zahlen und positive Grenzen.
-- [ ] Beginne die Abstimmung mit diesen ausdrücklich ungeprüften Startwerten: Hilfe für Beschleunigung 32/24 m/s², Bremsung 120/80 m/s², Halten 9,81/4,905 m/s² für Sehr leicht/Leicht.
-- [ ] Begrenze besondere Hilfe zunächst auf 4/2 Sekunden und einen Luftschub auf 8/4 m/s² während höchstens 0,5/0,25 Sekunden.
-- [ ] Erlaube die bestehende Kurvenführung nur nach gültiger Eingabe. Übernimm die bisherigen Grenzen 2,4 m Seitenabweichung und 20 Grad Richtungsabweichung als Startbedingungen.
-- [ ] Erhalte die Spieler-Tempoanforderung getrennt vom Hilfsziel. Ein dauerhaft gehaltener Befehl setzt kein Hilfsbudget zurück.
-- [ ] Erzeuge stabile Bewegungsereignisse und die vorhandenen Kurvenereignisse. Begrenze jede Ereignisliste auf 128 Einträge pro Schritt.
-- [ ] Bestätige alle neuen Hilfstests und die bestehenden Rufprofil- und Kurvenfreigabetests. Speichere den Commit.
+- [x] Schreibe Tests für beide Stufen, fehlende Kurvenfreigabe, falschen Ruf, leisen Ruf, Tempobefehl und wiederholte Ereigniskennung.
+- [x] Ergänze Grenzen bei maximaler Hilfsdauer sowie unmittelbar davor und danach.
+- [x] Prüfe, dass ein Looping keine folgende Kurve freigibt und ein Neustart alte Ereignisse verwirft.
+- [x] Führe die Tests vor der Umsetzung aus.
+- [x] Implementiere neue Profile getrennt vom bestehenden `assist_profile.gd`. Verwende endliche Zahlen und positive Grenzen.
+- [x] Beginne die Abstimmung mit diesen ausdrücklich ungeprüften Startwerten: Hilfe für Beschleunigung 32/24 m/s², Bremsung 120/80 m/s², Halten 9,81/4,905 m/s² für Sehr leicht/Leicht.
+- [x] Begrenze besondere Hilfe zunächst auf 4/2 Sekunden und einen Luftschub auf 8/4 m/s² während höchstens 0,5/0,25 Sekunden.
+- [x] Erlaube die bestehende Kurvenführung nur nach gültiger Eingabe. Übernimm die bisherigen Grenzen 2,4 m Seitenabweichung und 20 Grad Richtungsabweichung als Startbedingungen.
+- [x] Erhalte die Spieler-Tempoanforderung getrennt vom Hilfsziel. Ein dauerhaft gehaltener Befehl setzt kein Hilfsbudget zurück.
+- [x] Erzeuge stabile Bewegungsereignisse und die vorhandenen Kurvenereignisse. Begrenze jede Ereignisliste auf 128 Einträge pro Schritt.
+- [x] Bestätige alle neuen Hilfstests und die bestehenden Rufprofil- und Kurvenfreigabetests. Speichere den Commit.
 
 Die Startwerte sind keine zugesagten Sicherheitsgrenzen. Aufgabe 12 prüft und versioniert die endgültigen Werte.
 Ausführung: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-spatial-assists.log --path . --script tests/spatial/test_assists.gd`.
@@ -306,17 +306,17 @@ Erwartung: Exitcode 0; jede besondere Hilfe besitzt ein messbares Ende.
 
 **Schnittstellen:** `DriveRunner.run` entspricht dem Vertrag. `Verification.digest(track, profile: Dictionary) -> String` kennzeichnet alle Fahrdaten. `Verification.speed_hint(report: Dictionary, digest: String, element_id: String, state: Dictionary) -> Dictionary` liefert einen gültigen Hinweis oder `{}`.
 
-- [ ] Schreibe Tests für gleiche Eingaben, veränderte Form, geändertes Profil, fremde Strecke und einen Anfahrzustand außerhalb des geprüften Bereichs.
-- [ ] Prüfe `speed_hint(old_report, changed_digest, id, state).is_empty()` und einen gültigen Hinweis bei unveränderten Daten.
-- [ ] Führe die neuen Tests aus.
-- [ ] Implementiere den Runner mit demselben Modell, derselben Ereignisreihenfolge und `dt = 1.0/60.0`.
-- [ ] Erstelle Prüfsummen aus kanonisch geordneten Fahrdaten, Formdaten, Kontaktflächen, Profilen, Rechenschritt und Fahrregelversion samt Quellprüfsummen.
-- [ ] Schließe reine Modellpfade, Materialien und Effektparameter aus der Fahrprüfsumme aus.
-- [ ] Schließe auch Berichtsinhalte aus der Fahrprüfsumme aus. Verhindere dadurch einen Kreis zwischen Bericht und seiner eigenen Prüfsumme.
-- [ ] Speichere Anfahrzustände, Eingaben, Zwischenzustände, Hilfen, Zeiten und Fehlergründe pro Fahrt.
-- [ ] Unterscheide statische Dateigültigkeit von Fahrfreigabe. Der Prüflauf darf ungeprüfte Strecken laden; das normale Menü gibt sie erst nach gültigem Bericht frei.
-- [ ] Kennzeichne nur geprüfte Stichproben als solche. Leite keine garantierten Zwischenwerte aus einer groben Temporeihe ab.
-- [ ] Bestätige die Tests und speichere den Commit.
+- [x] Schreibe Tests für gleiche Eingaben, veränderte Form, geändertes Profil, fremde Strecke und einen Anfahrzustand außerhalb des geprüften Bereichs.
+- [x] Prüfe `speed_hint(old_report, changed_digest, id, state).is_empty()` und einen gültigen Hinweis bei unveränderten Daten.
+- [x] Führe die neuen Tests aus.
+- [x] Implementiere den Runner mit demselben Modell, derselben Ereignisreihenfolge und `dt = 1.0/60.0`.
+- [x] Erstelle Prüfsummen aus kanonisch geordneten Fahrdaten, Formdaten, Kontaktflächen, Profilen, Rechenschritt und Fahrregelversion samt Quellprüfsummen.
+- [x] Schließe reine Modellpfade, Materialien und Effektparameter aus der Fahrprüfsumme aus.
+- [x] Schließe auch Berichtsinhalte aus der Fahrprüfsumme aus. Verhindere dadurch einen Kreis zwischen Bericht und seiner eigenen Prüfsumme.
+- [x] Speichere Anfahrzustände, Eingaben, Zwischenzustände, Hilfen, Zeiten und Fehlergründe pro Fahrt.
+- [x] Unterscheide statische Dateigültigkeit von Fahrfreigabe. Der Prüflauf darf ungeprüfte Strecken laden; das normale Menü gibt sie erst nach gültigem Bericht frei.
+- [x] Kennzeichne nur geprüfte Stichproben als solche. Leite keine garantierten Zwischenwerte aus einer groben Temporeihe ab.
+- [x] Bestätige die Tests und speichere den Commit.
 
 Ausführung: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-verification.log --path . --script tests/spatial/test_verification.gd`.
 Erwartung: Exitcode 0; geänderte Fahrdaten verwerfen die alten Tempoangaben.
@@ -327,20 +327,20 @@ Erwartung: Exitcode 0; geänderte Fahrdaten verwerfen die alten Tempoangaben.
 
 **Schnittstellen:** `DriveModelFactory.create(track)` wählt das alte oder neue Fahrmodell. `TrackFactory.load_track` ersetzt direkte Neukonstruktionen bei Start, Streckenwechsel und Einstellungen.
 
-- [ ] Schreibe Szenentests für Wechsel von Format 1 zu 2 und zurück, Pause, Neustart, gespeicherte Auswahl und fehlenden Bericht.
-- [ ] Prüfe die vorhandenen Anzeigefelder des neuen Modells gegen den tatsächlichen Zustand. Dazu gehören `position`, `speed_mps`, `distance_m`, `airborne`, `off_road`, `finished`, `elapsed_s`, `lateral`, `active_curve_id` und `assist_id`.
-- [ ] Prüfe außerdem die bisherigen Tempo-, Kurven- und Ereignismethoden über den echten `CommandRouter`.
-- [ ] Führe die Szenentests vor der Verbindung aus.
-- [ ] Implementiere abgeleitete Kompatibilitätsfelder in `SpatialDriveModel`. Bewahre Schreibzugriff für `hint_seconds` und die vorhandenen Einstellungswege.
-- [ ] Ergänze die von der Anzeige benötigten Streckenabfragen `next_curve`, `section_at`, `jump_at`, `speed_hint_at` und Katalogwerte am neuen Streckenmodell.
-- [ ] Übernimm dafür die vorhandenen Signaturen und Ergebnisfelder von `TrackData`. Leite Kurven, Sprünge und Kontrollpunkte aus den neuen Elementen ab.
-- [ ] Rufe die allgemeine Zahlenprüfung in der Hauptszene direkt über `TrackData.number` auf. Sie darf nicht vom gewählten Streckenformat abhängen.
-- [ ] Verwende vorhandene Kurvennummern für die Eingabe; ordne sie intern eindeutig den stabilen Elementkennungen zu.
-- [ ] Beziehe neue Tempohinweise ausschließlich aus `Verification.speed_hint`. Zeige unbekannte Werte verständlich an.
-- [ ] Lasse bei Format 2 das neue Modell auch den Absturz berechnen. Verhindere eine zweite Bewegung durch `CarView.fall` während desselben Schritts.
-- [ ] Ergänze im Zustand `FALLING` genau einen Bewegungsschritt für Format 2. Erhalte die bisherige Rückkehrfrist von 1,1 Sekunden und den Neustart am Kontrollpunkt.
-- [ ] Bestätige neue Szenentests, `tests/run_input_tests.gd`, `tests/run_selection_tests.gd`, `tests/run_voice_tests.gd` und `tests/test_localization_catalog.py`.
-- [ ] Speichere den Commit.
+- [x] Schreibe Szenentests für Wechsel von Format 1 zu 2 und zurück, Pause, Neustart, gespeicherte Auswahl und fehlenden Bericht.
+- [x] Prüfe die vorhandenen Anzeigefelder des neuen Modells gegen den tatsächlichen Zustand. Dazu gehören `position`, `speed_mps`, `distance_m`, `airborne`, `off_road`, `finished`, `elapsed_s`, `lateral`, `active_curve_id` und `assist_id`.
+- [x] Prüfe außerdem die bisherigen Tempo-, Kurven- und Ereignismethoden über den echten `CommandRouter`.
+- [x] Führe die Szenentests vor der Verbindung aus.
+- [x] Implementiere abgeleitete Kompatibilitätsfelder in `SpatialDriveModel`. Bewahre Schreibzugriff für `hint_seconds` und die vorhandenen Einstellungswege.
+- [x] Ergänze die von der Anzeige benötigten Streckenabfragen `next_curve`, `section_at`, `jump_at`, `speed_hint_at` und Katalogwerte am neuen Streckenmodell.
+- [x] Übernimm dafür die vorhandenen Signaturen und Ergebnisfelder von `TrackData`. Leite Kurven, Sprünge und Kontrollpunkte aus den neuen Elementen ab.
+- [x] Rufe die allgemeine Zahlenprüfung in der Hauptszene direkt über `TrackData.number` auf. Sie darf nicht vom gewählten Streckenformat abhängen.
+- [x] Verwende vorhandene Kurvennummern für die Eingabe; ordne sie intern eindeutig den stabilen Elementkennungen zu.
+- [x] Beziehe neue Tempohinweise ausschließlich aus `Verification.speed_hint`. Zeige unbekannte Werte verständlich an.
+- [x] Lasse bei Format 2 das neue Modell auch den Absturz berechnen. Verhindere eine zweite Bewegung durch `CarView.fall` während desselben Schritts.
+- [x] Ergänze im Zustand `FALLING` genau einen Bewegungsschritt für Format 2. Erhalte die bisherige Rückkehrfrist von 1,1 Sekunden und den Neustart am Kontrollpunkt.
+- [x] Bestätige neue Szenentests, `tests/run_input_tests.gd`, `tests/run_selection_tests.gd`, `tests/run_voice_tests.gd` und `tests/test_localization_catalog.py`.
+- [x] Speichere den Commit.
 
 Ausführung: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-spatial-session.log --path . --script tests/spatial/test_session.gd`.
 Erwartung: Exitcode 0; beide Streckenformate bleiben über dieselben Eingaben spielbar.
@@ -351,15 +351,15 @@ Erwartung: Exitcode 0; beide Streckenformate bleiben über dieselben Eingaben sp
 
 **Schnittstellen:** `CarView.place_spatial(state: Dictionary) -> void`, `CarView.drive_spatial(previous: Dictionary, current: Dictionary, alpha: float) -> void`. `FollowCamera.follow_spatial(frame: Dictionary, target: Vector3, speed_mps: float, delta: float) -> void`.
 
-- [ ] Schreibe Tests für senkrechte Fahrt, umgekehrte Oberseite, Neustart und den Übergang vom Looping zur Geraden.
-- [ ] Prüfe endliche Kamerawerte und eine positive, annähernd eins große Basisdeterminante während der ganzen Durchfahrt.
-- [ ] Führe die neuen Tests aus.
-- [ ] Verwende die vollständige Basis für Fahrzeug und Kamera. Erhalte den bisherigen Darstellungsweg für Format 1.
-- [ ] Interpoliere nur die Anzeige zwischen zwei vollständigen Fahrzuständen. Ändere dadurch keine Fahrzustände.
-- [ ] Führe die Kameraausrichtung stetig entlang der Fahrbahn fort. Verwende keine feste Welt-Oberseite am senkrechten Abschnitt.
-- [ ] Halte die letzten gültigen Richtungen bei Stillstand. Setze sie beim Neustart ausdrücklich auf den neuen Startpunkt.
-- [ ] Bestätige die Tests und erstelle Bilder von Einfahrt, beiden senkrechten Abschnitten, Scheitel und Ausfahrt.
-- [ ] Prüfe die Bilder auf verdeckte Fahrbahn, falsche Fahrzeugoberseite und abgeschnittenes Auto. Speichere den Commit.
+- [x] Schreibe Tests für senkrechte Fahrt, umgekehrte Oberseite, Neustart und den Übergang vom Looping zur Geraden.
+- [x] Prüfe endliche Kamerawerte und eine positive, annähernd eins große Basisdeterminante während der ganzen Durchfahrt.
+- [x] Führe die neuen Tests aus.
+- [x] Verwende die vollständige Basis für Fahrzeug und Kamera. Erhalte den bisherigen Darstellungsweg für Format 1.
+- [x] Interpoliere nur die Anzeige zwischen zwei vollständigen Fahrzuständen. Ändere dadurch keine Fahrzustände.
+- [x] Führe die Kameraausrichtung stetig entlang der Fahrbahn fort. Verwende keine feste Welt-Oberseite am senkrechten Abschnitt.
+- [x] Halte die letzten gültigen Richtungen bei Stillstand. Setze sie beim Neustart ausdrücklich auf den neuen Startpunkt.
+- [x] Bestätige die Tests und erstelle Bilder von Einfahrt, beiden senkrechten Abschnitten, Scheitel und Ausfahrt.
+- [x] Prüfe die Bilder auf verdeckte Fahrbahn, falsche Fahrzeugoberseite und abgeschnittenes Auto. Speichere den Commit.
 
 Ausführung: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-camera.log --path . --script tests/spatial/test_camera.gd`.
 Bildprüfung: `"$STUNTCAR_GODOT" --log-file /private/tmp/stuntcar-loop-images.log --path . --script tests/spatial/capture_loop.gd`.
@@ -371,19 +371,19 @@ Erwartung: Tests bestehen; die Bildfolge zeigt eine stetige Drehung ohne plötzl
 
 **Schnittstellen:** `RideFeedback.advance(state: Dictionary, events: Array[Dictionary], dt: float) -> Dictionary` liefert sichtbaren Versatz und Neigung. `TireMarks.advance(state: Dictionary, dt: float) -> void`. `RaceAudio.apply_motion_events(events: Array[Dictionary], session) -> void`.
 
-- [ ] Schreibe Tests für schwache und starke gültige Landungen, Bremsen, Beschleunigen, Gleiten und Flug ohne Reifenkontakt.
-- [ ] Prüfe `hard.compression_m > soft.compression_m`, `hard.compression_m <= 0.16` und `airborne.new_mark_count == 0`.
-- [ ] Ergänze Tests für doppelte Ereigniskennung, Pause vor Landung, Tonabschaltung, Neustart und einen langen Ablauf mit vielen Spuren.
-- [ ] Prüfe bei gleichen Eingaben `trace_with_effects == trace_without_effects`.
-- [ ] Führe die Tests vor der Umsetzung aus.
-- [ ] Implementiere eine gedämpfte sichtbare Federbewegung mit höchstens 0,16 m Versatz und höchstens 5 Grad zusätzlicher Neigung.
-- [ ] Leite Bremsneigung und seitliche Neigung aus `accel_local` ab. Halte die eigentliche Fahrzeugbasis unverändert.
-- [ ] Begrenze Reifenspuren auf 256 Abschnitte mit höchstens 12 Sekunden Lebensdauer. Verwende alte Plätze erneut.
-- [ ] Begrenze gleichzeitig sichtbare Partikel auf 128 pro Auto. Erzeuge Reifenrauch nur bei Bodenkontakt und Staub nur nach passender Landung.
-- [ ] Verteilt die Hauptszene ein Landungsereignis, verwenden Bild und Ton dieselbe Stärke. Unterdrücke dabei den alten zusätzlichen Landeton aus dem Zustandswechsel.
-- [ ] Verbrauche stummgeschaltete Ereignisse ohne Ton. Spiele sie nach dem Einschalten nicht nach. Halte Effektzeit und Ereignisverteilung während einer Pause an.
-- [ ] Erhalte die bestehenden Lautstärkeregler und die Absenkung der Fahrgeräusche bei Hinweisen. Ergänze kein Kamerazittern.
-- [ ] Bestätige neue Tests, `tests/run_audio_tests.gd`, `tests/run_engine_audio_tests.gd`, `tests/run_stunt_scene_tests.gd` und die Bildprüfung. Speichere den Commit.
+- [x] Schreibe Tests für schwache und starke gültige Landungen, Bremsen, Beschleunigen, Gleiten und Flug ohne Reifenkontakt.
+- [x] Prüfe `hard.compression_m > soft.compression_m`, `hard.compression_m <= 0.16` und `airborne.new_mark_count == 0`.
+- [x] Ergänze Tests für doppelte Ereigniskennung, Pause vor Landung, Tonabschaltung, Neustart und einen langen Ablauf mit vielen Spuren.
+- [x] Prüfe bei gleichen Eingaben `trace_with_effects == trace_without_effects`.
+- [x] Führe die Tests vor der Umsetzung aus.
+- [x] Implementiere eine gedämpfte sichtbare Federbewegung mit höchstens 0,16 m Versatz und höchstens 5 Grad zusätzlicher Neigung.
+- [x] Leite Bremsneigung und seitliche Neigung aus `accel_local` ab. Halte die eigentliche Fahrzeugbasis unverändert.
+- [x] Begrenze Reifenspuren auf 256 Abschnitte mit höchstens 12 Sekunden Lebensdauer. Verwende alte Plätze erneut.
+- [x] Begrenze gleichzeitig sichtbare Partikel auf 128 pro Auto. Erzeuge Reifenrauch nur bei Bodenkontakt und Staub nur nach passender Landung.
+- [x] Verteilt die Hauptszene ein Landungsereignis, verwenden Bild und Ton dieselbe Stärke. Unterdrücke dabei den alten zusätzlichen Landeton aus dem Zustandswechsel.
+- [x] Verbrauche stummgeschaltete Ereignisse ohne Ton. Spiele sie nach dem Einschalten nicht nach. Halte Effektzeit und Ereignisverteilung während einer Pause an.
+- [x] Erhalte die bestehenden Lautstärkeregler und die Absenkung der Fahrgeräusche bei Hinweisen. Ergänze kein Kamerazittern.
+- [x] Bestätige neue Tests, `tests/run_audio_tests.gd`, `tests/run_engine_audio_tests.gd`, `tests/run_stunt_scene_tests.gd` und die Bildprüfung. Speichere den Commit.
 
 Ausführung: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-feedback.log --path . --script tests/spatial/test_feedback.gd`.
 Bildprüfung: `"$STUNTCAR_GODOT" --log-file /private/tmp/stuntcar-feedback-images.log --path . --script tests/spatial/capture_feedback.gd`.
@@ -395,23 +395,23 @@ Erwartung: Tests bestehen; Effekte erklären die Bewegung und verdecken keine Hi
 
 **Schnittstellen:** Verwendet `TrackFactory`, `DriveRunner`, `Verification` und beide Modellstile. Erzeugt den geprüften Bericht samt endgültiger Profilversion.
 
-- [ ] Schreibe zuerst vollständige Fahrfälle mit Gerade, Kuppe, Steilkurve, Sprung, Landung, Looping und Folgekurve.
-- [ ] Verwende als erste Anordnung die vorhandenen Formen und eine Sprunglücke von 24 m. Behandle alle Anfahrwege als ungeprüfte Streckendaten.
-- [ ] Lege die Landefläche mit ihrer tatsächlichen Breite und Länge fest. Beginne mit höchstens 20 Grad Ausrichtungsfehler und 12 m/s normaler Aufprallgeschwindigkeit als ungeprüften Grenzwerten.
-- [ ] Führe die Gesamtfahrten aus und halte die konkreten Fehler fest.
-- [ ] Stimme Vorlauf, Abstand zwischen Elementen, Profile und Landebedingungen anhand der Messwerte ab. Vergrößere keine Grenze nur zur Unterdrückung eines Fehlers.
-- [ ] Prüfe beide Stufen mit Anfangstempo 0, 5, 14, 22, 35, 46 und 58 m/s sowie passender, später, falscher und fehlender Kurveneingabe.
-- [ ] Prüfe zusätzlich volle Beschleunigung, volle Bremsung und wechselnde Tempobefehle. Setze zwischen Elementen keinen Fahrzeugzustand zurück.
-- [ ] Prüfe jeden gefundenen Grenzwert mit ±0,1 m/s, ±0,01 m und ±einem Rechenschritt, soweit die jeweilige Größe zutrifft.
-- [ ] Vergleiche saubere und absichtlich gerettete Fahrten ab demselben Startzustand. Fordere `rescued.finished_time_s >= clean.finished_time_s` bei erfolgreichen Vergleichsfahrten.
-- [ ] Prüfe jede saubere Fahrt mit beiden Modellstilen und mit ausgeschalteten Effekten. Fordere gleiche Fahrzustände und Ereignisse.
-- [ ] Fixiere die vier bisherigen Strecken ausdrücklich in `legacy_routes.json`. Alte Fahrtests dürfen Format-2-Strecken nicht versehentlich mit dem alten Fahrmodell prüfen.
-- [ ] Verwende dazu `LegacyRoutes.catalog() -> Array[Dictionary]` aus dem neuen Testhelfer in allen oben genannten alten Fahrprüfungen.
-- [ ] Prüfe die exakten vier bisherigen Streckenpfade auf Vorhandensein. Ein fehlender Eintrag muss den Test fehlschlagen lassen.
-- [ ] Prüfe getrennt den gemischten Katalog über `test_track_loading.gd`. Die Begrenzung alter Fahrprüfungen darf neue Katalogfehler nicht verbergen.
-- [ ] Ergänze `--output` für den alten Matrixbericht. Schreibe neue Kontrollläufe nach `/private/tmp`, ohne alte Abnahmeberichte still zu ersetzen.
-- [ ] Erzeuge erst nach erfolgreicher Prüfung den neuen Bericht. Nenne getestete Zustände, Stichproben und nicht geprüfte Bereiche ausdrücklich.
-- [ ] Speichere Strecke, Bericht und endgültige Profile gemeinsam in einem Commit.
+- [x] Schreibe zuerst vollständige Fahrfälle mit Gerade, Kuppe, Steilkurve, Sprung, Landung, Looping und Folgekurve.
+- [x] Verwende als erste Anordnung die vorhandenen Formen und eine Sprunglücke von 24 m. Behandle alle Anfahrwege als ungeprüfte Streckendaten.
+- [x] Lege die Landefläche mit ihrer tatsächlichen Breite und Länge fest. Beginne mit höchstens 20 Grad Ausrichtungsfehler und 12 m/s normaler Aufprallgeschwindigkeit als ungeprüften Grenzwerten.
+- [x] Führe die Gesamtfahrten aus und halte die konkreten Fehler fest.
+- [x] Stimme Vorlauf, Abstand zwischen Elementen, Profile und Landebedingungen anhand der Messwerte ab. Vergrößere keine Grenze nur zur Unterdrückung eines Fehlers.
+- [x] Prüfe beide Stufen mit Anfangstempo 0, 5, 14, 22, 35, 46 und 58 m/s sowie passender, später, falscher und fehlender Kurveneingabe.
+- [x] Prüfe zusätzlich volle Beschleunigung, volle Bremsung und wechselnde Tempobefehle. Setze zwischen Elementen keinen Fahrzeugzustand zurück.
+- [x] Prüfe jeden gefundenen Grenzwert mit ±0,1 m/s, ±0,01 m und ±einem Rechenschritt, soweit die jeweilige Größe zutrifft.
+- [x] Vergleiche saubere und absichtlich gerettete Fahrten ab demselben Startzustand. Fordere `rescued.finished_time_s >= clean.finished_time_s` bei erfolgreichen Vergleichsfahrten.
+- [x] Prüfe jede saubere Fahrt mit beiden Modellstilen und mit ausgeschalteten Effekten. Fordere gleiche Fahrzustände und Ereignisse.
+- [x] Fixiere die vier bisherigen Strecken ausdrücklich in `legacy_routes.json`. Alte Fahrtests dürfen Format-2-Strecken nicht versehentlich mit dem alten Fahrmodell prüfen.
+- [x] Verwende dazu `LegacyRoutes.catalog() -> Array[Dictionary]` aus dem neuen Testhelfer in allen oben genannten alten Fahrprüfungen.
+- [x] Prüfe die exakten vier bisherigen Streckenpfade auf Vorhandensein. Ein fehlender Eintrag muss den Test fehlschlagen lassen.
+- [x] Prüfe getrennt den gemischten Katalog über `test_track_loading.gd`. Die Begrenzung alter Fahrprüfungen darf neue Katalogfehler nicht verbergen.
+- [x] Ergänze `--output` für den alten Matrixbericht. Schreibe neue Kontrollläufe nach `/private/tmp`, ohne alte Abnahmeberichte still zu ersetzen.
+- [x] Erzeuge erst nach erfolgreicher Prüfung den neuen Bericht. Nenne getestete Zustände, Stichproben und nicht geprüfte Bereiche ausdrücklich.
+- [x] Speichere Strecke, Bericht und endgültige Profile gemeinsam in einem Commit.
 
 Ausführung: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-full-drives.log --path . --script tests/spatial/test_full_drives.gd`.
 Bericht: `"$STUNTCAR_GODOT" --headless --log-file /private/tmp/stuntcar-spatial-report.log --path . --script tools/spatial/check_drives.gd -- --track res://tracks/06_stuntlabor.json --output res://tracks/reports/06_stuntlabor.json`.
