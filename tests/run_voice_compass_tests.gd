@@ -77,7 +77,7 @@ func run() -> void:
 		scene._physics_process(0.016)
 		scene._process(0.016)
 		check(scene.ui.voice_compass.tip_lit("left"), "Die echte Spielszene bestätigt den ausgeführten Befehl mit der Pfeilspitze.")
-		check(not contains_text(scene.ui, "left left left"), "Die Oberfläche zeigt die erkannten Wörter nicht als Text.")
+		check(contains_text(scene.ui, "left left left") and contains_text(scene.ui, "Curve help: right"), "Die Anzeige trennt das erkannte Wort von der angewendeten Richtung.")
 		scene.session.pause()
 		scene.sync_voice_context()
 		scene._process(0.016)

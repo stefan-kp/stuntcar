@@ -20,7 +20,7 @@ func _initialize() -> void:
 	router.submit_voice("right")
 	check(model.active_curve_id == 0, "Rechts aktiviert dieselbe Lenkhilfe wie die Taste")
 	router.submit_voice("right")
-	check(router.state == "RUNNING" and model.correction_remaining > 0, "Erneutes Rechts korrigiert ohne Pause")
+	check(router.state == "RUNNING" and model.assist_state().authorized and model.recovery_remaining == 0, "Erneutes Rechts erhaelt die Freigabe ohne neue Strafe")
 	var old_speed: float = model.speed_mps
 	router.submit_voice("slower")
 	model.step(0.1)

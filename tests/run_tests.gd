@@ -36,13 +36,14 @@ func run() -> void:
 	check(no_input.off_road, "Ohne Eingabe verlässt das Auto die erste Kurve")
 	check(no_input.position.x < 0.05, "Ohne Eingabe dreht das Auto nicht selbst")
 	var wrong = drive_script.new(track)
+	wrong.set_assist_level("easy")
 	wrong.reset(80.0)
 	wrong.request_turn(-1)
 	for i in range(400):
 		wrong.step(1.0 / 60.0)
 		if wrong.off_road:
 			break
-	check(wrong.off_road, "Eine falsche Richtung führt von der Strecke")
+	check(wrong.off_road, "Leicht lehnt eine falsche Richtung ab")
 	var early = drive_script.new(track)
 	early.hint_seconds = 3.0
 	early.request_turn(1)
@@ -100,7 +101,7 @@ func test_router(track, drive_script) -> void:
 	check(router.state == "RUNNING", "Start mit der rechten Taste")
 	router.step(1.0)
 	router.press(-1)
-	check(model.last_command == -1, "Linke Taste lenkt links")
+	check(model.last_command == 1, "Sehr leicht gleicht die linke Taste fuer die rechte Kurve aus")
 	router.press(-1)
 	check(router.state == "RUNNING", "Erneuter Tastendruck lenkt ohne Pause")
 	router.pause()
@@ -109,7 +110,7 @@ func test_router(track, drive_script) -> void:
 	router.step(10.0)
 	check(model.position == saved_position and model.elapsed_s == saved_time, "Pause friert Fahrt und Zeit ein")
 	router.press(1)
-	check(router.state == "RUNNING" and model.last_command == -1, "Weiter löst keine rechte Lenkung aus")
+	check(router.state == "RUNNING" and model.last_command == 1, "Weiter erhaelt die bestehende Kurvenfreigabe")
 	router.pause()
 	router.press(-1)
 	router.press(1)

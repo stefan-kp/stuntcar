@@ -67,21 +67,21 @@ func run() -> void:
 			command(scene, direction, strength)
 			steps(scene, 17)
 			angles.append(rad_to_deg(scene.model.heading))
-			check(scene.model.heading < 0.0 if direction == "left" else scene.model.heading > 0.0, "Jede Stufe lenkt in die verlangte Richtung.")
-		check(absf(angles[0]) < absf(angles[1]) and absf(angles[1]) < absf(angles[2]), "Ein lauterer Befehl lenkt auf der Geraden stärker: " + direction)
-		check(absf(angles[0]) < 4.0 and absf(angles[2]) > 10.0, "Die kleine und die große Lenkkorrektur unterscheiden sich deutlich.")
+			check(is_zero_approx(scene.model.heading), "Die vorgemerkte Kurve dreht die Gerade noch nicht.")
+		check(is_equal_approx(angles[0],angles[1]) and is_equal_approx(angles[1],angles[2]), "Die Lautstaerke aendert die Richtung nicht: " + direction)
+		check(is_zero_approx(angles[0]) and is_zero_approx(angles[2]), "Beide Lautstaerken erhalten die gerade Fahrtrichtung.")
 		print("LENKWINKEL ", direction, ": ", angles)
 	var curve_results: Array[float] = []
 	var curve = scene.track.curves[0]
 	for strength in [0.2, 0.5, 0.9]:
 		reset_scene(scene, curve.start_m + 24.0)
-		scene.model.position += scene.track.right(scene.model.heading) * -2.4
-		scene.model.lateral = -2.4
+		scene.model.position += scene.track.right(scene.model.heading) * -2.3
+		scene.model.lateral = -2.3
 		command(scene, "right", strength)
 		steps(scene, 17)
 		curve_results.append(absf(scene.model.lateral))
 		check(scene.session.state == "RUNNING", "Die Kurvenkorrektur hält das Auto auf der Strecke.")
-	check(curve_results[0] > curve_results[1] and curve_results[1] > curve_results[2], "Ein lauterer Befehl korrigiert stärker vom Kurvenrand nach innen.")
+	check(curve_results[0] < 2.3 and is_equal_approx(curve_results[0],curve_results[2]), "Die Kurvenhilfe rettet bei allen Lautstaerken gleich.")
 	print("ABSTAND ZUR MITTE IN DER KURVE: ", curve_results)
 	var jump_results: Array[float] = []
 	var jump = scene.track.jumps[0]
@@ -93,7 +93,7 @@ func run() -> void:
 		steps(scene, 11)
 		jump_results.append(absf(scene.model.lateral))
 		check(scene.session.state == "RUNNING", "Die Sprungkorrektur hält das Auto auf der Strecke.")
-	check(jump_results[0] > jump_results[1] and jump_results[1] > jump_results[2], "Ein lauterer Befehl korrigiert die Richtung vor dem Sprung stärker.")
+	check(jump_results[0] < 1.5 and is_equal_approx(jump_results[0],jump_results[2]), "Die Sprungkorrektur wirkt bei allen Lautstaerken gleich.")
 	print("ABSTAND ZUR MITTE VOR DEM SPRUNG: ", jump_results)
 	reset_scene(scene)
 	command(scene, "faster", 0.2)
@@ -135,7 +135,7 @@ func run() -> void:
 	reset_scene(scene, 0.0, 14.0)
 	scene.session.press(-1)
 	steps(scene, 18)
-	check(is_equal_approx(rad_to_deg(scene.model.heading), -7.5), "Die Taste nutzt nach einem lauten Sprachbefehl die normale Stärke.")
+	check(is_zero_approx(scene.model.heading) and scene.model.turn_strength == 1.0, "Die Taste nutzt dieselbe Hilfskraft und wartet auf die Kurve.")
 	reset_scene(scene)
 	for i in range(8): command(scene, "faster", 0.9)
 	check(scene.model.target_speed_mps == 46.0, "Laute Gasbefehle überschreiten das Höchsttempo nicht.")
