@@ -2,6 +2,8 @@ extends CharacterBody3D
 
 const QualityAssets = preload("res://scripts/quality_assets.gd")
 const StuntEffects = preload("res://scripts/vehicle/stunt_effects.gd")
+var feedback = preload("res://scripts/vehicle/ride_feedback.gd").new()
+var tire_marks: Node3D
 var effects: Node3D
 var wheels: Array[Node3D] = []
 var body: Node3D
@@ -23,11 +25,15 @@ func _ready() -> void:
 	add_child(body)
 	for wheel_name in ["WheelFL", "WheelFR", "WheelRL", "WheelRR"]:
 		wheels.append(body.get_node(wheel_name))
+	tire_marks = preload("res://scripts/vehicle/tire_marks.gd").new()
+	add_child(tire_marks)
 	effects = StuntEffects.new()
 	body.add_child(effects)
 
 func place(model) -> void:
 	if model.has_method("feedback_state"):
+		feedback.reset()
+		if tire_marks != null: tire_marks.reset()
 		place_spatial({"position":model.state.position,"basis":model.state.basis})
 		if effects!=null:effects.reset()
 		return
@@ -84,3 +90,10 @@ func drive_spatial(previous:Dictionary,current:Dictionary,alpha:float)->void:
 	if a.dot(b)<0:b=-b
 	global_basis=Basis(a.slerp(b,clampf(alpha,0,1)))
 	global_position=previous.position.lerp(current.position,clampf(alpha,0,1))+global_basis.y*0.03
+
+func apply_motion_feedback(state: Dictionary, events: Array[Dictionary], delta: float) -> void:
+	var result: Dictionary = feedback.advance(state, events, delta)
+	body.position.y = -result.compression_m
+	body.rotation = Vector3(result.pitch_rad, 0, result.roll_rad)
+	tire_marks.advance(state, delta)
+	effects.update_spatial(state, events)

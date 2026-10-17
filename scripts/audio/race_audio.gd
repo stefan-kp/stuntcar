@@ -13,6 +13,7 @@ var forest: AudioStreamPlayer
 var landing: AudioStreamPlayer
 var suspension: AudioStreamPlayer
 var hint: AudioStreamPlayer
+var motion_seen: Dictionary = {}
 var enabled := false
 var was_running := false
 var was_airborne := false
@@ -54,6 +55,7 @@ func stop_playback() -> void:
 	hint_remaining = 0.0
 
 func reset() -> void:
+	motion_seen.clear()
 	motor.reset()
 	stop_playback()
 	was_running = false
@@ -94,7 +96,7 @@ func update(model, session, delta: float) -> void:
 	set_loop(road, -26 + speed * 5 + background_gain, 0.0 if airborne else session.engine_volume, response)
 	set_loop(forest, -20 + background_gain, session.environment_volume if model.track.scenario == "forest" else 0.0, response)
 	# A state edge triggers one impact. Pause, mute and reset cannot create an impact.
-	if running and was_running and was_airborne and not model.airborne:
+	if not model.has_method("feedback_state") and running and was_running and was_airborne and not model.airborne:
 		landing.volume_db = gain_db(-10 + voice_gain, session.engine_volume)
 		suspension.volume_db = gain_db(-23 + voice_gain, session.engine_volume)
 		if session.engine_volume > 0:
@@ -173,3 +175,18 @@ func make_combustion() -> AudioStreamWAV:
 	stream.loop_begin = 0
 	stream.loop_end = COUNT
 	return stream
+
+func apply_motion_events(events: Array[Dictionary], session) -> void:
+	if session.state not in ["RUNNING", "FALLING"]: return
+	for event in events:
+		if motion_seen.has(event.id): continue
+		motion_seen[event.id] = true
+		if motion_seen.size() > 128: motion_seen.erase(motion_seen.keys()[0])
+		if event.type != "landing" or not session.sound_enabled or session.engine_volume <= 0: continue
+		var strength := clampf(float(event.magnitude) / 12.0, 0, 1)
+		var gain := (-6.0 if session.voice_enabled else 0.0) + (-9.0 if hint_remaining > 0 else 0.0)
+		landing.volume_db = gain_db(lerpf(-24, -8, strength) + gain, session.engine_volume)
+		suspension.volume_db = gain_db(lerpf(-32, -19, strength) + gain, session.engine_volume)
+		landing.play()
+		suspension.play()
+		effect_played.emit("landing")

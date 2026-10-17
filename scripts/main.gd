@@ -238,6 +238,10 @@ func _physics_process(delta: float) -> void:
 	elif session.state == "FALLING":
 		if model.has_method("feedback_state"): car.drive(model, delta)
 		else: car.fall(delta)
+	if model.has_method("take_motion_events") and (was_running or session.state == "FALLING"):
+		var motion_events: Array[Dictionary] = model.take_motion_events()
+		car.apply_motion_feedback(model.feedback_state(), motion_events, delta)
+		race_audio.apply_motion_events(motion_events, session)
 	race_audio.update(model, session, delta)
 	for event in model.take_assist_events():
 		if session.state == "RUNNING" and event.type == "opened" and session.sound_enabled:
@@ -285,7 +289,9 @@ func _process(delta: float) -> void:
 		camera.follow_spatial({"basis":car.global_basis},car.global_position,model.speed_mps,delta)
 	else:
 		camera.follow(car, model.heading, delta, session.state in ["MENU", "CONTROL", "TRACKS", "PRACTICE"], model.pitch, model.speed_mps, 1.0 if model.boost_remaining > 0.0 else 0.0)
-	if session.state != "RUNNING": car.effects.suspend()
+	if session.state != "RUNNING":
+		if model.has_method("feedback_state") and session.state == "PAUSED": car.effects.freeze_spatial()
+		else: car.effects.suspend()
 	var message := ""
 	if binding_stage == 1:
 		message = tr("I18N_KEY_BIND_LEFT")
