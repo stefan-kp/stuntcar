@@ -233,6 +233,12 @@ msgstr "The track bank angle must be from 0 to 45 degrees."
 msgid "I18N_TRACK_CANYON_DESCRIPTION"
 msgstr "Two jumps, high turns and a long slope down."
 
+msgid "I18N_TRACK_CANYON_GAUNTLET_DESCRIPTION"
+msgstr "Eight tight banked curves, three of them back to back, and two long jumps."
+
+msgid "I18N_TRACK_CANYON_GAUNTLET_NAME"
+msgstr "Canyon Gauntlet"
+
 msgid "I18N_TRACK_CANYON_NAME"
 msgstr "Jump Track"
 
