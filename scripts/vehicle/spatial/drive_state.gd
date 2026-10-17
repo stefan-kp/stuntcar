@@ -14,3 +14,5 @@ var speed_mps:float:
 	get:return velocity.length()
 func snapshot()->Dictionary:
 	return {"position":[position.x,position.y,position.z],"velocity":[velocity.x,velocity.y,velocity.z],"basis":[basis.x.x,basis.x.y,basis.x.z,basis.y.x,basis.y.y,basis.y.z,basis.z.x,basis.z.y,basis.z.z],"tick":tick,"attempt_id":attempt_id,"element_id":element_id,"local_m":local_m,"distance_m":distance_m,"mode":mode,"lateral_m":lateral_m,"lateral_speed":lateral_speed}
+var help_used:Dictionary={}
+var thrust_used:=0.0
