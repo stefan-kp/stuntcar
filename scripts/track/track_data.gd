@@ -48,15 +48,26 @@ static func scan_catalog(folder: String = "res://tracks") -> Dictionary:
 			if not ResourceLoader.exists(preview) and not FileAccess.file_exists(preview):
 				errors.append(String(TranslationServer.translate("I18N_TRACK_PREVIEW_MISSING")) % [file, custom])
 				preview = Scenarios.preview(landscape)
-		result.append({"path": path, "name": String(TranslationServer.translate(d.name)), "description": String(TranslationServer.translate(d.description)),
+		var length:float=d.get("length_m",0)
+		var curve_count:int=d.get("curves",[]).size();var jump_count:int=d.get("jumps",[]).size()
+		if d.get("format_version",1)==2:
+			var forms:Dictionary=load("res://scripts/track/spatial/form_library.gd").load_file("res://tracks/forms/stunt_v1.json")
+			var spatial=load("res://scripts/track/spatial/spatial_track.gd").new(d,forms.forms)
+			length=spatial.length_m;curve_count=spatial.curves.size();jump_count=spatial.jumps.size()
+		result.append({"format_version":d.get("format_version",1),"path": path, "name": String(TranslationServer.translate(d.name)), "description": String(TranslationServer.translate(d.description)),
 			"scenario": landscape, "preview": preview, "landscape_preview": preview == Scenarios.preview(landscape),
-			"length_m": d.length_m, "curves": d.curves.size(), "jumps": d.jumps.size()})
+			"length_m": length, "curves": curve_count, "jumps": jump_count})
 	return {"routes": result, "errors": errors}
 
 static func catalog() -> Array[Dictionary]:
 	return scan_catalog().routes
 
 static func validate_definition(d) -> String:
+	if d is Dictionary and d.get("format_version")==2:
+		var forms:Dictionary=load("res://scripts/track/spatial/form_library.gd").load_file("res://tracks/forms/stunt_v1.json")
+		if not forms.errors.is_empty():return str(forms.errors)
+		var errors:Array=load("res://scripts/track/spatial/track_definition.gd").validate(d,forms.forms)
+		return ", ".join(errors)
 	if not d is Dictionary: return String(TranslationServer.translate("I18N_TRACK_OBJECT_ERROR"))
 	for key in ["name", "description"]:
 		if not d.get(key) is String or d[key].strip_edges().is_empty(): return String(TranslationServer.translate("I18N_TRACK_NAME_ERROR"))

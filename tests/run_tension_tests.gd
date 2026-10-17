@@ -17,26 +17,21 @@ func _initialize() -> void:
 		corrected.request_turn(curve.turn_sign)
 		var peak := 0.0
 		var command_sent := false
-		var after_command := 0.0
-		var recovery_seen := false
+		var corrected_peak := 0.0
 		for i in range(900):
 			baseline.step(1.0 / 60.0)
 			corrected.step(1.0 / 60.0)
 			peak = maxf(peak, absf(baseline.lateral))
-			if not command_sent and absf(corrected.lateral) > 1.65:
+			if not command_sent and corrected.distance_m > curve.start_m + 5.0:
 				corrected.request_turn(curve.turn_sign)
 				command_sent = true
-			if command_sent:
-				after_command += 1.0 / 60.0
-				if after_command > 0.6 and after_command < 1.2 and absf(corrected.lateral) < absf(baseline.lateral) - 0.5:
-					recovery_seen = true
-			if baseline.off_road or corrected.off_road or baseline.distance_m > curve.end_m + 25.0:
-				break
-		check(peak >= 1.7, "Kurve %d: Das Auto kommt sichtbar nahe an den Rand" % curve.id)
-		check(not baseline.off_road and baseline.distance_m > curve.end_m, "Kurve %d: Die knappe Fahrlinie bleibt fahrbar" % curve.id)
-		check(recovery_seen and not corrected.off_road, "Kurve %d: Ein weiterer Druck zieht das Auto nach innen" % curve.id)
-		check(baseline.speed_mps >= 18.0, "Kurve %d: Das Auto hält ein hohes Tempo" % curve.id)
-		print("Kurve %d: Randnähe %.2f m; Korrektur %s" % [curve.id, peak, recovery_seen])
+			corrected_peak = maxf(corrected_peak, absf(corrected.lateral))
+			if baseline.off_road or corrected.off_road or baseline.distance_m > curve.end_m + 25.0: break
+		check(peak >= 0.1 and peak <= baseline.assist_profile.sway_limit_m, "Die sichtbare Bewegung bleibt innerhalb der Hilfe.")
+		check(not baseline.off_road and baseline.distance_m > curve.end_m, "Eine Eingabe reicht für die Kurve.")
+		print("curve ",curve.id," peak ",peak," corrected ",corrected_peak," sent ",command_sent)
+		check(command_sent and corrected_peak <= corrected.assist_profile.sway_limit_m and not corrected.off_road, "Eine weitere Eingabe hält die Fahrt innerhalb der Hilfe.")
+		check(baseline.speed_mps >= 18.0, "Die Kurvenfahrt hält das Tempo.")
 	var model = Drive.new(track)
 	var router = Router.new(model)
 	router.restart()

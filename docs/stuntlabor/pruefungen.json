@@ -1,0 +1,292 @@
+[
+  {
+    "test": "tests/run_assist_bounds_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_assist_feedback_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_assist_limits_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_assist_selection_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_assisted_drive_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_audio_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_call_practice_scene_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_call_profile_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_catalog_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_curve_assist_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_engine_audio_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_forest_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_i18n_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_input_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_jump_scene_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_keyboard_speed_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_landscape_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_lower_assist_tracks_tests.gd",
+    "passed": true,
+    "timeout_s": 600
+  },
+  {
+    "test": "tests/run_scene_test.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_selection_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_speed_bank_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_speed_hint_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_stunt_feel_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_stunt_scene_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_stunt_track_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_tension_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_track_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_assist_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_auto_range_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_bridge_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_calibration_scene_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_calibration_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_compass_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_diagnostics_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_practice_cues_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_practice_scene_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_practice_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_runtime_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_scene_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_strength_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/run_voice_tests.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_assists.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_boundaries.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_camera.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_definition.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_endurance.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_feedback.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_flight.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_full_drives.gd",
+    "passed": true,
+    "timeout_s": 600
+  },
+  {
+    "test": "tests/spatial/test_geometry.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_model_swap.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_models.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_review_regressions.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_session.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_surface_motion.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_track_loading.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
+    "test": "tests/spatial/test_verification.gd",
+    "passed": true,
+    "timeout_s": 90
+  }
+]

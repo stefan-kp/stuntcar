@@ -213,6 +213,8 @@ func render(session, rebind_message: String = "") -> void:
 		speed_text = tr("I18N_HUD_SPEED_TARGET") % [roundi(model.speed_mps * 3.6), roundi(target_speed * 3.6)]
 	time_label.text = tr("I18N_HUD_TIME") % [speed_text, int(session.total_time + model.elapsed_s) / 60, int(session.total_time + model.elapsed_s) % 60]
 	route_label.text = tr("I18N_HUD_ROUTE") % [model.track.track_name, int(model.distance_m), int(model.track.length_m)]
+	if not session.visual_warnings.is_empty(): route_label.text += " — " + tr("I18N_STUNT_MODEL_FALLBACK")
+	route_label.tooltip_text = "\n".join(session.visual_warnings)
 	var curve: Dictionary = model.track.curves[model.active_curve_id] if model.active_curve_id >= 0 else model.track.next_curve(model.distance_m)
 	var assist: Dictionary = model.assist_state()
 	var near_curve: bool = not curve.is_empty() and assist.phase in ["early", "clean", "late", "rescue"]
@@ -253,6 +255,12 @@ func render(session, rebind_message: String = "") -> void:
 			hint_detail.text = tr("I18N_JUMP_READY")
 	if state == "RUNNING":
 		if assist.wrong_direction: hint_detail.text = tr("I18N_ASSIST_WRONG_DIRECTION")
+		if model.has_method("verified_speed_hint"):
+			var checked: Dictionary = model.verified_speed_hint()
+			if not checked.is_empty() and checked.get("target_mps") != null:
+				hint_detail.text += "\n" + tr("I18N_STUNT_SPEED_TARGET") % roundi(checked.target_mps * 3.6)
+			else:
+				hint_detail.text += "\n" + tr("I18N_STUNT_SPEED_UNKNOWN")
 		var speed_hint: Dictionary = model.track.speed_hint_at(model.distance_m, model.input_window_m())
 		if not speed_hint.is_empty():
 			if speed_hint.status == "assisted_tested" and speed_hint.model == "lower_assist_v1" and speed_hint.max_mps != null:

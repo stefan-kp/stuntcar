@@ -82,3 +82,17 @@ func reset() -> void:
 		particles.emitting = false
 		particles.restart()
 	suspend()
+
+func update_spatial(state: Dictionary, events: Array[Dictionary]) -> void:
+	visible = true
+	flames.visible = state.boosting
+	var contact: bool = state.grounded
+	var impact := false
+	for event in events:
+		if event.type == "landing" and event.magnitude > 2: impact = true
+	for particles in smoke:
+		particles.speed_scale = 0 if state.get("paused", false) else 1
+		particles.emitting = contact and (state.braking or state.slip_mps > 0.8 or impact)
+
+func freeze_spatial() -> void:
+	for particles in smoke: particles.speed_scale = 0

@@ -4,7 +4,7 @@ const Drive = preload("res://scripts/vehicle/drive_model.gd")
 var failures := 0
 var checks := 0
 func _initialize() -> void:
-	for route in Track.catalog():
+	for route in preload("res://tests/helpers/legacy_routes.gd").catalog():
 		var track = Track.new(route.path)
 		for curve in track.curves:
 			for at in [curve.start_m+5.0,curve.end_m-5.0]:

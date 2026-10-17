@@ -125,3 +125,23 @@ Current ramps use `position_based_v1`, `unverified`, and null speed values.
 Do not enter a physical minimum for this model. The fixed flight path does not test it.
 Future speed-dependent jumps need a new model and repeatable flight tests before they can use speed bounds.
 The reader rejects negative values, non-finite values, reversed bounds, and targets outside the bounds.
+
+## Räumliche Strecken mit Format 2
+
+`06_stuntlabor.json` enthält die erste räumliche Strecke.
+Ihre Elemente verwenden die gespeicherten Fahrformen aus `forms/stunt_v1.json`.
+`entry_transform` setzt Lage und Drehung jedes Elements.
+Die Drehung verwendet vier Werte: x, y, z und w eines Einheitsquaternions.
+Ein Quaternion beschreibt hier die räumliche Ausrichtung ohne feste Oberseite.
+
+`assist` enthält Mindesttempo, Höchsttempo, Zieltempo und Anfahrabstand.
+Ein leeres Feld verwendet die Vorgaben aus `stunt_assist.gd`.
+Diese Werte steuern die Hilfe. Sie beweisen keinen sicheren Bereich für beliebige Fahrzustände.
+`landings` nennt die erlaubten Landeflächen sowie die Grenzen für Winkel und Aufpralltempo.
+Die Fahrfläche liefert die tatsächliche Breite und Länge.
+
+`styles.road` und `styles.scenery` wählen die Darstellung getrennt.
+`report` nennt den Fahrbericht. Eine passende erfolgreiche Fahrt ist für beide Hilfestufen nötig.
+Nach Änderungen an Fahrdaten oder Fahrberechnung erzeugt `tools/spatial/check_drives.gd` einen neuen Bericht.
+Ein reiner Modelltausch braucht nur eine neue Modellprüfung.
+Die vier alten Strecken verwenden weiterhin Format 1.

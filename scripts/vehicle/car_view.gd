@@ -2,10 +2,14 @@ extends CharacterBody3D
 
 const QualityAssets = preload("res://scripts/quality_assets.gd")
 const StuntEffects = preload("res://scripts/vehicle/stunt_effects.gd")
+var feedback = preload("res://scripts/vehicle/ride_feedback.gd").new()
+var tire_marks: Node3D
 var effects: Node3D
 var wheels: Array[Node3D] = []
 var body: Node3D
 var fall_velocity := 0.0
+var spatial_previous:Dictionary={}
+var spatial_current:Dictionary={}
 
 func _ready() -> void:
 	collision_layer = 2
@@ -21,10 +25,18 @@ func _ready() -> void:
 	add_child(body)
 	for wheel_name in ["WheelFL", "WheelFR", "WheelRL", "WheelRR"]:
 		wheels.append(body.get_node(wheel_name))
+	tire_marks = preload("res://scripts/vehicle/tire_marks.gd").new()
+	add_child(tire_marks)
 	effects = StuntEffects.new()
 	body.add_child(effects)
 
 func place(model) -> void:
+	feedback.reset()
+	if tire_marks != null: tire_marks.reset()
+	if model.has_method("feedback_state"):
+		place_spatial({"position":model.state.position,"basis":model.state.basis})
+		if effects!=null:effects.reset()
+		return
 	global_position = model.position + Vector3.UP * 0.03
 	rotation = Vector3(model.pitch, -model.heading, model.bank)
 	body.rotation = Vector3.ZERO
@@ -35,6 +47,12 @@ func place(model) -> void:
 	for wheel in wheels: wheel.rotation.y = 0.0
 
 func drive(model, delta: float) -> void:
+	if model.has_method("feedback_state"):
+		spatial_previous=spatial_current.duplicate()
+		spatial_current={"position":model.state.position,"basis":model.state.basis}
+		drive_spatial(spatial_previous,spatial_current,1.0)
+		for wheel in wheels:wheel.rotation.x-=model.speed_mps*delta/0.384
+		return
 	# The assisted model owns the road and flight path. Falling remains physical.
 	var before := global_position
 	global_position = model.position + Vector3.UP * 0.03
@@ -59,3 +77,23 @@ func fall(delta: float) -> void:
 	velocity.y -= 22.0 * delta
 	move_and_slide()
 	rotation.z += 0.3 * delta
+
+func place_spatial(state:Dictionary)->void:
+	spatial_previous=state.duplicate();spatial_current=state.duplicate()
+	drive_spatial(state,state,1.0)
+	if body!=null:body.position=Vector3.ZERO;body.rotation=Vector3.ZERO
+	velocity=Vector3.ZERO;fall_velocity=0
+func drive_spatial(previous:Dictionary,current:Dictionary,alpha:float)->void:
+	if current.is_empty():return
+	if previous.is_empty():previous=current
+	var a:Quaternion=previous.basis.get_rotation_quaternion();var b:Quaternion=current.basis.get_rotation_quaternion()
+	if a.dot(b)<0:b=-b
+	global_basis=Basis(a.slerp(b,clampf(alpha,0,1)))
+	global_position=previous.position.lerp(current.position,clampf(alpha,0,1))+global_basis.y*0.03
+
+func apply_motion_feedback(state: Dictionary, events: Array[Dictionary], delta: float) -> void:
+	var result: Dictionary = feedback.advance(state, events, delta)
+	body.position.y = -result.compression_m
+	body.rotation = Vector3(result.pitch_rad, 0, result.roll_rad)
+	tire_marks.advance(state, delta)
+	effects.update_spatial(state, events)

@@ -1,0 +1,10 @@
+{
+	"frames": 578,
+	"median_render_wait_ms": 0.878,
+	"method": "wall wait for drawn frame; includes scheduling, excludes PNG write; not FPS benchmark",
+	"p95_render_wait_ms": 1.248,
+	"resolution": [
+		1280,
+		800
+	]
+}

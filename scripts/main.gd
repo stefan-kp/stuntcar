@@ -1,5 +1,10 @@
 extends Node3D
 
+const TrackFactory = preload("res://scripts/track/track_factory.gd")
+const DriveFactory = preload("res://scripts/vehicle/drive_model_factory.gd")
+const SpatialBuilder = preload("res://scripts/track/visuals/spatial_builder.gd")
+const Verification = preload("res://scripts/track/spatial/verification.gd")
+const StuntAssist = preload("res://scripts/vehicle/spatial/stunt_assist.gd")
 const TrackData = preload("res://scripts/track/track_data.gd")
 const TrackBuilder = preload("res://scripts/track/track_builder.gd")
 const DriveModel = preload("res://scripts/vehicle/drive_model.gd")
@@ -43,14 +48,12 @@ var voice_action_text := tr("I18N_VOICE_NO_ACTION")
 
 func _ready() -> void:
 	track = TrackData.new()
-	model = DriveModel.new(track)
+	model = DriveFactory.create(track)
 	model.reset(5.0)
 	session = CommandRouter.new(model)
 	session.action_requested.connect(on_action)
 	load_settings()
-	builder = TrackBuilder.new()
-	add_child(builder)
-	builder.build(track)
+	build_selected_track()
 	car = CarView.new()
 	add_child(car)
 	car.place(model)
@@ -157,7 +160,7 @@ func _physics_process(delta: float) -> void:
 					session.call_practice.reset()
 				else:
 					var seconds = level_event.get("sample_seconds", 0.0)
-					if track.number(seconds) and seconds > 0.0 and seconds <= 0.2:
+					if TrackData.number(seconds) and seconds > 0.0 and seconds <= 0.2:
 						session.call_practice.receive(level_event, seconds)
 						if session.call_practice.phase == "done" and session.call_profile != session.call_practice.profile_data():
 							session.call_profile = session.call_practice.profile_data()
@@ -233,7 +236,12 @@ func _physics_process(delta: float) -> void:
 	if was_running:
 		car.drive(model, delta)
 	elif session.state == "FALLING":
-		car.fall(delta)
+		if model.has_method("feedback_state"): car.drive(model, delta)
+		else: car.fall(delta)
+	if model.has_method("take_motion_events") and (was_running or session.state == "FALLING"):
+		var motion_events: Array[Dictionary] = model.take_motion_events()
+		car.apply_motion_feedback(model.feedback_state(), motion_events, delta)
+		race_audio.apply_motion_events(motion_events, session)
 	race_audio.update(model, session, delta)
 	for event in model.take_assist_events():
 		if session.state == "RUNNING" and event.type == "opened" and session.sound_enabled:
@@ -275,8 +283,15 @@ func _process(delta: float) -> void:
 	if session == null:
 		return
 	if is_instance_valid(builder.landscape): builder.landscape.follow(car.global_position)
-	camera.follow(car, model.heading, delta, session.state in ["MENU", "CONTROL", "TRACKS", "PRACTICE"], model.pitch, model.speed_mps, 1.0 if model.boost_remaining > 0.0 else 0.0)
-	if session.state != "RUNNING": car.effects.suspend()
+	if model.has_method("feedback_state"):
+		if session.state in ["RUNNING","FALLING"]:
+			car.drive_spatial(car.spatial_previous,car.spatial_current,Engine.get_physics_interpolation_fraction())
+		camera.follow_spatial({"basis":car.global_basis},car.global_position,model.speed_mps,delta)
+	else:
+		camera.follow(car, model.heading, delta, session.state in ["MENU", "CONTROL", "TRACKS", "PRACTICE"], model.pitch, model.speed_mps, 1.0 if model.boost_remaining > 0.0 else 0.0)
+	if session.state != "RUNNING":
+		if model.has_method("feedback_state") and session.state == "PAUSED": car.effects.freeze_spatial()
+		else: car.effects.suspend()
 	var message := ""
 	if binding_stage == 1:
 		message = tr("I18N_KEY_BIND_LEFT")
@@ -367,21 +382,37 @@ func on_action(action: String) -> void:
 			binding_stage = 1
 			bind_timeout = 30.0
 
+func build_selected_track() -> void:
+	builder = SpatialBuilder.new() if track.get("format_version") == 2 else TrackBuilder.new()
+	add_child(builder)
+	if track.get("format_version") == 2: builder.build(track, track.definition.styles)
+	else: builder.build(track)
+	if session != null:
+		session.visual_warnings.clear()
+		if track.get("format_version") == 2:
+			for warning in builder.warnings: session.visual_warnings.append(tr("I18N_STUNT_MODEL_FALLBACK") + " " + warning)
+
 func select_track(path: String) -> void:
-	var replacement = TrackData.new(path)
-	if not replacement.valid:
+	var loaded: Dictionary = TrackFactory.load_track(path)
+	if not loaded.errors.is_empty():
 		session.open_tracks()
-		session.catalog_errors.append(path.get_file() + ": " + replacement.validation_error)
+		session.catalog_errors.append(path.get_file() + ": " + str(loaded.errors))
+		return
+	var replacement = loaded.track
+	if loaded.format_version == 2 and not Verification.playable(replacement, StuntAssist.profile(session.selected_assist_id)):
+		session.open_tracks()
+		session.catalog_errors.append(tr("I18N_STUNT_UNVERIFIED"))
 		return
 	track = replacement
-	model.track = track
+	var hint: float = model.hint_seconds
+	model = DriveFactory.create(track)
+	model.hint_seconds = hint
+	session.model = model
 	model.reset(5.0)
 	if is_instance_valid(builder):
 		remove_child(builder)
 		builder.free()
-	builder = TrackBuilder.new()
-	add_child(builder)
-	builder.build(track)
+	build_selected_track()
 	session.go_to_menu()
 	held.clear()
 	pending.clear()
@@ -453,9 +484,12 @@ func load_settings() -> void:
 	var selected = config.get_value("game", "track", TrackData.DEFAULT_PATH)
 	for route in TrackData.catalog():
 		if route.path == selected:
-			track = TrackData.new(selected)
-			model.track = track
-			model.reset(5.0)
+			var loaded: Dictionary = TrackFactory.load_track(selected)
+			if loaded.errors.is_empty() and (loaded.format_version == 1 or Verification.playable(loaded.track, StuntAssist.profile(session.selected_assist_id))):
+				track = loaded.track
+				model = DriveFactory.create(track)
+				session.model = model
+				model.reset(5.0)
 			break
 	var bindings := KeyboardControls.restored(config)
 	key_left = bindings[0]

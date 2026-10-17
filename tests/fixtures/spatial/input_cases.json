@@ -1,0 +1,27 @@
+{
+  "start_speeds_mps": [
+    0,
+    5,
+    14,
+    22,
+    35,
+    46,
+    58
+  ],
+  "cases": [
+    "clean",
+    "late",
+    "wrong",
+    "missing",
+    "faster",
+    "slower",
+    "alternate"
+  ],
+  "dt_s": 0.016666666666666666,
+  "gap_m": 24,
+  "bounds": {
+    "speed_delta_mps": 0.1,
+    "position_delta_m": 0.01,
+    "time_delta_ticks": 1
+  }
+}

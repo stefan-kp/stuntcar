@@ -42,7 +42,7 @@ func _initialize() -> void:
 			else: fast_peak = maxf(fast_peak, absf(drive.lateral))
 			if drive.off_road or drive.distance_m > 175: break
 	check(fast_peak > normal_peak + 0.5, "Höheres Tempo erhöht die Randnähe tatsächlich")
-	for route in track.catalog():
+	for route in preload("res://tests/helpers/legacy_routes.gd").catalog():
 		track = Track.new(route.path)
 		var peak_bank := 0.0
 		for curve in track.curves:

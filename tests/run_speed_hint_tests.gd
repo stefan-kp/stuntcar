@@ -7,7 +7,7 @@ func _initialize() -> void:
 	var track = Track.new()
 	check(track.has_method("speed_hint_at"), "Die Geschwindigkeitshinweise fehlen.")
 	if not track.has_method("speed_hint_at"): quit(1);return
-	for route in Track.catalog():
+	for route in preload("res://tests/helpers/legacy_routes.gd").catalog():
 		var t = Track.new(route.path)
 		for c in t.curves:
 			var hint: Dictionary = t.speed_hint_at(c.start_m)
