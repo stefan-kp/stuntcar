@@ -60,6 +60,7 @@ var recovery_remaining := 0.0
 var motion := "normal"
 var sway_remaining := 0.0
 var sway_used := false
+var rejection_until_s := -1.0
 
 func _init(track_data) -> void:
 	track = track_data
@@ -68,6 +69,7 @@ func _init(track_data) -> void:
 func reset(checkpoint_m: float = 0.0) -> void:
 	attempt_id += 1
 	input_serial = 0
+	rejection_until_s = -1.0
 	curve_assist.reset(attempt_id)
 	assist_events.clear()
 	assist_speed_active = false
@@ -143,7 +145,8 @@ func refresh_assist() -> void:
 func assist_state() -> Dictionary:
 	var state: Dictionary = curve_assist.snapshot()
 	state.merge({"assist_id":assist_id,"player_target_mps":target_speed_mps,"assist_target_mps":assist_target_mps,
-		"assist_speed_active":assist_speed_active,"motion":motion,"assist_reason":assist_reason})
+		"assist_speed_active":assist_speed_active,"motion":motion,"assist_reason":assist_reason,
+		"wrong_direction":elapsed_s < rejection_until_s})
 	return state
 
 func take_assist_events() -> Array[Dictionary]:
@@ -154,7 +157,13 @@ func take_assist_events() -> Array[Dictionary]:
 func request_assisted_turn(direction: int, unknown_call: bool, event_id: String) -> bool:
 	refresh_assist()
 	var was_authorized: bool = curve_assist.snapshot().authorized
-	if not curve_assist.request(direction, unknown_call, event_id): return false
+	if not curve_assist.request(direction, unknown_call, event_id):
+		var rejected: Dictionary = curve_assist.snapshot()
+		if not was_authorized and rejected.phase != "closed" and assist_id == "easy" and not unknown_call and direction in [-1,1] and direction != rejected.turn_sign:
+			rejection_until_s = elapsed_s + 2.0
+			_emit_assist("rejected", "wrong_direction")
+		return false
+	rejection_until_s = -1.0
 	var state: Dictionary = curve_assist.snapshot()
 	active_curve_id = state.curve_id
 	last_command = state.turn_sign
@@ -252,7 +261,8 @@ func step(delta: float) -> void:
 	if not assist_speed_active: motion = "normal"
 	var rate := BOOST_ACCEL if boost_remaining > 0.0 else (18.0 if desired_speed < speed_mps else 10.0) * speed_strength
 	if emergency_braking: rate = FULL_BRAKE_DECEL
-	if assist_speed_active: rate = assist_profile.max_assist_brake_mps2
+	if assist_speed_active:
+		rate = assist_profile.max_assist_accel_mps2 if desired_speed > speed_mps else assist_profile.max_assist_brake_mps2
 	# Brakes act on the road. Preserve forward motion until the landing.
 	if desired_speed >= speed_mps or track.jump_at(distance_m).is_empty():
 		speed_mps = move_toward(speed_mps, desired_speed, rate * delta)

@@ -42,5 +42,14 @@ func run() -> void:
 	check(scene.ui.buttons[-1].get_global_rect().end.y < scene.ui.root.size.y - 124, "Alle Einstellungen passen oberhalb der Bedienhinweise.")
 	var config := ConfigFile.new();config.load(scene.settings_path)
 	check(config.get_value("input","call_profile",{}) == saved, "Das Profil bleibt gespeichert.")
+	scene.voice.device_name = "Quiet test"
+	scene.session.restart();scene.model.reset(200);scene.model.refresh_assist()
+	check(scene.has_method("current_call_context"), "Der Rufkontext muss Profil und Gelegenheit getrennt halten.")
+	if scene.has_method("current_call_context"):
+		var context: Dictionary = scene.current_call_context()
+		check(context.profile == saved and context.opportunity_id == -1, "Das Profil bleibt vor der Kurve aktiv.")
+		scene.session.set_selected_assist("easy");scene.session.restart();scene.model.reset(70);scene.model.refresh_assist()
+		context = scene.current_call_context()
+		check(context.profile == saved and context.opportunity_id == -1, "Leicht nutzt das leise Wortprofil ohne unbekannte Rufhilfe.")
 	DirAccess.remove_absolute(scene.settings_path);scene.free()
 	print("RUFUEBUNG: %d Bedingungen, %d Fehler" % [checks,failures]);quit(0 if failures == 0 else 1)

@@ -62,3 +62,74 @@ class CallStreamTests(unittest.TestCase):
         for _ in range(10):
             _,status=stream.feed(array('h',[5]*800).tobytes())
             self.assertNotIn('call_id',status)
+
+class CallPriorityRegression(unittest.TestCase):
+    def profile(self, on=25., off=15., release=.3):
+        return dict(version=1, device='quiet', on_rms=on, off_rms=off,
+                    min_call_s=.15, max_call_s=3., release_s=release)
+
+    def pcm(self, rms):
+        return array('h', [rms] * 800).tobytes()
+
+    def test_quiet_speed_word_has_priority_with_and_without_call_permission(self):
+        from voice.tests.test_modes import RecognitionModes
+        for mode in ('direct', 'checked'):
+            for opportunity in (7, -1):
+                with self.subTest(mode=mode, opportunity=opportunity):
+                    stream, decoder, fallback = RecognitionModes().stream(mode)
+                    stream.configure_call(self.profile(), opportunity)
+                    commands, calls = [], []
+                    decoder.text = fallback.text = 'faster'
+                    for volume in [45] * 8 + [5] * 10:
+                        words, status = stream.feed(self.pcm(volume))
+                        commands.extend(words)
+                        if 'call_id' in status: calls.append(status)
+                    self.assertEqual([word['command'] for word in commands], ['faster'])
+                    self.assertEqual(calls, [])
+
+    def test_personal_call_end_finishes_word_check_before_unknown_help(self):
+        import json
+        from voice.tests.test_modes import RecognitionModes
+        for mode in ('direct', 'checked'):
+            for release in (.15, .3):
+                with self.subTest(mode=mode, release=release):
+                    stream, decoder, fallback = RecognitionModes().stream(mode)
+                    stream.configure_call(self.profile(850., 525., release), 7)
+                    decoder.FinalResult = fallback.FinalResult = lambda: json.dumps({'text': 'faster'})
+                    commands, calls = [], []
+                    for volume in [1500] * 8 + [200] * 10:
+                        words, status = stream.feed(self.pcm(volume))
+                        commands.extend(words)
+                        if 'call_id' in status: calls.append(status)
+                    self.assertEqual([word['command'] for word in commands], ['faster'])
+                    self.assertEqual(calls, [])
+
+    def test_room_noise_cannot_release_a_second_late_action(self):
+        from voice.tests.test_modes import RecognitionModes
+        for mode in ('direct', 'checked'):
+            stream, decoder, fallback = RecognitionModes().stream(mode)
+            stream.configure_call(self.profile(850.,525.),7)
+            actions=[]
+            for volume in [1500]*8+[200]*6:
+                words,status=stream.feed(self.pcm(volume));actions.extend(words)
+                if 'call_id' in status:actions.append(status)
+            decoder.text=fallback.text='faster'
+            for _ in range(3):
+                words,status=stream.feed(self.pcm(200));actions.extend(words)
+                if 'call_id' in status:actions.append(status)
+            self.assertEqual(len(actions),1,mode)
+
+    def test_long_call_keeps_its_duration_when_opportunity_opens(self):
+        from voice.tests.test_modes import RecognitionModes
+        for mode in ('direct','checked'):
+            stream,_,_=RecognitionModes().stream(mode)
+            stream.configure_call(self.profile(),-1)
+            calls=[]
+            for _ in range(80):
+                _,status=stream.feed(self.pcm(45))
+                if 'call_id' in status:calls.append(status)
+            stream.configure_call(self.profile(),7)
+            for volume in [45]*6+[5]*10:
+                _,status=stream.feed(self.pcm(volume))
+                if 'call_id' in status:calls.append(status)
+            self.assertEqual(calls,[])

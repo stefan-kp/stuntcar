@@ -731,3 +731,6 @@ msgstr "With curve help: up to %d km/h."
 msgid "I18N_RAMP_SPEED_UNVERIFIED"
 msgstr "Fixed jump path. No tested minimum speed."
 
+
+msgid "I18N_ASSIST_WRONG_DIRECTION"
+msgstr "Wrong direction. Follow the curve arrow."

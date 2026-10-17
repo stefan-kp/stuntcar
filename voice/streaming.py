@@ -145,7 +145,8 @@ class StreamingRecognizer:
         while self.recent_clips and self.recent_clips[0][0] < self.elapsed - .45:
             self.recent_clips.popleft()
         self.pre_roll.append(pcm)
-        if rms >= 180:
+        speech_threshold = self.calls.profile.get("off_rms", 180)
+        if rms >= speech_threshold:
             self.speech_seconds += len(pcm) / 32000
             self.call_peak_rms = max(self.call_peak_rms, rms)
             self.call_silent_blocks = 0
@@ -155,7 +156,7 @@ class StreamingRecognizer:
             self.silent_blocks = 0
         elif self.active:
             self.silent_blocks += 1
-        if rms < 180 and self.speech_seconds > 0:
+        if rms < speech_threshold and self.speech_seconds > 0:
             self.call_silent_blocks += 1
         if self.active and len(self.parts) < 300:
             self.parts.append(pcm)
@@ -184,11 +185,17 @@ class StreamingRecognizer:
         status = {'heard': self.heard[-70:], 'level': min(1.0, rms / 3000), 'state': 'listening',
                   'clipped': any(value for _, value in self.recent_clips),
                   'rms': rms, 'peak_rms': max((level for _, level in self.recent_levels), default=0.0)}
-        status['direction'] = (confirmed[-1]['command'] if confirmed and rms >= 180
+        status['direction'] = (confirmed[-1]['command'] if confirmed and rms >= speech_threshold
                                and confirmed[-1]['command'] in {'left', 'right', 'faster', 'slower'} else '')
         if self.active:
             status['state'] = 'checking'
-        if self.active and (self.silent_blocks >= 6 or all(self.decoder_ended)):
+        # A call can end before the decoder's own endpoint. Resolve the final
+        # word result first, then decide whether this is an unknown call.
+        call = None
+        if self.call_context:
+            opportunity = self.opportunity_id if call_opportunity_id is None else call_opportunity_id
+            call = self.calls.feed(pcm, opportunity, bool(events))
+        if self.active and (self.silent_blocks >= 6 or all(self.decoder_ended) or call is not None):
             finals = []
             for index, decoder in enumerate(self.decoders):
                 result = json.loads(decoder.FinalResult())
@@ -220,9 +227,7 @@ class StreamingRecognizer:
             status['direction'] = events[-1]['command']
         if self.call_context:
             status.pop('speech_seconds', None)
-            opportunity = self.opportunity_id if call_opportunity_id is None else call_opportunity_id
-            call = self.calls.feed(pcm, opportunity, bool(events))
-            if call:
+            if call and not events:
                 status.update(call)
                 status['state'] = 'unknown'
         return events, status

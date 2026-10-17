@@ -34,9 +34,9 @@ Die Ausgangsprüfung bestand vor der Umsetzung.
 Die Abschlussprüfung besteht ebenfalls.
 
 - 21 bestehende Godot-Prüfprogramme bestehen.
-- 80 Python-Tests für die Sprachsteuerung bestehen.
+- 84 Python-Tests für die Sprachsteuerung bestehen.
 - Der Textkatalog und die Streckenprüfung bestehen.
-- Acht neue Godot-Prüfprogramme bestehen.
+- Neun neue Godot-Prüfprogramme bestehen.
 - Die Streckenmatrix enthält 528 vollständige Fahrten ohne Fehler.
 - Die Randprüfung enthält 128 kombinierte Anfangszustände ohne Fehler.
 
@@ -55,9 +55,14 @@ Die zulässige Richtungsabweichung beträgt weniger als 20 Grad.
 Der zulässige seitliche Abstand beträgt weniger als 2,4 Meter.
 Die Hilfe sichert den Ausgang noch 16 Meter.
 
+64 Vergleichspaare prüfen den Zeitverlust einer späten oder sehr späten Eingabe.
+Keine Rettung bringt einen Zeitvorteil.
+Der kleinste zusätzliche Zeitbedarf beträgt 1,5 Sekunden.
+
 Die Tests verwenden Schritte von 1/60 Sekunde.
 Der [Fahrbericht](untere-hilfestufen-testresultate.json) enthält jeden geprüften Fall.
 Er nennt Eingaben, Positionen, Tempi, Zeiten und seitliche Abstände.
+Prüfsummen benennen den genauen Stand des Fahrmodells und der Streckendaten.
 Die Stichproben beweisen nicht jede mögliche Kombination.
 Künftige Strecken brauchen eigene Fahrprüfungen.
 
@@ -94,3 +99,20 @@ Dabei müssen die Testpersonen die Hinweise und das Schlingern beurteilen.
 
 Die Ausgabe enthält keine Freigabe für eine Veröffentlichung.
 Die Umsetzung bleibt im vorhandenen Arbeitsbaum.
+
+## Unabhängige Abschlussprüfung
+
+Eine unabhängige Codeprüfung fand vier wichtige Fehler und eine fehlende Rückmeldung.
+Gezielte Tests bestätigten diese Fehler vor der Korrektur.
+
+- Die Worterkennung nutzt jetzt das persönliche Geräuschniveau. Das gilt auch für „Leicht“.
+- Eine mögliche Rufhilfe wartet auf die endgültige Wortprüfung derselben Äußerung.
+- Das Mikrofonprofil bleibt vor einem Kurvenfenster aktiv. Ein Dauerlaut beginnt dort nicht neu.
+- Die Hilfe verwendet getrennte Grenzen für Beschleunigung und Bremsung.
+- „Leicht“ zeigt eine abgelehnte Richtung an. Eine richtige Eingabe entfernt diese Meldung.
+
+Die fehlende Rückmeldung zählt für diese zugängliche Steuerung als wichtiger Fehler.
+Die Korrektur ergänzt eine kurze Meldung und verändert keine Fahrregel.
+Alle fünf Befunde erhalten einen Test.
+Die Abschlussprüfung verschiebt keinen gefundenen Fehler auf später.
+Die menschliche Erprobung bleibt davon getrennt.

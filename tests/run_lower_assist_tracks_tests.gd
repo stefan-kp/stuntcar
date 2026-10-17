@@ -48,5 +48,10 @@ func _initialize() -> void:
 		print("Geprueft: "+route.path)
 	var revision: Array = [];OS.execute("git",["rev-parse","HEAD"],revision)
 	var report := {"source_base":str(revision[0]).strip_edges(),"source_state":"working_tree","profile":Profile.for_id("very_easy"),"step_s":DT,"runs":results.size(),"failures":failures,"limits":["Discrete samples, no proof for every possible input.","No human microphone trial.","Jumps use the existing position-based path.","Artificial boundary states have a separate test."],"results":results}
+	var hashes := {}
+	for path in ["res://scripts/vehicle/drive_model.gd","res://scripts/vehicle/curve_assist.gd","res://scripts/vehicle/assist_profile.gd","res://scripts/track/track_data.gd"]:
+		hashes[path] = FileAccess.get_sha256(path)
+	for route in Track.catalog(): hashes[route.path] = FileAccess.get_sha256(route.path)
+	report["source_sha256"] = hashes
 	var file := FileAccess.open("res://docs/untere-hilfestufen-testresultate.json",FileAccess.WRITE);file.store_string(JSON.stringify(report,"\t")+"\n")
 	print("STRECKENMATRIX: %d Fahrten, %d Fehler"%[results.size(),failures]);quit(0 if failures==0 else 1)

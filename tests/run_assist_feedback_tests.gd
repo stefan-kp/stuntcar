@@ -33,4 +33,8 @@ func run() -> void:
 	for i in range(300):
 		model.step(1.0/60.0);easy_sway = easy_sway or model.motion == "safe_sway"
 	check(not easy_sway,"Leicht hat keinen zusaetzlichen Schlingerimpuls.")
+	model.reset(70);model.set_assist_level("easy");session.press(-1);ui.render(session)
+	check(model.active_curve_id == -1 and "Wrong direction" in ui.hint_detail.text, "Leicht bestaetigt die abgelehnte Richtung sichtbar.")
+	session.press(1);ui.render(session)
+	check(model.active_curve_id == 0 and "Wrong direction" not in ui.hint_detail.text, "Die richtige Eingabe entfernt die Ablehnung.")
 	ui.free();print("HILFSANZEIGE: %d Bedingungen, %d Fehler"%[checks,failures]);quit(0 if failures==0 else 1)

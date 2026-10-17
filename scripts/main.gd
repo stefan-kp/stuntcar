@@ -146,11 +146,8 @@ func _physics_process(delta: float) -> void:
 	if voice != null:
 		voice.poll()
 		model.refresh_assist()
-		var call_opportunity := -1
-		if session.state == "RUNNING" and binding_stage == 0 and model.assist_id == "very_easy":
-			if session.CallProfile.validate(session.call_profile, voice.device_name).is_empty():
-				call_opportunity = model.assist_state().opportunity_id if model.assist_state().phase not in ["closed", "inactive"] else -1
-		voice.configure_call(session.call_profile if call_opportunity >= 0 else {}, call_opportunity, session.state == "CALL_PRACTICE")
+		var call_context := current_call_context()
+		voice.configure_call(call_context.profile, call_context.opportunity_id, session.state == "CALL_PRACTICE")
 		if voice_diagnostics != null: voice_diagnostics.observe_state(self)
 		var events: Array[Dictionary] = voice.take_commands()
 		for level_event in voice.take_level_events():
@@ -244,6 +241,17 @@ func _physics_process(delta: float) -> void:
 	previous_state = session.state
 	sync_voice_context()
 	if voice_diagnostics != null: voice_diagnostics.observe_state(self)
+
+func current_call_context() -> Dictionary:
+	var context := {"profile":{},"opportunity_id":-1}
+	if session.state != "RUNNING" or binding_stage > 0: return context
+	if not session.CallProfile.validate(session.call_profile, voice.device_name).is_empty(): return context
+	# Keep the acoustic profile across curve windows and in Easy. Only the
+	# opportunity grants unknown-call steering; words use the same noise floor.
+	context.profile = session.call_profile
+	if model.assist_id == "very_easy" and model.assist_state().phase != "closed":
+		context.opportunity_id = model.assist_state().opportunity_id
+	return context
 
 func sync_voice_context() -> void:
 	if voice == null: return
