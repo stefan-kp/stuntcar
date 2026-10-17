@@ -1,8 +1,15 @@
 extends SceneTree
+# Die automatische Bildprobe hat kein menschliches Fokusfenster.
+# Die getrennte Fokuspruefung prueft weiterhin die echte Hauptszene.
+class RenderScene:
+ extends "res://scripts/main.gd"
+ func _notification(what:int)->void:
+  if what==NOTIFICATION_APPLICATION_FOCUS_OUT:return
+  super._notification(what)
 var now=0
 func _initialize()->void:call_deferred("run")
 func run()->void:
- var scene=load("res://scenes/main.tscn").instantiate()
+ var scene=RenderScene.new()
  scene.settings_path="/private/tmp/control-drive-capture-%d.cfg"%OS.get_process_id()
  scene.control_clock=func():return now
  root.add_child(scene);scene.set_process(false);scene.set_physics_process(false);scene.session.sound_enabled=false

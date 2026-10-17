@@ -51,9 +51,14 @@ func step(now_ms:int)->Array[Dictionary]:
   var accepted=ledger.accept(input,now_ms)
   if accepted.status!="accepted":results.append({"result":accepted.status,"reason_code":accepted.reason_code});continue
   pending.append(accepted.intent)
+ var cancelled_sources={}
+ for intent in pending:
+  if intent.kind=="cancel":cancelled_sources[intent.source_id]=true
+ for source_id in cancelled_sources:lose_source(source_id,now_ms)
+ var actionable=pending.filter(func(i):return not cancelled_sources.has(i.source_id))
  var conflicts={}
  var group_actions={}
- for intent in pending:
+ for intent in actionable:
   if intent.phase=="end" or intent.kind!="explicit":continue
   for a in intent.required_actions:
    var group=Contract.action_definition(catalog,a.action_id).get("exclusive_group","")
@@ -62,7 +67,9 @@ func step(now_ms:int)->Array[Dictionary]:
    group_actions[group]=a.action_id
  for intent in pending:
   if intent.kind=="cancel":
-   lose_source(intent.source_id,now_ms);results.append({"result":"applied","actions":[]});continue
+   results.append({"result":"applied","actions":[],"event_id":intent.event_id});continue
+  if cancelled_sources.has(intent.source_id):
+   results.append({"result":"rejected","reason_code":"source_cancelled","event_id":intent.event_id});continue
   if intent.phase=="end":
    for id in executions.keys():
     if executions[id].control_id==intent.control_id and executions[id].source_id==intent.source_id:
@@ -74,7 +81,7 @@ func step(now_ms:int)->Array[Dictionary]:
    if conflicts.has(Contract.action_definition(catalog,a.action_id).get("exclusive_group","")):blocked=true
   if blocked:
    ledger.retire(intent.control_id,intent.source_id);results.append({"result":"rejected","reason_code":"conflicting_inputs"});continue
-  var result=_execute(intent,now_ms,pending)
+  var result=_execute(intent,now_ms,actionable)
   result.event_id=intent.event_id
   if result.get("result")=="applied":_remember(intent,result,now_ms)
   results.append(result)
@@ -94,7 +101,7 @@ func constrained_intent(intent:Dictionary,now_ms:int,pending:Array)->Dictionary:
   var group=Contract.action_definition(catalog,active.action_id).get("exclusive_group","")
   if group.is_empty() or requested_groups.has(group):continue
   for action in catalog.actions:
-   if action.exclusive_group==group and action.action_id!=active.action_id and action.action_id not in selection.forbidden_actions:selection.forbidden_actions.append(action.action_id)
+   if action.exclusive_group==group and action.action_id not in selection.forbidden_actions:selection.forbidden_actions.append(action.action_id)
  return selection
 func _execute(intent:Dictionary,now_ms:int,pending:Array)->Dictionary:
  for attempt in range(3):
@@ -105,27 +112,38 @@ func _execute(intent:Dictionary,now_ms:int,pending:Array)->Dictionary:
   var result:Dictionary=port.apply(decision,now_ms)
   if result.get("result")!="stale":return result
  return {"result":"rejected","reason_code":"no_current_state","actions":[]}
+func merge_members(previous:Array,current:Array)->Array:
+ var merged=previous.duplicate(true)
+ for member in current:
+  merged=merged.filter(func(old):return old.action_id!=member.action_id)
+  merged.append(member.duplicate(true))
+ return merged
 func _remember(intent:Dictionary,result:Dictionary,now_ms:int)->void:
  var new_groups={}
  for a in result.get("actions",[]):
-  new_groups[Contract.action_definition(catalog,a.action_id).get("exclusive_group","")]=a.action_id
+  var group=Contract.action_definition(catalog,a.action_id).get("exclusive_group","")
+  if not group.is_empty():new_groups[group]=a.action_id
  for id in executions.keys():
   var old=executions[id]
   if old.control_id==intent.control_id and old.source_id==intent.source_id:continue
   var retire=[]
   for a in old.actions:
    var group=Contract.action_definition(catalog,a.action_id).get("exclusive_group","")
-   if new_groups.has(group) and new_groups[group]!=a.action_id:retire.append(a.action_id)
+   if not group.is_empty() and new_groups.has(group) and new_groups[group]!=a.action_id:retire.append(a.action_id)
   if not retire.is_empty():
    ledger.retire_members(old.control_id,retire,old.source_id)
    port.cancel({"session_id":session,"scope":"execution","execution_id":id,"action_ids":retire,"reason":"replaced"},now_ms)
    old.actions=old.actions.filter(func(a):return a.action_id not in retire)
+   old.explicit_actions=old.get("explicit_actions",[]).filter(func(a):return a.action_id not in retire)
+   for id_to_remove in retire:old.get("ends",{}).erase(id_to_remove)
    if old.actions.is_empty():executions.erase(id)
  if result.has("execution_id"):
-  var ends={}
+  var previous:Dictionary=executions.get(result.execution_id,{})
+  var ends:Dictionary=previous.get("ends",{}).duplicate(true)
   for a in result.get("actions",[]):ends[a.action_id]=now_ms+int(a.duration_ms)
   for member in result.get("member_ends",[]):ends[member.action_id]=member.ends_at_ms
-  executions[result.execution_id]={"control_id":intent.control_id,"source_id":intent.source_id,"actions":result.get("actions",[]).duplicate(true),"explicit_actions":intent.required_actions.duplicate(true) if intent.kind=="explicit" else [],"ends":ends}
+  var explicit_actions=merge_members(previous.get("explicit_actions",[]),intent.required_actions) if intent.kind=="explicit" else previous.get("explicit_actions",[]).duplicate(true)
+  executions[result.execution_id]={"control_id":intent.control_id,"source_id":intent.source_id,"actions":merge_members(previous.get("actions",[]),result.get("actions",[])),"explicit_actions":explicit_actions,"ends":ends}
 func suspend(reason:String,now_ms:int)->void:
  suspended=true
  queue.clear()

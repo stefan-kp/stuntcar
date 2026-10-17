@@ -50,6 +50,7 @@ Gegenbefehl, Pause und Quellenverlust beenden den Lenkwunsch sofort.
 | `pedal_up`, `pedal_down` | Ändert das Zieltempo während der bestätigten Dauer. |
 
 Eine ausdrückliche falsche Richtung bleibt erhalten.
+Teilverlängerungen erhalten den Schutz anderer noch aktiver Mitglieder.
 Die Kurvenhilfe benötigt die passende Richtung.
 Ein ausdrücklich gehaltenes Pedal verhindert einen entgegengesetzten automatischen Tempoeingriff.
 Das Ende eines Pedals erhält das zuvor gespeicherte Zieltempo.
@@ -75,6 +76,7 @@ Geprüfte Einzelproben benötigen dieselbe Bedingung und Prüfsumme.
 Die Hinweise verbinden keine Einzelproben zu einem sicheren Bereich.
 
 Die Anzeige bestätigt die tatsächlich ausgeführte Richtung.
+Eine Pedalbestätigung erhält die noch aktive Lenkbestätigung.
 Der vorhandene Hinweiston ertönt einmal je gültigem Hinweisfenster.
 Die Umsetzung enthält keine neue Sprachausgabe.
 
@@ -99,7 +101,7 @@ Die automatischen Prüfungen verwenden Godot 4.5.1 unter macOS.
 Zehn neue Prüfeinstiege decken Vertrag, Auswahl, Quellen, Richtung, Ausführung, Regeln, Sitzung, Anzeige, Fahrberichte und Wiederverwendung ab.
 Die bestehende Abnahme umfasst zusätzlich die Spielszene, Fahrmodelle, Sprachverbindung und Texte.
 Die Python-Prüfungen decken Sprachpakete, Rufereignisse, Rückmeldungen und Mikrofonzustände ab.
-Die automatische Abnahme besteht mit 32 von 32 Aufträgen.
+Die automatische Abnahme besteht nach den vier Astra-Korrekturen mit 32 von 32 Aufträgen.
 Der Prüfstand steht unter `docs/superpowers/reviews/2026-10-17-steuerung-umsetzung-pruefstand.md`.
 
 Drei Bilder aus der echten Spielszene prüfen Kurve, falsche Richtung und ungeprüften Sprung.

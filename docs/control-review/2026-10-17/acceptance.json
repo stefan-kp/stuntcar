@@ -1,0 +1,420 @@
+[
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tools/spatial/check_drives.gd",
+      "--",
+      "--track",
+      "res://tracks/06_stuntlabor.json",
+      "--output",
+      "res://tracks/reports/06_stuntlabor.json"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "very_easy: finished at 619.31 m, 32.80 s; easy: finished at 619.31 m, 32.78 s"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/control/run_contract_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "CONTROL: 14 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/control/run_control_verification_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "CONTROL: 6 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/control/run_controller_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "CONTROL: 32 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/control/run_direction_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "CONTROL: 44 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/control/run_hint_rules_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "CONTROL: 14 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/control/run_hint_view_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "CONTROL: 11 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/control/run_portability_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "CONTROL: 11 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/control/run_session_control_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "CONTROL: 10 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/control/run_source_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "CONTROL: 18 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/control/run_stuntcar_port_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "CONTROL: 24 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_input_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "EINGABEPRÜFUNGEN: 12, FEHLER: 0"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_keyboard_speed_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "KEYBOARD SPEED: 27 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_voice_bridge_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "SPRACHVERBINDUNG: 18 Prüfungen, 0 Fehler"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_voice_scene_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "SPRACHE IM SPIEL: 10 Prüfungen, 0 Fehler"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_voice_assist_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "RUFHILFE: 41 Prüfungen, 0 Fehler"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_curve_assist_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "KURVENHILFE: 26 Bedingungen, 0 Fehler"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_assisted_drive_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "UNTERE FAHRHILFE: 45 Bedingungen, 0 Fehler"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_assist_selection_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "STUFENWAHL: 11 Bedingungen, 0 Fehler"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_assist_feedback_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "HILFSANZEIGE: 9 Bedingungen, 0 Fehler"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_assist_limits_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "HILFSKRAEFTE: 0 Fehler"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/spatial/test_assists.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "SPATIAL: 14 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/spatial/test_surface_motion.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "SPATIAL: 7 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/spatial/test_flight.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "SPATIAL: 10 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/spatial/test_boundaries.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "SPATIAL: 11 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/spatial/test_full_drives.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "SPATIAL: 81 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/spatial/test_verification.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "SPATIAL: 10 checks, 0 failures"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_scene_test.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "SPIELPRÜFUNG: FINISHED bei 939.740470195968 m; Zeit: 42.5166666666655 s; Fehler: 0"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_stunt_scene_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "STUNTS IM SPIEL: 11 Prüfungen, 0 Fehler"
+  },
+  {
+    "command": [
+      ".tools/Godot.app/Contents/MacOS/Godot",
+      "--headless",
+      "--path",
+      ".",
+      "--script",
+      "tests/run_i18n_tests.gd"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "ÜBERSETZUNGEN: 949 Prüfungen, 0 Fehler"
+  },
+  {
+    "command": [
+      "python3",
+      "tests/test_localization_catalog.py"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "Ran 3 tests in 0.016s; OK"
+  },
+  {
+    "command": [
+      ".tools/voice-env/bin/python",
+      "-m",
+      "unittest",
+      "voice.tests.test_protocol",
+      "voice.tests.test_call_detector",
+      "voice.tests.test_feedback",
+      "voice.tests.test_microphone"
+    ],
+    "exit": 0,
+    "passed": true,
+    "summary": "Ran 36 tests in 5.481s; OK"
+  }
+]

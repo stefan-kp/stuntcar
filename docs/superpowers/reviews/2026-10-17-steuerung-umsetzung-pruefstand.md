@@ -1,6 +1,6 @@
 # Prüfstand der modularen Steuerung
 
-Die automatische Abnahme besteht am 17. Oktober 2026 mit 32 von 32 Aufträgen.
+Die automatische Abnahme besteht nach den Astra-Korrekturen am 17. Oktober 2026 mit 32 von 32 Aufträgen.
 Die Prüfungen verwenden Godot 4.5.1 unter macOS.
 Die Sprachprüfungen verwenden `.tools/voice-env/bin/python` und das vorhandene englische Sprachmodell.
 Der globale Python-Aufruf enthielt zuerst kein Vosk. Die vorhandene Sprachumgebung löste diesen Umgebungsfehler.
@@ -10,14 +10,14 @@ Der globale Python-Aufruf enthielt zuerst kein Vosk. Die vorhandene Sprachumgebu
 | `tools/spatial/check_drives.gd` | very_easy: finished at 619.31 m, 32.80 s; easy: finished at 619.31 m, 32.78 s |
 | `tests/control/run_contract_tests.gd` | CONTROL: 14 checks, 0 failures |
 | `tests/control/run_control_verification_tests.gd` | CONTROL: 6 checks, 0 failures |
-| `tests/control/run_controller_tests.gd` | CONTROL: 29 checks, 0 failures |
+| `tests/control/run_controller_tests.gd` | CONTROL: 32 checks, 0 failures |
 | `tests/control/run_direction_tests.gd` | CONTROL: 44 checks, 0 failures |
 | `tests/control/run_hint_rules_tests.gd` | CONTROL: 14 checks, 0 failures |
-| `tests/control/run_hint_view_tests.gd` | CONTROL: 8 checks, 0 failures |
+| `tests/control/run_hint_view_tests.gd` | CONTROL: 11 checks, 0 failures |
 | `tests/control/run_portability_tests.gd` | CONTROL: 11 checks, 0 failures |
 | `tests/control/run_session_control_tests.gd` | CONTROL: 10 checks, 0 failures |
 | `tests/control/run_source_tests.gd` | CONTROL: 18 checks, 0 failures |
-| `tests/control/run_stuntcar_port_tests.gd` | CONTROL: 20 checks, 0 failures |
+| `tests/control/run_stuntcar_port_tests.gd` | CONTROL: 24 checks, 0 failures |
 | `tests/run_input_tests.gd` | EINGABEPRÜFUNGEN: 12, FEHLER: 0 |
 | `tests/run_keyboard_speed_tests.gd` | KEYBOARD SPEED: 27 checks, 0 failures |
 | `tests/run_voice_bridge_tests.gd` | SPRACHVERBINDUNG: 18 Prüfungen, 0 Fehler |
@@ -37,8 +37,8 @@ Der globale Python-Aufruf enthielt zuerst kein Vosk. Die vorhandene Sprachumgebu
 | `tests/run_scene_test.gd` | SPIELPRÜFUNG: FINISHED bei 939.740470195968 m; Zeit: 42.5166666666655 s; Fehler: 0 |
 | `tests/run_stunt_scene_tests.gd` | STUNTS IM SPIEL: 11 Prüfungen, 0 Fehler |
 | `tests/run_i18n_tests.gd` | ÜBERSETZUNGEN: 949 Prüfungen, 0 Fehler |
-| `python3 tests/test_localization_catalog.py` | Ran 3 tests in 0.015s; OK |
-| `.tools/voice-env/bin/python -m unittest voice.tests.test_protocol voice.tests.test_call_detector voice.tests.test_feedback voice.tests.test_microphone` | Ran 36 tests in 5.420s; OK |
+| `python3 tests/test_localization_catalog.py` | Ran 3 tests in 0.016s; OK |
+| `.tools/voice-env/bin/python -m unittest voice.tests.test_protocol voice.tests.test_call_detector voice.tests.test_feedback voice.tests.test_microphone` | Ran 36 tests in 5.481s; OK |
 
 Die normale Fahrt im Stuntlabor und ihre Wiederholung erreichen auf beiden Hilfestufen das Ziel.
 Die wiederholten Berichte stimmen einschließlich Eingaben und Hilfsverbrauch überein.
@@ -50,7 +50,13 @@ Die falsche Richtung zeigt links als gewählte Richtung vor einer Rechtskurve.
 Der ungeprüfte Sprung zeigt keine erfundene Mindestgeschwindigkeit.
 
 Eine menschliche Sprachprobe und eine Windows-Probe stehen noch aus.
-Das unabhängige Astra-Review folgt nach diesem Prüfstand.
+Astra fand vier wichtige Fehler im Stand `26a8e00`.
+Die Korrekturen und ihre gezielten Prüfungen stehen unter `2026-10-17-steuerung-umsetzung-astra.md`.
+Nach den Korrekturen besteht die gesamte automatische Abnahme erneut.
+Die maschinenlesbaren Ergebnisse liegen unter `docs/control-review/2026-10-17/acceptance.json`.
+Vier vollständige Fahrten mit Darstellung erreichen das Ziel.
+Die automatische Bildprobe trennt zufällige Betriebssystem-Fokuswechsel von der Fahrprüfung.
+Die separate Fokusprüfung der echten Hauptszene bleibt aktiv.
 
 ## Entscheidungen während der Umsetzung
 

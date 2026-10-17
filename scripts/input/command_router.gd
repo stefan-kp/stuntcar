@@ -73,10 +73,19 @@ func advance_controls(delta:float)->Array[Dictionary]:
 	for event in keyboard_source.refresh(now):controller.submit(event)
 	var results=controller.step(now)
 	for result in results:
-		if result.get("result")=="applied" and not result.get("actions",[]).is_empty():control_confirmation=result.duplicate(true)
+		if result.get("result")=="applied" and not result.get("actions",[]).is_empty():remember_control_confirmation(result)
 	control_port.advance(delta,now)
 	remembered_curve=model.active_curve_id
 	return results
+func remember_control_confirmation(result:Dictionary)->void:
+	var members:Array=control_confirmation.get("actions",[]).duplicate(true)
+	for action in result.actions:
+		var group=DriveController.Contract.action_definition(controller.catalog,action.action_id).get("exclusive_group","")
+		members=members.filter(func(old):return old.action_id!=action.action_id and (group.is_empty() or DriveController.Contract.action_definition(controller.catalog,old.action_id).get("exclusive_group","")!=group))
+		members.append(action.duplicate(true))
+	control_confirmation=result.duplicate(true)
+	control_confirmation.actions=members
+
 func flush_compatibility(intent:Dictionary)->bool:
 	if intent.is_empty():return false
 	var accepted=false

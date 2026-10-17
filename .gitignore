@@ -1,5 +1,5 @@
 .godot/
-.tools/
+.tools
 .DS_Store
 *.log
 __pycache__/

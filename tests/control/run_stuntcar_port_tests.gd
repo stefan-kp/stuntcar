@@ -59,4 +59,28 @@ func _initialize()->void:
   if not spatial:model.request_turn(1);model.recovery_remaining=1
   model.step(1.0/60.0)
   check(not model.assist_speed_active or model.assist_target_mps>=model.speed_mps,"Explicit gas blocks extra brake "+str(spatial))
+ var Controller=load("res://addons/accessible_controls/core/controller.gd")
+ var Source=load("res://addons/accessible_controls/core/input_source.gd")
+ var Actions=load("res://scripts/control/stuntcar_actions.gd")
+ var combined_model=Drive.new(Track.new());var combined_port=Port.new(combined_model);combined_port.reset("s1")
+ var combined=Controller.new(combined_port,Actions.control_profile(combined_model));combined.begin_session("s1")
+ var source=Source.new("combo")
+ var pair=source.begin("s1","explicit",[F.action("turn_left"),F.action("pedal_down",150)],0,250)
+ combined.submit(pair);combined.step(0)
+ combined.submit(source.update(pair.control_id,[F.action("pedal_down",150)],50,250));combined.step(50)
+ for time in [51,52]:
+  combined.submit(source.begin("s1","activate",[],time,250,combined_model.assist_state().opportunity_id));combined.step(time)
+  check(combined_model.requested_direction==-1,"Partial extension preserves explicit direction against later calls "+str(time))
+ for cancel_first in [true,false]:
+  var cancel_model=Drive.new(Track.new());var cancel_port=Port.new(cancel_model);cancel_port.reset("s1")
+  var cancel_control=Controller.new(cancel_port,Actions.control_profile(cancel_model));cancel_control.begin_session("s1")
+  var cancel_source=Source.new("cancel-source")
+  var held=cancel_source.begin("s1","explicit",[F.action("pedal_down",150)],0,250)
+  cancel_control.submit(held);cancel_control.step(0)
+  var cancellation=cancel_source.begin("s1","cancel",[],50,250)
+  var update=cancel_source.update(held.control_id,[F.action("pedal_down",150)],50,250)
+  cancel_control.submit(cancellation if cancel_first else update);cancel_control.submit(update if cancel_first else cancellation)
+  var target_before=cancel_model.target_speed_mps
+  cancel_control.step(50);cancel_port.advance(0.05,50)
+  check(cancel_model.active_pedal==0 and cancel_model.target_speed_mps==target_before,"Source cancel discards accepted updates in this step "+str(cancel_first))
  done()

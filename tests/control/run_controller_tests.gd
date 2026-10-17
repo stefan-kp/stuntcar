@@ -66,4 +66,18 @@ func _initialize() -> void:
  check(held_port.applied[-1].actions.size()==1,"Helper cannot oppose active explicit brake")
  held_control.submit(F.intent({"event_id":"left3","control_id":"left3"}));held_control.step(101)
  check(held_port.applied[-1].actions.size()==2,"Expired explicit brake no longer blocks a helper")
+ var independent=Port.new()
+ var free_a=F.catalog().actions[2].duplicate(true);free_a.action_id="free_a";free_a.exclusive_group=""
+ var free_b=free_a.duplicate(true);free_b.action_id="free_b";independent.extra_actions=[free_a,free_b]
+ var independent_control=C.new(independent,F.profile());independent_control.begin_session("s1")
+ independent_control.submit(F.intent({"event_id":"free-a","control_id":"free-a","required_actions":[F.action("free_a",100)]}));independent_control.step(0)
+ independent_control.submit(F.intent({"event_id":"free-b","control_id":"free-b","required_actions":[F.action("free_b",100)]}));independent_control.step(1)
+ check(independent.cancelled.is_empty(),"Empty exclusive groups do not replace independent actions")
+ independent_control.submit(F.intent({"event_id":"free-a-update","control_id":"free-a","control_revision":2,"phase":"update","captured_at_ms":2,"required_actions":[F.action("free_a",100)]}));independent_control.step(2)
+ check(independent.applied.size()==3,"Independent action remains extendable")
+ var cancelled_port=Port.new();var cancelled_control=C.new(cancelled_port,F.profile());cancelled_control.begin_session("s1")
+ cancelled_control.submit(F.intent({"kind":"cancel","required_actions":[],"event_id":"drop-source","control_id":"drop-source"}))
+ cancelled_control.submit(F.intent({"event_id":"cancelled-left","control_id":"cancelled-left"}))
+ cancelled_control.submit(F.intent({"source_id":"other","event_id":"other-right","control_id":"other-right","required_actions":[F.action("turn_right")]}));cancelled_control.step(0)
+ check(cancelled_port.position==1,"Discarded source cannot conflict with another source")
  done()

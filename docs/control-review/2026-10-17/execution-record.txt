@@ -1,0 +1,43 @@
+# SDD ledger — plan: docs/superpowers/plans/2026-10-17-steuerung-modularisierung-einfache-hinweise.md
+
+Base: d386185
+
+Pre-flight: 1→2 Vertrag und Testanbindung; 1→3 Eingabeformat; 3/4→5 Quellen und echte Lenkung; 5→6 Bewertung; 2/3/5→7 Sitzungsintegration; 6/7→8 Anzeige; 4–8→9 Prüfsummen; 1/2→10 Wiederverwendung. Schnittstellen geprüft.
+
+Ruling: Die Hilfsskripte erkennen nur englische Task-Überschriften. Aufgabenblätter werden unverändert aus den deutschen Abschnitten extrahiert. Kein Produktunterschied; Risiko bei falscher Extraktion ist ein ausgelassener Schritt.
+Ruling: Die temporären Prüfdateien liegen im getrennten Arbeitsstand. Ein Sandboxfehler im Hilfsskript wurde durch Abbruch und freigegebene Dateizugriffe behoben. Kein Produktunterschied.
+
+Baseline: [('tests/run_curve_assist_tests.gd', 0), ('tests/spatial/test_surface_motion.gd', 0), ('tests/spatial/test_verification.gd', 0)]
+Task 1: RED missing contract/source/port, 3 failed checks.
+Ruling: Öffentliche Aktionslisten verwenden Array statt Array[Dictionary], damit JSON-Arrays ohne verdeckte Konvertierung funktionieren; jedes Element wird ausdrücklich validiert. Risiko: fehlende Validierung, deshalb Grenztests.
+Task 1: complete (commits d386185..62fe7ac, tests: .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/control/run_contract_tests.gd → CONTROL: 13 checks, 0 failures)
+Task 2: RED fehlende Auswahl/Reihenfolge, danach zusätzliche RED-Pausenfälle. Ruling: begin_session mit unveränderter Sitzungskennung setzt die Pause zurück, erhält aber die verarbeiteten Kennungen; nur eine neue Sitzung leert diese. Verhindert alte Eingaben nach Fortsetzung; Risiko bei falscher Anbindung ist ausbleibende Fortsetzung.
+Task 2: complete (commits 62fe7ac..dde4957, tests: .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/control/run_controller_tests.gd → CONTROL: 26 checks, 0 failures)
+Task 3: RED fehlende Adapter. Ruling: VoiceSource.call kollidiert mit Object.call in Godot; der Adapter heißt activate_call. Keine Verhaltensänderung; Risiko sind veraltete Aufrufer, deshalb Quellen- und Integrationstests. Tastenzuweisungen akzeptieren Array und werden intern typisiert; GDScript.new konvertiert untypisierte Arrays nicht automatisch.
+Task 3: complete (commits dde4957..a8ee4ae, tests: .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/control/run_source_tests.gd → CONTROL: 18 checks, 0 failures)
+Task 4: complete (commits a8ee4ae..8e63fd3, tests: .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/control/run_direction_tests.gd → CONTROL: 44 checks, 0 failures)
+Task 5: complete (commits 8e63fd3..2dde082, tests: .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/control/run_stuntcar_port_tests.gd → CONTROL: 18 checks, 0 failures)
+Task 6: complete (commits 2dde082..ce10574, tests: .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/control/run_hint_rules_tests.gd → CONTROL: 14 checks, 0 failures)
+Task 7: complete (commits ce10574..720494f, tests: .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/control/run_session_control_tests.gd → CONTROL: 10 checks, 0 failures)
+
+Aufgabe 8: Drei echte Spielbilder liegen unter visual/. Die Sichtprüfung zeigte zuerst einen fehlenden Hinweis bei einem ungeprüften Sprung. Die Korrektur zeigt den Sprung auch ohne Zieltempo.
+Task 8: complete (commits 720494f..5083763, tests: .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/control/run_hint_view_tests.gd → CONTROL: 8 checks, 0 failures)
+
+Ruling Aufgabe 9: Die Vollfahrt-Faelle faster und alternate bleiben erhalten. Ihr Kriterium prueft nun den Vorrang des ausdruecklichen Pedals. Ein dauerhaftes Gas darf wegen des neuen Vertrags die Stunthilfe zum Bremsen unterbinden und scheitern. Die regulaeren Fahrten verlangen weiterhin den Zieleinlauf.
+
+Ruling Aufgabe 9: Die bestehende Vollfahrtmatrix deckte einen Fehler der geplanten Zehn-Sekunden-Grenze auf. Bei 46/58 m/s oeffnet das Fenster sehr frueh. Die vorhandene Tempohilfe senkt danach die Geschwindigkeit. Der Lenkwunsch endete vor der ersten Kurve. Die passende Vormerkung erhaelt deshalb eine endliche Obergrenze von 30 Sekunden. Kurvenende, Gegenbefehl, Pause und Quellenverlust beenden sie vorher. Manuelle falsche Eingaben behalten 500 ms. Die schweren Faelle bleiben unveraendert.
+Task 9: complete (commits 5083763..409bcd2, tests: .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/control/run_control_verification_tests.gd → CONTROL: 6 checks, 0 failures)
+Task 10: complete (commits fd3b70f..26a8e00, tests: .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/control/run_portability_tests.gd → CONTROL: 11 checks, 0 failures)
+
+Final review: Astra, frischer Unteragent, gesamter Zweig d386185..26a8e00. Vier Important-Befunde, keine Critical- oder Minor-Befunde. Alle vier gehen in die Korrektur.
+Final: Ruling: Neue Sprachkombinationen und Gesten bleiben ausserhalb der ersten Lieferung, wie vereinbart. Kosten: Diese Eingabearten fehlen weiterhin.
+Final: Ruling: Vorausberechnung, Referenzfahrten und Training bleiben ausserhalb der ersten Lieferung, wie vereinbart. Kosten: Die Empfehlungen nutzen nur einfache Regeln.
+Final: Ruling: Menschliche Sprachprobe und Windows-Probe bleiben offen. Die automatische Abnahme beweist sie nicht. Kosten: Diese Umgebungen und die menschliche Bedienbarkeit bleiben ungeprueft.
+Final: RED vier Befunde mit sechs fehlgeschlagenen Bedingungen nachgewiesen. Erweiterte RED-Pruefung: Eine abgebrochene Quelle blockierte noch eine andere Quelle. Korrekturen erhalten Mitglieder und Herkunft, verwerfen eine abgebrochene Quelle vor der Auswahl, behandeln leere Gruppen als unabhaengig und erhalten die Lenkbestaetigung bei Pedalereignissen. Gezielte GREEN: Controller 32/32, Anbindung 24/24, Anzeige 11/11. Volle Abnahme laeuft.
+
+Final: fixed Teilverlaengerung verliert ausdrueckliche Mitglieder — echte kombinierte Eingabe, Pedalverlaengerung und zwei Rufe RED→GREEN, volle Abnahme 32/32.
+Final: fixed Quellenabbruch laesst angenommene Eingaben erneut starten — zwei Reihenfolgen und andere Quelle RED→GREEN, volle Abnahme 32/32.
+Final: fixed Leere Gruppe beendet unabhaengige Aktionen — paralleler Beginn und spaetere Verlaengerung RED→GREEN, volle Abnahme 32/32.
+Final: fixed Pedalereignis entfernt Lenkbestaetigung — echte Anzeige bei Gasbeginn und Verlaengerung RED→GREEN, volle Abnahme 32/32.
+Final: minor (deferred): keine bestaetigten kleinen Befunde.
+Final: Vier dargestellte Fahrten erreichen nach den Korrekturen das Ziel. Neuer Fahrbericht stimmt bei zwei Erzeugungen exakt ueberein. Menschliche Sprachprobe und Windows bleiben offen.

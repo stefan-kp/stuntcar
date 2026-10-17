@@ -11,6 +11,7 @@ func run()->void:
   scene.session.restart();scene.model.reset(400 if case=="jump" else 70)
   scene.session.ensure_controls()
   if case!="jump":scene.session.press(-1 if case=="wrong" else 1)
+  if case=="wrong":scene.session.capture_key(KEY_W,true);scene.session.advance_controls(0.05)
   scene.session.refresh_control_hints();scene.car.place(scene.model)
   scene.camera.initialized=false;scene._process(0.016)
   for frame in range(6):await process_frame

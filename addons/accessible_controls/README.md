@@ -74,7 +74,8 @@ Eine ausdrücklich verlangte schlechte Aktion bleibt ausführbar, wenn das Spiel
 | `allow_additions` | Erlaubt passende zusätzliche Aktionen. |
 | `allow_activate` | Erlaubt eine bewusste Aktivierung ohne konkrete Aktion. |
 
-Eine Ergänzung darf einer noch aktiven ausdrücklichen Aktion nicht widersprechen.
+Eine Ergänzung startet keine neue Aktion in einer noch ausdrücklich belegten Ausschlussgruppe.
+Die bereits laufende ausdrückliche Aktion wirkt weiter.
 Ein neuer ausdrücklicher Gegenbefehl ersetzt nur widersprechende Mitglieder.
 Gleichzeitige widersprüchliche Anweisungen starten keine Teilkombination.
 

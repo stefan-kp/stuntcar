@@ -1,4 +1,5 @@
 extends "res://tests/control/test_base.gd"
+var control_now=0
 func _initialize()->void:call_deferred("run")
 func run()->void:
  var P=need("res://scripts/ui/hint_presenter.gd")
@@ -23,5 +24,13 @@ func run()->void:
  check(scene.hint_tone_count==count and count==1,"One tone per hint window")
  scene.session.pause();scene.emit_control_hint_tones()
  check(scene.session.control_hints.is_empty() and scene.hint_tone_count==count,"Pause clears hints and stops tones")
+ scene.control_clock=func():return control_now
+ scene.session.activate(0)
+ scene.session.capture_key(KEY_A,true);scene.session.advance_controls(0);scene.session.refresh_control_hints();scene.ui.render(scene.session)
+ check("Left selected" in scene.ui.hint_label.text,"Real view confirms the explicit direction")
+ scene.session.capture_key(KEY_W,true);scene.session.advance_controls(0);scene.session.refresh_control_hints();scene.ui.render(scene.session)
+ check(scene.model.requested_direction==-1 and "Left selected" in scene.ui.hint_label.text,"Pedal begin preserves steering confirmation")
+ control_now=50;scene.session.advance_controls(0.05);scene.session.refresh_control_hints();scene.ui.render(scene.session)
+ check(scene.model.requested_direction==-1 and "Left selected" in scene.ui.hint_label.text,"Pedal extension preserves steering confirmation")
  scene.free()
  done()
