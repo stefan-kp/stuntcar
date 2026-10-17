@@ -77,6 +77,9 @@ static func validate_intent(intent: Dictionary, catalog: Dictionary) -> Array[St
   if not integer(intent.get(key)): errors.append(key)
  if integer(intent.get("captured_at_ms")) and integer(intent.get("expires_at_ms")) and intent.captured_at_ms>intent.expires_at_ms: errors.append("expiry")
  errors.append_array(validate_actions(intent.get("required_actions"),catalog))
+ if intent.get("phase")=="update" and intent.get("required_actions") is Array:
+  for action in intent.required_actions:
+   if action is Dictionary and action.get("action_id") is String and action_definition(catalog,action.action_id).get("execution_mode")=="pulse":errors.append("pulse_update")
  if intent.get("kind")=="explicit" and intent.get("phase")=="begin" and intent.get("required_actions",[]).is_empty(): errors.append("explicit_actions")
  if not intent.get("forbidden_actions") is Array: errors.append("forbidden_actions")
  else:

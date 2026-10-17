@@ -10,7 +10,11 @@ func need(path: String):
  if not FileAccess.file_exists(path):
   check(false, "Fehlende Umsetzung: " + path)
   return null
- return load(path)
+ var script=load(path)
+ if script==null or not script.can_instantiate():
+  check(false,"Nicht ladbare Umsetzung: "+path)
+  return null
+ return script
 func done() -> void:
  print("CONTROL: %d checks, %d failures" % [checks, failures])
  quit(0 if failures == 0 else 1)

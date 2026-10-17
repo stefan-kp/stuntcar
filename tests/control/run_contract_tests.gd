@@ -14,6 +14,7 @@ func _initialize() -> void:
  check(C.validate_assessment(F.assessment({"rating_status":"unknown","utility":null}),F.catalog()).is_empty(),"unknown null accepted")
  check(not C.validate_intent(F.intent({"required_actions":[F.action("turn_left"),F.action("turn_right")]}),F.catalog()).is_empty(),"test_atomic_request_shape conflicting")
  check(C.validate_intent(F.intent({"required_actions":[F.action("turn_left"),F.action("brake",100)]}),F.catalog()).is_empty(),"test_atomic_request_shape independent")
+ check(not C.validate_intent(F.intent({"phase":"update","control_revision":2}),F.catalog()).is_empty(),"update must not restart a pulse")
  var source = S.new("keys")
  var first = source.begin("s1","explicit",[F.action("brake",100)],0,250)
  var update = source.update(first.control_id,[F.action("brake",100)],50,250)
