@@ -265,6 +265,11 @@
     "timeout_s": 90
   },
   {
+    "test": "tests/spatial/test_review_regressions.gd",
+    "passed": true,
+    "timeout_s": 90
+  },
+  {
     "test": "tests/spatial/test_session.gd",
     "passed": true,
     "timeout_s": 90

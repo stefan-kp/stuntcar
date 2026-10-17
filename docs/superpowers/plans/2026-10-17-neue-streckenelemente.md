@@ -423,21 +423,21 @@ Erwartung: Beide Stufen besitzen eine saubere vollständige Fahrt. Grenzfälle l
 
 **Schnittstellen:** `run_checks.py` führt Godot-Tests einzeln mit Zeitgrenze aus und schreibt Protokolle unter `/private/tmp`. Kein eigener Fahrberechnungscode.
 
-- [ ] Schreibe `test_model_swap.gd` für zwei passende Zuordnungen, einen fehlenden Import, falsche Formversion und eingebaute fremde Kollisionsknoten.
-- [ ] Prüfe nach einem Austausch gleiche Fahrprüfsumme, gleiche Bewegung und einen erneuerten Darstellungsbericht.
-- [ ] Prüfe nach Formänderung eine andere Fahrprüfsumme und die Sperre des alten Berichts.
-- [ ] Führe die Tests aus und korrigiere ausschließlich nachgewiesene Fehler.
-- [ ] Erstelle den Prüfläufer mit 90 Sekunden Grenze je kleinem Test und 600 Sekunden für Gesamtfahrten. Fehlermeldungen von Godot gelten auch bei Exitcode 0 als Fehler.
-- [ ] Führe alle neuen Tests und alle vorhandenen eingecheckten `tests/run_*tests.gd` aus. Erfasse auch `run_scene_test.gd`, die Modellprüfung und die alte Fahrtenmatrix über alle vier bisherigen Strecken.
-- [ ] Prüfe bei `tests/run_landscape_tests.gd` den alten Landschaftsumfang über den Testhelfer. Erhalte dabei die vorhandenen lokalen Landschaftsänderungen.
-- [ ] Führe zusätzliche lokale Landschaftstests nur als getrennte Prüfung aus. Dokumentiere deren Stand, ohne fremde Dateien in den Commit zu übernehmen.
-- [ ] Führe die vorhandenen Python-Tests und die Sprachkatalogprüfung aus. Verwende getrennte Protokolle und Einstellungen.
-- [ ] Erfasse eine Bildfolge und einen kurzen Fahrmitschnitt mit weicher Landung, harter Landung, Looping und sichtbarer Rettung.
-- [ ] Prüfe einen 10-Minuten-Ablauf auf wachsende Spuren- oder Partikelzahlen. Nenne Gerät, Auflösung und gemessene Bildzeiten im Bericht.
-- [ ] Dokumentiere den Blender-Austausch mit GLB, Formversion, Anschlüssen, Flächenkennzeichnung, Importprüfung und Rückkehr zur alten Modellversion.
-- [ ] Dokumentiere tatsächliche Ergebnisse und offene Spielversuche. Behaupte keine Sprach- oder Komfortprüfung mit Menschen ohne einen solchen Versuch.
-- [ ] Lasse die gesamte Änderung vor der Übergabe unabhängig prüfen, gemäß `superpowers:requesting-code-review`. Behebe bestätigte Fehler und wiederhole die betroffenen Prüfungen.
-- [ ] Speichere die Abschlussdokumentation und zeige den geprüften Startweg des neuen Branches.
+- [x] Schreibe `test_model_swap.gd` für zwei passende Zuordnungen, einen fehlenden Import, falsche Formversion und eingebaute fremde Kollisionsknoten.
+- [x] Prüfe nach einem Austausch gleiche Fahrprüfsumme, gleiche Bewegung und einen erneuerten Darstellungsbericht.
+- [x] Prüfe nach Formänderung eine andere Fahrprüfsumme und die Sperre des alten Berichts.
+- [x] Führe die Tests aus und korrigiere ausschließlich nachgewiesene Fehler.
+- [x] Erstelle den Prüfläufer mit 90 Sekunden Grenze je kleinem Test und 600 Sekunden für Gesamtfahrten. Fehlermeldungen von Godot gelten auch bei Exitcode 0 als Fehler.
+- [x] Führe alle neuen Tests und alle vorhandenen eingecheckten `tests/run_*tests.gd` aus. Erfasse auch `run_scene_test.gd`, die Modellprüfung und die alte Fahrtenmatrix über alle vier bisherigen Strecken.
+- [x] Prüfe bei `tests/run_landscape_tests.gd` den alten Landschaftsumfang über den Testhelfer. Erhalte dabei die vorhandenen lokalen Landschaftsänderungen.
+- [x] Führe zusätzliche lokale Landschaftstests nur als getrennte Prüfung aus. Dokumentiere deren Stand, ohne fremde Dateien in den Commit zu übernehmen.
+- [x] Führe die vorhandenen Python-Tests und die Sprachkatalogprüfung aus. Verwende getrennte Protokolle und Einstellungen.
+- [x] Erfasse eine Bildfolge und einen kurzen Fahrmitschnitt mit weicher Landung, harter Landung, Looping und sichtbarer Rettung.
+- [x] Prüfe einen 10-Minuten-Ablauf auf wachsende Spuren- oder Partikelzahlen. Nenne Gerät, Auflösung und gemessene Bildzeiten im Bericht.
+- [x] Dokumentiere den Blender-Austausch mit GLB, Formversion, Anschlüssen, Flächenkennzeichnung, Importprüfung und Rückkehr zur alten Modellversion.
+- [x] Dokumentiere tatsächliche Ergebnisse und offene Spielversuche. Behaupte keine Sprach- oder Komfortprüfung mit Menschen ohne einen solchen Versuch.
+- [x] Lasse die gesamte Änderung vor der Übergabe unabhängig prüfen, gemäß `superpowers:requesting-code-review`. Behebe bestätigte Fehler und wiederhole die betroffenen Prüfungen.
+- [x] Speichere die Abschlussdokumentation und zeige den geprüften Startweg des neuen Branches.
 
 Ausführung: `"$STUNTCAR_PYTHON" tools/spatial/run_checks.py --output /private/tmp/stuntcar-spatial-checks`.
 Python: `"$STUNTCAR_PYTHON" -m unittest discover -s voice/tests` und `"$STUNTCAR_PYTHON" tests/test_localization_catalog.py`.
@@ -470,3 +470,10 @@ Der bisherige Wunsch nach Arbeit in dieser Unterhaltung bleibt erhalten.
 Empfehlung: Umsetzung Aufgabe für Aufgabe in dieser Unterhaltung, anschließend eine unabhängige Gesamtprüfung.
 Die Aufgaben teilen viele Schnittstellen. Eine fortlaufende Umsetzung erleichtert deren Prüfung.
 Die Erstellung des Plans startet noch keine Änderung am Spielcode.
+
+## Ausführungsstand
+
+Die Umsetzung und die unabhängige Prüfung sind abgeschlossen.
+58 Spielprüfungen bestanden nach den Korrekturen.
+Die Ergebnisse stehen in `docs/neue-streckenelemente-abnahme.md`.
+Der Branch und der Arbeitsordner bleiben für den Spielversuch erhalten.

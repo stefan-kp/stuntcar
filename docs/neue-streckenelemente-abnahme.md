@@ -33,6 +33,7 @@ Die neue Fahrberechnung ergänzt Godot. Sie benötigt keine zusätzliche Physik-
 | Saubere Gesamtfahrt Leicht | 32,78 Sekunden |
 | Untersuchte Anfangstempi | 0, 5, 14, 22, 35, 46 und 58 m/s |
 | Fahrfälle | 98 Kombinationen aus Stufe, Anfangstempo und Eingabeart |
+| Vollständige Spielprüfung nach den Korrekturen | 58 Testdateien ohne Fehler |
 | Alte Streckenmatrix | 528 Fahrten ohne Fehler |
 | Python-Prüfungen | 84 ohne Fehler |
 | Sprachkatalog | 3 Prüfungen ohne Fehler |
@@ -129,7 +130,9 @@ Die Anleitung für spätere Modelle steht in `docs/blender-streckenmodelle.md`.
 Die Prüfung fand keine kritischen Fehler.
 Sie fand sechs Punkte mit Folgen für die Anzeige, den Modelltausch oder die Effekte.
 Gezielte Gegenbeispiele zeigten diese Punkte vor der Korrektur.
-Danach bestanden alle Gegenbeispiele.
+Danach bestanden alle Gegenbeispiele und die vollständige Spielprüfung.
+Die Liste der 58 Testdateien steht in `docs/stuntlabor/pruefungen.json`.
+Die 98 Fahrfälle stehen mit Eingaben und Ergebnissen in `docs/stuntlabor/fahrten.json`.
 
 - Ein Neustart erhält nun passende bestätigte Tempohinweise.
 - Die Rettungsanzeige nennt das tatsächliche Zieltempo und endet mit der Hilfe.
