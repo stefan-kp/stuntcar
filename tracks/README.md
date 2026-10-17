@@ -97,3 +97,31 @@ Zusätzliche Fahrtests im Projektordner:
 Die erste Prüfung liest alle Streckendateien. Sie prüft Fahrten mit 50, 79 und 101 km/h. Sie prüft auch Korrekturen vor dem Sprung und kurz vor der Landung. Die zweite Prüfung fährt die Strecken mit dem sichtbaren Fahrzeugmodell ab. Sie prüft zusätzlich 166 km/h mit kurzen Korrekturen in den Kurven.
 
 Diese Prüfungen ersetzen keinen Spieltest. Prüfe besonders die Sicht auf die Landung und die Zeit bis zur nächsten Kurve.
+
+## Speed hints for lower assist levels
+
+Each curve and jump can contain a `speed_hint` object. Old tracks without it remain valid.
+
+```json
+"speed_hint": {
+  "version": 1,
+  "min_mps": 0,
+  "max_mps": 58,
+  "target_mps": 28,
+  "status": "assisted_tested",
+  "model": "lower_assist_v1"
+}
+```
+
+All values use metres per second. `null` means that no tested bound is available.
+The fields describe the element at its existing `start_m` and `end_m` positions.
+`status` is `unverified`, `assisted_tested`, or `verified`. `model` identifies the rules used for the test.
+The two lower levels use a confirmed `max_mps` for `lower_assist_v1` after a valid curve input.
+The limit changes the help target. It preserves the player's target.
+`target_mps` is an authored target, not a measured physical limit. `min_mps` reserves a future lower bound.
+The current curve values describe tested help up to the game's speed limit. They do not describe unassisted tyre grip.
+
+Current ramps use `position_based_v1`, `unverified`, and null speed values.
+Do not enter a physical minimum for this model. The fixed flight path does not test it.
+Future speed-dependent jumps need a new model and repeatable flight tests before they can use speed bounds.
+The reader rejects negative values, non-finite values, reversed bounds, and targets outside the bounds.

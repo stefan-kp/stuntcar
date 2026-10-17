@@ -2,7 +2,7 @@
 
 **A racing game you control with your voice. Version 0.0.**
 
-Say `left`, `right`, `faster`, or `slower` to drive through banked curves and over jumps. Your voice level changes the force of each command. A quiet word makes a small correction. A loud `faster` gives a turbo boost, and a loud `slower` applies the full brake.
+Say `left`, `right`, `faster`, or `slower` to drive through banked curves and over jumps. Your voice level changes speed commands. Both lower assist levels use the same turn force for quiet and loud words. A loud `faster` gives a turbo boost, and a loud `slower` applies the full brake.
 
 Stuntcar takes its inspiration from Stunt Car Racer. It is an early prototype, made as a side project. We hope it is already fun to play.
 
@@ -45,7 +45,13 @@ Four tracks take you through a forest, a mountain pass, a canyon, and a wet coas
 | Jump Track | 1,350 m | Canyon, five curves, two jumps |
 | Coast Drive | 600 m | Wet coast, three curves, one hill |
 
-Give one direction command before each curve. The system then helps the car turn through that curve. Another command in the same direction moves the car towards the inside of the curve. A late command gives less time for a correction. A command in the wrong direction turns the car in that direction.
+Give one input before each curve. The help guides that curve and its exit. The next curve needs a new input.
+
+Select “Very easy” or “Easy” in Settings. A new drive uses the selected level. “Very easy” accepts either direction and can use a quiet call. “Easy” needs the correct direction. Late input causes help with a loss of speed. Input outside the finite help window cannot recover the car.
+
+Full acceleration after a valid input stays safe on the existing curves. “Very easy” adds one short sway in a fast curve. The speed display separates your target from the help target.
+
+The car uses a fixed jump path. The current model has no tested minimum jump speed. The track data reserves fields for minimum, maximum, and target speed, with a model and test status.
 
 The car jumps without a separate command. A direction command can help the car reach the centre of the track before it lands. The camera stays level with the horizon.
 
@@ -67,15 +73,15 @@ The menus and voice commands use English. Keyboard control also works with voice
 
 These are the default keys. Use “Settings → Change keys” to assign all four controls. The game saves the new keys after all four assignments. A custom assignment takes priority over an arrow key.
 
-One spoken word is sufficient for a command. You can say `left left left` to make three corrections. The default mode uses one recognizer. The optional “Two checks” mode checks the same speech twice. It does not need a second spoken word.
+One spoken word is sufficient for a command. A repeated direction word does not add force or extend the curve help. The default mode uses one recognizer. The optional “Two checks” mode checks the same speech twice. It does not need a second spoken word.
 
-The arrows show the direction and force of your command. The upper arrow increases speed. The lower arrow applies the brake.
+The side arrows confirm direction words. They show no turn-force bars in the two lower assist levels. The upper arrow increases speed. The lower arrow applies the brake.
 
 | Bars | Turn | `faster` | `slower` |
 | --- | --- | --- | --- |
-| 1 | Small correction | Small speed increase | Small speed decrease |
-| 2 | Normal correction | Normal speed increase | Normal speed decrease |
-| 3 | Large correction | Short turbo boost | Full brake to a stop |
+| 1 | Same curve help | Small speed increase | Small speed decrease |
+| 2 | Same curve help | Normal speed increase | Normal speed decrease |
+| 3 | Same curve help | Short turbo boost | Full brake to a stop |
 
 Say `faster` to move again after a full brake. A quiet command is sufficient. A brake command stops an active turbo boost.
 
@@ -91,11 +97,15 @@ Say `faster` to move again after a full brake. A quiet command is sufficient. A 
 
 The display tells you when to speak again. The word test asks for `left`, `right`, `faster`, and `slower`. It shows how many commands the game recognized.
 
-During a drive, a loud call can help if the game recognizes no command.
-The game uses your microphone profile to check the volume.
-At the end of the call, it applies the direction for the current or next curve if the time is correct.
-Each call gives at most one command. The display shows `Voice help`.
-This help stays off in menus and during the voice exercise.
+For quiet call help, open “Settings → Quiet call practice”. This separate exercise does not need loud speech.
+Start a sample. Stay quiet for two seconds. Give three comfortable sounds with pauses.
+The game compares each sound with the room noise and saves the profile for that microphone.
+If the sample fails, move the microphone closer or reduce the room noise.
+
+“Very easy” accepts a completed call during an open curve window. Each call belongs to one curve.
+An identified speed command changes speed and does not also act as an unknown call.
+Continuous noise does not create repeated calls. Call help stays off in menus and in “Easy”.
+The existing voice-level exercise remains optional for speed commands.
 
 The game saves your voice levels, keys, control mode, track, and sound levels. You do not need to set your voice levels after each start. Check the levels again if you change your microphone or its settings.
 

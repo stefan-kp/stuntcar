@@ -1,11 +1,12 @@
 # Sprachsteuerung und Fahrgefühl
 
-Die persönliche Kalibrierung bestimmt die drei Stufen.
-Die Pfeile zeigen dieselbe Stufe, die das Auto verwendet.
+Die persönliche Kalibrierung bestimmt die drei Stärken für Tempobefehle.
+Die Lautstärke verändert die Lenkhilfe bei „Sehr leicht“ und „Leicht“ nicht.
+Die seitlichen Pfeile bestätigen das erkannte Richtungswort.
 
 | Befehl | Ein Balken | Zwei Balken | Drei Balken |
 | --- | --- | --- | --- |
-| `left` / `right` | Kleine Korrektur | Normale Lenkung | Starke Lenkung |
+| `left` / `right` | Gleiche Kurvenhilfe | Gleiche Kurvenhilfe | Gleiche Kurvenhilfe |
 | `faster` / `fast` | Kleine Tempoerhöhung | Normale Tempoerhöhung | Tempoerhöhung und kurzer Turbo |
 | `slower` | Kleine Temposenkung | Normale Temposenkung | Vollbremsung bis zum Stillstand |
 
@@ -40,3 +41,32 @@ Die Bilder zeigen die echte Godot-Szene mit künstlich eingegebenen Befehlen:
 - [Turbo](stunt-boost.png)
 - [Drift](stunt-drift.png)
 - [Vollbremsung](stunt-brake.png)
+
+## Die beiden Hilfestufen
+
+„Sehr leicht“ gleicht eine falsche Richtung aus.
+Ein leiser Ruf kann die Kurve ebenfalls freigeben.
+Dafür nutzt das Spiel eine eigene Rufprobe.
+Die Rufprobe verlangt zwei Sekunden Raumgeräusch und drei angenehm leise Laute mit Pausen.
+Die Rufprobe verlangt keine laute Kalibrierung.
+
+„Leicht“ verlangt die richtige Richtung.
+Beide Stufen brauchen eine neue Eingabe vor jeder Kurve.
+Eine angenommene Eingabe gilt bis zum gesicherten Kurvenausgang.
+Die Hilfe führt den Ausgang noch 16 Meter.
+Eine falsche Folgeeingabe entzieht die bestehende Freigabe nicht.
+
+Die späte Hilfe senkt das Tempo kurzzeitig.
+Die Anzeige nennt das tatsächliche Tempo, das Spielerziel und das Hilfsziel.
+Vollgas in einer freigegebenen Kurve bleibt auf den bestehenden Strecken möglich.
+„Sehr leicht“ ergänzt bei hohem Tempo einen kurzen Schlingerimpuls.
+Der Impuls verändert die tatsächliche Spur innerhalb des sicheren Bereichs.
+Der Impuls verlangt keine zusätzliche Lenkeingabe.
+
+Die bestehenden Sprünge folgen weiterhin einer festen Bahn.
+Die Streckendaten enthalten bereits Felder für Mindesttempo, Höchsttempo und Zieltempo.
+Ungeprüfte Rampengrenzen stehen auf `null`.
+Sie gelten nicht als geprüfte Sprunggeschwindigkeiten.
+
+Die automatische Prüfung verwendet künstliche Eingaben.
+Die Erprobung mit Menschen und echten Mikrofonen steht noch aus.
