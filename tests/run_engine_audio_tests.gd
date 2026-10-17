@@ -45,7 +45,7 @@ func run() -> void:
 		if motor.gear > last_gear:
 			shifts += 1
 			pre_shift_rpm = last_rpm
-		if pre_shift_rpm > 0 and motor.rpm < pre_shift_rpm - 500:
+		if pre_shift_rpm > 0 and motor.rpm < pre_shift_rpm - 200:
 			audible_drops += 1
 			pre_shift_rpm = 0
 		rpm_in_range = rpm_in_range and is_finite(motor.rpm) and motor.rpm >= 800 and motor.rpm <= 7000
