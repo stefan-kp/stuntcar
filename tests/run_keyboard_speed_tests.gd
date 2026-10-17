@@ -2,6 +2,7 @@ extends SceneTree
 
 var checks := 0
 var failures := 0
+var now_ms:=0
 
 func _initialize() -> void: call_deferred("run")
 func check(ok: bool, message: String) -> void:
@@ -16,15 +17,18 @@ func key(scene, code: int, pressed := true, echo := false) -> void:
     event.echo = echo
     scene._input(event)
 func reset(scene) -> void:
+    for code in [KEY_A,KEY_D,KEY_W,KEY_S,KEY_LEFT,KEY_RIGHT,KEY_UP,KEY_DOWN,KEY_J,KEY_L,KEY_I,KEY_K,KEY_ESCAPE]:key(scene,code,false)
     scene.held.clear()
     scene.session.restart()
     scene.sync_voice_context()
 func tick(scene, seconds := 0.1) -> void:
+    now_ms+=roundi(seconds*1000)
     scene._physics_process(seconds)
 func run() -> void:
     var scene = load("res://scenes/main.tscn").instantiate()
     var settings := OS.get_cache_dir().path_join("stuntcar-keyboard-%d.cfg" % OS.get_process_id())
     DirAccess.remove_absolute(settings)
+    scene.control_clock=func():return now_ms
     scene.settings_path = settings
     root.add_child(scene)
     scene.set_process(false)
@@ -47,7 +51,7 @@ func run() -> void:
     check(scene.model.target_speed_mps > 22.0, "Up also accelerates.")
     key(scene, KEY_A)
     tick(scene)
-    check(scene.model.last_command == 1 and scene.model.target_speed_mps > 22.0, "Gas and a turn work together.")
+    check(scene.model.last_command == -1 and scene.model.target_speed_mps > 22.0, "Gas and a turn work together.")
     reset(scene)
     key(scene, KEY_W)
     key(scene, KEY_S)
@@ -80,7 +84,7 @@ func run() -> void:
     reset(scene)
     key(scene, KEY_LEFT)
     tick(scene)
-    check(scene.model.last_command == 1, "Very easy corrects the left input for this right curve.")
+    check(scene.model.last_command == -1, "Very easy preserves the explicit left direction.")
     reset(scene)
     key(scene, KEY_RIGHT)
     tick(scene)

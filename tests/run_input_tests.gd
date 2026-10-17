@@ -42,6 +42,8 @@ func run() -> void:
 	key(scene, KEY_ESCAPE)
 	scene._physics_process(1.0 / 60.0)
 	check(scene.session.state == "PAUSED", "Ein alter Tastendruck darf die Pause nicht beenden")
+	key(scene,KEY_A,false)
+	key(scene,KEY_D,false)
 	scene.held.clear()
 	scene.pending.clear()
 	scene.session.restart()

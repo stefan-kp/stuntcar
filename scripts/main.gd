@@ -18,6 +18,10 @@ const VoiceBridge = preload("res://scripts/input/voice_bridge.gd")
 const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
 const VoiceDiagnostics = preload("res://scripts/input/voice_diagnostics.gd")
 
+var control_clock:Callable
+func control_now_ms()->int:
+	return int(control_clock.call()) if control_clock.is_valid() else Time.get_ticks_msec()
+
 var track
 var builder: Node3D
 var control_mode := ""
@@ -51,6 +55,7 @@ func _ready() -> void:
 	model = DriveFactory.create(track)
 	model.reset(5.0)
 	session = CommandRouter.new(model)
+	session.control_clock=control_now_ms
 	session.action_requested.connect(on_action)
 	load_settings()
 	build_selected_track()
@@ -105,12 +110,15 @@ func _input(event: InputEvent) -> void:
 	if not event is InputEventKey:
 		return
 	var code: int = event.physical_keycode if event.physical_keycode != 0 else event.keycode
+	session.set_control_bindings([key_left,key_right,key_faster,key_slower])
 	if not event.pressed:
+		session.capture_key(code,false)
 		held.erase(code)
 		return
 	if event.echo or held.has(code):
 		return
 	held[code] = true
+	session.capture_key(code,true,binding_stage==0)
 	if binding_stage > 0:
 		capture_binding(code)
 		get_viewport().set_input_as_handled()
@@ -121,9 +129,9 @@ func _input(event: InputEvent) -> void:
 		elif session.state == "PRACTICE": session.close_practice()
 		else: session.pause()
 	elif keyboard_action(code) == "left":
-		pending.append(-1)
+		if session.state!="RUNNING":pending.append(-1)
 	elif keyboard_action(code) == "right":
-		pending.append(1)
+		if session.state!="RUNNING":pending.append(1)
 	elif keyboard_action(code) in ["faster", "slower"]:
 		pass
 	else:
@@ -145,6 +153,9 @@ func clear_speed_keys() -> void:
 func _physics_process(delta: float) -> void:
 	if session == null:
 		return
+	session.ensure_controls()
+	model.refresh_assist()
+	var voice_waiting:Array[Dictionary]=[]
 	sync_voice_context()
 	if voice != null:
 		voice.poll()
@@ -188,30 +199,18 @@ func _physics_process(delta: float) -> void:
 						sync_voice_context()
 						ui.practice_panel.compass.confirm(packet.command, strength)
 				continue
-			var accepted := false
+			var intent:Dictionary={}
 			if packet.get("type", "") == "feedback":
-				accepted = session.submit_call(packet, voice.device_name)
-				if not accepted: continue
-				packet = packet.duplicate()
-				packet["command"] = "left" if model.last_command < 0 else "right"
-				packet["assisted"] = true
-				word = packet.command
+				intent=session.queue_call(packet,voice.device_name)
+				packet=packet.duplicate();packet["assisted"]=true
+			elif packet.command in ["left","right","faster","slower"]:
+				var normalized=packet.duplicate();normalized.strength=strength
+				intent=session.queue_voice(normalized)
 			else:
-				accepted = session.submit_voice(packet.command, strength, "word:%d:%s" % [packet.epoch, str(packet.get("event_id", packet.seq))])
-			if voice_diagnostics != null: voice_diagnostics.observe_command(packet, strength, accepted, self)
-			if accepted:
-				voice_applied_count += 1
-				voice_action_text = (tr("I18N_VOICE_ASSIST_ACTION") if packet.get("assisted", false) else tr("I18N_VOICE_ACTION")) % [word, voice_applied_count]
-				if packet.command in ["left", "right"] and model.active_curve_id >= 0:
-					var applied := "left" if model.last_command < 0 else "right"
-					if packet.command != applied: voice_action_text = tr("I18N_ASSIST_DIRECTION") % [word, applied]
-				if packet.command in ["faster", "slower"]:
-					voice_action_text += "\n" + model.speed_feedback
-				if session.state == "RUNNING":
-					ui.voice_compass.confirm(packet.command, strength)
+				var accepted:bool=session.submit_voice(packet.command,strength)
+				confirm_voice(packet,strength,accepted)
 				sync_voice_context()
-			else:
-				voice_action_text = tr("I18N_VOICE_NO_EFFECT") % word
+			if not intent.is_empty():voice_waiting.append({"packet":packet,"strength":strength,"event_id":intent.event_id})
 	if session.state == "PRACTICE":
 		if session.practice.phase == "waiting" and voice.is_ready:
 			session.practice.begin_calibration(session.voice_mode)
@@ -229,10 +228,14 @@ func _physics_process(delta: float) -> void:
 		if bind_timeout <= 0:
 			binding_stage = 0
 			candidate_keys.clear()
-	if session.state == "RUNNING" and binding_stage == 0:
-		model.keyboard_speed(int(action_held("faster")) - int(action_held("slower")), delta)
+	var results:Array[Dictionary]=session.advance_controls(delta)
+	for waiting in voice_waiting:
+		var accepted=false
+		for result in results:
+			if result.get("event_id")==waiting.event_id and result.get("result")=="applied":accepted=true
+		confirm_voice(waiting.packet,waiting.strength,accepted)
 	var was_running: bool = session.state == "RUNNING"
-	session.step(delta)
+	session.step(delta,false)
 	if was_running:
 		car.drive(model, delta)
 	elif session.state == "FALLING":
@@ -250,6 +253,17 @@ func _physics_process(delta: float) -> void:
 	sync_voice_context()
 	if voice_diagnostics != null: voice_diagnostics.observe_state(self)
 
+func confirm_voice(packet:Dictionary,strength:float,accepted:bool)->void:
+	if voice_diagnostics!=null:voice_diagnostics.observe_command(packet,strength,accepted,self)
+	var word=str(packet.get("command", ""))
+	if accepted:
+		if packet.get("assisted",false):word="left" if model.last_command<0 else "right"
+		voice_applied_count+=1
+		voice_action_text=(tr("I18N_VOICE_ASSIST_ACTION") if packet.get("assisted",false) else tr("I18N_VOICE_ACTION"))%[word,voice_applied_count]
+		if word in ["faster","slower"]:voice_action_text+="\n"+model.speed_feedback
+		if session.state=="RUNNING":ui.voice_compass.confirm(word,strength)
+	else:voice_action_text=tr("I18N_VOICE_NO_EFFECT")%word
+
 func current_call_context() -> Dictionary:
 	var context := {"profile":{},"opportunity_id":-1}
 	if session.state != "RUNNING" or binding_stage > 0: return context
@@ -266,6 +280,8 @@ func sync_voice_context() -> void:
 	var context := "%s:%d:%d" % [session.state, binding_stage, session.practice.generation if session.state == "PRACTICE" else 0]
 	if context != voice_context:
 		voice_context = context
+		session.lose_control_source("voice")
+		if session.state!="RUNNING":session.suspend_controls("context")
 		clear_speed_keys()
 		pending.clear()
 		voice.invalidate()
@@ -273,6 +289,7 @@ func sync_voice_context() -> void:
 		ui.practice_panel.compass.clear()
 
 func on_voice_unavailable(_message: String) -> void:
+	session.lose_control_source("voice")
 	session.call_practice.reset()
 	session.voice_enabled = false
 	if session.state == "PRACTICE": session.practice.prepare(session.voice_mode)
@@ -318,6 +335,7 @@ func _notification(what: int) -> void:
 		if session.state == "PRACTICE":
 			session.practice.prepare(session.voice_mode)
 			sync_voice_context()
+		session.lose_control_source("keyboard")
 		session.call_practice.reset()
 		session.pause()
 		held.clear()
@@ -376,6 +394,7 @@ func on_action(action: String) -> void:
 			pending.clear()
 		"save_settings": save_settings()
 		"rebind":
+			session.lose_control_source("keyboard")
 			held.clear()
 			pending.clear()
 			candidate_keys.clear()
@@ -388,6 +407,7 @@ func build_selected_track() -> void:
 	if track.get("format_version") == 2: builder.build(track, track.definition.styles)
 	else: builder.build(track)
 	if session != null:
+		session.ensure_controls()
 		session.visual_warnings.clear()
 		if track.get("format_version") == 2:
 			for warning in builder.warnings: session.visual_warnings.append(tr("I18N_STUNT_MODEL_FALLBACK") + " " + warning)

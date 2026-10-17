@@ -7,6 +7,82 @@ const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
 const VoicePractice = preload("res://scripts/input/voice_practice.gd")
 const VoiceCalibration = preload("res://scripts/input/voice_calibration.gd")
 
+const DriveController=preload("res://addons/accessible_controls/core/controller.gd")
+const ControlActions=preload("res://scripts/control/stuntcar_actions.gd")
+const ControlPort=preload("res://scripts/control/stuntcar_port.gd")
+const KeyboardSource=preload("res://scripts/control/keyboard_source.gd")
+const VoiceSource=preload("res://scripts/control/voice_source.gd")
+var control_clock:Callable=func():return Time.get_ticks_msec()
+var controller
+var control_port
+var keyboard_source=KeyboardSource.new([KEY_A,KEY_D,KEY_W,KEY_S])
+var voice_source=VoiceSource.new()
+var control_session=""
+var control_serial=0
+var control_model
+var control_attempt=-1
+var control_profile=""
+var control_hints:Array[Dictionary]=[]
+var control_confirmation:Dictionary={}
+var compatibility_serial=0
+func control_now_ms()->int:return int(control_clock.call())
+func ensure_controls()->void:
+	var profile=ControlActions.control_profile(model)
+	if control_model==model and control_attempt==model.attempt_id and control_profile==profile.profile_id:return
+	if controller!=null:controller.suspend("session_replaced",control_now_ms())
+	control_serial+=1;control_session="drive:%d"%control_serial
+	control_model=model;control_attempt=model.attempt_id;control_profile=profile.profile_id
+	control_port=ControlPort.new(model);control_port.reset(control_session)
+	controller=DriveController.new(control_port,profile);controller.begin_session(control_session)
+	keyboard_source.configure(control_session,controller.catalog);voice_source.configure(control_session,controller.catalog)
+	control_hints.clear();control_confirmation.clear()
+func suspend_controls(reason:String)->void:
+	if controller!=null:controller.suspend(reason,control_now_ms())
+	keyboard_source.reset()
+func lose_control_source(source:String)->void:
+	if controller!=null:controller.lose_source(source,control_now_ms())
+	if source=="keyboard":keyboard_source.reset()
+func set_control_bindings(bindings:Array)->void:
+	if keyboard_source.bindings==bindings:return
+	for event in keyboard_source.rebind(bindings,control_now_ms()):
+		if state=="RUNNING":controller.submit(event)
+func capture_key(code:int,pressed:bool,allow_driving:bool=true)->void:
+	ensure_controls()
+	var events=keyboard_source.capture(code,pressed,control_now_ms())
+	if state=="RUNNING" and allow_driving:
+		for event in events:controller.submit(event)
+func queue_voice(packet:Dictionary)->Dictionary:
+	if state!="RUNNING":return {}
+	ensure_controls()
+	var intent=voice_source.command(packet,control_now_ms())
+	controller.submit(intent)
+	return intent
+func queue_call(packet:Dictionary,microphone:String)->Dictionary:
+	if state!="RUNNING":return {}
+	ensure_controls();model.refresh_assist()
+	var intent=voice_source.activate_call(packet,{"state":state,"voice_enabled":voice_enabled,"assist_id":model.assist_id,"profile":call_profile,"microphone":microphone,"opportunity_id":model.assist_state().opportunity_id},control_now_ms())
+	if not intent.is_empty():controller.submit(intent)
+	return intent
+func advance_controls(delta:float)->Array[Dictionary]:
+	ensure_controls()
+	if state!="RUNNING":return []
+	if controller.suspended:controller.begin_session(control_session)
+	model.refresh_assist()
+	var now=control_now_ms()
+	for event in keyboard_source.refresh(now):controller.submit(event)
+	var results=controller.step(now)
+	for result in results:
+		if result.get("result")=="applied" and not result.get("actions",[]).is_empty():control_confirmation=result.duplicate(true)
+	control_port.advance(delta,now)
+	remembered_curve=model.active_curve_id
+	return results
+func flush_compatibility(intent:Dictionary)->bool:
+	if intent.is_empty():return false
+	var accepted=false
+	for result in advance_controls(0):
+		if result.get("event_id")==intent.event_id and result.get("result")=="applied":accepted=true
+	return accepted
+
 signal action_requested(action: String)
 var model
 var state := "MENU"
@@ -46,31 +122,13 @@ func assist_name(id: String) -> String:
 	return tr("I18N_ASSIST_VERY_EASY") if id == "very_easy" else tr("I18N_ASSIST_EASY")
 
 func submit_call(packet: Dictionary, microphone: String) -> bool:
-	if state != "RUNNING" or not voice_enabled or model.assist_id != "very_easy": return false
-	if not CallProfile.validate(call_profile, microphone).is_empty(): return false
-	if packet.get("has_command", true) != false: return false
-	for key in ["call_id", "epoch", "opportunity_id"]:
-		var value = packet.get(key)
-		if not model.track.number(value) or value < 0 or value != floor(value): return false
-	var duration = packet.get("speech_seconds")
-	if not model.track.number(duration) or duration < call_profile.min_call_s or duration > call_profile.max_call_s: return false
-	if not VoiceCalibration.valid_signal(packet.get("peak_rms")) or packet.peak_rms < call_profile.on_rms: return false
-	model.refresh_assist()
-	if packet.opportunity_id != model.assist_state().opportunity_id: return false
-	var accepted: bool = model.request_assisted_turn(0, true, "call:%d:%d" % [packet.epoch, packet.call_id])
-	if accepted: remembered_curve = model.active_curve_id
-	return accepted
+	return flush_compatibility(queue_call(packet,microphone))
 
 func submit_voice(command: String, strength: float = VoiceStrength.NORMAL, event_id: String = "") -> bool:
 	match command:
-		"left", "right":
-			if state != "RUNNING": return false
-			var accepted: bool = model.request_turn(-1 if command == "left" else 1, strength, event_id)
-			remembered_curve = model.active_curve_id
-			return accepted
-		"faster", "slower":
-			if state != "RUNNING": return false
-			model.change_speed(1 if command == "faster" else -1, strength)
+		"left", "right", "faster", "slower":
+			compatibility_serial+=1
+			return flush_compatibility(queue_voice({"command":command,"strength":strength,"epoch":0,"event_id":event_id if not event_id.is_empty() else "compat:%d"%compatibility_serial}))
 		"pause":
 			if state != "RUNNING": return false
 			pause()
@@ -88,6 +146,7 @@ func submit_voice(command: String, strength: float = VoiceStrength.NORMAL, event
 
 func _init(drive_model) -> void:
 	model = drive_model
+	ensure_controls()
 
 func entries() -> Array[String]:
 	var voice_entry := tr("I18N_CONTROL_VOICE_ENTRY") if control_mode == "voice" else tr("I18N_CONTROL_KEYS_ENTRY")
@@ -111,7 +170,10 @@ func entries() -> Array[String]:
 func press(direction: int, strength: float = VoiceStrength.NORMAL) -> void:
 	if state == "RUNNING":
 		last_key = direction
-		model.request_turn(direction, strength)
+		compatibility_serial+=1
+		var event=keyboard_source.source.begin(control_session,"explicit",[{"action_id":"turn_left" if direction==-1 else "turn_right","parameters":{"strength":strength},"duration_ms":0}],control_now_ms(),250)
+		controller.submit(event)
+		flush_compatibility(event)
 		remembered_curve = model.active_curve_id
 		return
 	var options := entries()
@@ -134,6 +196,7 @@ func activate(index: int) -> void:
 		"PAUSED":
 			if index == 0:
 				state = paused_from
+				if controller!=null:controller.begin_session(control_session)
 				last_key = 0
 			elif index == 1: restart()
 			elif index == 2: open_settings()
@@ -246,6 +309,7 @@ func restart() -> void:
 			return
 	model.set_assist_level(selected_assist_id)
 	model.reset(5.0)
+	ensure_controls()
 	state = "RUNNING"
 	menu_index = 0
 	last_key = 0
@@ -256,7 +320,9 @@ func restart() -> void:
 	action_requested.emit("reset_car")
 
 func go_to_menu() -> void:
+	suspend_controls("menu")
 	model.reset(5.0)
+	ensure_controls()
 	state = "MENU"
 	menu_index = 0
 	last_key = 0
@@ -269,14 +335,17 @@ func open_settings() -> void:
 
 func pause() -> void:
 	if state in ["RUNNING", "FALLING"]:
+		suspend_controls("pause")
 		paused_from = state
 		state = "PAUSED"
 		menu_index = 0
 		last_key = 0
 
-func step(delta: float) -> void:
+func step(delta: float, process_controls: bool = true) -> void:
 	if state == "RUNNING":
+		if process_controls:advance_controls(delta)
 		model.step(delta)
+		control_hints.assign(controller.read_hints(control_now_ms()))
 		if remembered_curve >= 0 and model.active_curve_id == -1:
 			last_key = 0
 			remembered_curve = -1
@@ -284,10 +353,12 @@ func step(delta: float) -> void:
 			if model.distance_m >= curve.checkpoint_m:
 				checkpoint_m = curve.checkpoint_m
 		if model.off_road:
+			suspend_controls("falling")
 			state = "FALLING"
 			fall_time = 0.0
 			retry_count += 1
 		elif model.finished:
+			suspend_controls("finished")
 			state = "FINISHED"
 			menu_index = 0
 	elif state == "FALLING":
@@ -296,6 +367,7 @@ func step(delta: float) -> void:
 		if fall_time >= 1.1:
 			total_time += model.elapsed_s
 			model.reset(checkpoint_m)
+			ensure_controls()
 			state = "RUNNING"
 			menu_index = 0
 			last_key = 0

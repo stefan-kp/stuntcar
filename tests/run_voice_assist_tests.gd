@@ -121,7 +121,7 @@ func run() -> void:
 	scene.voice.accept_packet({"type":"command", "seq":sequence, "epoch":scene.voice.epoch,
 		"command":"left", "peak_rms":6000.0})
 	feedback(scene, 6000.0, 0.4, "recognized", "left")
-	check(scene.voice_applied_count == before + 1 and scene.model.last_command == 1, "Sehr leicht gleicht eine erkannte falsche Richtung aus.")
+	check(scene.voice_applied_count == before + 1 and scene.model.last_command == -1, "Sehr leicht erhaelt eine erkannte Richtung.")
 	scene.free()
 	print("RUFHILFE: %d Prüfungen, %d Fehler" % [checks, failures])
 	quit(0 if failures == 0 else 1)
