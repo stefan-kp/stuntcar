@@ -1,5 +1,8 @@
 extends RefCounted
 
+const AssistProfile = preload("res://scripts/vehicle/assist_profile.gd")
+const CurveAssist = preload("res://scripts/vehicle/curve_assist.gd")
+
 const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
 
 const CRUISE_SPEED := 22.0
@@ -44,12 +47,35 @@ var speed_feedback := ""
 var speed_feedback_seconds := 0.0
 var jump_assist_until := -1.0
 var landing_pulse := 0.0
+var assist_id := "very_easy"
+var assist_profile := AssistProfile.for_id(assist_id)
+var curve_assist = CurveAssist.new()
+var attempt_id := 0
+var input_serial := 0
+var assist_events: Array[Dictionary] = []
+var assist_target_mps := 0.0
+var assist_speed_active := false
+var assist_reason := ""
+var recovery_remaining := 0.0
+var motion := "normal"
+var sway_remaining := 0.0
+var sway_used := false
 
 func _init(track_data) -> void:
 	track = track_data
 	reset()
 
 func reset(checkpoint_m: float = 0.0) -> void:
+	attempt_id += 1
+	input_serial = 0
+	curve_assist.reset(attempt_id)
+	assist_events.clear()
+	assist_speed_active = false
+	assist_reason = ""
+	recovery_remaining = 0.0
+	motion = "normal"
+	sway_remaining = 0.0
+	sway_used = false
 	var frame: Dictionary = track.sample(checkpoint_m)
 	position = frame.position
 	heading = frame.heading
@@ -83,35 +109,72 @@ func reset(checkpoint_m: float = 0.0) -> void:
 	drift_angle = 0.0
 	steering_input = 0.0
 
-func request_turn(direction: int, strength: float = VoiceStrength.NORMAL) -> void:
-	if off_road or finished or direction not in [-1, 1]:
-		return
-	last_command = direction
-	turn_strength = VoiceStrength.multiplier(strength)
-	steering_input = float(direction) * turn_strength
-	var curve: Dictionary = track.next_curve(distance_m)
+func set_assist_level(id: String) -> void:
+	assist_profile = AssistProfile.for_id(id)
+	assist_id = assist_profile.id
+
+func _emit_assist(kind: String, reason: String) -> void:
+	var state: Dictionary = curve_assist.snapshot()
+	if assist_events.size() >= 64: assist_events.pop_front()
+	assist_events.append({"type":kind,"reason":reason,"curve_id":state.curve_id,
+		"opportunity_id":state.opportunity_id,"elapsed_s":elapsed_s,
+		"player_target_mps":target_speed_mps,"assist_target_mps":assist_target_mps,"speed_mps":speed_mps})
+
+func _refresh_assist() -> void:
+	if active_curve_id >= 0 and distance_m >= track.curves[active_curve_id].end_m:
+		completed_ids[active_curve_id] = true
+		completed_curves += 1
+		active_curve_id = -1
+		last_command = 0
+		guide_offset = 0.0
+		sway_used = false
+	var projection: Dictionary = track.project(position, distance_m)
+	var before: Dictionary = curve_assist.snapshot()
+	curve_assist.update(track.next_curve(distance_m), {"distance_m":distance_m,"speed_mps":speed_mps,
+		"target_speed_mps":target_speed_mps,"elapsed_s":elapsed_s,"hint_seconds":hint_seconds,
+		"lateral":lateral,"gap":projection.gap,"heading_error_rad":angle_difference(projection.heading,heading),
+		"off_road":off_road,"finished":finished}, assist_profile)
+	var after: Dictionary = curve_assist.snapshot()
+	if after.opened_at_s >= 0 and (before.opportunity_id != after.opportunity_id or before.opened_at_s < 0):
+		_emit_assist("opened", "curve")
+	if after.phase == "closed" and before.phase != "closed": _emit_assist("closed", after.closed_reason)
+
+func assist_state() -> Dictionary:
+	var state: Dictionary = curve_assist.snapshot()
+	state.merge({"assist_id":assist_id,"player_target_mps":target_speed_mps,"assist_target_mps":assist_target_mps,
+		"assist_speed_active":assist_speed_active,"motion":motion,"assist_reason":assist_reason})
+	return state
+
+func take_assist_events() -> Array[Dictionary]:
+	var result := assist_events.duplicate()
+	assist_events.clear()
+	return result
+
+func request_assisted_turn(direction: int, unknown_call: bool, event_id: String) -> bool:
+	_refresh_assist()
+	var was_authorized: bool = curve_assist.snapshot().authorized
+	if not curve_assist.request(direction, unknown_call, event_id): return false
+	var state: Dictionary = curve_assist.snapshot()
+	active_curve_id = state.curve_id
+	last_command = state.turn_sign
+	turn_strength = 1.0
+	steering_input = float(state.turn_sign)
+	manual_remaining = 0.0
+	if not was_authorized:
+		if state.accepted_phase in ["late", "rescue"]:
+			recovery_remaining = assist_profile.recovery_seconds * (2.0 if state.accepted_phase == "rescue" else 1.0)
+			motion = "rescue_turn" if state.accepted_phase == "rescue" else "late_turn"
+		_emit_assist("accepted", state.accepted_phase)
+	return true
+
+func request_turn(direction: int, _strength: float = VoiceStrength.NORMAL) -> void:
+	if off_road or finished or direction not in [-1,1]: return
+	input_serial += 1
+	request_assisted_turn(direction, false, "key:%d:%d" % [attempt_id,input_serial])
 	var jump: Dictionary = track.jump_for_correction(distance_m)
 	if not jump.is_empty() and (absf(lateral) < 0.15 or signf(lateral) == -direction):
 		jump_assist_until = maxf(jump.end_m + 24.0, distance_m + 24.0)
-		manual_remaining = 0.0
-		# A turn cue can arrive during landing. Keep that authorization while
-		# the same command centers the car for the last part of the jump.
-		if not curve.is_empty() and curve.turn_sign == direction and distance_m >= curve.start_m - input_window_m():
-			active_curve_id = curve.id
-		return
-	jump_assist_until = -1.0
-	var window := input_window_m()
-	if not curve.is_empty() and curve.turn_sign == direction and distance_m >= curve.start_m - window:
-		if active_curve_id == curve.id or distance_m >= curve.start_m:
-			correction_remaining = 1.35
-		active_curve_id = curve.id
-		manual_remaining = 0.0
-	else:
-		active_curve_id = -1
-		manual_direction = direction
-		manual_remaining = 0.3
-		correction_remaining = 0.0
-		guide_offset = 0.0
+		turn_strength = 1.0
 
 func input_window_m() -> float:
 	return maxf(speed_mps, target_speed_mps) * hint_seconds
@@ -163,13 +226,23 @@ func effective_target_speed() -> float:
 func step(delta: float) -> void:
 	if off_road or finished:
 		return
+	_refresh_assist()
 	elapsed_s += delta
 	speed_feedback_seconds = maxf(0.0, speed_feedback_seconds - delta)
 	boost_remaining = maxf(0.0, boost_remaining - delta)
 	boost_cooldown = maxf(0.0, boost_cooldown - delta)
 	var desired_speed := effective_target_speed()
+	var was_assisting := assist_speed_active
+	assist_speed_active = recovery_remaining > 0.0 and active_curve_id >= 0
+	assist_reason = "late_turn" if assist_speed_active else ""
+	assist_target_mps = minf(desired_speed, CRUISE_SPEED * 0.45) if assist_speed_active else desired_speed
+	if assist_speed_active: desired_speed = assist_target_mps
+	if assist_speed_active != was_assisting: _emit_assist("speed_help" if assist_speed_active else "speed_help_end", assist_reason)
+	recovery_remaining = maxf(0.0,recovery_remaining-delta)
+	if not assist_speed_active: motion = "normal"
 	var rate := BOOST_ACCEL if boost_remaining > 0.0 else (18.0 if desired_speed < speed_mps else 10.0) * speed_strength
 	if emergency_braking: rate = FULL_BRAKE_DECEL
+	if assist_speed_active: rate = assist_profile.max_assist_brake_mps2
 	# Brakes act on the road. Preserve forward motion until the landing.
 	if desired_speed >= speed_mps or track.jump_at(distance_m).is_empty():
 		speed_mps = move_toward(speed_mps, desired_speed, rate * delta)
@@ -188,39 +261,19 @@ func step(delta: float) -> void:
 		heading = rotate_toward(heading, desired, deg_to_rad(65.0) * turn_strength * rolling_steer * delta)
 	elif active_curve_id >= 0:
 		var curve: Dictionary = track.curves[active_curve_id]
-		# A command authorizes only this curve, never the rest of the road.
-		if distance_m >= curve.end_m:
-			if not completed_ids.has(active_curve_id):
-				completed_ids[active_curve_id] = true
-				completed_curves += 1
-			active_curve_id = -1
-			last_command = 0
-			guide_offset = 0.0
-		elif distance_m >= curve.start_m - 4.0:
-			var lookahead := 4.0
-			var target_s := distance_m + lookahead
+		if distance_m >= curve.start_m:
+			var target_s: float = minf(distance_m + 4.0, curve.end_m)
 			var target: Dictionary = track.sample(target_s)
-			# The car really approaches the outside edge. A fresh tap pulls it inward.
-			var entry := smoothstep(curve.start_m + 3.0, curve.start_m + 19.0, target_s)
-			var exit := 1.0 - smoothstep(curve.end_m - 23.0, curve.end_m - 7.0, target_s)
-			var speed_risk := clampf((speed_mps - 28.0) / 18.0, 0.0, 1.0)
-			var edge := 2.35 + speed_risk * 1.1 * clampf(35.0 / curve.radius, 0.8, 1.3)
-			if correction_remaining > 0.0:
-				# A quiet input pulls partway toward the centre; a loud input
-				# can pull a little beyond it, within the road width.
-				edge = clampf(lerpf(edge, 0.2, turn_strength), -1.4, 4.2)
-			else:
-				edge += (1.0 - turn_strength) * 0.6
+			var entry := smoothstep(curve.start_m, curve.start_m + 14.0, target_s)
+			var exit := 1.0 - smoothstep(curve.end_m - 20.0, curve.end_m, target_s)
+			var edge := 0.35 + clampf((speed_mps - 28.0) / 30.0,0.0,1.0) * 0.55
 			var requested_offset: float = -float(curve.turn_sign) * edge * entry * exit
-			guide_offset = move_toward(guide_offset, requested_offset, 3.5 * turn_strength * delta)
+			guide_offset = move_toward(guide_offset, requested_offset, 3.5 * delta)
 			var offset: Vector3 = target.position + track.right(target.heading) * guide_offset - position
-			var desired := atan2(offset.x, -offset.z)
-			var exit_blend := clampf((distance_m - float(curve.end_m) + 8.0) / 8.0, 0.0, 1.0)
-			desired = lerp_angle(desired, track.sample(curve.end_m).heading, exit_blend)
-			heading = rotate_toward(heading, desired, deg_to_rad(170.0) * turn_strength * rolling_steer * delta)
-	elif manual_remaining > 0.0:
-		heading += float(manual_direction) * deg_to_rad(25.0) * turn_strength * rolling_steer * minf(delta, manual_remaining)
-		manual_remaining = maxf(0.0, manual_remaining - delta)
+			var desired := atan2(offset.x,-offset.z)
+			var exit_blend := clampf((distance_m - float(curve.end_m) + 8.0) / 6.0,0.0,1.0)
+			desired = lerp_angle(desired,track.sample(curve.end_m).heading,exit_blend)
+			heading = rotate_toward(heading,desired,assist_profile.max_turn_rate_rad_s * rolling_steer * delta)
 	position += track.forward(heading) * speed_mps * delta
 	var projection: Dictionary = track.project(position, distance_m)
 	distance_m = projection.distance_m
