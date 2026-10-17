@@ -21,3 +21,19 @@ func follow(car: Node3D, heading: float, delta: float, overview: bool, pitch: fl
 	else:
 		global_position = global_position.lerp(destination, 1.0 - exp(-9.0 * delta))
 	look_at(target, Vector3.UP)
+
+func follow_spatial(frame:Dictionary,target:Vector3,speed_mps:float,delta:float)->void:
+	var surface:Basis=frame.basis
+	var forward:Vector3=-surface.z
+	var destination:Vector3=target-forward*6.5+surface.y*2.9
+	var look:Vector3=target+forward*8+surface.y*0.8
+	var desired:Basis=Basis.looking_at((look-destination).normalized(),surface.y)
+	var response:=1.0-exp(-12.0*maxf(delta,0))
+	if not initialized:
+		global_position=destination;global_basis=desired;initialized=true
+	else:
+		global_position=global_position.lerp(destination,response)
+		var a:=global_basis.get_rotation_quaternion();var b:=desired.get_rotation_quaternion()
+		if a.dot(b)<0:b=-b
+		global_basis=Basis(a.slerp(b,response))
+	fov=lerpf(76.0,90.0,clampf(speed_mps/58.0,0,1))

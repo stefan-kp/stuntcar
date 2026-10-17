@@ -279,7 +279,12 @@ func _process(delta: float) -> void:
 	if session == null:
 		return
 	if is_instance_valid(builder.landscape): builder.landscape.follow(car.global_position)
-	camera.follow(car, model.heading, delta, session.state in ["MENU", "CONTROL", "TRACKS", "PRACTICE"], model.pitch, model.speed_mps, 1.0 if model.boost_remaining > 0.0 else 0.0)
+	if model.has_method("feedback_state"):
+		if session.state in ["RUNNING","FALLING"]:
+			car.drive_spatial(car.spatial_previous,car.spatial_current,Engine.get_physics_interpolation_fraction())
+		camera.follow_spatial({"basis":car.global_basis},car.global_position,model.speed_mps,delta)
+	else:
+		camera.follow(car, model.heading, delta, session.state in ["MENU", "CONTROL", "TRACKS", "PRACTICE"], model.pitch, model.speed_mps, 1.0 if model.boost_remaining > 0.0 else 0.0)
 	if session.state != "RUNNING": car.effects.suspend()
 	var message := ""
 	if binding_stage == 1:
