@@ -30,6 +30,7 @@ var control_return := "MENU"
 var control_mode := "keys"
 var routes: Array[Dictionary] = []
 var catalog_errors: Array[String] = []
+var visual_warnings: Array[String] = []
 
 var selected_assist_id := "very_easy"
 var call_profile: Dictionary = {}
@@ -228,6 +229,7 @@ func open_tracks() -> void:
 	var report: Dictionary = model.track.scan_catalog()
 	routes.assign(report.routes)
 	catalog_errors.assign(report.errors)
+	catalog_errors.append_array(visual_warnings)
 	state = "TRACKS"
 	menu_index = 0
 	for i in range(routes.size()):

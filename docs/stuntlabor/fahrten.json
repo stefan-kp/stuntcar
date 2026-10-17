@@ -1,0 +1,5720 @@
+[
+  {
+    "case": "clean",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28401264183666,
+        "e16": 5.24999999999999,
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 391,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1527,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 34.0833333333333
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "late",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.285593193971,
+        "e16": 5.24999999999999,
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 811,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1921,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 36.3166666666667
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "wrong",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28401264183666,
+        "e16": 5.24999999999999,
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 391,
+          "value": 1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1527,
+          "value": -1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 34.0833333333333
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "missing",
+    "profile": "very_easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 14.1166666666667
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "faster",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27289337763809,
+        "e16": 5.21666666666665,
+        "e20": 3.71666666666666,
+        "e3": 8.41666666666666,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 72,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1280,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 33.1333333333333
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "slower",
+    "profile": "very_easy",
+    "result": {
+      "element": "e0",
+      "finished": false,
+      "help": {},
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "alternate",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.15657045823084,
+        "e16": 3.79999999999999,
+        "e3": 3.96666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 72,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2886,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3840",
+          "kind": "held_speed",
+          "tick": 3840,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3960",
+          "kind": "held_speed",
+          "tick": 3960,
+          "value": -1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 66.7333333333333
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "clean",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27870878801875,
+        "e16": 5.23333333333332,
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 366,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1502,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 33.65
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "late",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28030074180785,
+        "e16": 5.24999999999999,
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 786,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1895,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 35.8833333333333
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "wrong",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27870878801875,
+        "e16": 5.23333333333332,
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 366,
+          "value": 1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1502,
+          "value": -1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 33.65
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "missing",
+    "profile": "very_easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 13.7
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "faster",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.2676085731812,
+        "e16": 5.23333333333332,
+        "e20": 3.69999999999999,
+        "e3": 8.41666666666666,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 67,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1254,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.7
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "slower",
+    "profile": "very_easy",
+    "result": {
+      "element": "e0",
+      "finished": false,
+      "help": {},
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "alternate",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.22929756850385,
+        "e16": 4.16666666666666,
+        "e3": 4.11666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 67,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2891,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3840",
+          "kind": "held_speed",
+          "tick": 3840,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3960",
+          "kind": "held_speed",
+          "tick": 3960,
+          "value": -1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 66.0333333333333
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "clean",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28322311099758,
+        "e16": 5.24999999999999,
+        "e3": 8.36666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 337,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1473,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 33.1833333333333
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "late",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28480518332529,
+        "e16": 5.24999999999999,
+        "e3": 8.36666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 757,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1867,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 35.4166666666667
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "wrong",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28322311099758,
+        "e16": 5.24999999999999,
+        "e3": 8.36666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 337,
+          "value": 1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1473,
+          "value": -1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 33.1833333333333
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "missing",
+    "profile": "very_easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.36666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 13.2166666666667
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "faster",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27209762822671,
+        "e16": 5.21666666666665,
+        "e20": 3.69999999999999,
+        "e3": 8.36666666666666,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 61,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1226,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.2166666666667
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "slower",
+    "profile": "very_easy",
+    "result": {
+      "element": "e0",
+      "finished": false,
+      "help": {},
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "alternate",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.35589356220403,
+        "e16": 3.76666666666666,
+        "e3": 4.64999999999999
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 61,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2883,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3840",
+          "kind": "held_speed",
+          "tick": 3840,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3960",
+          "kind": "held_speed",
+          "tick": 3960,
+          "value": -1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 66.7
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "clean",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27725758270891,
+        "e16": 5.23333333333332,
+        "e3": 8.38333333333333
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 328,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1465,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 33.0333333333333
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "late",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27884349484194,
+        "e16": 5.23333333333332,
+        "e3": 8.38333333333333
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 749,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1859,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 35.2833333333333
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "wrong",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27725758270891,
+        "e16": 5.23333333333332,
+        "e3": 8.38333333333333
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 328,
+          "value": 1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1465,
+          "value": -1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 33.0333333333333
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "missing",
+    "profile": "very_easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.38333333333333
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 13.0833333333333
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "faster",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.26734597516999,
+        "e16": 5.23333333333332,
+        "e20": 3.69999999999999,
+        "e3": 8.31666666666666,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 58,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1210,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 31.9666666666667
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "slower",
+    "profile": "very_easy",
+    "result": {
+      "element": "e0",
+      "finished": false,
+      "help": {},
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "alternate",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27582469422595,
+        "e16": 3.71666666666666,
+        "e3": 4.68333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 58,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2517,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 62.7
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "clean",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27844531711131,
+        "e16": 5.23333333333332,
+        "e3": 8.31666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 315,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1451,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.8
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "late",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28003501300879,
+        "e16": 5.24999999999999,
+        "e3": 8.31666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 735,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1844,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 35.0333333333333
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "wrong",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27844531711131,
+        "e16": 5.23333333333332,
+        "e3": 8.31666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 315,
+          "value": 1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1451,
+          "value": -1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.8
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "missing",
+    "profile": "very_easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.31666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 12.85
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "faster",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.2670825159132,
+        "e16": 5.23333333333332,
+        "e20": 3.69999999999999,
+        "e3": 8.13333333333332,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 2,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1189,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 31.6166666666667
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "slower",
+    "profile": "very_easy",
+    "result": {
+      "element": "e0",
+      "finished": false,
+      "help": {
+        "e3": 0.133333333333333
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "alternate",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.24252211611724,
+        "e16": 3.66666666666666,
+        "e3": 4.58333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 2,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2636,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 62.8166666666667
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "clean",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27987346796015,
+        "e16": 5.24999999999999,
+        "e3": 8.06666666666665
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1430,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.45
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "late",
+    "profile": "very_easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.06666666666665
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 12.5
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "wrong",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27987346796015,
+        "e16": 5.24999999999999,
+        "e3": 8.06666666666665
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": 1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1430,
+          "value": -1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.45
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "missing",
+    "profile": "very_easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.06666666666665
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 12.5
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "faster",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.26615593301458,
+        "e16": 5.23333333333332,
+        "e20": 3.69999999999999,
+        "e3": 7.94999999999998,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1174,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 31.3666666666667
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "slower",
+    "profile": "very_easy",
+    "result": {
+      "element": "e0",
+      "finished": false,
+      "help": {
+        "e3": 0.25
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "alternate",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.15490186265464,
+        "e16": 3.79999999999999,
+        "e3": 4.43333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2646,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 62.75
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "clean",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27979458247884,
+        "e16": 5.24999999999999,
+        "e3": 7.71666666666664
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1405,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.0333333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "late",
+    "profile": "very_easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 7.71666666666664
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 12.0833333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "wrong",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27979458247884,
+        "e16": 5.24999999999999,
+        "e3": 7.71666666666664
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": 1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1405,
+          "value": -1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.0333333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "missing",
+    "profile": "very_easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 7.71666666666664
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 12.0833333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "faster",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.26868756880264,
+        "e16": 5.23333333333332,
+        "e20": 3.69999999999999,
+        "e3": 7.71666666666664,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1157,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 31.0833333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "slower",
+    "profile": "very_easy",
+    "result": {
+      "element": "e1",
+      "finished": false,
+      "help": {
+        "e3": 0.333333333333333
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "alternate",
+    "profile": "very_easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.23684982245354,
+        "e16": 4.16666666666666,
+        "e3": 4.21666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2651,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 62.0333333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "clean",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28202455739173,
+        "e16": 5.24999999999999,
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 391,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1527,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 34.0833333333333
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "late",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28678086018629,
+        "e16": 5.24999999999999,
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 811,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1920,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 36.2833333333333
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "wrong",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 391,
+          "value": 1.0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 14.1166666666667
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "missing",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.41666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 14.1166666666667
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "faster",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.2694258263827,
+        "e16": 5.21666666666665,
+        "e20": 3.69999999999999,
+        "e3": 8.41666666666666,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 72,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1279,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 33.1166666666667
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "slower",
+    "profile": "easy",
+    "result": {
+      "element": "e0",
+      "finished": false,
+      "help": {},
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "alternate",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.17839782745738,
+        "e16": 3.98333333333332,
+        "e3": 3.96666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 72,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2887,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3840",
+          "kind": "held_speed",
+          "tick": 3840,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3960",
+          "kind": "held_speed",
+          "tick": 3960,
+          "value": -1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 66.7333333333333
+    },
+    "start_speed_mps": 0.0
+  },
+  {
+    "case": "clean",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27607283235544,
+        "e16": 5.24999999999999,
+        "e3": 8.41666626135508
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 365,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1502,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 33.65
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "late",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28083068268085,
+        "e16": 5.24999999999999,
+        "e3": 8.41666626135508
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 786,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1895,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 35.8666666666667
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "wrong",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.41666626135508
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 365,
+          "value": 1.0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 13.7
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "missing",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.41666626135508
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 13.7
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "faster",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.26347179772576,
+        "e16": 5.23333333333332,
+        "e20": 3.71666666666666,
+        "e3": 8.41666626135508,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 67,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1254,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.7
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "slower",
+    "profile": "easy",
+    "result": {
+      "element": "e0",
+      "finished": false,
+      "help": {},
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "alternate",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.26409595363619,
+        "e16": 4.34999999999999,
+        "e3": 4.11666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 67,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2891,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3840",
+          "kind": "held_speed",
+          "tick": 3840,
+          "value": 1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 65.9333333333333
+    },
+    "start_speed_mps": 5.0
+  },
+  {
+    "case": "clean",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28189132590052,
+        "e16": 5.24999999999999,
+        "e3": 8.34999999999999
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 336,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1472,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 33.1666666666667
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "late",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28664841109775,
+        "e16": 5.24999999999999,
+        "e3": 8.34999999999999
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 756,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1865,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 35.3666666666667
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "wrong",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.34999999999999
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 336,
+          "value": 1.0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 13.2
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "missing",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.34999999999999
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 13.2
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "faster",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.26929483214056,
+        "e16": 5.21666666666665,
+        "e20": 3.69999999999999,
+        "e3": 8.34999999999999,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 61,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1224,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.2
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "slower",
+    "profile": "easy",
+    "result": {
+      "element": "e0",
+      "finished": false,
+      "help": {},
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "alternate",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.50268173891345,
+        "e16": 4.09999999999999,
+        "e3": 4.66666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 61,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2886,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3840",
+          "kind": "held_speed",
+          "tick": 3840,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3960",
+          "kind": "held_speed",
+          "tick": 3960,
+          "value": -1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 66.7166666666667
+    },
+    "start_speed_mps": 14.0
+  },
+  {
+    "case": "clean",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28282331108224,
+        "e16": 5.24999999999999,
+        "e3": 8.34999999999999
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 327,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1463,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 33.0166666666667
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "late",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28757281829218,
+        "e16": 5.24999999999999,
+        "e3": 8.34999999999999
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 747,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1856,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 35.2166666666667
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "wrong",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.34999999999999
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 327,
+          "value": 1.0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 13.05
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "missing",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.34999999999999
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 13.05
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "faster",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.26666364536759,
+        "e16": 5.23333333333332,
+        "e20": 3.69999999999999,
+        "e3": 8.26666666666666,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 58,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1207,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 31.9166666666667
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "slower",
+    "profile": "easy",
+    "result": {
+      "element": "e0",
+      "finished": false,
+      "help": {},
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "alternate",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27131189891496,
+        "e16": 3.64999999999999,
+        "e3": 4.63333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 58,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2520,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 62.6833333333333
+    },
+    "start_speed_mps": 22.0
+  },
+  {
+    "case": "clean",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27575741613612,
+        "e16": 5.23333333333332,
+        "e3": 8.26666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 311,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1448,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.7666666666667
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "late",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28051136383735,
+        "e16": 5.24999999999999,
+        "e3": 8.26666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 732,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1841,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 34.9666666666667
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "wrong",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.26666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 311,
+          "value": 1.0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 12.8
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "missing",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 8.26666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 12.8
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "faster",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27459561406184,
+        "e16": 5.21666666666665,
+        "e20": 3.69999999999999,
+        "e3": 7.98333333333331,
+        "e7": 4.74999999999999
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 2,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1181,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 31.4666666666667
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "slower",
+    "profile": "easy",
+    "result": {
+      "element": "e0",
+      "finished": false,
+      "help": {
+        "e3": 0.166666666666667
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "alternate",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.16619948169802,
+        "e16": 3.61666666666666,
+        "e3": 4.48333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 2,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2642,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3720",
+          "kind": "held_speed",
+          "tick": 3720,
+          "value": -1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 62.7
+    },
+    "start_speed_mps": 35.0
+  },
+  {
+    "case": "clean",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27839239243913,
+        "e16": 5.24999999999999,
+        "e3": 7.89999999999998
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1420,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 32.2833333333333
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "late",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 7.89999999999998
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 12.3333333333333
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "wrong",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 7.89999999999998
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": 1.0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 12.3333333333333
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "missing",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 7.89999999999998
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 12.3333333333333
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "faster",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.26550495672397,
+        "e16": 5.23333333333332,
+        "e20": 3.69999999999999,
+        "e3": 7.71666666666664,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1160,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 31.1333333333333
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "slower",
+    "profile": "easy",
+    "result": {
+      "element": "e1",
+      "finished": false,
+      "help": {
+        "e3": 0.266666666666667
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "alternate",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27304875075934,
+        "e16": 4.34999999999999,
+        "e3": 4.16666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2651,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 61.9333333333333
+    },
+    "start_speed_mps": 46.0
+  },
+  {
+    "case": "clean",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.27905251366331,
+        "e16": 5.24999999999999,
+        "e3": 7.36666666666665
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1384,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 31.7
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "late",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 7.36666666666665
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 11.7333333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "wrong",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 7.36666666666665
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": 1.0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 11.7333333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "missing",
+    "profile": "easy",
+    "result": {
+      "element": "e7",
+      "finished": false,
+      "help": {
+        "e3": 7.36666666666665
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 0
+        }
+      ],
+      "mode": "crashed",
+      "seconds": 11.7333333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "faster",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.26647675025564,
+        "e16": 5.23333333333332,
+        "e20": 3.69999999999999,
+        "e3": 7.36666666666665,
+        "e7": 4.73333333333332
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 1136,
+          "value": 1.0
+        }
+      ],
+      "mode": "finished",
+      "seconds": 30.7333333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "slower",
+    "profile": "easy",
+    "result": {
+      "element": "e1",
+      "finished": false,
+      "help": {
+        "e3": 0.333333333333333
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": -1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        }
+      ],
+      "mode": "grounded",
+      "seconds": 10.0333333333333
+    },
+    "start_speed_mps": 58.0
+  },
+  {
+    "case": "alternate",
+    "profile": "easy",
+    "result": {
+      "element": "e22",
+      "finished": true,
+      "help": {
+        "e11": 5.28026866498383,
+        "e16": 4.34999999999999,
+        "e3": 4.21666666666666
+      },
+      "inputs": [
+        {
+          "event_id": "speed:0",
+          "kind": "held_speed",
+          "tick": 0,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20001",
+          "kind": "turn",
+          "tick": 0,
+          "value": -1.0
+        },
+        {
+          "event_id": "speed:120",
+          "kind": "held_speed",
+          "tick": 120,
+          "value": -1
+        },
+        {
+          "event_id": "speed:240",
+          "kind": "held_speed",
+          "tick": 240,
+          "value": 1
+        },
+        {
+          "event_id": "speed:360",
+          "kind": "held_speed",
+          "tick": 360,
+          "value": -1
+        },
+        {
+          "event_id": "speed:480",
+          "kind": "held_speed",
+          "tick": 480,
+          "value": 1
+        },
+        {
+          "event_id": "speed:600",
+          "kind": "held_speed",
+          "tick": 600,
+          "value": -1
+        },
+        {
+          "event_id": "speed:720",
+          "kind": "held_speed",
+          "tick": 720,
+          "value": 1
+        },
+        {
+          "event_id": "speed:840",
+          "kind": "held_speed",
+          "tick": 840,
+          "value": -1
+        },
+        {
+          "event_id": "speed:960",
+          "kind": "held_speed",
+          "tick": 960,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1080",
+          "kind": "held_speed",
+          "tick": 1080,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1200",
+          "kind": "held_speed",
+          "tick": 1200,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1320",
+          "kind": "held_speed",
+          "tick": 1320,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1440",
+          "kind": "held_speed",
+          "tick": 1440,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1560",
+          "kind": "held_speed",
+          "tick": 1560,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1680",
+          "kind": "held_speed",
+          "tick": 1680,
+          "value": 1
+        },
+        {
+          "event_id": "speed:1800",
+          "kind": "held_speed",
+          "tick": 1800,
+          "value": -1
+        },
+        {
+          "event_id": "speed:1920",
+          "kind": "held_speed",
+          "tick": 1920,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2040",
+          "kind": "held_speed",
+          "tick": 2040,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2160",
+          "kind": "held_speed",
+          "tick": 2160,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2280",
+          "kind": "held_speed",
+          "tick": 2280,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2400",
+          "kind": "held_speed",
+          "tick": 2400,
+          "value": 1
+        },
+        {
+          "event_id": "speed:2520",
+          "kind": "held_speed",
+          "tick": 2520,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2640",
+          "kind": "held_speed",
+          "tick": 2640,
+          "value": 1
+        },
+        {
+          "event_id": "turn:20002",
+          "kind": "turn",
+          "tick": 2651,
+          "value": 1.0
+        },
+        {
+          "event_id": "speed:2760",
+          "kind": "held_speed",
+          "tick": 2760,
+          "value": -1
+        },
+        {
+          "event_id": "speed:2880",
+          "kind": "held_speed",
+          "tick": 2880,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3000",
+          "kind": "held_speed",
+          "tick": 3000,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3120",
+          "kind": "held_speed",
+          "tick": 3120,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3240",
+          "kind": "held_speed",
+          "tick": 3240,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3360",
+          "kind": "held_speed",
+          "tick": 3360,
+          "value": 1
+        },
+        {
+          "event_id": "speed:3480",
+          "kind": "held_speed",
+          "tick": 3480,
+          "value": -1
+        },
+        {
+          "event_id": "speed:3600",
+          "kind": "held_speed",
+          "tick": 3600,
+          "value": 1
+        }
+      ],
+      "mode": "finished",
+      "seconds": 61.9333333333333
+    },
+    "start_speed_mps": 58.0
+  }
+]

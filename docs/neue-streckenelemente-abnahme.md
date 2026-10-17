@@ -29,14 +29,15 @@ Die neue Fahrberechnung ergänzt Godot. Sie benötigt keine zusätzliche Physik-
 
 | Prüfung | Ergebnis |
 | --- | --- |
-| Saubere Gesamtfahrt Sehr leicht | 33,03 Sekunden |
-| Saubere Gesamtfahrt Leicht | 33,02 Sekunden |
+| Saubere Gesamtfahrt Sehr leicht | 32,80 Sekunden |
+| Saubere Gesamtfahrt Leicht | 32,78 Sekunden |
 | Untersuchte Anfangstempi | 0, 5, 14, 22, 35, 46 und 58 m/s |
 | Fahrfälle | 98 Kombinationen aus Stufe, Anfangstempo und Eingabeart |
 | Alte Streckenmatrix | 528 Fahrten ohne Fehler |
 | Python-Prüfungen | 84 ohne Fehler |
 | Sprachkatalog | 3 Prüfungen ohne Fehler |
 | Untere Sprunggrenze im geprüften Absprungzustand | Zwischen 20,01416 und 20,01435 m/s |
+| Obere Sprunggrenze im geprüften Absprungzustand | Zwischen 22,44147 und 22,44263 m/s |
 | Geprüfte seitliche Landepositionen | 2,99 m gelingt; 3,01 m verfehlt die Fahrfläche |
 | Hilfe je Element | Höchstens 10 Sekunden bei Sehr leicht; 9 Sekunden bei Leicht |
 | Simulierte Dauer der Effektprüfung | 600 Sekunden mit 60 Schritten pro Sekunde |
@@ -70,6 +71,9 @@ Dann gelingt keine Rettung.
 Eine Prüfsumme kennzeichnet die genauen Fahrdaten und die Fahrberechnung.
 Eine Änderung dieser Daten macht den alten Bericht ungültig.
 Der Modellstil gehört nicht zu den Fahrdaten.
+
+Der Bericht verwendet denselben Start bei fünf Metern wie das Spiel.
+Versuchskennungen ändern die bestätigten Fahrzustände nicht.
 
 Die Werte für Mindesttempo und Höchsttempo steuern die Hilfe.
 Der Bericht bestätigt einzelne Fahrzustände und vollständige Eingabefolgen.
@@ -119,3 +123,45 @@ Er schreibt die alte Fahrtenmatrix unter `/private/tmp`.
 Er überschreibt keinen vorhandenen Abnahmebericht.
 
 Die Anleitung für spätere Modelle steht in `docs/blender-streckenmodelle.md`.
+
+## Ergebnis der unabhängigen Prüfung
+
+Die Prüfung fand keine kritischen Fehler.
+Sie fand sechs Punkte mit Folgen für die Anzeige, den Modelltausch oder die Effekte.
+Gezielte Gegenbeispiele zeigten diese Punkte vor der Korrektur.
+Danach bestanden alle Gegenbeispiele.
+
+- Ein Neustart erhält nun passende bestätigte Tempohinweise.
+- Die Rettungsanzeige nennt das tatsächliche Zieltempo und endet mit der Hilfe.
+- Der Modelltausch beachtet die Darstellungskennung `visual_id`.
+- Eine Ersatzdarstellung erzeugt einen sichtbaren Hinweis.
+- Ein Streckenwechsel entfernt die bisherigen Reifenspuren.
+- Ein tatsächlicher Zusatzschub erzeugt genau einen Ton.
+
+Die Prüfung umfasste keine fremden Landschaftsänderungen.
+Die gesonderten Landschaftstests bestanden trotzdem.
+Die frühere große Randbewegung gehörte nicht zum neuen Fahrmodell.
+Das unveränderte alte Fahrmodell bestimmt weiterhin die vier bisherigen Strecken.
+
+## Entscheidungen bei der Umsetzung
+
+Die Tests verwendeten zuerst leere Schnittstellen, damit fachliche Fehler vor der Umsetzung sichtbar wurden.
+Ein fehlendes Skript galt nicht als solcher Nachweis.
+Fremde Dateien blieben erhalten und außerhalb der Commits.
+Der Aufgabenhelfer erkannte die deutschen Überschriften nicht.
+Ein örtliches Aufgabenprotokoll übernahm deshalb die Zuordnung.
+
+Die Modellprüfung verwendet die tatsächlichen Dreiecke der gespeicherten Fahrfläche.
+Die alten geneigten Flächen stimmen nicht überall mit einer ideal geglätteten Fläche überein.
+Die Abweichungsgrenze bleibt bei zwei Zentimetern.
+Ein falscher Flächenbezug würde eine erneute Modellprüfung erfordern.
+
+Der Prüfläufer erlaubt zusätzliche Anfangszustände für Tempo und Strecke.
+Dadurch kann er die verlangten Anfangstempi prüfen.
+Diese Erweiterung verändert den normalen Spielstart nicht.
+
+Ein alter Spannungstest erwartete noch eine große Randbewegung und einen zweiten notwendigen Tastendruck.
+Diese Erwartungen passten nicht zum bereits vorhandenen unteren Hilfsmodell.
+Der Test prüft jetzt eine sichere Kurvenfahrt mit einer Eingabe und weitere sichere Eingaben.
+Er prüft die frühere große Randbewegung nicht mehr.
+Das alte Fahrmodell blieb unverändert.

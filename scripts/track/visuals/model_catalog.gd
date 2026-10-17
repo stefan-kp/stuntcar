@@ -1,11 +1,12 @@
 extends RefCounted
 const Validator=preload("res://scripts/track/visuals/model_validator.gd")
-static func resolve(style:String,id:String,version:int)->Dictionary:
+static func resolve(style:String,id:String,version:int,form_id:String="")->Dictionary:
+	if form_id.is_empty():form_id=id
 	var data=JSON.parse_string(FileAccess.get_file_as_string("res://assets/stuntcar_styles/catalog.json"))
 	var key:=style+"/"+id
 	if data is Dictionary and data.get("models") is Dictionary and data.models.has(key):
 		var entry:Dictionary=data.models[key]
-		if entry.form_version==version and entry.form_id==id and ResourceLoader.exists(entry.scene_path):
+		if entry.form_version==version and entry.form_id==form_id and ResourceLoader.exists(entry.scene_path):
 			var result:=entry.duplicate(true);result.merge({"fallback":false,"errors":[]});return result
 	return {"scene_path":"","fallback":true,"errors":["model_unavailable:"+key]}
 static func remove_collisions(node:Node)->void:

@@ -31,6 +31,9 @@ Ein Eintrag hat etwa diese Werte:
 
 Der Schlüssel besteht aus dem Stil und der Form, zum Beispiel `mein_stil/straight_24`.
 Die Strecke wählt den Stil über `styles.road`.
+Ein Element wählt die Darstellungskennung über `visual_id`.
+Verschiedene Darstellungskennungen dürfen dieselbe Fahrform verwenden.
+Der Katalog prüft ihre Fahrform trotzdem gegen `form_id` und `form_version`.
 
 Die Anschlussprüfung erlaubt 1 mm Abstand und 0,1 Grad Winkelabweichung.
 Die Prüfung der Fahrfläche erlaubt 2 cm Abweichung.

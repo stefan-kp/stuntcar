@@ -19,6 +19,13 @@ func _initialize()->void:
 		if jump(track,mid):high=mid
 		else:low=mid
 	check(not jump(track,low-0.1) and jump(track,high+0.1),"measured lower jump threshold +/-0.1")
+	var upper_low:=21.0;var upper_high:=40.0
+	for i in range(14):
+		var mid:=(upper_low+upper_high)*0.5
+		if jump(track,mid):upper_low=mid
+		else:upper_high=mid
+	check(jump(track,upper_low-0.1) and not jump(track,upper_high+0.1),"measured upper jump threshold +/-0.1")
+	print("Measured upper jump threshold: ",upper_low,"..",upper_high," m/s")
 	print("Measured lower jump threshold: ",low,"..",high," m/s")
 	check(jump(track,21,2.99) and not jump(track,21,3.01),"actual landing width +/-0.01 m")
 	for level in ["very_easy","easy"]:
@@ -30,4 +37,14 @@ func _initialize()->void:
 		check(float(model.state.help_used.e16)<=budget+0.000001,"help ends at exact tick budget")
 		model.step(1.0/60)
 		check(float(model.state.help_used.e16)<=budget+0.000001,"one later tick cannot renew help")
+	var flat=load("res://tests/spatial/fixtures.gd").make(["straight_24"])
+	flat.definition.landings=[{"launch_id":"launch","target_ids":["e0"],"max_angle_degrees":20.0,"max_impact_mps":12.0}]
+	for impact in [11.9,12.1]:
+		var state=State.new();state.position=Vector3(0,12.0001,-5);state.velocity=Vector3(0,-impact,-40);state.element_id="launch";state.mode="airborne"
+		var result:Dictionary=Flight.step(flat,state,{},1.0/60)
+		check(result.landed if impact<12 else result.crashed,"impact boundary +/-0.1 m/s")
+	for angle in [19.9,20.1]:
+		var state=State.new();state.position=Vector3(0,12.00001,-5);state.velocity=Vector3(sin(deg_to_rad(angle))*100,-0.001,-cos(deg_to_rad(angle))*100);state.element_id="launch";state.mode="airborne"
+		var result:Dictionary=Flight.step(flat,state,{},1.0/60)
+		check(result.landed if angle<20 else result.crashed,"landing angle boundary +/-0.1 degrees")
 	done()

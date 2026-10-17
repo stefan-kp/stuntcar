@@ -23,6 +23,10 @@ func reset(checkpoint_m:float=0)->void:
 	target_speed_mps=22;boost_remaining=0;boost_cooldown=0;emergency_braking=false;recovery_remaining=0
 	curve_assist.reset(attempt_id);assist_events.clear();motion_events.clear();event_serial=0
 	actual_boost=false;holding=false;last_acceleration=Vector3.ZERO;rejection_until_s=-1
+	motion="normal";steering_input=0;assist_speed_active=false;assist_target_mps=22;assist_reason=""
+	speed_feedback="";speed_feedback_seconds=0;landing_pulse=0;drift_angle=0
+	manual_remaining=0;manual_direction=0;correction_remaining=0;guide_offset=0
+	sway_remaining=0;sway_used=false;speed_strength=1;turn_strength=1;jump_assist_until=-1
 	set_assist_level(assist_id);sync_fields()
 func set_assist_level(id:String)->void:
 	super.set_assist_level(id)
@@ -71,9 +75,6 @@ func step(delta:float)->void:
 	var aid:Dictionary=StuntAssist.evaluate(track,state,spatial_profile,effective_target_speed())
 	if aid.get("invalid",false):state.mode="crashed";emit_motion("crash");sync_fields();return
 	assist_speed_active=aid.active;assist_target_mps=aid.target_speed_mps;assist_reason="stunt_speed" if aid.active else ""
-	if recovery_remaining>0:
-		aid.target_speed_mps=minf(aid.target_speed_mps,10);aid.brake_cap_mps2=spatial_profile.assist_brake_mps2
-		recovery_remaining=maxf(0,recovery_remaining-delta);assist_speed_active=true
 	var before_velocity:Vector3=state.velocity
 	var remaining:=delta;var iterations:=0;var hold_used:=false;var boosted:=false
 	while remaining>0.000001 and iterations<8 and state.mode not in ["crashed","finished"]:
@@ -81,8 +82,13 @@ func step(delta:float)->void:
 		aid=StuntAssist.evaluate(track,state,spatial_profile,effective_target_speed())
 		var slice:=remaining
 		if aid.remaining_s>0:slice=minf(slice,aid.remaining_s)
-		if recovery_remaining>0:
+		var recovering:=recovery_remaining>0
+		if recovering:
+			slice=minf(slice,recovery_remaining)
 			aid.target_speed_mps=minf(aid.target_speed_mps,10);aid.brake_cap_mps2=spatial_profile.assist_brake_mps2
+		assist_speed_active=aid.active or recovering
+		assist_target_mps=aid.target_speed_mps
+		assist_reason="late_turn" if recovering else ("stunt_speed" if aid.active else "")
 		var was_mode:String=state.mode
 		var outcome:Dictionary
 		var slice_boost:=false
@@ -95,19 +101,22 @@ func step(delta:float)->void:
 			if boost_remaining>0 and state.thrust_used<spatial_profile.thrust_seconds-0.000001:
 				slice=minf(slice,spatial_profile.thrust_seconds-state.thrust_used)
 				aid.thrust_world_mps2=-state.basis.z*spatial_profile.thrust_mps2
-				slice_boost=true;boosted=true
+				slice_boost=true
 			outcome=Flight.step(track,state,aid,slice)
 			if outcome.landed:landing_pulse=1;emit_motion("landing",outcome.impact_mps)
 		var used:float=slice-outcome.remaining_s
 		if aid.active or outcome.get("hold_used",0)>0:
 			state.help_used[aid.element_id]=minf(spatial_profile.help_seconds,float(state.help_used.get(aid.element_id,0))+used)
-		if slice_boost:state.thrust_used+=used
+		if recovering:recovery_remaining=maxf(0,recovery_remaining-used)
+		if slice_boost:
+			state.thrust_used+=used;boosted=boosted or used>0
 		if was_mode=="grounded" and state.mode=="airborne":emit_motion("contact_lost")
 		remaining-=used
 	if iterations>=8 and remaining>0.000001:state.mode="crashed"
 	if state.mode=="crashed":emit_motion("crash")
 	if hold_used!=holding:emit_motion("hold_start" if hold_used else "hold_end")
-	if boosted!=actual_boost:emit_motion("boost_start" if boosted else "boost_end")
+	if boosted!=actual_boost:emit_motion("boost_start" if boosted else "boost_end",spatial_profile.thrust_mps2 if boosted else 0)
+	if recovery_remaining<=0:motion="normal"
 	holding=hold_used;actual_boost=boosted;last_acceleration=(state.velocity-before_velocity)/delta
 	sync_fields();refresh_assist()
 func feedback_state()->Dictionary:

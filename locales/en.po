@@ -749,3 +749,6 @@ msgstr "Stunt course"
 
 msgid "Kuppe, Steilkurve, Sprung und Looping."
 msgstr "Hill, banked turn, jump and loop."
+
+msgid "I18N_STUNT_MODEL_FALLBACK"
+msgstr "Using a basic track model."

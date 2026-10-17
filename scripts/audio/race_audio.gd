@@ -12,6 +12,7 @@ var road: AudioStreamPlayer
 var forest: AudioStreamPlayer
 var landing: AudioStreamPlayer
 var suspension: AudioStreamPlayer
+var boost: AudioStreamPlayer
 var hint: AudioStreamPlayer
 var motion_seen: Dictionary = {}
 var enabled := false
@@ -32,6 +33,10 @@ func _ready() -> void:
 	forest = make_player("Wald", "forest", true)
 	landing = make_player("Landung", "landing", false)
 	suspension = make_player("Federung", "suspension", false)
+	boost = AudioStreamPlayer.new()
+	boost.name = "Boost"
+	boost.stream = make_boost()
+	add_child(boost)
 	hint = AudioStreamPlayer.new()
 	hint.name = "Hinweis"
 	hint.stream = make_tone()
@@ -107,6 +112,7 @@ func update(model, session, delta: float) -> void:
 	if session.engine_volume <= 0:
 		landing.stop()
 		suspension.stop()
+		boost.stop()
 	if hint_level <= 0: hint.stop()
 	was_running = running
 	was_airborne = model.airborne
@@ -182,7 +188,14 @@ func apply_motion_events(events: Array[Dictionary], session) -> void:
 		if motion_seen.has(event.id): continue
 		motion_seen[event.id] = true
 		if motion_seen.size() > 128: motion_seen.erase(motion_seen.keys()[0])
-		if event.type != "landing" or not session.sound_enabled or session.engine_volume <= 0: continue
+		if not session.sound_enabled or session.engine_volume <= 0: continue
+		if event.type == "boost_start":
+			var gain := (-6.0 if session.voice_enabled else 0.0) + (-9.0 if hint_remaining > 0 else 0.0)
+			boost.volume_db = gain_db(-19.0 + gain, session.engine_volume)
+			boost.play()
+			effect_played.emit("boost")
+			continue
+		if event.type != "landing": continue
 		var strength := clampf(float(event.magnitude) / 12.0, 0, 1)
 		var gain := (-6.0 if session.voice_enabled else 0.0) + (-9.0 if hint_remaining > 0 else 0.0)
 		landing.volume_db = gain_db(lerpf(-24, -8, strength) + gain, session.engine_volume)
@@ -190,3 +203,21 @@ func apply_motion_events(events: Array[Dictionary], session) -> void:
 		landing.play()
 		suspension.play()
 		effect_played.emit("landing")
+
+func make_boost() -> AudioStreamWAV:
+	var noise := RandomNumberGenerator.new()
+	noise.seed = 7301
+	var bytes := PackedByteArray()
+	const COUNT := 8820
+	bytes.resize(COUNT * 2)
+	var filtered := 0.0
+	for i in range(COUNT):
+		var t := float(i) / COUNT
+		filtered = lerpf(filtered, noise.randf_range(-1, 1), 0.3)
+		var envelope := sin(PI * t) * (1 - t)
+		bytes.encode_s16(i * 2, int(filtered * envelope * 22000))
+	var stream := AudioStreamWAV.new()
+	stream.format = AudioStreamWAV.FORMAT_16_BITS
+	stream.mix_rate = 22050
+	stream.data = bytes
+	return stream

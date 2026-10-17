@@ -13,7 +13,7 @@ func _initialize()->void:
 	if not loaded.errors.is_empty():printerr(loaded.errors);quit(1);return
 	var track=loaded.track;var profiles:Dictionary={};var passed:=true
 	for id in ["very_easy","easy"]:
-		var profile:=Assist.profile(id);var model=Drive.new(track);model.set_assist_level(id)
+		var profile:=Assist.profile(id);var model=Drive.new(track);model.set_assist_level(id);model.reset(5.0)
 		var inputs:Array[Dictionary]=[];var samples:Array[Dictionary]=[];var seen:Dictionary={}
 		for tick in range(18000):
 			model.refresh_assist();var hint:Dictionary=model.assist_state()
@@ -26,7 +26,7 @@ func _initialize()->void:
 				seen[e.id]=true;samples.append({"condition":Verification.condition(model),"element_id":e.id,"speed_mps":model.speed_mps,"lateral_m":model.lateral,"mode":model.state.mode,"min_mps":null,"max_mps":null,"target_mps":limits.target_mps})
 			model.step(1.0/60.0);model.take_motion_events()
 			if model.state.mode in ["finished","crashed"]:break
-		var result:Dictionary=Runner.run(track,profile,inputs,18000)
+		var result:Dictionary=Runner.run(track,profile,inputs,18000,{"distance_m":5.0})
 		result.erase("trace")
 		profiles[id]={"digest":Verification.digest(track,profile),"status":"tested_samples","clean_completed":result.finished,"samples":samples,"clean_run":result}
 		passed=passed and result.finished

@@ -213,6 +213,8 @@ func render(session, rebind_message: String = "") -> void:
 		speed_text = tr("I18N_HUD_SPEED_TARGET") % [roundi(model.speed_mps * 3.6), roundi(target_speed * 3.6)]
 	time_label.text = tr("I18N_HUD_TIME") % [speed_text, int(session.total_time + model.elapsed_s) / 60, int(session.total_time + model.elapsed_s) % 60]
 	route_label.text = tr("I18N_HUD_ROUTE") % [model.track.track_name, int(model.distance_m), int(model.track.length_m)]
+	if not session.visual_warnings.is_empty(): route_label.text += " — " + tr("I18N_STUNT_MODEL_FALLBACK")
+	route_label.tooltip_text = "\n".join(session.visual_warnings)
 	var curve: Dictionary = model.track.curves[model.active_curve_id] if model.active_curve_id >= 0 else model.track.next_curve(model.distance_m)
 	var assist: Dictionary = model.assist_state()
 	var near_curve: bool = not curve.is_empty() and assist.phase in ["early", "clean", "late", "rescue"]

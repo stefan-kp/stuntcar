@@ -8,7 +8,7 @@ static func digest(track,profile:Dictionary)->String:
 	for e in data.elements:forms[e.form_id]=track.forms[e.form_id]
 	var hashes:Dictionary={}
 	for path in SOURCES:hashes[path]=FileAccess.get_sha256("res://"+path)
-	return JSON.stringify({"rule_version":1,"dt":1.0/60.0,"definition":data,"forms":forms,"profile":profile,"sources":hashes},"",true,true).sha256_text()
+	return JSON.stringify({"rule_version":2,"dt":1.0/60.0,"definition":data,"forms":forms,"profile":profile,"sources":hashes},"",true,true).sha256_text()
 static func speed_hint(report:Dictionary,expected:String,id:String,state:Dictionary)->Dictionary:
 	if report.get("digest","")!=expected or report.get("status")!="tested_samples":return {}
 	for sample in report.get("samples",[]):
@@ -29,6 +29,8 @@ static func playable(track,profile:Dictionary)->bool:
 
 static func condition(model)->String:
 	var snapshot:Dictionary=model.state.snapshot()
-	# Attempts and elapsed time do not affect geometry; remaining input windows do.
+	# Attempt identifiers do not affect movement; input windows and remaining budgets do.
 	snapshot.erase("attempt_id")
-	return JSON.stringify({"state":snapshot,"curve":model.active_curve_id,"target":model.target_speed_mps,"recovery":model.recovery_remaining,"boost":model.boost_remaining,"curve_assist":model.assist_state()},"",true,true).sha256_text()
+	var input_state:Dictionary=model.assist_state()
+	input_state.erase("opportunity_id")
+	return JSON.stringify({"state":snapshot,"curve":model.active_curve_id,"target":model.target_speed_mps,"recovery":model.recovery_remaining,"boost":model.boost_remaining,"curve_assist":input_state},"",true,true).sha256_text()

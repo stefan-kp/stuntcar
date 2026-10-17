@@ -387,6 +387,10 @@ func build_selected_track() -> void:
 	add_child(builder)
 	if track.get("format_version") == 2: builder.build(track, track.definition.styles)
 	else: builder.build(track)
+	if session != null:
+		session.visual_warnings.clear()
+		if track.get("format_version") == 2:
+			for warning in builder.warnings: session.visual_warnings.append(tr("I18N_STUNT_MODEL_FALLBACK") + " " + warning)
 
 func select_track(path: String) -> void:
 	var loaded: Dictionary = TrackFactory.load_track(path)

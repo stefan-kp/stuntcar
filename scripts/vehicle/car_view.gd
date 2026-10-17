@@ -31,9 +31,9 @@ func _ready() -> void:
 	body.add_child(effects)
 
 func place(model) -> void:
+	feedback.reset()
+	if tire_marks != null: tire_marks.reset()
 	if model.has_method("feedback_state"):
-		feedback.reset()
-		if tire_marks != null: tire_marks.reset()
 		place_spatial({"position":model.state.position,"basis":model.state.basis})
 		if effects!=null:effects.reset()
 		return
