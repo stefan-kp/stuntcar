@@ -1,0 +1,38 @@
+{
+  "format_version": 2,
+  "name": "Test",
+  "description": "Route",
+  "scenario": "forest",
+  "styles": {
+    "road": "neutral",
+    "scenery": "neutral"
+  },
+  "elements": [
+    {
+      "id": "start",
+      "kind": "loop",
+      "form_id": "loop_12",
+      "form_version": 1,
+      "entry_transform": {
+        "position": [
+          0,
+          12,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "input": {
+        "kind": "none"
+      },
+      "assist": {},
+      "visual_id": "straight_24"
+    }
+  ],
+  "landings": [],
+  "report": "reports/test.json"
+}
