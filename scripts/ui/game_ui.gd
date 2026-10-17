@@ -9,6 +9,9 @@ var track_selection: PanelContainer
 const INK := Color("142f3e")
 const PAPER := Color("f4f5e9")
 const MINT := Color("a9e2c8")
+const CUE_EARLY := Color("22b24c")
+const CUE_MID := Color("ff9a3c")
+const CUE_LATE := Color("ff4a3d")
 var root: Control
 var hud: Control
 var menu_panel: PanelContainer
@@ -20,6 +23,8 @@ var route_label: Label
 var time_label: Label
 var hint_label: Label
 var hint_detail: Label
+var cue_sparkles: CPUParticles2D
+var cue_was_accepted := false
 var keys_label: Label
 var status_label: Label
 var voice_label: Label
@@ -94,6 +99,8 @@ func _ready() -> void:
 	hint_detail.add_theme_color_override("font_outline_color", INK)
 	hint_detail.add_theme_constant_override("outline_size", 6)
 	hint_box.add_child(hint_detail)
+	cue_sparkles = make_sparkles()
+	hud.add_child(cue_sparkles)
 	var bottom := panel(hud, Color("142f3ef5"))
 	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
 	bottom.offset_left = 28
@@ -173,6 +180,45 @@ func label(text: String, size: int, color: Color) -> Label:
 	result.add_theme_color_override("font_color", color)
 	return result
 
+func make_sparkles() -> CPUParticles2D:
+	var sparkles := CPUParticles2D.new()
+	sparkles.emitting = false
+	sparkles.one_shot = true
+	sparkles.explosiveness = 1.0
+	sparkles.amount = 90
+	sparkles.lifetime = 1.3
+	sparkles.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
+	sparkles.direction = Vector2.UP
+	sparkles.spread = 180.0
+	sparkles.initial_velocity_min = 70.0
+	sparkles.initial_velocity_max = 260.0
+	sparkles.gravity = Vector2(0, 60)
+	sparkles.angular_velocity_min = -360.0
+	sparkles.angular_velocity_max = 360.0
+	sparkles.scale_amount_min = 6.0
+	sparkles.scale_amount_max = 12.0
+	var fade := Gradient.new()
+	fade.set_color(0, Color("ffe54a"))
+	fade.set_color(1, Color("ffe54a00"))
+	sparkles.color_ramp = fade
+	return sparkles
+
+# Holds green for the first fifth, orange at 60%, red at the curve start.
+func cue_color(curve: Dictionary, distance_m: float, window_m: float) -> Color:
+	var elapsed := clampf(1.0 - (curve.start_m - distance_m) / maxf(window_m, 1.0), 0.0, 1.0)
+	if elapsed < 0.2:
+		return CUE_EARLY
+	if elapsed < 0.6:
+		return CUE_EARLY.lerp(CUE_MID, (elapsed - 0.2) / 0.4)
+	return CUE_MID.lerp(CUE_LATE, (elapsed - 0.6) / 0.4)
+
+func burst_sparkles() -> void:
+	var rect := hint_label.get_global_rect()
+	cue_sparkles.position = rect.get_center()
+	cue_sparkles.emission_rect_extents = Vector2(hint_label.get_minimum_size().x * 0.6, 22.0)
+	cue_sparkles.restart()
+	cue_sparkles.emitting = true
+
 func render(session, rebind_message: String = "") -> void:
 	practice_panel.visible = session.state == "PRACTICE"
 	track_selection.visible = session.state == "TRACKS"
@@ -206,6 +252,7 @@ func render(session, rebind_message: String = "") -> void:
 	status_label.text = tr("I18N_DRIVE_HELP")
 	if session.voice_enabled:
 		status_label.text = tr("I18N_DRIVE_VOICE")
+	var cue_waiting := false
 	if state == "FALLING":
 		hint_label.text = tr("I18N_FALL_TITLE")
 		hint_detail.text = tr("I18N_FALL_HELP")
@@ -220,6 +267,7 @@ func render(session, rebind_message: String = "") -> void:
 	elif near_curve:
 		hint_label.text = tr("I18N_TURN_LEFT") if curve.turn_sign < 0 else tr("I18N_TURN_RIGHT")
 		hint_detail.text = tr("I18N_TURN_PROMPT")
+		cue_waiting = true
 	else:
 		hint_label.text = tr("I18N_STRAIGHT_TITLE")
 		hint_detail.text = tr("I18N_STRAIGHT_HELP")
@@ -232,6 +280,12 @@ func render(session, rebind_message: String = "") -> void:
 			hint_detail.text = tr("I18N_JUMP_RIGHT")
 		else:
 			hint_detail.text = tr("I18N_JUMP_READY")
+		cue_waiting = false
+	hint_label.add_theme_color_override("font_color", cue_color(curve, model.distance_m, model.input_window_m()) if cue_waiting else PAPER)
+	var cue_accepted: bool = state == "RUNNING" and model.active_curve_id >= 0
+	if cue_accepted and not cue_was_accepted:
+		burst_sparkles()
+	cue_was_accepted = cue_accepted
 	if driving and model.emergency_braking:
 		status_label.text = tr("I18N_FULL_BRAKE")
 	elif driving and model.boost_remaining > 0.0:
