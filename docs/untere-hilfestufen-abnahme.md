@@ -88,17 +88,19 @@ Dabei müssen die Testpersonen die Hinweise und das Schlingern beurteilen.
 
 ## Entscheidungen während der Umsetzung
 
-- Der neue Auftrag ergänzt Tempodaten bereits in dieser Stufe. Physikalische Rampengrenzen bleiben offen.
-- Bestehende fremde Änderungen bleiben im Arbeitsbaum. Die eigenen Commits enthalten diese Änderungen nicht.
-- Der Planhelfer erkennt die deutschen Aufgabenüberschriften nicht. Eine separate Fortschrittsdatei hält die Aufgaben fest.
-- Die Testumgebung braucht einen beschreibbaren Logpfad und Zugriff auf den lokalen Test-Cache.
-- Eine lokale Verknüpfung nutzt die vorhandene Godot-Laufzeit und die vorhandenen Sprachmodelle.
-- Die Randprüfung begrenzt die Annahme auf 20 Grad. Die zusätzliche Ausgangshilfe verhindert einen Abbruch der Hilfe am Kurvenende.
-- Langsame Fahrten erhalten ein längeres, weiterhin endliches Eingabefenster. Das Anfangstempo bestimmt dessen Dauer.
-- Bei dicht folgenden Kurven beginnt die nächste Gelegenheit nach der Ausgangshilfe. Ihr erster Abschnitt kann bereits die saubere Eingabephase sein.
-
-Die Ausgabe enthält keine Freigabe für eine Veröffentlichung.
-Die Umsetzung bleibt im vorhandenen Arbeitsbaum.
+1. Die Tempodaten gehören bereits zu diesem Auftrag. Rampengrenzen bleiben leer. Eine echte Sprungprüfung bleibt später nötig.
+2. Fremde Änderungen bleiben außerhalb der eigenen Commits. Ihre Fehler brauchen eine getrennte Zuordnung.
+3. Der Planhelfer erkennt die deutschen Aufgabenüberschriften nicht. Eine manuelle Fortschrittsliste hält die Aufgaben und Ergebnisse fest.
+4. Godot nutzt einen beschreibbaren Pfad für die Prüfprotokolle. Diese Anpassung verändert das Spiel nicht.
+5. Die Prüfung nutzt die vorhandene Laufzeit und die vorhandenen Sprachmodelle. Eine lokale Verknüpfung und der Zugriff auf den Test-Cache ermöglichen dies.
+6. Die Randprüfung begrenzt die Annahme auf weniger als 20 Grad. Die Hilfe sichert den Ausgang noch 16 Meter. Ein stärker verdrehtes Auto erhält keine neue Zusage.
+7. Langsame Fahrten erhalten ein längeres, weiterhin endliches Eingabefenster. Bei Stillstand bleibt der Hinweis deshalb länger offen.
+8. Bei dicht folgenden Kurven prüft die Matrix das erste offene Fenster. Eine Vorschau-Eingabe während der vorherigen Ausgangshilfe ist nicht möglich.
+9. Die fehlende Ablehnungsanzeige zählt für diese zugängliche Steuerung als wichtiger Fehler. Ihre Korrektur ergänzt eine Meldung und verändert keine Fahrregel.
+10. Die vorhandenen Landschaftsarbeiten bleiben außerhalb dieses Auftrags. Die Abschlussprüfung bewertet deren Änderungen nicht.
+11. Tempoabhängige Sprünge, ein allgemeiner Streckensimulator und weitere Hilfestufen folgen später. Die neuen Daten bestätigen keine künftigen Strecken.
+12. Menschliche Mikrofonproben bleiben offen. Die Zugänglichkeit am tatsächlichen Gerät bleibt deshalb unbestätigt.
+13. Die Änderungen bleiben im lokalen Arbeitsbaum. Andere Arbeitsbäume und veröffentlichte Versionen erhalten sie noch nicht.
 
 ## Unabhängige Abschlussprüfung
 
