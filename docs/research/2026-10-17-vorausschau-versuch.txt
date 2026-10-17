@@ -1,0 +1,104 @@
+Versuch zur vorausschauenden Steuerung im Stuntlabor
+17. Oktober 2026
+
+Ergebnis: Die Vorausberechnung liefert im Versuch brauchbare Geschwindigkeitsempfehlungen. Die Auswahl der Pläne und das Ziel der Bewertung sind entscheidend.
+Der Versuch gehört nicht zur Spielsteuerung. Alle Versuchsskripte liegen vorläufig unter /private/tmp. Der Versuch ändert die Fahrphysik nicht.
+
+Umfang und Verfahren
+
+Ich nutzte das echte räumliche Fahrmodell mit 60 Physikschritten je Spielsekunde. Die Streckengeometrie blieb unverändert.
+Ich prüfte zunächst 24 Startzustände. Dazu kamen zwölf Fahrten mit wiederholten Empfehlungen und vier Gegenversuche.
+Die Startzustände umfassten die Kuppe, die Steilkurve, den Sprung, den Looping und die Rechtskurve.
+Ich verglich die beiden vorhandenen Hilfestufen. Je nach Versuch standen die Fahrhilfen vollständig, teilweise oder nicht mehr zur Verfügung.
+Ein vorgegebener Testfahrer lieferte korrekte Kurveneingaben. Der Versuch optimiert die Geschwindigkeit unter dieser Annahme.
+Ein Gegenversuch ließ die Kurveneingaben weg. Die Suche fand dann für die Rechtskurve keinen Plan, der den Abschnitt durchfuhr.
+Zwei Gegenversuche begannen bereits seitlich versetzt in der Steilkurve. Keine geprüfte Variante durchfuhr dort den Abschnitt.
+Das beweist keine Unmöglichkeit. Es zeigt nur die Grenze dieser geprüften Varianten.
+
+Erster Befund: Die Dauer der Vorausschau
+
+Vor dem Sprung startete das Fahrzeug mit 32 Metern je Sekunde. Die Fahrhilfen waren bereits verbraucht.
+Eine erneute Auswahl nach jeweils 0,25 Spielsekunden ergab:
+
+Maximale Vorausschau | Ergebnis im geprüften Sprungabschnitt
+1 Sekunde            | Absturz
+3 Sekunden           | Absturz
+6 Sekunden           | Abschnitt durchfahren
+
+Die kurze Vorausschau bewertete den Flug teilweise vor der Landung. Damit fehlte die spätere Folge der jetzigen Geschwindigkeit.
+Die Planung muss den entscheidenden Ausgang berücksichtigen. Beim Sprung gehört die Landung dazu. Eine feste kurze Dauer genügt dafür nicht.
+
+Zweiter Befund: Ein unveränderter Plan genügt nicht
+
+Im ersten Versuch bestanden die Pläne aus Bremsen, Beschleunigen, Halten und einem späteren Wechsel.
+Nur eine der vier vollständigen Fahrten erreichte das Ziel. Drei Fahrten standen nach 120 Spielsekunden weiterhin vor einem schwierigen Abschnitt.
+Ein wiederholt neu begonnener Plan konnte das spätere Beschleunigen ständig verschieben.
+Eine Bewertung darf Stillstand daher nicht als erfolgreichen Fahrverlauf behandeln. Eine noch nicht beobachtete Landung ist ebenfalls kein Erfolg.
+
+Änderungen ausschließlich im Versuch
+
+Ich ergänzte sieben Zielgeschwindigkeiten und den Plan zum Halten des bisherigen Ziels.
+Die Zielgeschwindigkeiten betrugen 8, 11, 16, 21, 26, 32 und 46 Meter je Sekunde.
+Der Versuch erreicht diese Ziele mit den vorhandenen Geschwindigkeitseingaben. Er setzt die tatsächliche Fahrzeuggeschwindigkeit nicht direkt.
+Die Physik bewertet die Folgen dieser Pläne. Die Zielgeschwindigkeiten sind Suchvorschläge und keine bewiesenen Geschwindigkeitsgrenzen.
+Zusätzlich erhielt die Bewertung ein Ziel hinter dem nächsten schwierigen Abschnitt. Beim Sprung liegt dieses Ziel hinter der Landung.
+Der Versuch nutzt je nach Abschnitt höchstens drei, sechs oder acht Sekunden Vorausschau.
+Der Versuch berechnet nach jeweils 0,25 Spielsekunden erneut. Er führt jeweils nur den nächsten Teil des gewählten Plans aus.
+
+Vollständige Fahrten nach diesen Änderungen
+
+Hilfestufe | Fahrhilfe zu Beginn | Ergebnis | Spielzeit
+Sehr leicht | vollständig | Ziel erreicht | 29.07 Sekunden
+Sehr leicht | verbraucht | Ziel erreicht | 22.83 Sekunden
+Leicht | vollständig | Ziel erreicht | 29.00 Sekunden
+Leicht | verbraucht | Ziel erreicht | 22.83 Sekunden
+
+Alle vier Fahrten erreichten das Ziel. Die verschiedenen Fahrhilfen verändern auch die Fahrzeit.
+Die Fahrzeiten beweisen daher keine beste Lösung und dienen nicht als allgemeiner Vergleich der Hilfestufen.
+
+Zusätzliche Endprüfung
+
+Ich prüfte vier Abschnitte mit jeweils drei Startgeschwindigkeiten: 12, 22 und 38 Meter je Sekunde.
+Die Fahrhilfe hatte dabei noch eine Sekunde je Streckenelement zur Verfügung.
+Alle zwölf Fahrten durchfuhren ihren Abschnitt. Die Abschnitte waren die Kuppe, der Sprung, der Looping und die Rechtskurve.
+
+Rechenzeit und Verbesserung
+
+Gleiche Plananfänge lassen sich gemeinsam berechnen. Erst bei unterschiedlichen Eingaben benötigt die Suche getrennte Zustände.
+Ich verglich die gemeinsame Berechnung mit der getrennten Berechnung aller Pläne. Beide Verfahren lieferten dieselben geprüften Ergebnisse und dieselbe Auswahl.
+Die folgende Tabelle zeigt den mittleren sortierten Wert aus fünf Zeitmessungen nach einem vorbereitenden Lauf.
+Die Messung enthält die Zustandskopien, die Physik, die Bewertung und die Auswahl. Die Darstellung und der einmalige Aufbau fehlen.
+Jede Auswahl vergleicht acht Pläne. Die Pläne enden beim Abschnittsziel, bei einem Absturz oder nach der maximalen Vorausschau.
+
+Abschnitt | Maximale Vorausschau | Getrennt | Gemeinsame Anfänge | Zeitersparnis
+kuppe | 6 Sekunden | 51.8 ms | 43.1 ms | 16.7 Prozent
+sprung | 8 Sekunden | 120.2 ms | 102.4 ms | 14.8 Prozent
+looping | 6 Sekunden | 67.4 ms | 57.5 ms | 14.7 Prozent
+kurve | 6 Sekunden | 37.7 ms | 30.2 ms | 19.7 Prozent
+
+Die vollständigen Fahrten benötigten höchstens 138.5 Millisekunden je Auswahl in diesen Messungen.
+Die Messung enthält keine gleichzeitige Darstellung des Spiels. Sie beweist keine feste Rechenzeit im laufenden Spiel.
+Die Physik des Fahrzeugs wartet im Versuch während der Berechnung. Ein späterer Einsatz muss den Zeitversatz berücksichtigen.
+Eine spätere Steuerung muss deshalb den Ausgangszustand und das Alter einer Empfehlung prüfen. Sie muss alte Empfehlungen verwerfen.
+
+Prüfung der Zustandskopien
+
+Die Kopien enthalten auch die Fahrhilfen, die Ziele der Geschwindigkeit, die Kurvenfreigaben, die Eingaben und deren Zeitwerte.
+Kopierte Zustände lieferten dieselbe Fortsetzung. Das galt auch während des Flugs. Änderungen der Fahrhilfen einer Kopie veränderten andere Kopien nicht.
+Alle vier Versuchsprogramme endeten erfolgreich. Alle enthaltenen Prüfungen der Kopien und Ergebnisgleichheit bestanden.
+Godot meldete beim Start einen Fehler beim Lesen der Systemzertifikate. Die lokalen Versuche liefen danach vollständig zu Ende.
+
+Folgerungen für den Entwurf
+
+Die Vorausschau sollte den entscheidenden Streckenabschnitt vollständig erfassen. Eine feste Dauer von einer Sekunde reicht nicht.
+Die Suche sollte wenige Pläne prüfen. Zielgeschwindigkeiten mit klaren Abschnittszielen ergänzen zeitgesteuerte Eingabefolgen sinnvoll.
+Die Suche sollte gemeinsame Plananfänge einmal berechnen. Der Versuch prüft diese Verbesserung ohne eine Änderung der Physik.
+Eine erneute Berechnung darf den noch nötigen späteren Teil eines Plans nicht ständig verschieben.
+Die Schnittstelle muss Erfolg, offenen Ausgang und das Scheitern aller geprüften Pläne getrennt melden.
+Die Bewertung braucht später zusätzlich einen Abstand zu Fehlergrenzen und möglichst wenige Eingabewechsel.
+Die jetzige Bewertung bevorzugt das Durchfahren und den Fortschritt. Sie bewertet noch keinen Fahrkomfort.
+Die Steuerung muss ausdrücklich verlangte Aktionen weiterhin ausführen. Dieser Versuch prüft diese Regel noch nicht.
+Der Testfahrer ersetzt weder die Spracheingabe noch einen Menschen. Der Versuch beweist keine allgemein beste Aktion.
+Für neue Level bleiben weitere Startzustände und Gegenversuche nötig. Eine erfolgreiche Fahrt beweist keine durchgehend sichere Strecke.
+
+Die Messwerte stehen auszugsweise in 2026-10-17-vorausschau-messwerte.json. Die Datei enthält auch die Kennwerte der verwendeten Quelldateien.

@@ -1,0 +1,728 @@
+{
+  "herkunft": {
+    "datum": "2026-10-17",
+    "godot": "4.5.1 stable",
+    "commit": "5a37796a6c623e5243a193261c66af975a332dc9",
+    "sha256": {
+      "tracks/06_stuntlabor.json": "141cd5c6b7d7b31f45fe5e0b11f59bb59872f88632455bba9394eb45b3059c3b",
+      "scripts/vehicle/drive_model.gd": "62f658e2f8556d3bfb9ef764c6cd66ed247ec6fd268d6f660a0aa2a68f02b761",
+      "scripts/vehicle/curve_assist.gd": "c3100da965ddfd09d440cc03547e23ec32c6547c2460a9d8105056718f36e8d4",
+      "scripts/vehicle/spatial_drive_model.gd": "8c9b71d4fdb45079f63fa9104b35920b65b8663ec7dad59026d13759cb40a8fc",
+      "scripts/vehicle/spatial/drive_state.gd": "f15f09ece22d7c2849eea18662ff684f307f27ab7d85ae64a66dee725fa52a1a",
+      "scripts/vehicle/spatial/surface_motion.gd": "c4c32cdedab4f4ff42993a1a4b113a1d8419eba8d34550f3c8229631e5136b14",
+      "scripts/vehicle/spatial/flight_motion.gd": "48696180770cd904cb6118fc8a1d013c56de384eaacb4d48e1edd95040663bd2",
+      "scripts/vehicle/spatial/stunt_assist.gd": "98a822858b3ce59b3549958403820c685e2d6f3660cf340305e6e70576870e22",
+      "scripts/vehicle/spatial/profiles.json": "d4c185a4f25d07d44d8124cefbac5c2b2e1257f71843a948230c2038d0fd70a9",
+      "scripts/track/spatial/spatial_track.gd": "f374b186996dafb725fbe94e0bc4bcbbf3d0a14d739737554a630bfb07d8c948",
+      "scripts/track/spatial/surface_query.gd": "cfd95085e5fddce3d1ac7041850770c5fb79554e2f5b770b230d57ce3a435ae9"
+    }
+  },
+  "umfang": {
+    "startzustaende": 24,
+    "abschnittsfahrten_im_ersten_versuch": 12,
+    "gegenversuche": 4
+  },
+  "kopier_und_vergleichspruefungen": {
+    "erster_versuch": [
+      {
+        "name": "Kopierte Zustände liefern dieselbe Fortsetzung",
+        "passed": true
+      },
+      {
+        "name": "Getrennte Modelle haben getrennte Zustände",
+        "passed": true
+      },
+      {
+        "name": "Der vollständige Zustand lässt sich wiederherstellen",
+        "passed": true
+      },
+      {
+        "name": "Die Kopierprüfung enthält einen Flugzustand",
+        "passed": true
+      },
+      {
+        "name": "Auch der Flugzustand liefert dieselbe Fortsetzung",
+        "passed": true
+      },
+      {
+        "name": "Fahrhilfen bleiben je Modell unabhängig",
+        "passed": true
+      }
+    ],
+    "gleiche_plananfaenge": [
+      {
+        "name": "Kopierte Zustände liefern dieselbe Fortsetzung",
+        "passed": true
+      },
+      {
+        "name": "Getrennte Modelle haben getrennte Zustände",
+        "passed": true
+      },
+      {
+        "name": "Der vollständige Zustand lässt sich wiederherstellen",
+        "passed": true
+      },
+      {
+        "name": "Die Kopierprüfung enthält einen Flugzustand",
+        "passed": true
+      },
+      {
+        "name": "Auch der Flugzustand liefert dieselbe Fortsetzung",
+        "passed": true
+      },
+      {
+        "name": "Fahrhilfen bleiben je Modell unabhängig",
+        "passed": true
+      },
+      {
+        "name": "kuppe/8: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "kuppe/8: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "kuppe/19: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "kuppe/19: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "sprung/8: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "sprung/8: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "sprung/19: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "sprung/19: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "looping/8: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "looping/8: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "looping/19: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "looping/19: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "kurve/8: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "kurve/8: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "kurve/19: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "kurve/19: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      }
+    ],
+    "zielgeschwindigkeiten": [
+      {
+        "name": "Kopierte Zustände liefern dieselbe Fortsetzung",
+        "passed": true
+      },
+      {
+        "name": "Getrennte Modelle haben getrennte Zustände",
+        "passed": true
+      },
+      {
+        "name": "Der vollständige Zustand lässt sich wiederherstellen",
+        "passed": true
+      },
+      {
+        "name": "Die Kopierprüfung enthält einen Flugzustand",
+        "passed": true
+      },
+      {
+        "name": "Auch der Flugzustand liefert dieselbe Fortsetzung",
+        "passed": true
+      },
+      {
+        "name": "Fahrhilfen bleiben je Modell unabhängig",
+        "passed": true
+      },
+      {
+        "name": "kuppe: Zielgeschwindigkeiten: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "kuppe: Zielgeschwindigkeiten: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "sprung: Zielgeschwindigkeiten: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "sprung: Zielgeschwindigkeiten: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "looping: Zielgeschwindigkeiten: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "looping: Zielgeschwindigkeiten: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "kurve: Zielgeschwindigkeiten: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "kurve: Zielgeschwindigkeiten: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      }
+    ],
+    "endpruefung": [
+      {
+        "name": "Kopierte Zustände liefern dieselbe Fortsetzung",
+        "passed": true
+      },
+      {
+        "name": "Getrennte Modelle haben getrennte Zustände",
+        "passed": true
+      },
+      {
+        "name": "Der vollständige Zustand lässt sich wiederherstellen",
+        "passed": true
+      },
+      {
+        "name": "Die Kopierprüfung enthält einen Flugzustand",
+        "passed": true
+      },
+      {
+        "name": "Auch der Flugzustand liefert dieselbe Fortsetzung",
+        "passed": true
+      },
+      {
+        "name": "Fahrhilfen bleiben je Modell unabhängig",
+        "passed": true
+      },
+      {
+        "name": "kuppe: Endprüfung: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "kuppe: Endprüfung: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "sprung: Endprüfung: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "sprung: Endprüfung: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "looping: Endprüfung: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "looping: Endprüfung: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      },
+      {
+        "name": "kurve: Endprüfung: gleiche Auswahl",
+        "passed": true
+      },
+      {
+        "name": "kurve: Endprüfung: gleiche Ergebnisse für alle Pläne",
+        "passed": true
+      }
+    ]
+  },
+  "sprung_vorausschau": [
+    {
+      "vorausschau_s": 1.0,
+      "ergebnis": "crashed",
+      "abschnitt_durchfahren": false
+    },
+    {
+      "vorausschau_s": 3.0,
+      "ergebnis": "crashed",
+      "abschnitt_durchfahren": false
+    },
+    {
+      "vorausschau_s": 6.0,
+      "ergebnis": "grounded",
+      "abschnitt_durchfahren": true
+    }
+  ],
+  "erste_vollfahrten": [
+    {
+      "air_ticks": 0,
+      "completed_section": false,
+      "distance_m": 218.286840745007,
+      "elapsed_ms": 44205.821,
+      "element_id": "e7",
+      "extra_help_s": 8.65,
+      "first_action_switches": 11,
+      "help": "fresh",
+      "interval_s": 0.25,
+      "level": "very_easy",
+      "mode": "grounded",
+      "peak_lateral_m": 0.0,
+      "progress_m": 213.286840745007,
+      "seconds": 120.0,
+      "speed_mps": 3.75493846149766e-06,
+      "steps": 7200,
+      "target_mps": 0.0
+    },
+    {
+      "air_ticks": 0,
+      "completed_section": false,
+      "distance_m": 309.793432435616,
+      "elapsed_ms": 50789.452,
+      "element_id": "e11",
+      "extra_help_s": 0.0,
+      "first_action_switches": 19,
+      "help": "exhausted",
+      "interval_s": 0.25,
+      "level": "very_easy",
+      "mode": "grounded",
+      "peak_lateral_m": 0.0,
+      "progress_m": 304.793432435616,
+      "seconds": 120.0,
+      "speed_mps": 0.0,
+      "steps": 7200,
+      "target_mps": 0.0
+    },
+    {
+      "air_ticks": 93,
+      "completed_section": true,
+      "distance_m": 619.313178867102,
+      "elapsed_ms": 12173.953,
+      "element_id": "e22",
+      "extra_help_s": 13.0298812071557,
+      "first_action_switches": 15,
+      "help": "fresh",
+      "interval_s": 0.25,
+      "level": "easy",
+      "mode": "finished",
+      "peak_lateral_m": 3.23875974268794e-09,
+      "progress_m": 614.313178867102,
+      "seconds": 30.35,
+      "speed_mps": 39.2370185852051,
+      "steps": 1821,
+      "target_mps": 39.2370204925537
+    },
+    {
+      "air_ticks": 0,
+      "completed_section": false,
+      "distance_m": 309.793432435616,
+      "elapsed_ms": 51025.523,
+      "element_id": "e11",
+      "extra_help_s": 0.0,
+      "first_action_switches": 19,
+      "help": "exhausted",
+      "interval_s": 0.25,
+      "level": "easy",
+      "mode": "grounded",
+      "peak_lateral_m": 0.0,
+      "progress_m": 304.793432435616,
+      "seconds": 120.0,
+      "speed_mps": 0.0,
+      "steps": 7200,
+      "target_mps": 0.0
+    }
+  ],
+  "verbesserte_vollfahrten": [
+    {
+      "air_ticks": 93,
+      "completed_section": true,
+      "distance_m": 619.313178867102,
+      "elapsed_ms": 7105.668,
+      "element_id": "e22",
+      "extra_help_s": 13.396648910086,
+      "first_action_switches": 16,
+      "help": "fresh",
+      "level": "very_easy",
+      "mode": "finished",
+      "peak_lateral_m": 3.75957614654266e-09,
+      "progress_m": 614.313178867102,
+      "seconds": 29.0666666666667,
+      "speed_mps": 42.8866920471191,
+      "steps": 1744,
+      "target_mps": 43.0333360036213
+    },
+    {
+      "air_ticks": 97,
+      "completed_section": true,
+      "distance_m": 619.313178867102,
+      "elapsed_ms": 4872.005,
+      "element_id": "e22",
+      "extra_help_s": 0.0,
+      "first_action_switches": 11,
+      "help": "exhausted",
+      "level": "very_easy",
+      "mode": "finished",
+      "peak_lateral_m": 3.07524397668895e-09,
+      "progress_m": 614.313178867102,
+      "seconds": 22.8333333333333,
+      "speed_mps": 45.967716217041,
+      "steps": 1370,
+      "target_mps": 45.9677177429199
+    },
+    {
+      "air_ticks": 93,
+      "completed_section": true,
+      "distance_m": 619.313178867102,
+      "elapsed_ms": 6966.407,
+      "element_id": "e22",
+      "extra_help_s": 13.3144290736437,
+      "first_action_switches": 14,
+      "help": "fresh",
+      "level": "easy",
+      "mode": "finished",
+      "peak_lateral_m": 3.23698938705156e-09,
+      "progress_m": 614.313178867102,
+      "seconds": 29.0,
+      "speed_mps": 42.353515625,
+      "steps": 1740,
+      "target_mps": 42.4194869995116
+    },
+    {
+      "air_ticks": 97,
+      "completed_section": true,
+      "distance_m": 619.313178867102,
+      "elapsed_ms": 4889.018,
+      "element_id": "e22",
+      "extra_help_s": 0.0,
+      "first_action_switches": 11,
+      "help": "exhausted",
+      "level": "easy",
+      "mode": "finished",
+      "peak_lateral_m": 3.07524397668895e-09,
+      "progress_m": 614.313178867102,
+      "seconds": 22.8333333333333,
+      "speed_mps": 45.967716217041,
+      "steps": 1370,
+      "target_mps": 45.9677177429199
+    }
+  ],
+  "endpruefung_zeitmessung": [
+    {
+      "candidates": 8,
+      "completed_section": true,
+      "horizon_s": 6.0,
+      "mode": "grounded",
+      "plain_median_ms": 51.793,
+      "scenario": "kuppe",
+      "selected": "ziel_11",
+      "tree_max_ms": 43.818,
+      "tree_median_ms": 43.139,
+      "tree_min_ms": 42.284
+    },
+    {
+      "candidates": 8,
+      "completed_section": true,
+      "horizon_s": 8.0,
+      "mode": "grounded",
+      "plain_median_ms": 120.231,
+      "scenario": "sprung",
+      "selected": "ziel_21",
+      "tree_max_ms": 103.987,
+      "tree_median_ms": 102.382,
+      "tree_min_ms": 100.756
+    },
+    {
+      "candidates": 8,
+      "completed_section": true,
+      "horizon_s": 6.0,
+      "mode": "grounded",
+      "plain_median_ms": 67.428,
+      "scenario": "looping",
+      "selected": "ziel_46",
+      "tree_max_ms": 58.834,
+      "tree_median_ms": 57.489,
+      "tree_min_ms": 57.115
+    },
+    {
+      "candidates": 8,
+      "completed_section": true,
+      "horizon_s": 6.0,
+      "mode": "grounded",
+      "plain_median_ms": 37.682,
+      "scenario": "kurve",
+      "selected": "ziel_46",
+      "tree_max_ms": 30.986,
+      "tree_median_ms": 30.245,
+      "tree_min_ms": 30.048
+    }
+  ],
+  "endpruefung_abschnitte": [
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "kuppe",
+      "speed_mps": 12.0,
+      "result": {
+        "air_ticks": 0,
+        "completed_section": true,
+        "distance_m": 114.860281183335,
+        "elapsed_ms": 639.689,
+        "element_id": "e4",
+        "extra_help_s": 1.0,
+        "mode": "grounded",
+        "peak_lateral_m": 0.0,
+        "progress_m": 60.860281183335,
+        "seconds": 4.36666666666667,
+        "speed_mps": 26.0,
+        "steps": 262,
+        "target_mps": 26.0000000000001
+      }
+    },
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "kuppe",
+      "speed_mps": 22.0,
+      "result": {
+        "air_ticks": 0,
+        "completed_section": true,
+        "distance_m": 115.05732400977,
+        "elapsed_ms": 570.212,
+        "element_id": "e4",
+        "extra_help_s": 1.0,
+        "mode": "grounded",
+        "peak_lateral_m": 0.0,
+        "progress_m": 61.0573240097701,
+        "seconds": 4.4,
+        "speed_mps": 27.1111755371094,
+        "steps": 264,
+        "target_mps": 28.5333320617676
+      }
+    },
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "kuppe",
+      "speed_mps": 38.0,
+      "result": {
+        "air_ticks": 0,
+        "completed_section": true,
+        "distance_m": 114.731790855652,
+        "elapsed_ms": 508.429,
+        "element_id": "e4",
+        "extra_help_s": 1.0,
+        "mode": "grounded",
+        "peak_lateral_m": 0.0,
+        "progress_m": 60.7317908556524,
+        "seconds": 4.11666666666667,
+        "speed_mps": 26.033332824707,
+        "steps": 247,
+        "target_mps": 26.0333320617676
+      }
+    },
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "sprung",
+      "speed_mps": 12.0,
+      "result": {
+        "air_ticks": 100,
+        "completed_section": true,
+        "distance_m": 339.75716088266,
+        "elapsed_ms": 1039.142,
+        "element_id": "e13",
+        "extra_help_s": 1.0,
+        "mode": "grounded",
+        "peak_lateral_m": 2.66523123195773e-07,
+        "progress_m": 65.0928568646398,
+        "seconds": 4.18333333333333,
+        "speed_mps": 29.0917358398438,
+        "steps": 251,
+        "target_mps": 30.8999919891358
+      }
+    },
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "sprung",
+      "speed_mps": 22.0,
+      "result": {
+        "air_ticks": 102,
+        "completed_section": true,
+        "distance_m": 339.360736853503,
+        "elapsed_ms": 1057.351,
+        "element_id": "e13",
+        "extra_help_s": 1.0,
+        "mode": "grounded",
+        "peak_lateral_m": 4.70207398952932e-09,
+        "progress_m": 64.6964328354828,
+        "seconds": 4.05,
+        "speed_mps": 28.7557601928711,
+        "steps": 243,
+        "target_mps": 29.5000000000001
+      }
+    },
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "sprung",
+      "speed_mps": 38.0,
+      "result": {
+        "air_ticks": 98,
+        "completed_section": true,
+        "distance_m": 339.376706930503,
+        "elapsed_ms": 952.487,
+        "element_id": "e13",
+        "extra_help_s": 1.0,
+        "mode": "grounded",
+        "peak_lateral_m": 4.29297329853818e-09,
+        "progress_m": 64.7124029124826,
+        "seconds": 4.01666666666667,
+        "speed_mps": 29.3471355438232,
+        "steps": 241,
+        "target_mps": 30.8666674296062
+      }
+    },
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "looping",
+      "speed_mps": 12.0,
+      "result": {
+        "air_ticks": 0,
+        "completed_section": true,
+        "distance_m": 487.79785988936,
+        "elapsed_ms": 567.774,
+        "element_id": "e17",
+        "extra_help_s": 1.0,
+        "mode": "grounded",
+        "peak_lateral_m": 0.0,
+        "progress_m": 104.509813499542,
+        "seconds": 3.51666666666667,
+        "speed_mps": 45.9999885559082,
+        "steps": 211,
+        "target_mps": 45.9999885559081
+      }
+    },
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "looping",
+      "speed_mps": 22.0,
+      "result": {
+        "air_ticks": 0,
+        "completed_section": true,
+        "distance_m": 487.443934699327,
+        "elapsed_ms": 543.745,
+        "element_id": "e17",
+        "extra_help_s": 1.0,
+        "mode": "grounded",
+        "peak_lateral_m": 0.0,
+        "progress_m": 104.155888309509,
+        "seconds": 3.36666666666667,
+        "speed_mps": 45.9999961853027,
+        "steps": 202,
+        "target_mps": 45.9999980926512
+      }
+    },
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "looping",
+      "speed_mps": 38.0,
+      "result": {
+        "air_ticks": 0,
+        "completed_section": true,
+        "distance_m": 487.905260717293,
+        "elapsed_ms": 484.657,
+        "element_id": "e17",
+        "extra_help_s": 1.0,
+        "mode": "grounded",
+        "peak_lateral_m": 0.0,
+        "progress_m": 104.617214327474,
+        "seconds": 3.25,
+        "speed_mps": 45.8666725158691,
+        "steps": 195,
+        "target_mps": 45.8666718800861
+      }
+    },
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "kurve",
+      "speed_mps": 12.0,
+      "result": {
+        "air_ticks": 0,
+        "completed_section": true,
+        "distance_m": 581.76382339279,
+        "elapsed_ms": 236.506,
+        "element_id": "e21",
+        "extra_help_s": 0.0166666666666515,
+        "mode": "grounded",
+        "peak_lateral_m": 0.0,
+        "progress_m": 50.4416794804747,
+        "seconds": 2.23333333333333,
+        "speed_mps": 31.8333034515381,
+        "steps": 134,
+        "target_mps": 32.000015894572
+      }
+    },
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "kurve",
+      "speed_mps": 22.0,
+      "result": {
+        "air_ticks": 0,
+        "completed_section": true,
+        "distance_m": 581.488907976892,
+        "elapsed_ms": 169.28,
+        "element_id": "e21",
+        "extra_help_s": 0.0,
+        "mode": "grounded",
+        "peak_lateral_m": 0.0,
+        "progress_m": 50.1667640645769,
+        "seconds": 1.88333333333333,
+        "speed_mps": 32.0,
+        "steps": 113,
+        "target_mps": 32.0000006357829
+      }
+    },
+    {
+      "remaining_help_s_per_element": 1,
+      "scenario": "kurve",
+      "speed_mps": 38.0,
+      "result": {
+        "air_ticks": 0,
+        "completed_section": true,
+        "distance_m": 581.758300548072,
+        "elapsed_ms": 145.268,
+        "element_id": "e21",
+        "extra_help_s": 0.0999999999999943,
+        "mode": "grounded",
+        "peak_lateral_m": 0.0,
+        "progress_m": 50.4361566357564,
+        "seconds": 1.76666666666667,
+        "speed_mps": 32.3000068664551,
+        "steps": 106,
+        "target_mps": 32.3000087738037
+      }
+    }
+  ],
+  "methode": "Endprüfung mit acht Zielgeschwindigkeitsplänen. Vier Abschnitte mit drei Startgeschwindigkeiten und einer verbleibenden Hilfesekunde je Element. Neue Auswahl nach jeweils 0,25 Spielsekunden. Zeitmessung mit fünf Wiederholungen nach Aufwärmen, einschließlich Zustandskopien und Auswahl. Ohne Darstellung. Vorgeschriebene korrekte Kurveneingaben.",
+  "grenzen": [
+    "Zielgeschwindigkeiten bilden zusätzliche Kandidaten. Die Physik bewertet die Kandidaten.",
+    "Ein Testfahrer gibt korrekte Kurveneingaben vor.",
+    "Abschnittsziele und eine Vorausschau von drei, sechs oder acht Sekunden begrenzen die Suche.",
+    "Keine Einbindung in die Spielsteuerung."
+  ],
+  "rohdaten_hinweis": "Auszug aus dem temporären Machbarkeitsversuch. Kein nachspielbarer Abnahmebericht. Die Versuchsskripte und vollständigen Suchdaten liegen nur vorläufig unter /private/tmp."
+}
