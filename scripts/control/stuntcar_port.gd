@@ -1,5 +1,7 @@
 extends "res://addons/accessible_controls/core/game_port.gd"
 const Actions=preload("res://scripts/control/stuntcar_actions.gd")
+const Hints=preload("res://scripts/control/stuntcar_hints.gd")
+const Rules=preload("res://scripts/control/stuntcar_rules.gd")
 const Contract=preload("res://addons/accessible_controls/core/contract.gd")
 var model
 var session=""
@@ -20,8 +22,8 @@ func context(now_ms:int)->Dictionary:
  if current!=last_condition:revision+=1;last_condition=current
  return {"session_id":session,"decision_revision":revision,"state_step":roundi(model.elapsed_s*60),"opportunity_id":model.assist_state().opportunity_id,"valid_until_ms":now_ms+100,"catalog_version":1,"model_version":"stuntcar:2","assist_profile_id":Actions.control_profile(model).profile_id,"condition":current}
 func assess(request:Dictionary)->Dictionary:
- var answer=context(request.now_ms)
- answer.merge({"schema_version":1,"objective_id":"stuntcar_rules_v1","horizon_ms":0,"scoring_version":1,"assessment_method":"rules_only","hints":[],"proposals":[]})
+ var answer=Rules.assess(model,request,Hints.read(model,request.now_ms),request.now_ms)
+ answer.merge(context(request.now_ms),true)
  return answer
 func reject(reason:String)->Dictionary:return {"result":"rejected","reason_code":reason,"actions":[]}
 func apply(decision:Dictionary,now_ms:int)->Dictionary:
