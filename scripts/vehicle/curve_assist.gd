@@ -28,16 +28,18 @@ func update(curve: Dictionary, state: Dictionary, selected: Dictionary) -> void:
 		serial += 1
 		data = {"curve_id":curve.id,"opportunity_id":attempt * 10000 + serial,"phase":"closed","authorized":false,
 			"turn_sign":curve.turn_sign,"opened_at_s":-1.0,"expires_at_s":-1.0,"accepted_phase":"","closed_reason":"not_open"}
+	if data.authorized:
+		if state.distance_m >= curve.end_m + profile.exit_distance_m: close("completed")
+		return
 	if state.distance_m >= curve.end_m:
 		close("completed")
 		return
-	if data.authorized: return
 	if data.closed_reason not in ["not_open", ""]: return
 	if data.opened_at_s < 0.0:
 		reference_speed = maxf(22.0, maxf(state.speed_mps, state.target_speed_mps))
 		if state.distance_m < curve.start_m - reference_speed * state.hint_seconds: return
 		data.opened_at_s = state.elapsed_s
-		data.expires_at_s = state.elapsed_s + maxf(10.0, 2.0 * state.hint_seconds)
+		data.expires_at_s = state.elapsed_s + maxf(10.0, 2.0 * state.hint_seconds * reference_speed / maxf(5.0, maxf(state.speed_mps, state.target_speed_mps)))
 		data.closed_reason = ""
 	if state.elapsed_s >= data.expires_at_s:
 		close("expired")

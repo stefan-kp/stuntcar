@@ -16,7 +16,7 @@ var hud: Control
 var menu_panel: PanelContainer
 var menu_title: Label
 var menu_subtitle: Label
-var menu_buttons: VBoxContainer
+var menu_buttons: GridContainer
 var menu_footer: Label
 var route_label: Label
 var time_label: Label
@@ -139,8 +139,10 @@ func _ready() -> void:
 	menu_subtitle.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	menu_subtitle.custom_minimum_size = Vector2(365, 64)
 	content.add_child(menu_subtitle)
-	menu_buttons = VBoxContainer.new()
-	menu_buttons.add_theme_constant_override("separation", 8)
+	menu_buttons = GridContainer.new()
+	menu_buttons.columns = 1
+	menu_buttons.add_theme_constant_override("v_separation", 8)
+	menu_buttons.add_theme_constant_override("h_separation", 12)
 	content.add_child(menu_buttons)
 	menu_footer = label("", 15, MINT)
 	menu_footer.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -199,6 +201,7 @@ func render(session, rebind_message: String = "") -> void:
 	var model = session.model
 	var state: String = session.state
 	var driving := state in ["RUNNING", "FALLING"]
+	voice_compass.steering_bars = false
 	voice_compass.visible = voice_visible and state == "RUNNING"
 	menu_panel.visible = not driving
 	hint_label.visible = driving
@@ -210,8 +213,9 @@ func render(session, rebind_message: String = "") -> void:
 		speed_text = tr("I18N_HUD_SPEED_TARGET") % [roundi(model.speed_mps * 3.6), roundi(target_speed * 3.6)]
 	time_label.text = tr("I18N_HUD_TIME") % [speed_text, int(session.total_time + model.elapsed_s) / 60, int(session.total_time + model.elapsed_s) % 60]
 	route_label.text = tr("I18N_HUD_ROUTE") % [model.track.track_name, int(model.distance_m), int(model.track.length_m)]
-	var curve: Dictionary = model.track.next_curve(model.distance_m)
-	var near_curve: bool = not curve.is_empty() and curve.start_m - model.distance_m <= model.input_window_m()
+	var curve: Dictionary = model.track.curves[model.active_curve_id] if model.active_curve_id >= 0 else model.track.next_curve(model.distance_m)
+	var assist: Dictionary = model.assist_state()
+	var near_curve: bool = not curve.is_empty() and assist.phase in ["early", "clean", "late", "rescue"]
 	keys_label.text = tr("I18N_DRIVE_KEYS") % [left_name, right_name, faster_name, slower_name]
 	status_label.text = tr("I18N_DRIVE_HELP")
 	if session.voice_enabled:
@@ -221,20 +225,25 @@ func render(session, rebind_message: String = "") -> void:
 		hint_detail.text = tr("I18N_FALL_HELP")
 	elif model.active_curve_id >= 0:
 		hint_label.text = tr("I18N_TURN_LEFT_SELECTED") if model.track.curves[model.active_curve_id].turn_sign < 0 else tr("I18N_TURN_RIGHT_SELECTED")
-		if model.correction_remaining > 0.0:
-			hint_detail.text = tr("I18N_TURN_CORRECTION")
-		elif absf(model.lateral) > 1.6:
-			hint_detail.text = tr("I18N_TURN_EDGE")
+		if model.distance_m < curve.start_m:
+			hint_detail.text = tr("I18N_ASSIST_SAVED")
+		elif assist.motion in ["late_turn", "rescue_turn"]:
+			hint_detail.text = tr("I18N_ASSIST_RESCUE")
+		elif assist.motion == "safe_sway":
+			hint_detail.text = tr("I18N_ASSIST_SWAY")
 		else:
-			hint_detail.text = tr("I18N_TURN_SELECTED_HELP")
+			hint_detail.text = tr("I18N_ASSIST_ACTIVE")
 	elif near_curve:
 		hint_label.text = tr("I18N_TURN_LEFT") if curve.turn_sign < 0 else tr("I18N_TURN_RIGHT")
-		hint_detail.text = tr("I18N_TURN_PROMPT")
+		hint_detail.text = tr("I18N_ASSIST_LAST_CHANCE") if assist.phase == "rescue" else tr("I18N_TURN_PROMPT")
+	elif assist.phase == "closed" and assist.closed_reason in ["expired", "outside_support", "missed"]:
+		hint_label.text = tr("I18N_ASSIST_MISSED")
+		hint_detail.text = tr("I18N_ASSIST_MISSED_HELP")
 	else:
 		hint_label.text = tr("I18N_STRAIGHT_TITLE")
 		hint_detail.text = tr("I18N_STRAIGHT_HELP")
 	var jump: Dictionary = model.track.jump_for_correction(model.distance_m)
-	if state == "RUNNING" and not jump.is_empty():
+	if state == "RUNNING" and not jump.is_empty() and not near_curve and not assist.authorized:
 		hint_label.text = tr("I18N_JUMP_AIR") if model.airborne else (tr("I18N_JUMP_LANDED") if model.distance_m >= jump.end_m else tr("I18N_JUMP_AHEAD"))
 		if model.lateral > 0.7:
 			hint_detail.text = tr("I18N_JUMP_LEFT")
@@ -242,12 +251,23 @@ func render(session, rebind_message: String = "") -> void:
 			hint_detail.text = tr("I18N_JUMP_RIGHT")
 		else:
 			hint_detail.text = tr("I18N_JUMP_READY")
-	if driving and model.emergency_braking:
+	if state == "RUNNING":
+		var speed_hint: Dictionary = model.track.speed_hint_at(model.distance_m, model.input_window_m())
+		if not speed_hint.is_empty():
+			if speed_hint.status == "assisted_tested" and speed_hint.model == "lower_assist_v1" and speed_hint.max_mps != null:
+				hint_detail.text += "\n" + tr("I18N_CURVE_SPEED_HINT") % roundi(speed_hint.max_mps * 3.6)
+			elif speed_hint.kind == "ramp":
+				hint_detail.text += "\n" + tr("I18N_RAMP_SPEED_UNVERIFIED")
+	if driving and assist.assist_speed_active:
+		status_label.text = tr("I18N_ASSIST_SPEED") % [roundi(model.speed_mps * 3.6), roundi(assist.player_target_mps * 3.6), roundi(assist.assist_target_mps * 3.6)]
+	elif driving and model.emergency_braking:
 		status_label.text = tr("I18N_FULL_BRAKE")
 	elif driving and model.boost_remaining > 0.0:
 		status_label.text = tr("I18N_TURBO_BOOST")
 	elif driving and model.speed_feedback_seconds > 0.0:
 		status_label.text = model.speed_feedback
+	elif driving and model.active_curve_id >= 0:
+		status_label.text = tr("I18N_ASSIST_ACTIVE")
 	elif driving and model.speed_mps > 30.0:
 		status_label.text = tr("I18N_HIGH_SPEED")
 	if driving:
@@ -280,6 +300,9 @@ func render(session, rebind_message: String = "") -> void:
 		"SETTINGS":
 			menu_title.text = tr("I18N_SETTINGS_TITLE")
 			menu_subtitle.text = rebind_message if not rebind_message.is_empty() else tr("I18N_SETTINGS_HELP")
+	menu_buttons.columns = 2 if state == "SETTINGS" else 1
+	menu_panel.offset_right = minf(920.0, root.size.x - 48.0) if state == "SETTINGS" else 492.0
+	menu_panel.offset_top = -260.0 if state == "SETTINGS" else -290.0
 	menu_subtitle.custom_minimum_size.y = 40 if state == "SETTINGS" else 64
 	menu_footer.visible = state != "SETTINGS"
 	menu_footer.text = tr("I18N_MENU_FOOTER")
@@ -295,6 +318,7 @@ func render(session, rebind_message: String = "") -> void:
 		for i in range(entries.size()):
 			var button := Button.new()
 			button.text = entries[i]
+			button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 			button.custom_minimum_size = Vector2(0, 38 if state == "SETTINGS" else 46)
 			button.focus_mode = Control.FOCUS_NONE

@@ -7,6 +7,7 @@ const OPPOSITE := {"left": "right", "right": "left", "faster": "slower", "slower
 const MINT := Color("a9e2c8")
 const PAPER := Color("f4f5e9")
 const ORANGE := Color("ed8651")
+var steering_bars := true
 var input_direction := ""
 var input_level := 0.0
 var pulses: Dictionary = {}
@@ -60,7 +61,7 @@ func _draw() -> void:
 		var count := lit_bars(direction)
 		var remaining: float = pulses[direction].remaining if pulses.has(direction) else 0.0
 		var fade := clampf(remaining / 0.22, 0.0, 1.0)
-		for index in range(3):
+		for index in range(3 if steering_bars or direction not in ["left", "right"] else 0):
 			var rect := Rect2(-14, -31 - index * 17, 28, 11)
 			var color := MINT if index < 2 else ORANGE
 			var active := index < count

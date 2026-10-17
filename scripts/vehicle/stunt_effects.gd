@@ -69,7 +69,7 @@ func update(model) -> void:
 	visible = true
 	flames.visible = model.boost_remaining > 0.0
 	flames.scale.z = 0.88 + 0.12 * sin(model.elapsed_s * 71.0)
-	var sliding: bool = not model.airborne and model.speed_mps > 8.0 and (absf(model.drift_angle) > deg_to_rad(3.0) or model.emergency_braking)
+	var sliding: bool = not model.airborne and model.speed_mps > 8.0 and (absf(model.drift_angle) > deg_to_rad(3.0) or (model.emergency_braking or model.assist_speed_active))
 	for particles in smoke: particles.emitting = sliding
 
 func suspend() -> void:

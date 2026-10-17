@@ -28,7 +28,10 @@ func _initialize() -> void:
 		var first: Dictionary = c.snapshot()
 		state.distance_m = 180.0
 		c.update(curve, state, profile)
-		check(not c.snapshot().authorized, "Am Ende endet die Freigabe.")
+		check(c.snapshot().authorized, "Die Hilfe sichert den Kurvenausgang.")
+		state.distance_m = 180.0 + profile.exit_distance_m
+		c.update(curve, state, profile)
+		check(not c.snapshot().authorized, "Nach dem Kurvenausgang endet die Freigabe.")
 		var next := {"id":1,"start_m":220.0,"end_m":280.0,"turn_sign":-1}
 		c.update(next, state, profile)
 		check(not c.snapshot().authorized and c.snapshot().opportunity_id != first.opportunity_id, "Die Folgekurve braucht eine neue Eingabe.")

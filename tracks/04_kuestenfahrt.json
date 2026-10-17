@@ -11,7 +11,15 @@
       "turn_sign": 1,
       "radius": 35,
       "checkpoint_m": 5,
-      "bank_degrees": 12
+      "bank_degrees": 12,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": 0,
+        "max_mps": 58,
+        "target_mps": 28,
+        "status": "assisted_tested",
+        "model": "lower_assist_v1"
+      }
     },
     {
       "start_m": 270,
@@ -19,7 +27,15 @@
       "turn_sign": -1,
       "radius": 20,
       "checkpoint_m": 175,
-      "bank_degrees": 18
+      "bank_degrees": 18,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": 0,
+        "max_mps": 58,
+        "target_mps": 28,
+        "status": "assisted_tested",
+        "model": "lower_assist_v1"
+      }
     },
     {
       "start_m": 430,
@@ -27,7 +43,15 @@
       "turn_sign": 1,
       "radius": 35,
       "checkpoint_m": 335,
-      "bank_degrees": 12
+      "bank_degrees": 12,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": 0,
+        "max_mps": 58,
+        "target_mps": 28,
+        "status": "assisted_tested",
+        "model": "lower_assist_v1"
+      }
     }
   ],
   "heights": [

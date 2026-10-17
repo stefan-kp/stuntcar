@@ -11,7 +11,15 @@
       "turn_sign": 1,
       "radius": 38,
       "checkpoint_m": 5,
-      "bank_degrees": 25
+      "bank_degrees": 25,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": 0,
+        "max_mps": 58,
+        "target_mps": 28,
+        "status": "assisted_tested",
+        "model": "lower_assist_v1"
+      }
     },
     {
       "start_m": 255,
@@ -19,7 +27,15 @@
       "turn_sign": -1,
       "radius": 34,
       "checkpoint_m": 190,
-      "bank_degrees": 32
+      "bank_degrees": 32,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": 0,
+        "max_mps": 58,
+        "target_mps": 28,
+        "status": "assisted_tested",
+        "model": "lower_assist_v1"
+      }
     },
     {
       "start_m": 550,
@@ -27,7 +43,15 @@
       "turn_sign": 1,
       "radius": 38,
       "checkpoint_m": 475,
-      "bank_degrees": 38
+      "bank_degrees": 38,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": 0,
+        "max_mps": 58,
+        "target_mps": 28,
+        "status": "assisted_tested",
+        "model": "lower_assist_v1"
+      }
     },
     {
       "start_m": 755,
@@ -35,7 +59,15 @@
       "turn_sign": -1,
       "radius": 34,
       "checkpoint_m": 665,
-      "bank_degrees": 28
+      "bank_degrees": 28,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": 0,
+        "max_mps": 58,
+        "target_mps": 28,
+        "status": "assisted_tested",
+        "model": "lower_assist_v1"
+      }
     },
     {
       "start_m": 1030,
@@ -43,7 +75,15 @@
       "turn_sign": 1,
       "radius": 38,
       "checkpoint_m": 900,
-      "bank_degrees": 35
+      "bank_degrees": 35,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": 0,
+        "max_mps": 58,
+        "target_mps": 28,
+        "status": "assisted_tested",
+        "model": "lower_assist_v1"
+      }
     }
   ],
   "heights": [
@@ -100,7 +140,15 @@
     {
       "start_m": 400,
       "end_m": 432,
-      "height_m": 6
+      "height_m": 6,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": null,
+        "max_mps": null,
+        "target_mps": null,
+        "status": "unverified",
+        "model": "position_based_v1"
+      }
     }
   ],
   "preview": "previews/alpine.png"

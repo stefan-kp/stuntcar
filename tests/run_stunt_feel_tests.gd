@@ -59,18 +59,18 @@ func _initialize() -> void:
 	check(model.speed_mps >= 22.0 and model.distance_m > jump.start_m + 1.0, "Eine Vollbremsung friert das Auto nicht in der Luft ein.")
 	model.reset()
 	var curve: Dictionary = track.curves[0]
-	model.reset(curve.start_m + 15.0)
+	model.reset(curve.start_m - 10.0)
 	model.speed_mps = 40.0
 	model.target_speed_mps = 40.0
 	model.request_turn(curve.turn_sign)
-	steps(model, 12)
+	steps(model, 90)
 	check(absf(model.drift_angle) > deg_to_rad(5.0) and not model.off_road, "Eine schnelle unterstützte Kurve erzeugt sichtbaren Drift.")
 	check(signf(model.drift_angle) == -curve.turn_sign, "Der Drift zeigt zur Innenseite der Kurve.")
-	model.reset(curve.start_m + 15.0)
+	model.reset(curve.start_m - 10.0)
 	model.speed_mps = 20.0
 	model.target_speed_mps = 20.0
 	model.request_turn(curve.turn_sign)
-	steps(model, 12)
+	steps(model, 90)
 	check(absf(model.drift_angle) < deg_to_rad(1.0), "Langsame Kurven erzeugen keinen starken Drift.")
 	model.reset()
 	var router = Router.new(model)

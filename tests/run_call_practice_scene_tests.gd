@@ -37,6 +37,9 @@ func run() -> void:
 	check(scene.session.call_practice.phase == "ready", "Ein anderes Geraet bricht die Probe ab.")
 	scene.session.close_call_practice()
 	check(scene.session.call_profile == saved and scene.session.state == "SETTINGS", "Ein Abbruch erhaelt das Profil.")
+	scene.ui.render(scene.session)
+	for i in range(3): await process_frame
+	check(scene.ui.buttons[-1].get_global_rect().end.y < scene.ui.root.size.y - 124, "Alle Einstellungen passen oberhalb der Bedienhinweise.")
 	var config := ConfigFile.new();config.load(scene.settings_path)
 	check(config.get_value("input","call_profile",{}) == saved, "Das Profil bleibt gespeichert.")
 	DirAccess.remove_absolute(scene.settings_path);scene.free()

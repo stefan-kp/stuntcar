@@ -11,7 +11,15 @@
       "turn_sign": 1,
       "radius": 40,
       "checkpoint_m": 5,
-      "bank_degrees": 38
+      "bank_degrees": 38,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": 0,
+        "max_mps": 58,
+        "target_mps": 28,
+        "status": "assisted_tested",
+        "model": "lower_assist_v1"
+      }
     },
     {
       "start_m": 410,
@@ -19,7 +27,15 @@
       "turn_sign": -1,
       "radius": 30,
       "checkpoint_m": 340,
-      "bank_degrees": 45
+      "bank_degrees": 45,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": 0,
+        "max_mps": 58,
+        "target_mps": 28,
+        "status": "assisted_tested",
+        "model": "lower_assist_v1"
+      }
     },
     {
       "start_m": 760,
@@ -27,7 +43,15 @@
       "turn_sign": 1,
       "radius": 40,
       "checkpoint_m": 690,
-      "bank_degrees": 42
+      "bank_degrees": 42,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": 0,
+        "max_mps": 58,
+        "target_mps": 28,
+        "status": "assisted_tested",
+        "model": "lower_assist_v1"
+      }
     }
   ],
   "heights": [
@@ -80,12 +104,28 @@
     {
       "start_m": 250,
       "end_m": 300,
-      "height_m": 12
+      "height_m": 12,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": null,
+        "max_mps": null,
+        "target_mps": null,
+        "status": "unverified",
+        "model": "position_based_v1"
+      }
     },
     {
       "start_m": 600,
       "end_m": 650,
-      "height_m": 12
+      "height_m": 12,
+      "speed_hint": {
+        "version": 1,
+        "min_mps": null,
+        "max_mps": null,
+        "target_mps": null,
+        "status": "unverified",
+        "model": "position_based_v1"
+      }
     }
   ],
   "preview": "previews/forest.png"

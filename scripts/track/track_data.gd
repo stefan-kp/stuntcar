@@ -80,6 +80,7 @@ static func validate_definition(d) -> String:
 			if not number(c.get(key)): return String(TranslationServer.translate("I18N_TRACK_CURVE_NUMBER_ERROR"))
 		if c.start_m < previous + 40 or c.end_m <= c.start_m + 24 or c.end_m > d.length_m - 20 or absf(c.turn_sign) != 1.0 or c.radius < 20 or c.checkpoint_m < previous or c.checkpoint_m > c.start_m - 25: return String(TranslationServer.translate("I18N_TRACK_CURVE_SPACE_ERROR"))
 		if not number(c.get("bank_degrees", 0)) or c.get("bank_degrees", 0) < 0 or c.get("bank_degrees", 0) > 45: return String(TranslationServer.translate("I18N_TRACK_BANK_ERROR"))
+		if not valid_speed_hint(c.get("speed_hint")): return String(TranslationServer.translate("I18N_TRACK_SPEED_HINT_ERROR"))
 		previous = c.end_m
 	if d.heights.size() < 2: return String(TranslationServer.translate("I18N_TRACK_HEIGHT_COUNT_ERROR"))
 	previous = -1.0
@@ -96,8 +97,41 @@ static func validate_definition(d) -> String:
 		if j.start_m < previous + 60 or j.end_m - j.start_m < 15 or j.end_m - j.start_m > 50 or j.end_m > d.length_m - 60 or j.height_m < 2 or j.height_m > 12: return String(TranslationServer.translate("I18N_TRACK_JUMP_SPACE_ERROR"))
 		for c in d.curves:
 			if j.start_m - 60 < c.end_m and j.end_m + 90 > c.start_m: return String(TranslationServer.translate("I18N_TRACK_JUMP_TURN_ERROR"))
+		if not valid_speed_hint(j.get("speed_hint")): return String(TranslationServer.translate("I18N_TRACK_SPEED_HINT_ERROR"))
 		previous = j.end_m
 	return ""
+
+static func valid_speed_hint(hint) -> bool:
+	if hint == null: return true
+	if not hint is Dictionary or hint.get("version") != 1: return false
+	if hint.get("status") not in ["unverified", "assisted_tested", "verified"]: return false
+	if not hint.get("model") is String or hint.model.is_empty(): return false
+	for key in hint:
+		if key not in ["version", "min_mps", "max_mps", "target_mps", "status", "model"]: return false
+	for key in ["min_mps", "max_mps", "target_mps"]:
+		if not hint.has(key): return false
+		if hint[key] != null and (not number(hint[key]) or hint[key] < 0 or hint[key] > 200): return false
+	if hint.min_mps != null and hint.max_mps != null and hint.min_mps > hint.max_mps: return false
+	if hint.target_mps != null:
+		if hint.min_mps != null and hint.target_mps < hint.min_mps: return false
+		if hint.max_mps != null and hint.target_mps > hint.max_mps: return false
+	if hint.model == "position_based_v1" and (hint.status != "unverified" or hint.min_mps != null or hint.max_mps != null): return false
+	return true
+
+func speed_hint_at(s: float, approach: float = 0.0) -> Dictionary:
+	var candidates: Array[Dictionary] = []
+	for c in curves:
+		if s >= c.start_m - approach and s < c.end_m:
+			candidates.append({"kind":"curve", "element":c})
+	for j in jumps:
+		if s >= j.start_m - approach and s < j.end_m:
+			candidates.append({"kind":"ramp", "element":j})
+	candidates.sort_custom(func(a,b): return a.element.start_m < b.element.start_m)
+	if candidates.is_empty(): return {}
+	var candidate: Dictionary = candidates[0]
+	var hint: Dictionary = candidate.element.get("speed_hint", {"version":1,"min_mps":null,"max_mps":null,"target_mps":null,"status":"unverified","model":"unknown"}).duplicate(true)
+	hint.merge({"kind":candidate.kind,"start_m":candidate.element.start_m,"end_m":candidate.element.end_m})
+	return hint
 
 static func number(value) -> bool:
 	return typeof(value) in [TYPE_FLOAT, TYPE_INT] and is_finite(float(value))

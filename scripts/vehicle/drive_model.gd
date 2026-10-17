@@ -121,16 +121,17 @@ func _emit_assist(kind: String, reason: String) -> void:
 		"player_target_mps":target_speed_mps,"assist_target_mps":assist_target_mps,"speed_mps":speed_mps})
 
 func refresh_assist() -> void:
-	if active_curve_id >= 0 and distance_m >= track.curves[active_curve_id].end_m:
+	if active_curve_id >= 0 and distance_m >= track.curves[active_curve_id].end_m + assist_profile.exit_distance_m:
 		completed_ids[active_curve_id] = true
 		completed_curves += 1
 		active_curve_id = -1
 		last_command = 0
 		guide_offset = 0.0
 		sway_used = false
+		sway_remaining = 0.0
 	var projection: Dictionary = track.project(position, distance_m)
 	var before: Dictionary = curve_assist.snapshot()
-	curve_assist.update(track.next_curve(distance_m), {"distance_m":distance_m,"speed_mps":speed_mps,
+	curve_assist.update(track.curves[active_curve_id] if active_curve_id >= 0 else track.next_curve(distance_m), {"distance_m":distance_m,"speed_mps":speed_mps,
 		"target_speed_mps":target_speed_mps,"elapsed_s":elapsed_s,"hint_seconds":hint_seconds,
 		"lateral":lateral,"gap":projection.gap,"heading_error_rad":angle_difference(projection.heading,heading),
 		"off_road":off_road,"finished":finished}, assist_profile)
@@ -238,6 +239,13 @@ func step(delta: float) -> void:
 	assist_speed_active = recovery_remaining > 0.0 and active_curve_id >= 0
 	assist_reason = "late_turn" if assist_speed_active else ""
 	assist_target_mps = minf(desired_speed, CRUISE_SPEED * 0.45) if assist_speed_active else desired_speed
+	if active_curve_id >= 0:
+		var speed_hint: Dictionary = track.curves[active_curve_id].get("speed_hint", {})
+		if speed_hint.get("model") == "lower_assist_v1" and speed_hint.get("status") in ["assisted_tested", "verified"] and speed_hint.get("max_mps") != null:
+			if desired_speed > float(speed_hint.max_mps):
+				assist_speed_active = true
+				assist_reason = "curve_speed" if recovery_remaining <= 0.0 else "late_turn"
+				assist_target_mps = minf(assist_target_mps, float(speed_hint.max_mps))
 	if assist_speed_active: desired_speed = assist_target_mps
 	if assist_speed_active != was_assisting: _emit_assist("speed_help" if assist_speed_active else "speed_help_end", assist_reason)
 	recovery_remaining = maxf(0.0,recovery_remaining-delta)
@@ -264,17 +272,27 @@ func step(delta: float) -> void:
 	elif active_curve_id >= 0:
 		var curve: Dictionary = track.curves[active_curve_id]
 		if distance_m >= curve.start_m:
-			var target_s: float = minf(distance_m + 4.0, curve.end_m)
+			var target_s: float = minf(distance_m + 4.0, curve.end_m + 16.0)
 			var target: Dictionary = track.sample(target_s)
 			var entry := smoothstep(curve.start_m, curve.start_m + 14.0, target_s)
 			var exit := 1.0 - smoothstep(curve.end_m - 20.0, curve.end_m, target_s)
 			var edge := 0.35 + clampf((speed_mps - 28.0) / 30.0,0.0,1.0) * 0.55
-			var requested_offset: float = -float(curve.turn_sign) * edge * entry * exit
+			if assist_id == "very_easy" and not sway_used and not assist_speed_active and not airborne and target_speed_mps >= 40.0 and speed_mps >= 28.0 and distance_m < curve.end_m - 24.0:
+				sway_remaining = 1.0
+				sway_used = true
+				_emit_assist("sway", "throttle")
+			var sway_offset := 0.0
+			if sway_remaining > 0.0 and not assist_speed_active and not airborne:
+				motion = "safe_sway"
+				var progress := 1.0 - sway_remaining
+				sway_offset = sin(progress * TAU) * sin(progress * PI) * 0.6
+				sway_remaining = maxf(0.0, sway_remaining - delta)
+			var requested_offset: float = (-float(curve.turn_sign) * edge + sway_offset) * entry * exit
 			guide_offset = move_toward(guide_offset, requested_offset, 3.5 * delta)
 			var offset: Vector3 = target.position + track.right(target.heading) * guide_offset - position
 			var desired := atan2(offset.x,-offset.z)
-			var exit_blend := clampf((distance_m - float(curve.end_m) + 8.0) / 6.0,0.0,1.0)
-			desired = lerp_angle(desired,track.sample(curve.end_m).heading,exit_blend)
+			var exit_blend := clampf((distance_m - float(curve.end_m) - 8.0) / 6.0,0.0,1.0)
+			desired = lerp_angle(desired,track.sample(curve.end_m + 16.0).heading,exit_blend)
 			heading = rotate_toward(heading,desired,assist_profile.max_turn_rate_rad_s * rolling_steer * delta)
 	position += track.forward(heading) * speed_mps * delta
 	var projection: Dictionary = track.project(position, distance_m)
@@ -294,6 +312,9 @@ func step(delta: float) -> void:
 		var curve: Dictionary = track.curves[active_curve_id]
 		var blend := smoothstep(curve.start_m, curve.start_m + 10.0, distance_m) * (1.0 - smoothstep(curve.end_m - 12.0, curve.end_m, distance_m))
 		drift_target = -float(curve.turn_sign) * deg_to_rad(20.0) * clampf((speed_mps - 26.0) / 20.0, 0.0, 1.0) * blend
+	if motion in ["safe_sway", "late_turn", "rescue_turn"] and not airborne:
+		drift_target = clampf(angle_difference(projection.heading, heading), -0.35, 0.35)
+		steering_input = -drift_target * 2.0
 	drift_angle = lerpf(drift_angle, drift_target, 1.0 - exp(-6.0 * delta))
 	# No horizontal snap or lane clamp: a missed turn really leaves the deck.
 	if absf(lateral) > 3.2 or projection.gap > 3.2:

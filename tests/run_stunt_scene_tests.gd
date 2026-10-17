@@ -51,14 +51,14 @@ func run() -> void:
 			scene.sync_voice_context()
 			command(scene,"left",strength)
 			angles.append(absf(scene.car.wheels[0].rotation.y))
-		check(angles[1] > angles[0] * 2.0, "Die Vorderräder zeigen bei einem lauten Lenkbefehl deutlich mehr Einschlag.")
+		check(is_equal_approx(angles[1], angles[0]), "Die Lautstaerke aendert die Lenkhilfe nicht.")
 		var curve: Dictionary = scene.track.curves[0]
 		scene.session.restart()
-		scene.model.reset(curve.start_m + 15.0)
+		scene.model.reset(curve.start_m - 10.0)
 		scene.model.speed_mps = 40.0
 		scene.model.target_speed_mps = 40.0
 		scene.model.request_turn(curve.turn_sign)
-		for i in range(16): scene._physics_process(1.0/60.0)
+		for i in range(90): scene._physics_process(1.0/60.0)
 		check(absf(scene.car.body.rotation.y) > deg_to_rad(3.0) and scene.car.effects.smoke[0].emitting, "Die echte Karosserie driftet mit Reifenrauch durch die schnelle Kurve.")
 		scene.model.airborne = true
 		scene.car.drive(scene.model,0.016)

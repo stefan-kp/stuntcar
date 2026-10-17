@@ -202,6 +202,9 @@ func _physics_process(delta: float) -> void:
 			if accepted:
 				voice_applied_count += 1
 				voice_action_text = (tr("I18N_VOICE_ASSIST_ACTION") if packet.get("assisted", false) else tr("I18N_VOICE_ACTION")) % [word, voice_applied_count]
+				if packet.command in ["left", "right"] and model.active_curve_id >= 0:
+					var applied := "left" if model.last_command < 0 else "right"
+					if packet.command != applied: voice_action_text = tr("I18N_ASSIST_DIRECTION") % [word, applied]
 				if packet.command in ["faster", "slower"]:
 					voice_action_text += "\n" + model.speed_feedback
 				if session.state == "RUNNING":
@@ -235,12 +238,9 @@ func _physics_process(delta: float) -> void:
 	elif session.state == "FALLING":
 		car.fall(delta)
 	race_audio.update(model, session, delta)
-	if session.state == "RUNNING":
-		var curve: Dictionary = track.next_curve(model.distance_m)
-		if not curve.is_empty() and model.distance_m >= curve.start_m - model.input_window_m() and not hinted_ids.has(curve.id):
-			hinted_ids[curve.id] = true
-			if session.sound_enabled:
-				race_audio.play_hint()
+	for event in model.take_assist_events():
+		if session.state == "RUNNING" and event.type == "opened" and session.sound_enabled:
+			race_audio.play_hint()
 	previous_state = session.state
 	sync_voice_context()
 	if voice_diagnostics != null: voice_diagnostics.observe_state(self)
@@ -281,6 +281,7 @@ func _process(delta: float) -> void:
 	if binding_stage > 0:
 		message += tr("I18N_KEY_BIND_TIMEOUT") % ceili(bind_timeout)
 	ui.voice_text = voice.status_text if voice != null else tr("I18N_VOICE_OFF")
+	if session.state == "RUNNING" and session.voice_enabled: ui.voice_text += " · " + voice_action_text
 	ui.voice_ready = voice.is_ready
 	ui.voice_visible = session.voice_enabled
 	var personal_level: float = session.practice.calibration.strength_for(voice.input_rms, voice.input_level, voice.device_name)

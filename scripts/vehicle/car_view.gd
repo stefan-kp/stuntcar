@@ -44,7 +44,7 @@ func drive(model, delta: float) -> void:
 	rotation.x = lerp_angle(rotation.x, model.pitch, 1.0 - exp(-10.0 * delta))
 	body.position.y = -sin(model.landing_pulse * PI) * 0.16
 	var response := 1.0 - exp(-9.0 * delta)
-	var pitch_effect := 0.045 if model.boost_remaining > 0.0 else (-0.075 if model.emergency_braking and model.speed_mps > 0.1 else 0.0)
+	var pitch_effect := 0.045 if model.boost_remaining > 0.0 else (-0.075 if (model.emergency_braking or model.assist_speed_active) and model.speed_mps > 0.1 else 0.0)
 	body.rotation.x = lerp_angle(body.rotation.x,pitch_effect,response)
 	body.rotation.y = lerp_angle(body.rotation.y,model.drift_angle,response)
 	body.rotation.z = lerp_angle(body.rotation.z,-model.lateral * 0.055 - model.steering_input * 0.025 - model.drift_angle * 0.12,response)

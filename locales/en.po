@@ -693,3 +693,41 @@ msgstr "Your quiet call profile is saved. Very easy can use it before each curve
 msgid "I18N_CALL_WAIT"
 msgstr "Wait for the microphone. Then start a new sample."
 
+
+msgid "I18N_ASSIST_SAVED"
+msgstr "Your input is saved for this curve."
+
+msgid "I18N_ASSIST_ACTIVE"
+msgstr "The help guides this curve. The next curve needs a new input."
+
+msgid "I18N_ASSIST_RESCUE"
+msgstr "The help catches the car and reduces speed."
+
+msgid "I18N_ASSIST_SWAY"
+msgstr "The car sways. The help keeps this curve safe."
+
+msgid "I18N_ASSIST_LAST_CHANCE"
+msgstr "Last chance: give an input now."
+
+msgid "I18N_ASSIST_MISSED"
+msgstr "Curve input missed"
+
+msgid "I18N_ASSIST_MISSED_HELP"
+msgstr "The input window is closed."
+
+msgid "I18N_ASSIST_SPEED"
+msgstr "Speed %d km/h · Your target %d · Help target %d"
+
+msgid "I18N_ASSIST_DIRECTION"
+msgstr "Heard: %s. Curve help: %s."
+
+
+msgid "I18N_TRACK_SPEED_HINT_ERROR"
+msgstr "Invalid speed hint."
+
+msgid "I18N_CURVE_SPEED_HINT"
+msgstr "With curve help: up to %d km/h."
+
+msgid "I18N_RAMP_SPEED_UNVERIFIED"
+msgstr "Fixed jump path. No tested minimum speed."
+
