@@ -17,7 +17,7 @@ func _initialize()->void:
 				matrix.append({"profile":level,"start_speed_mps":speed,"case":case,"result":result})
 				print(level," ",speed," ",case," ",result.mode," ",result.element," ",result.seconds)
 				if case in ["late","wrong"] and result.finished:check(result.seconds>=clean.seconds,"rescue does not save time")
-				if case in ["faster","alternate"]:check(result.finished,"assisted speed case finishes")
+				if case in ["faster","alternate"]:check(not result.opposing_help,"automatic help never opposes an explicit pedal")
 				if case=="slower":check(result.mode=="grounded","full brake stops safely")
 				if case=="missing":check(not result.finished,"missing turn cannot finish")
 	var file:=FileAccess.open("/private/tmp/stuntcar-full-matrix.json",FileAccess.WRITE)

@@ -19,12 +19,13 @@ func run()->void:
 			track.definition.styles={"road":"contrast","scenery":"contrast"}
 			var model=load("res://scripts/vehicle/spatial_drive_model.gd").new(track);model.set_assist_level(level)
 			model.state.velocity=-model.state.basis.z*speed;model.sync_fields();car.place(model)
+			var controls:Dictionary=Runner.create_controls(model)
 			var events:Array[Dictionary]=[];var trace:Array[Dictionary]=[];var cursor:=0
 			for tick in range(12000):
 				while cursor<inputs.size() and inputs[cursor].tick==tick:
-					if inputs[cursor].kind!="held_speed":Runner.apply_input(model,inputs[cursor])
+					if inputs[cursor].kind!="held_speed":Runner.apply_input(model,inputs[cursor],controls)
 					cursor+=1
-				model.keyboard_speed(0,1.0/60);model.step(1.0/60)
+				Runner.step_controls(controls,tick);model.step(1.0/60)
 				var motion:Array[Dictionary]=model.take_motion_events();events.append_array(motion)
 				car.drive(model,1.0/60);car.apply_motion_feedback(model.feedback_state(),motion,1.0/60)
 				trace.append(model.state.snapshot())

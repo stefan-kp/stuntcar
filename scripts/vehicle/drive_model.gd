@@ -189,8 +189,8 @@ func request_assisted_turn(direction: int, unknown_call: bool, event_id: String)
 		if not guided: return false
 		direction = state.turn_sign
 	if direction not in [-1,1]: return false
-	var expiry: float = maxf(elapsed_s + 0.5, state.expires_at_s) if guided else elapsed_s + 0.5
-	if not set_steering_request(direction, minf(elapsed_s + 10.0, expiry)): return false
+	var expiry: float = elapsed_s + 30.0 if guided else elapsed_s + 0.5
+	if not set_steering_request(direction, expiry): return false
 	if not guided:
 		rejection_until_s = elapsed_s + 2.0 if state.phase != "closed" and direction != state.turn_sign else -1.0
 		return true

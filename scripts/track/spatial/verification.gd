@@ -1,5 +1,5 @@
 extends RefCounted
-const SOURCES:=["scripts/vehicle/spatial_drive_model.gd","scripts/vehicle/spatial/drive_state.gd","scripts/vehicle/spatial/surface_motion.gd","scripts/vehicle/spatial/flight_motion.gd","scripts/vehicle/spatial/stunt_assist.gd","scripts/vehicle/drive_model.gd","scripts/vehicle/curve_assist.gd","scripts/vehicle/assist_profile.gd","scripts/track/spatial/spatial_track.gd","scripts/track/spatial/surface_query.gd","scripts/track/spatial/track_definition.gd","scripts/track/spatial/form_library.gd"]
+const SOURCES:=["scripts/vehicle/spatial_drive_model.gd", "scripts/vehicle/spatial/drive_state.gd", "scripts/vehicle/spatial/surface_motion.gd", "scripts/vehicle/spatial/flight_motion.gd", "scripts/vehicle/spatial/stunt_assist.gd", "scripts/vehicle/drive_model.gd", "scripts/vehicle/curve_assist.gd", "scripts/vehicle/assist_profile.gd", "scripts/track/spatial/spatial_track.gd", "scripts/track/spatial/surface_query.gd", "scripts/track/spatial/track_definition.gd", "scripts/track/spatial/form_library.gd", "addons/accessible_controls/core/contract.gd", "addons/accessible_controls/core/controller.gd", "addons/accessible_controls/core/game_port.gd", "addons/accessible_controls/core/input_ledger.gd", "addons/accessible_controls/core/input_source.gd", "addons/accessible_controls/core/selector.gd", "scripts/control/keyboard_source.gd", "scripts/control/stuntcar_actions.gd", "scripts/control/stuntcar_hints.gd", "scripts/control/stuntcar_port.gd", "scripts/control/stuntcar_rules.gd", "scripts/control/voice_source.gd", "scripts/input/call_profile.gd", "scripts/input/command_router.gd", "scripts/input/keyboard_controls.gd", "scripts/input/voice_strength.gd", "scripts/main.gd", "scripts/vehicle/spatial/drive_runner.gd"]
 static func digest(track,profile:Dictionary)->String:
 	var data:Dictionary=track.definition.duplicate(true)
 	for key in ["name","description","preview","styles","report"]:data.erase(key)
@@ -8,7 +8,7 @@ static func digest(track,profile:Dictionary)->String:
 	for e in data.elements:forms[e.form_id]=track.forms[e.form_id]
 	var hashes:Dictionary={}
 	for path in SOURCES:hashes[path]=FileAccess.get_sha256("res://"+path)
-	return JSON.stringify({"rule_version":2,"dt":1.0/60.0,"definition":data,"forms":forms,"profile":profile,"sources":hashes},"",true,true).sha256_text()
+	return JSON.stringify({"rule_version":3,"dt":1.0/60.0,"definition":data,"forms":forms,"profile":profile,"sources":hashes},"",true,true).sha256_text()
 static func speed_hint(report:Dictionary,expected:String,id:String,state:Dictionary)->Dictionary:
 	if report.get("digest","")!=expected or report.get("status")!="tested_samples":return {}
 	for sample in report.get("samples",[]):
@@ -33,4 +33,4 @@ static func condition(model)->String:
 	snapshot.erase("attempt_id")
 	var input_state:Dictionary=model.assist_state()
 	input_state.erase("opportunity_id")
-	return JSON.stringify({"state":snapshot,"curve":model.active_curve_id,"target":model.target_speed_mps,"recovery":model.recovery_remaining,"boost":model.boost_remaining,"curve_assist":input_state},"",true,true).sha256_text()
+	return JSON.stringify({"state":snapshot,"curve":model.active_curve_id,"target":model.target_speed_mps,"recovery":model.recovery_remaining,"boost":model.boost_remaining,"curve_assist":input_state,"steering_direction":model.requested_direction,"steering_expires_at_s":model.steering_expires_at_s,"active_pedal":model.active_pedal},"",true,true).sha256_text()
