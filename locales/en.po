@@ -652,3 +652,19 @@ msgstr "3 of 4 · Press a different key for gas."
 
 msgid "I18N_KEY_BIND_SLOWER"
 msgstr "4 of 4 · Press a different key for the brake."
+
+msgid "I18N_ASSIST_VERY_EASY"
+msgstr "Very easy"
+
+msgid "I18N_ASSIST_EASY"
+msgstr "Easy"
+
+msgid "I18N_ASSIST_SELECT"
+msgstr "Assist: %s"
+
+msgid "I18N_ASSIST_CURRENT_NEXT"
+msgstr "This drive: %s. Next start: %s."
+
+msgid "I18N_CALL_RETRY"
+msgstr "Please try again. Move the microphone closer or reduce the room noise."
+

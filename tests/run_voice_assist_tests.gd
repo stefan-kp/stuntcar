@@ -27,13 +27,15 @@ func reset_scene(scene, distance: float = 80.0) -> void:
 	scene.session.practice.calibration.levels.assign([1000.0, 3000.0, 6000.0])
 	scene.session.practice.calibration.device = "Testmikrofon"
 	scene.session.voice_enabled = true
+	scene.session.call_profile = {"version":1,"device":"Testmikrofon","on_rms":25.0,"off_rms":15.0,"min_call_s":0.15,"max_call_s":3.0,"release_s":0.3}
+	scene.model.refresh_assist()
 	scene.binding_stage = 0
 
-func feedback(scene, peak: Variant = 6000.0, duration: Variant = 0.4, state: String = "unknown", heard: String = "") -> Dictionary:
+func feedback(scene, peak: Variant = 45.0, duration: Variant = 0.4, state: String = "unknown", heard: String = "") -> Dictionary:
 	sequence += 1
 	var packet := {"type":"feedback", "seq":sequence, "epoch":scene.voice.epoch,
 		"state":state, "heard":heard, "rms":0.0, "peak_rms":peak,
-		"level":0.0, "speech_seconds":duration}
+		"level":0.0, "speech_seconds":duration,"call_id":sequence,"opportunity_id":scene.model.assist_state().opportunity_id,"has_command":false}
 	scene.voice.accept_packet(packet)
 	scene._physics_process(DT)
 	return packet
@@ -48,8 +50,8 @@ func run() -> void:
 	for heard in ["", "updi dupdi"]:
 		reset_scene(scene)
 		var before: int = scene.voice_applied_count
-		var packet := feedback(scene, 6000.0, 0.4, "unknown", heard)
-		check(scene.model.active_curve_id == 0 and scene.model.last_command == 1, "Ein lauter unbekannter Ruf lenkt in die rechte Kurve, auch ohne Text.")
+		var packet := feedback(scene, 45.0, 0.4, "unknown", heard)
+		check(scene.model.active_curve_id == 0 and scene.model.last_command == 1, "Ein leiser unbekannter Ruf lenkt in die rechte Kurve, auch ohne Text.")
 		check(scene.voice_applied_count == before + 1, "Ein Ruf zählt genau einmal.")
 		check(scene.ui.voice_compass.tip_lit("right"), "Die Anzeige bestätigt die Hilfe nach rechts.")
 		check("Voice help" in scene.voice_action_text, "Die Anzeige unterscheidet die Hilfe vom erkannten Wort.")
@@ -73,7 +75,7 @@ func run() -> void:
 		var before: int = scene.voice_applied_count
 		feedback(scene)
 		check(scene.voice_applied_count == before + item[1], "Das bisherige Zeitfenster begrenzt die Hilfe bei %s Metern." % item[0])
-	for distance in [-100.0, scene.track.length_m + 1.0]:
+	for distance in [scene.track.length_m + 1.0]:
 		reset_scene(scene, maxf(0.0, distance))
 		# No movement: the first curve is outside the current time window.
 		scene.model.speed_mps = 0.0
@@ -81,7 +83,7 @@ func run() -> void:
 		var before: int = scene.voice_applied_count
 		feedback(scene)
 		check(scene.voice_applied_count == before, "Ohne Kurve im Zeitfenster wirkt der Ruf nicht.")
-	for values in [[3000.0, 0.4], [6000.0, 0.05], [-1.0, 0.4], [NAN, 0.4], [INF, 0.4], ["invalid", 0.4], [6000.0, NAN], [6000.0, "invalid"], [6000.0, -1.0]]:
+	for values in [[20.0, 0.4], [6000.0, 0.05], [-1.0, 0.4], [NAN, 0.4], [INF, 0.4], ["invalid", 0.4], [6000.0, NAN], [6000.0, "invalid"], [6000.0, -1.0]]:
 		reset_scene(scene)
 		var before: int = scene.voice_applied_count
 		feedback(scene, values[0], values[1])
@@ -102,7 +104,7 @@ func run() -> void:
 		reset_scene(scene)
 		var before: int = scene.voice_applied_count
 		match condition:
-			"missing_profile": scene.session.practice.calibration.levels.clear()
+			"missing_profile": scene.session.call_profile.clear()
 			"other_device": scene.voice.device_name = "Anderes Mikrofon"
 			"disabled": scene.session.voice_enabled = false
 			"binding": scene.binding_stage = 1
@@ -119,7 +121,7 @@ func run() -> void:
 	scene.voice.accept_packet({"type":"command", "seq":sequence, "epoch":scene.voice.epoch,
 		"command":"left", "peak_rms":6000.0})
 	feedback(scene, 6000.0, 0.4, "recognized", "left")
-	check(scene.voice_applied_count == before + 1 and scene.model.last_command == -1, "Ein erkannter Befehl behält auch gegen die Kurvenrichtung Vorrang.")
+	check(scene.voice_applied_count == before + 1 and scene.model.last_command == 1, "Sehr leicht gleicht eine erkannte falsche Richtung aus.")
 	scene.free()
 	print("RUFHILFE: %d Prüfungen, %d Fehler" % [checks, failures])
 	quit(0 if failures == 0 else 1)

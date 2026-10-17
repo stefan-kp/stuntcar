@@ -144,6 +144,12 @@ func _physics_process(delta: float) -> void:
 	sync_voice_context()
 	if voice != null:
 		voice.poll()
+		model.refresh_assist()
+		var call_opportunity := -1
+		if session.state == "RUNNING" and binding_stage == 0 and model.assist_id == "very_easy":
+			if session.CallProfile.validate(session.call_profile, voice.device_name).is_empty():
+				call_opportunity = model.assist_state().opportunity_id if model.assist_state().phase not in ["closed", "inactive"] else -1
+		voice.configure_call(session.call_profile if call_opportunity >= 0 else {}, call_opportunity)
 		if voice_diagnostics != null: voice_diagnostics.observe_state(self)
 		var events: Array[Dictionary] = voice.take_commands()
 		for level_event in voice.take_level_events():
@@ -171,14 +177,16 @@ func _physics_process(delta: float) -> void:
 						sync_voice_context()
 						ui.practice_panel.compass.confirm(packet.command, strength)
 				continue
+			var accepted := false
 			if packet.get("type", "") == "feedback":
-				var assisted_command: String = session.unrecognized_turn(packet, voice.device_name)
-				if assisted_command.is_empty(): continue
+				accepted = session.submit_call(packet, voice.device_name)
+				if not accepted: continue
 				packet = packet.duplicate()
-				packet["command"] = assisted_command
+				packet["command"] = "left" if model.last_command < 0 else "right"
 				packet["assisted"] = true
-				word = assisted_command
-			var accepted: bool = session.submit_voice(packet.command, strength)
+				word = packet.command
+			else:
+				accepted = session.submit_voice(packet.command, strength, "word:%d:%s" % [packet.epoch, str(packet.get("event_id", packet.seq))])
 			if voice_diagnostics != null: voice_diagnostics.observe_command(packet, strength, accepted, self)
 			if accepted:
 				voice_applied_count += 1
@@ -385,6 +393,8 @@ func save_settings() -> void:
 	config.set_value("input", "voice_mode", session.voice_mode)
 	config.set_value("input", "voice_calibration", session.practice.calibration.profile_data())
 	config.set_value("game", "track", track.source_path)
+	config.set_value("game", "assist_level", session.selected_assist_id)
+	config.set_value("input", "call_profile", session.call_profile)
 	config.set_value("input", "left", key_left)
 	config.set_value("input", "right", key_right)
 	config.set_value("input", "faster", key_faster)
@@ -401,6 +411,10 @@ func load_settings() -> void:
 	var config := ConfigFile.new()
 	if config.load(settings_path) != OK:
 		return
+	var assist = config.get_value("game", "assist_level", "very_easy")
+	if assist in ["very_easy", "easy"]: session.selected_assist_id = assist
+	var saved_call = config.get_value("input", "call_profile", {})
+	if saved_call is Dictionary: session.call_profile = saved_call
 	session.practice.calibration.load_profile(config.get_value("input", "voice_calibration", {}))
 	var voice_mode = config.get_value("input", "voice_mode", "direct")
 	if voice_mode in ["direct", "checked"]: session.voice_mode = voice_mode

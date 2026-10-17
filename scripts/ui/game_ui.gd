@@ -253,7 +253,7 @@ func render(session, rebind_message: String = "") -> void:
 			menu_subtitle.text = model.track.track_name + "\n" + model.track.description
 		"PAUSED":
 			menu_title.text = tr("I18N_PAUSE_TITLE")
-			menu_subtitle.text = tr("I18N_PAUSE_HELP")
+			menu_subtitle.text = tr("I18N_ASSIST_CURRENT_NEXT") % [session.assist_name(model.assist_id), session.assist_name(session.selected_assist_id)]
 		"FINISHED":
 			menu_title.text = tr("I18N_FINISH_TITLE")
 			menu_subtitle.text = tr("I18N_FINISH_FACTS") % [int(model.track.length_m), model.track.curves.size(), session.retry_count]

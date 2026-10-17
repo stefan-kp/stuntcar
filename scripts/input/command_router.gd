@@ -1,5 +1,8 @@
 extends RefCounted
 
+const CallProfile = preload("res://scripts/input/call_profile.gd")
+const CallPractice = preload("res://scripts/input/call_practice.gd")
+
 const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
 const VoicePractice = preload("res://scripts/input/voice_practice.gd")
 const VoiceCalibration = preload("res://scripts/input/voice_calibration.gd")
@@ -28,24 +31,42 @@ var control_mode := "keys"
 var routes: Array[Dictionary] = []
 var catalog_errors: Array[String] = []
 
-func unrecognized_turn(packet: Dictionary, microphone: String) -> String:
-	if state != "RUNNING" or not voice_enabled or model.off_road or model.finished: return ""
-	var calibration = practice.calibration
-	if not VoiceCalibration.valid_levels(calibration.levels) or calibration.device != microphone: return ""
-	if not VoiceCalibration.valid_signal(packet.get("peak_rms")): return ""
-	var duration = packet.get("speech_seconds", 0.0)
-	if typeof(duration) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(duration)) or float(duration) < 0.15: return ""
-	var strength: float = calibration.strength_for(packet.peak_rms, 0.0, microphone)
-	if VoiceStrength.bars(strength) < 3: return ""
-	var curve: Dictionary = model.track.next_curve(model.distance_m)
-	if curve.is_empty() or model.distance_m < curve.start_m - model.input_window_m(): return ""
-	return "left" if curve.turn_sign < 0 else "right"
+var selected_assist_id := "very_easy"
+var call_profile: Dictionary = {}
+var call_practice = CallPractice.new()
 
-func submit_voice(command: String, strength: float = VoiceStrength.NORMAL) -> bool:
+func set_selected_assist(id: String) -> bool:
+	if id not in ["very_easy", "easy"]: return false
+	selected_assist_id = id
+	action_requested.emit("save_settings")
+	return true
+
+func assist_name(id: String) -> String:
+	return tr("I18N_ASSIST_VERY_EASY") if id == "very_easy" else tr("I18N_ASSIST_EASY")
+
+func submit_call(packet: Dictionary, microphone: String) -> bool:
+	if state != "RUNNING" or not voice_enabled or model.assist_id != "very_easy": return false
+	if not CallProfile.validate(call_profile, microphone).is_empty(): return false
+	if packet.get("has_command", true) != false: return false
+	for key in ["call_id", "epoch", "opportunity_id"]:
+		var value = packet.get(key)
+		if not model.track.number(value) or value < 0 or value != floor(value): return false
+	var duration = packet.get("speech_seconds")
+	if not model.track.number(duration) or duration < call_profile.min_call_s or duration > call_profile.max_call_s: return false
+	if not VoiceCalibration.valid_signal(packet.get("peak_rms")) or packet.peak_rms < call_profile.on_rms: return false
+	model.refresh_assist()
+	if packet.opportunity_id != model.assist_state().opportunity_id: return false
+	var accepted: bool = model.request_assisted_turn(0, true, "call:%d:%d" % [packet.epoch, packet.call_id])
+	if accepted: remembered_curve = model.active_curve_id
+	return accepted
+
+func submit_voice(command: String, strength: float = VoiceStrength.NORMAL, event_id: String = "") -> bool:
 	match command:
 		"left", "right":
 			if state != "RUNNING": return false
-			press(-1 if command == "left" else 1, strength)
+			var accepted: bool = model.request_turn(-1 if command == "left" else 1, strength, event_id)
+			remembered_curve = model.active_curve_id
+			return accepted
 		"faster", "slower":
 			if state != "RUNNING": return false
 			model.change_speed(1 if command == "faster" else -1, strength)
@@ -73,7 +94,7 @@ func entries() -> Array[String]:
 		"MENU": return [tr("I18N_MENU_START"), tr("I18N_MENU_TRACKS"), tr("I18N_MENU_SETTINGS"), tr("I18N_MENU_QUIT")]
 		"PAUSED": return [tr("I18N_MENU_CONTINUE"), tr("I18N_MENU_RESTART"), tr("I18N_MENU_SETTINGS"), voice_entry, tr("I18N_MENU_QUIT")]
 		"FINISHED": return [tr("I18N_MENU_AGAIN"), tr("I18N_MENU_MAIN"), tr("I18N_MENU_TRACKS"), tr("I18N_MENU_QUIT")]
-		"SETTINGS": return [tr("I18N_HINT_SECONDS") % int(model.hint_seconds), tr("I18N_SOUND_ON") if sound_enabled else tr("I18N_SOUND_OFF"), tr("I18N_KEYS_CHANGE"), voice_entry, tr("I18N_MENU_VOLUME"), tr("I18N_MENU_VOICE_PRACTICE"), tr("I18N_MENU_BACK")]
+		"SETTINGS": return [tr("I18N_HINT_SECONDS") % int(model.hint_seconds), tr("I18N_SOUND_ON") if sound_enabled else tr("I18N_SOUND_OFF"), tr("I18N_KEYS_CHANGE"), voice_entry, tr("I18N_MENU_VOLUME"), tr("I18N_MENU_VOICE_PRACTICE"), tr("I18N_ASSIST_SELECT") % assist_name(selected_assist_id), tr("I18N_MENU_BACK")]
 		"PRACTICE": return [tr("I18N_PRACTICE_START"), tr("I18N_PRACTICE_MODE_ONE") if voice_mode == "direct" else tr("I18N_PRACTICE_MODE_TWO"), tr("I18N_PRACTICE_BACK")]
 		"AUDIO": return [tr("I18N_VOLUME_ENGINE") % roundi(engine_volume * 100), tr("I18N_VOLUME_ENVIRONMENT") % roundi(environment_volume * 100), tr("I18N_VOLUME_HINTS") % roundi(hint_volume * 100), tr("I18N_MENU_BACK")]
 		"CONTROL": return [tr("I18N_CONTROL_KEYS"), tr("I18N_CONTROL_VOICE")]
@@ -139,6 +160,8 @@ func activate(index: int) -> void:
 				menu_index = 0
 				practice.prepare(voice_mode)
 				action_requested.emit("practice_open")
+			elif index == 6:
+				set_selected_assist("easy" if selected_assist_id == "very_easy" else "very_easy")
 			else:
 				state = previous_state
 				menu_index = 0
@@ -196,6 +219,7 @@ func open_tracks() -> void:
 
 
 func restart() -> void:
+	model.set_assist_level(selected_assist_id)
 	model.reset(5.0)
 	state = "RUNNING"
 	menu_index = 0

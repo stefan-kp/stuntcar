@@ -120,7 +120,7 @@ func _emit_assist(kind: String, reason: String) -> void:
 		"opportunity_id":state.opportunity_id,"elapsed_s":elapsed_s,
 		"player_target_mps":target_speed_mps,"assist_target_mps":assist_target_mps,"speed_mps":speed_mps})
 
-func _refresh_assist() -> void:
+func refresh_assist() -> void:
 	if active_curve_id >= 0 and distance_m >= track.curves[active_curve_id].end_m:
 		completed_ids[active_curve_id] = true
 		completed_curves += 1
@@ -151,7 +151,7 @@ func take_assist_events() -> Array[Dictionary]:
 	return result
 
 func request_assisted_turn(direction: int, unknown_call: bool, event_id: String) -> bool:
-	_refresh_assist()
+	refresh_assist()
 	var was_authorized: bool = curve_assist.snapshot().authorized
 	if not curve_assist.request(direction, unknown_call, event_id): return false
 	var state: Dictionary = curve_assist.snapshot()
@@ -167,14 +167,16 @@ func request_assisted_turn(direction: int, unknown_call: bool, event_id: String)
 		_emit_assist("accepted", state.accepted_phase)
 	return true
 
-func request_turn(direction: int, _strength: float = VoiceStrength.NORMAL) -> void:
-	if off_road or finished or direction not in [-1,1]: return
+func request_turn(direction: int, _strength: float = VoiceStrength.NORMAL, event_id: String = "") -> bool:
+	if off_road or finished or direction not in [-1,1]: return false
 	input_serial += 1
-	request_assisted_turn(direction, false, "key:%d:%d" % [attempt_id,input_serial])
+	var accepted := request_assisted_turn(direction, false, event_id if not event_id.is_empty() else "key:%d:%d" % [attempt_id,input_serial])
 	var jump: Dictionary = track.jump_for_correction(distance_m)
 	if not jump.is_empty() and (absf(lateral) < 0.15 or signf(lateral) == -direction):
 		jump_assist_until = maxf(jump.end_m + 24.0, distance_m + 24.0)
 		turn_strength = 1.0
+		accepted = true
+	return accepted
 
 func input_window_m() -> float:
 	return maxf(speed_mps, target_speed_mps) * hint_seconds
@@ -226,7 +228,7 @@ func effective_target_speed() -> float:
 func step(delta: float) -> void:
 	if off_road or finished:
 		return
-	_refresh_assist()
+	refresh_assist()
 	elapsed_s += delta
 	speed_feedback_seconds = maxf(0.0, speed_feedback_seconds - delta)
 	boost_remaining = maxf(0.0, boost_remaining - delta)
