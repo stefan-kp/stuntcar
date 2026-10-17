@@ -5,8 +5,10 @@ import json
 
 if __package__:
     from .protocol import normalize_command
+    from .call_detector import CallDetector
 else:
     from protocol import normalize_command
+    from call_detector import CallDetector
 
 DRIVING = {'left', 'right', 'faster', 'slower', 'pause'}
 
@@ -38,9 +40,18 @@ def codes(words):
 
 class StreamingRecognizer:
     def __init__(self, engine):
+        self.calls = CallDetector()
+        self.call_context = False
+        self.opportunity_id = -1
+        self.event_serial = 0
         self.engine = engine
         self.mode = getattr(engine, 'mode', 'checked')
         self.reset()
+
+    def configure_call(self, profile, opportunity_id):
+        self.call_context = True
+        self.calls.configure(profile)
+        self.opportunity_id = opportunity_id
 
     def reset_call(self):
         self.speech_seconds = 0.0
@@ -51,6 +62,7 @@ class StreamingRecognizer:
     def reset(self, preserve_call=False):
         if not preserve_call:
             self.reset_call()
+            self.calls.reset()
         self.restricted_count = len(self.engine.recognizers) if self.mode == 'checked' else 0
         self.decoders = self.engine.recognizers + self.engine.fallback_recognizers
         for decoder in self.decoders:
@@ -107,6 +119,8 @@ class StreamingRecognizer:
                               self.mode == 'checked' and self.elapsed - times[index] < .049):
                 break
             event = dict(words[index])
+            self.event_serial += 1
+            event["event_id"] = str(self.event_serial)
             # Hold the spoken peak until the decoder releases the command.
             # Its onset can precede recognition by more than the live meter window.
             # Keep the short overlap too: the next word may already have started
@@ -118,7 +132,7 @@ class StreamingRecognizer:
             self.emitted.append(commands[index])
         return events
 
-    def feed(self, pcm):
+    def feed(self, pcm, call_opportunity_id=None):
         samples = array('h', pcm)
         rms = (sum(value * value for value in samples) / max(1, len(samples))) ** .5
         self.elapsed += len(pcm) / 32000
@@ -204,4 +218,11 @@ class StreamingRecognizer:
             self.pending_peak_rms = 0.0
         if events and events[-1]['command'] in {'left', 'right', 'faster', 'slower'}:
             status['direction'] = events[-1]['command']
+        if self.call_context:
+            status.pop('speech_seconds', None)
+            opportunity = self.opportunity_id if call_opportunity_id is None else call_opportunity_id
+            call = self.calls.feed(pcm, opportunity, bool(events))
+            if call:
+                status.update(call)
+                status['state'] = 'unknown'
         return events, status

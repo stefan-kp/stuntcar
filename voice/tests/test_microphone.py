@@ -42,7 +42,10 @@ class MicrophoneContext(unittest.TestCase):
                     def reset(self):
                         self.blocks = 0
 
-                    def feed(self, pcm):
+                    def configure_call(self, profile, opportunity_id):
+                        self.opportunity_id = opportunity_id
+
+                    def feed(self, pcm, call_opportunity_id=None):
                         self.blocks += 1
                         events = []
                         if self.blocks == 8:
@@ -54,6 +57,8 @@ class MicrophoneContext(unittest.TestCase):
 
                 class Connection:
                     epoch = 0
+                    call_context = {}
+                    call_context_time = 0.0
                     polls = 0
 
                     def send(self, kind, **values):

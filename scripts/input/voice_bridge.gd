@@ -33,6 +33,7 @@ var heard_text := ""
 var feedback_state := "listening"
 var device_name := ""
 var feedback_ms := 0
+var call_context_key := ""
 
 func start(mode: String = "direct") -> void:
 	stop()
@@ -83,6 +84,7 @@ func fail(message: String) -> void:
 	unavailable.emit(message)
 
 func invalidate() -> void:
+	call_context_key = ""
 	epoch += 1
 	heard_text = ""
 	feedback_state = "listening"
@@ -95,6 +97,14 @@ func invalidate() -> void:
 	commands.clear()
 	if peer != null and authenticated:
 		peer.put_data((JSON.stringify({"type":"context", "epoch":epoch}) + "\n").to_utf8_buffer())
+
+func configure_call(profile: Dictionary, opportunity_id: int) -> void:
+	if peer == null or not authenticated or not is_ready: return
+	var message := {"type":"call_context","epoch":epoch,"profile":profile,"opportunity_id":opportunity_id}
+	var encoded := JSON.stringify(message)
+	if encoded == call_context_key: return
+	call_context_key = encoded
+	peer.put_data((encoded + "\n").to_utf8_buffer())
 
 func poll() -> void:
 	if not enabled: return
@@ -184,7 +194,8 @@ func accept_packet(packet: Dictionary) -> void:
 					fail(tr("I18N_VOICE_TOO_MANY"))
 					return
 				feedback_events.append({"type":"feedback", "epoch":epoch, "seq":last_seq, "heard":heard,
-					"peak_rms":input_peak_rms, "speech_seconds":packet.get("speech_seconds", 0.0)})
+					"peak_rms":input_peak_rms, "speech_seconds":packet.get("speech_seconds", 0.0),
+					"call_id":packet.get("call_id",-1),"opportunity_id":packet.get("opportunity_id",-1),"has_command":packet.get("has_command",false)})
 			if not heard.is_empty() or Time.get_ticks_msec() - feedback_ms > 2000:
 				heard_text = heard
 				feedback_state = state

@@ -147,6 +147,8 @@ class Connection:
         self.seq = 0
         self.epoch = 0
         self.buffer = b''
+        self.call_context = {}
+        self.call_context_time = 0.0
         self.send('hello', token=token)
 
     def send(self, kind, **values):
@@ -168,6 +170,9 @@ class Connection:
                 data = json.loads(line)
                 if data.get('type') == 'context' and isinstance(data.get('epoch'), int):
                     self.epoch = data['epoch']
+                elif data.get('type') == 'call_context' and data.get('epoch') == self.epoch:
+                    self.call_context = data
+                    self.call_context_time = time.monotonic()
         return self.epoch != before
 
 
@@ -219,7 +224,11 @@ def run_microphone(connection, device=None, mode='checked'):
             if now - captured > .4:
                 raise VoiceError('I18N_VOICE_DELAY')
             epoch = connection.epoch
-            commands, feedback = stream.feed(pcm)
+            context = connection.call_context
+            if context:
+                stream.configure_call(context.get('profile', {}), context.get('opportunity_id', -1))
+            eligible = context.get("opportunity_id", -1) if captured >= connection.call_context_time else -1
+            commands, feedback = stream.feed(pcm, eligible)
             if connection.poll():
                 stream.reset()
                 cutoff = time.monotonic()
