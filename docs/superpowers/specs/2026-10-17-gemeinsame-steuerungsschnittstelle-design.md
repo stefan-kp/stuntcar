@@ -8,6 +8,8 @@ Die Schnittstelle verbindet Eingaben, bewertete Spielaktionen und Hilfestufen.
 Das Spiel bewertet mögliche Aktionen und Kombinationen anhand seines aktuellen Zustands.
 Das Steuerungsmodul wählt daraus einen Vorschlag, der zur Anweisung des Spielers passt.
 Eine ausdrückliche Anweisung hat auf jeder Hilfestufe Vorrang vor einer besseren Bewertung.
+Für Stuntcar liefern zunächst Spielregeln und Probefahrten mit dem tatsächlichen Fahrmodell die Bewertungen.
+Jev, Clef oder ein anderes lernendes Modell bilden keine Voraussetzung.
 
 ## 1 Bestätigte Regeln und vorgeschlagener Umfang
 
@@ -20,9 +22,12 @@ Stefan bestätigte diese Regeln:
 - Eine gemeinsame Anweisung darf mehrere Aktionen enthalten, etwa „bremsen links“.
 - Auf der leichtesten Stufe darf ein geeigneter Ruf ohne erkannten Befehl die beste gültige Aktion auslösen.
 - Das Spiel liefert Bewertungen für Einzelaktionen und Kombinationen.
+- Stuntcar nutzt seine eigene Bewegungsberechnung als Grundlage der Bewertung.
+- Neue Level erhalten automatische Prüfungen mit verschiedenen Zuständen und vollständigen Fahrten.
 
 Die folgenden Datenfelder und Auswahlregeln konkretisieren diese Vorgaben als Vorschlag.
 Der erste Umfang umfasst gleichzeitige Aktionen. Folgen mit mehreren zeitlich getrennten Schritten gehören nicht zur ersten Fassung.
+Diese Grenze betrifft einen einzelnen Vorschlag. Eine vollständige Levelprüfung darf mehrere Anweisungen über die Fahrt verteilen.
 Die Schnittstelle unterstützt verschiedene Spiele. Die erste Anbindung soll Godot nutzen.
 Gesten liefern später dieselbe Form der Eingabe wie Sprache oder Tasten.
 
@@ -166,6 +171,7 @@ Die Antwort enthält einen gemeinsamen Rahmen und eine Liste von Vorschlägen.
 | `objective_id` | Spielziel, auf das sich die Bewertungen beziehen. |
 | `horizon_ms` | Zeitraum, über den das Spiel die Folgen bewertet. |
 | `scoring_version` | Fassung der Bewertungsregeln. |
+| `evaluation_context` | Bei Probefahrten: Zustand, Schrittweite, Folgeeingaben und Grenzen der Suche gemäß Abschnitt 14. |
 | `proposals` | Liste der Einzelaktionen und Kombinationen. |
 
 Das Spiel bewertet alle Vorschläge einer Antwort anhand desselben Zustands, Ziels, Zeitraums und Hilfsprofils.
@@ -180,9 +186,10 @@ Ein Wechsel von Modell, Katalog, Hilfsprofil oder Spielzustand macht vorherige A
 | `rating_status` | `rated` oder `unknown`. |
 | `utility` | Nutzen zwischen −1 und +1; bei `unknown` gilt `null`. |
 | `reason_code` | Eindeutiger Grund für Nutzen, Unverfügbarkeit oder fehlende Bewertung. |
-| `evidence` | `rule`, `tested_samples` oder `unknown`. |
+| `evidence` | `rule`, `simulated`, `tested_samples` oder `unknown`. |
 
 `rule` bezeichnet eine Bewertung aus Spielregeln.
+`simulated` bezeichnet eine neue Probefahrt mit dem tatsächlichen Spielmodell ab dem angegebenen Zustand.
 `tested_samples` bezeichnet eine Bewertung aus passenden geprüften Fällen.
 `unknown` bezeichnet eine fehlende Grundlage.
 Diese Angaben sind keine Erfolgswahrscheinlichkeiten.
@@ -213,6 +220,7 @@ Sie müssen zusammen nicht 1 ergeben.
 Ein Wert von 0,8 bedeutet weder 80 Prozent Erfolg noch einen messbaren Verlust von 20 Prozent.
 Die erste Fassung vergleicht und ordnet die Werte. Sie berechnet daraus keine erwarteten Gewinne.
 Werte verschiedener Spiele müssen nicht dieselbe messbare Wirkung ausdrücken.
+Abschnitt 15 beschreibt die vorgeschlagene Berechnung dieser Rangfolge für Stuntcar.
 
 Für eine ausdrückliche Anweisung gilt diese Reihenfolge:
 
@@ -398,6 +406,8 @@ Der Entwurf ersetzt keine vorhandene Abnahme und ändert keine Spielregel.
 | [Befehlsverarbeitung](../../../scripts/input/command_router.gd) | Unterscheidet Fahrt, Pause, Menüs und Rufhilfe. | Spielzustand und Eingabeauswahl erhalten getrennte Zuständigkeiten. |
 | [Spracherkennung](../../../voice/streaming.py) | Erkennt mehrere Befehlswörter einer Äußerung. | Eine gemeinsame Anweisung mit garantiert gemeinsamem Start fehlt. |
 | [Prüfung räumlicher Tempohinweise](../../../scripts/track/spatial/verification.gd) | Bindet Hinweise an Zustand, Profil und Prüfsummen. | Neue Bewertungsregeln müssen dieselben Gültigkeitsgrenzen beachten. |
+| [Vorhandener Fahrprüfer](../../../scripts/vehicle/spatial/drive_runner.gd) | Spielt Eingabefolgen mit dem tatsächlichen Fahrmodell nach. | Vollständige Zustandskopien und unabhängige Vergleiche mehrerer Vorschläge fehlen noch. |
+| [Vorhandene Streckenprüfung](../../../tools/spatial/check_drives.gd) | Erstellt reguläre Fahrten und Berichte je Hilfsprofil. | Die Fallauswahl, die Suche und die Abnahmeregeln aus Abschnitt 16 müssen hinzukommen. |
 
 ### Wichtigster Unterschied bei der Richtung
 
@@ -498,3 +508,328 @@ Godot meldete beim Start einen Fehler beim Lesen der Systemzertifikate.
 Die drei Prüfprogramme beendeten ihre Prüfungen jeweils erfolgreich mit Rückgabewert 0.
 Die Prüfung nutzte keine neue menschliche Sprachprobe und keine Kamera.
 Die Erprobung mit den vorgesehenen Spielern bleibt Teil der späteren Abnahme.
+
+## 14 Bewertung mit der tatsächlichen Spielephysik
+
+### Grundlage und vollständiger Ausgangszustand
+
+Die Bewertung verwendet dieselben Bewegungsfunktionen wie das laufende Spiel.
+Eine getrennte, vereinfachte Bewegung darf keine geprüfte Bewertung ersetzen.
+Die Bewegungsfunktionen müssen die im Katalog versprochene Wirkung tatsächlich ausführen.
+Die heutige Umdeutung einer falschen Richtung darf keine Grundlage für die neue Bewertung bilden.
+Feste Regeln dürfen eindeutige Vorschläge vorbereiten. Ihre Kennzeichnung bleibt `rule`.
+Probefahrten können diese Vorschläge anschließend anhand ihrer tatsächlichen Folgen vergleichen.
+
+Jede Probefahrt beginnt mit einer eigenen vollständigen Kopie desselben Ausgangszustands.
+Sie verändert weder die laufende Fahrt noch andere Probefahrten.
+Sie löst keine sichtbaren Effekte, Geräusche, Mikrofonzugriffe oder echten Eingabeereignisse aus.
+Sie erfasst Bewegungsereignisse nur innerhalb ihrer eigenen Kopie.
+
+| Zustandsteil | Erforderlicher Inhalt |
+|---|---|
+| Bewegung | Position, Geschwindigkeit, Ausrichtung, Seitenbewegung und Bodenkontakt oder Flug. |
+| Strecke | Levelkennung, Abschnitt, Streckenfortschritt und zugehörige Formdaten. |
+| Spielerziel | Zieltempo, aktive ausdrückliche Aktionen und deren Restdauer. |
+| Hilfen | Aktive Kurvenhilfe, Freigaben, Zielwerte, Restdauer und bereits verbrauchte Hilfe je Abschnitt. |
+| Weitere Fahrregeln | Turbo, Wartezeiten, Bremszustand und weitere zeitabhängige Fahrwerte. |
+| Eingabeverarbeitung | Aktive Eingaben, Spielzustand, Hilfsfenster und bereits verarbeitete Ereigniskennungen. |
+| Wiederholung | Spielschritt, Vertragsfassungen und gegebenenfalls Zustand des Zufallsgenerators. |
+
+Eine Kopie nur von Position und Tempo reicht nicht.
+Auch `DriveState.snapshot()` enthält derzeit nicht alle Werte der übergeordneten Fahr- und Eingabeverarbeitung.
+Die spätere Umsetzung braucht deshalb eine vollständige Zustandserfassung und Wiederherstellung.
+Ein Kontrolllauf ohne neue Aktion muss nach der Wiederherstellung dieselbe Bewegung wie die Ausgangsfahrt liefern.
+
+### Interner Vertrag für Probefahrten
+
+Dieser Vertrag gehört zur Spielanbindung. Er erweitert nicht die vier Aufgaben für normale Eingabequellen.
+Die Bezeichnungen beschreiben Aufgaben und noch keine fertigen Programmfunktionen.
+
+| Aufgabe | Eingabe | Ergebnis |
+|---|---|---|
+| Zustand erfassen | Laufende Fahrt an einer festgelegten Schrittgrenze. | Vollständiger Zustand mit Fassung und Prüfsumme. |
+| Zustand kopieren | Vollständiger Zustand. | Unabhängige Fahrt ohne Verbindung zu echten Eingaben. |
+| Probefahrt ausführen | Kopie, Vorschlag, Zeitraum und Folgeeingaberegel. | Verlauf, Endzustand, Ereignisse, Verbrauch der Hilfe und Endegrund. |
+| Ergebnis bewerten | Ergebnisse aller verglichenen Vorschläge und ein gemeinsames Bewertungsprofil. | Nutzenwerte, Messwerte und Kennzeichnung der Grenzen. |
+
+Für den Start aller Vorschläge gilt dieselbe Grenze zwischen zwei Spielschritten.
+Der Prüfer verwendet die im Fahrmodell festgelegte Schrittweite, zunächst 1/60 Sekunde.
+Er verwendet dieselbe Unterteilung eines Schritts für Flug und Landung wie das echte Modell.
+Er darf weder Hilfsdauer zurücksetzen noch neue Kurvenfreigaben erfinden.
+Eine Kopie erhält eigene Ereigniskennungen für ihre Probe. Sie behält alle bereits wirksamen Eingabegrenzen.
+
+`evaluation_context` enthält die folgenden Angaben:
+
+| Feld | Bedeutung |
+|---|---|
+| `snapshot_version` und `state_digest` | Fassung und Prüfsumme des vollständigen Ausgangszustands. |
+| `step_s` | Schrittweite der Bewegungsberechnung. |
+| `evaluation_target` | Gemeinsames Abschnittsziel und nächster unabhängiger Entscheidungspunkt. |
+| `continuation_policy_id` | Fassung der gemeinsamen Regel für spätere Eingaben. |
+| `search_policy_version` | Fassung der Auswahl von Parametern und Vorschlägen. |
+| `candidate_count` | Zahl der vollständig bewerteten Vorschläge. Nicht geprüfte Vorschläge bleiben mit `unknown` in der Liste. |
+| `max_model_steps` und `used_model_steps` | Grenze und Verbrauch der Berechnung. |
+| `coverage` | `complete_for_candidates` oder `partial`. Das Ergebnis gilt nur für die bezeichneten Vorschläge. |
+
+Jeder simulierte Vorschlag enthält zusätzlich `metrics` und `stop_reason`.
+`metrics` enthält die Messwerte aus Abschnitt 15.
+`stop_reason` unterscheidet `finished`, `crashed`, `goal_reached`, `next_decision`, `horizon_reached`, `budget_exhausted` und `invalid_state`.
+Ein ungültiger Zustand liefert keine Bewertung.
+Ein Abbruch durch die Rechengrenze liefert für den betroffenen Vorschlag ebenfalls `unknown`.
+
+### Auswahl der Vorschläge und gemeinsame Folgeeingaben
+
+Die Auswahl beginnt mit der ausdrücklichen Anweisung und dem Vorschlag „keine neue Aktion“.
+Die Spielanbindung ergänzt verfügbare Einzelaktionen und erlaubte Kombinationen aus unterschiedlichen Aktionsgruppen.
+Sie bewertet auch schlechte, aber ausführbare Aktionen.
+Eine schlechte Vorhersage darf `available` nicht auf `false` setzen.
+
+Für frei wählbare Zusatzstärken schlägt dieser Entwurf zunächst die Werte 0,2, 0,3, 0,5, 0,75 und 1,0 vor.
+Die Anfangsauswahl für Zusatzdauern umfasst 200, 500 und 1.000 Millisekunden.
+Der Katalog begrenzt diese Werte und ergänzt bei Bedarf eine Dauer bis zum Ende des Hilfsfensters.
+Ein ausdrücklich genannter Wert erhält einen eigenen Vorschlag, auch wenn er nicht in dieser Auswahl steht.
+Die Suche darf diesen Wert nicht auf den nächsten Auswahlwert ändern.
+
+Die Suche prüft zunächst Einzelaktionen und danach Kombinationen aus höchstens einer Lenk- und einer Tempoaktion.
+Weitere Spiele legen ihre eigenen erlaubten Gruppen fest.
+Die erste Suche verwendet höchstens 24 Vorschläge einschließlich der ausdrücklichen Anweisung.
+Eine größere vorgeschriebene Kombination bleibt zulässig. Die Grenze betrifft die automatisch erzeugten Ergänzungen.
+
+Nach dem Start eines Vorschlags kommen bei der kurzen Bewertung keine weiteren neuen Befehle hinzu.
+Schon aktive Eingaben und der Vorschlag wirken bis zu ihrem angegebenen Ende.
+Anschließend gelten ihre im Katalog beschriebenen Folgen, etwa ein weiterhin gespeichertes Zieltempo.
+Diese Regel erhält die Kennung `no_new_input:1`.
+Sie verhindert einen Vergleich, bei dem nur manche Vorschläge später perfekte zusätzliche Eingaben erhalten.
+
+Das Zeitfenster umfasst zunächst drei Sekunden.
+Liegt ein relevantes Abschnittsende oder eine bevorstehende Landung später, verwendet die gesamte Antwort sechs oder zwölf Sekunden.
+Die Auswahl des Zeitfensters erfolgt anhand des Ausgangszustands vor dem Vergleich.
+Die Prüffälle und das Suchprofil legen fest, welches Ereignis den längeren Zeitraum verlangt.
+Das Suchprofil verwendet den kleinsten dieser Zeiträume, der das vorhergesagte Ereignis samt einer Sekunde Nachlauf umfasst.
+Ohne vorhergesagtes Ereignis verwendet es drei Sekunden.
+Liegt das Ereignis auch außerhalb von zwölf Sekunden, nennt der Bericht die ausstehende Prüfung ausdrücklich.
+Alle Vorschläge derselben Antwort verwenden denselben maximalen Zeitraum und dasselbe Abschnittsziel.
+Ein früherer Absturz, das Abschnittsziel oder das Streckenende beendet die jeweilige Probe.
+Auch der nächste unabhängige Entscheidungspunkt beendet die kurze Probe.
+Er bezeichnet eine weitere erforderliche Anweisung, die nicht zum ursprünglichen Vorschlag gehört.
+Der Bericht kennzeichnet dieses Ende als `next_decision` und nicht als vollständigen Erfolg.
+So bewertet der Prüfer eine passende Kurvenaktion nicht wegen einer erst später fehlenden Eingabe als Absturz.
+
+Bei zwölf Sekunden und 24 Vorschlägen liegt die Obergrenze bei 17.280 äußeren Modellschritten.
+Interne Teilschritte und ihre Zahl gehören zusätzlich in das Prüfprotokoll.
+Diese Grenze beschreibt den Arbeitsumfang. Sie verspricht noch keine bestimmte Antwortzeit.
+Eine spätere Messung legt die erlaubte Rechenzeit im laufenden Spiel fest.
+Das laufende Spiel darf nicht auf eine unbeschränkt lange Suche warten.
+
+Bei einer Rechengrenze bewertet das Modul nur vollständig geprüfte Vorschläge mit identischem Zeitfenster.
+Es kennzeichnet die übrigen Vorschläge als `unknown` und die Abdeckung als `partial`.
+Fehlt eine rechtzeitig gültige Bewertung, gelten die Ausweichregeln aus Abschnitt 7.
+Das Modul darf keine veraltete Empfehlung auf einen neuen Spielzustand anwenden.
+
+## 15 Konkrete Bewertungsregel für Stuntcar
+
+### Ziel und Messwerte
+
+Das erste Bewertungsprofil bevorzugt Fortschritt ohne Absturz und einen Abstand zum Fahrbahnrand.
+Danach berücksichtigt es Zeitbedarf, zusätzliche Hilfe und ergänzte Aktionen.
+Diese Reihenfolge und die folgenden Zahlen bilden einen prüfbaren Vorschlag für `stuntcar_physics_v1`.
+Sie sind keine aus Spielversuchen mit Menschen abgeleiteten Gewichte.
+
+Alle Vorschläge derselben Antwort verwenden dieselben Bezugsgrößen.
+Der Prüfer begrenzt die folgenden Messwerte auf den Bereich 0 bis 1.
+
+| Messwert | Berechnung |
+|---|---|
+| Fortschritt `P` | Vorwärtsfortschritt geteilt durch den Abstand zum festgelegten Abschnittsziel. |
+| Randabstand `M` | Kleinster seitlicher Abstand zur gültigen Fahrbahn oder tatsächlichen Landefläche, geteilt durch einen Meter. |
+| Zeitbedarf `T` | Zeit bis zum Abschnittsziel geteilt durch das Zeitfenster. Ohne erreichtes Ziel gilt 1. |
+| Zusätzliche Hilfe `A` | Dauer zusätzlicher Spielhilfe geteilt durch das Zeitfenster. Gleichzeitige Hilfen zählen je Schritt höchstens einmal. |
+| Ergänzungen `C` | Zahl ergänzter Aktionen geteilt durch zwei. Ausdrücklich verlangte Aktionen zählen nicht als Ergänzung. |
+
+Für `P` beträgt der Bezugsabstand mindestens einen Meter.
+Rückwärtsfahrt erhöht `P` nicht.
+Das Abschnittsziel bezeichnet eine festgelegte Position hinter der Kurve oder hinter der Landung.
+Die Streckenprüfung legt diese Position vor der Bewertung fest.
+
+Für `M` zählen Bodenkontakt und tatsächlich berechnete Landekontakte.
+Eine bloße Nähe zu einer Fahrfläche während des Flugs zählt nicht als Landung.
+Fehlt jeder passende Kontaktwert, gilt `M = 0`.
+Das Protokoll nennt diesen Fall ausdrücklich.
+Ein noch laufender Flug am Zeitfensterende bestätigt keine erfolgreiche Landung.
+
+Für `A` zählt nur zusätzliche Hilfe innerhalb der Probe.
+Vorher verbrauchte Hilfe zählt nicht erneut.
+Spurhilfe, automatische Tempoanpassung und zusätzliche Haltekraft zählen als Hilfe.
+Schwerkraft, normale Fahrkräfte und ausdrücklich verlangte Aktionen zählen nicht als zusätzliche Hilfe.
+
+### Berechnung des Nutzens
+
+Bei einem berechneten Absturz gilt `utility = -1`.
+Ohne berechneten Absturz gilt:
+
+`utility = 0.55 × P + 0.25 × M − 0.10 × T − 0.05 × A − 0.05 × C`
+
+Die zweite Formel liefert Werte zwischen −0,2 und +0,8.
+Damit bleibt ein Vorschlag ohne berechneten Absturz besser als ein Vorschlag mit berechnetem Absturz.
+Der Vertrag verlangt keinen Vorschlag mit dem Wert +1.
+Der Prüfer normiert nicht nach dem besten und schlechtesten Vorschlag derselben Antwort.
+Sonst könnte eine durchweg schlechte Auswahl einen scheinbar sehr guten Wert erzeugen.
+
+| Beispiel | Messwerte | Nutzen |
+|---|---|---|
+| Links ohne Bremse; berechneter Absturz. | Absturz. | −1,0 |
+| Links mit Bremsstärke 0,3. | `P=0.9, M=0.8, T=1, A=0.2, C=0.5` | +0,56 |
+| Links mit Bremsstärke 0,8. | `P=0.5, M=1, T=1, A=0.2, C=0.5` | +0,39 |
+
+Diese Beispielwerte erläutern die Formel. Sie sind keine gemessenen Fahrten.
+Die bisherige Fahrsteuerung bietet die hier angenommene genaue Bremsstärke noch nicht an.
+Die Spielanbindung darf solche Vorschläge erst nach einer entsprechenden Erweiterung des Fahrmodells anbieten.
+
+Die Physik berechnet die Folgen. Das Bewertungsprofil legt ihre Bedeutung für das Spielziel fest.
+Eine begrenzte Probe kann Gefahren nach ihrem Ende übersehen.
+`horizon_reached` bezeichnet deshalb keine erfolgreiche vollständige Fahrt.
+Die Vollfahrtprüfung aus Abschnitt 16 ergänzt diese Grenze.
+
+Eine negative Bewertung hebt eine ausdrückliche Anweisung nicht auf.
+Bei „links“ vergleicht die leichte Hilfe weiterhin nur passende Vorschläge nach links.
+Ein ausdrücklich gewählter schlechter Vorschlag bleibt ausführbar, sofern das Spiel seine Aktion tatsächlich unterstützt.
+
+## 16 Automatische Prüfung neuer Level
+
+### Prüfauftrag und Ablauf
+
+Jedes neue Level erhält einen eigenen Prüfauftrag mit festen Fällen und erwarteten Ergebnissen.
+Der Auftrag nennt Fahrmodell, Hilfsprofile, Schrittweite, Bewertungsprofil und Grenzen der Suche.
+Die vorhandenen Stufen „Sehr leicht“ und „Leicht“ brauchen getrennte Ergebnisse.
+Ein späteres Profil „Direkt“ erhält eigene Fälle erst nach seiner tatsächlichen Umsetzung.
+
+| Stufe der Prüfung | Inhalt | Ergebnis |
+|---|---|---|
+| Daten und Geometrie | Pflichtfelder, Formverweise, Anschlüsse, Fahrflächen und mögliche Landeflächen prüfen. | Datenfehler oder gültige Grundlage für Fahrversuche. |
+| Einzelne Abschnitte | Kurven, Kuppen, Rampen, Flug, Landung und Looping mit verschiedenen Zuständen durchfahren. | Messwerte und Fehler je Fall. |
+| Übergänge | Das Ende einer Hilfe und den Beginn des nächsten Elements zusammen prüfen. | Keine übertragene Freigabe und keine erneuerte Restdauer. |
+| Vollständige Fahrten | Vom tatsächlichen Start bis zum Ziel dieselben Bewegungsfunktionen und Eingaberegeln nutzen. | Nachspielbare Eingabefolge oder dokumentierter Abbruch. |
+| Wiederholung | Erfolgreiche und fehlgeschlagene Fälle mit denselben Daten erneut ausführen. | Übereinstimmung innerhalb festgelegter Toleranzen. |
+
+Der Prüfer nutzt zunächst aus vollständigen Fahrten erreichte Zustände als Ausgangspunkte.
+Er ergänzt gezielt künstliche Randzustände.
+Der Bericht unterscheidet beide Gruppen. Ein künstlicher Zustand belegt keine Erreichbarkeit im normalen Spiel.
+
+### Anfangsauswahl der Fälle
+
+Die vorhandene Auswahl enthält die Starttempi 0, 5, 14, 22, 35, 46 und 58 Meter pro Sekunde.
+Der neue Prüfauftrag übernimmt diese Werte nur, wenn das aktive Modell und Profil sie unterstützen.
+Tempo 0 prüft zunächst den Stillstand und anschließend das Anfahren nach einer ausdrücklichen Eingabe.
+Eine gewollte Vollbremsung braucht keinen erfolgreichen Zieleinlauf als Ergebnis.
+
+| Fallgruppe | Vorgeschlagene Fälle |
+|---|---|
+| Seitliche Lage | Spurmitte sowie jeweils 0,5 Meter links und rechts. |
+| Seitenbewegung | Keine Seitenbewegung sowie jeweils 0,5 Meter pro Sekunde nach links und rechts. |
+| Eingabezeit | Frühe, passende, späte und sehr späte Eingabe, soweit das Hilfsfenster diese Phasen enthält. |
+| Grenzen | Ein Modellschritt vor, auf und nach einer Zeitgrenze. Position jeweils 0,01 Meter neben einer Grenze. |
+| Tempogrenzen | Geprüfte Übergänge jeweils mit 0,1 Meter pro Sekunde Abstand auf beiden Seiten. |
+| Eingabeverhalten | Passende Richtung, gegensätzliche Richtung, fehlende Eingabe, Ruf und ausdrückliche Kombination. |
+| Tempoaktionen | Beschleunigen, Vollbremsen und wechselnde Tempobefehle. |
+| Restdauer der Hilfe | Volle Restdauer, ein verbleibender Schritt und bereits verbrauchte Hilfe. |
+| Unterbrechung | Pause, Fortsetzung, Neustart und Verlust der Eingabequelle. |
+
+Die Leveldaten und das Modell liefern die tatsächlich geltenden Grenzen.
+Der Prüfer darf nicht für alle Elemente dieselbe Fahrbahnbreite oder dasselbe Mindesttempo annehmen.
+Eine Suche nach Tempogrenzen prüft zuerst ein Raster im erlaubten Bereich.
+Sie verfeinert danach Übergänge zwischen Erfolg und Fehler.
+Sie darf ohne weitere Prüfung keine einzelne durchgehende Erfolgszone annehmen.
+
+Die Fälle für Unterbrechungen verwenden zusätzlich die tatsächliche Zustands- und Eingabeverarbeitung.
+Eine Prüfung nur der Bewegung reicht für Pause oder alte Eingaben nicht aus.
+Bei gegensätzlichen ausdrücklichen Befehlen prüft der Fall die verlangte Wirkung.
+Er verlangt keine heimliche Richtungskorrektur und nicht zwingend eine erfolgreiche Fahrt.
+
+### Suche nach einer vollständigen Fahrt
+
+Der Levelprüfer darf mehrere Anweisungen über eine Fahrt verteilen.
+Eine feste Vergleichssteuerung verwendet zunächst die Streckenrichtung und die erlaubten Tempoaktionen.
+Sie ruft dieselbe Bewertungs- und Ausführungsschnittstelle wie die spätere Hilfe auf.
+Sie verändert weder Position noch Geschwindigkeit direkt, um einen Abschnitt zu bestehen.
+
+Zusätzlich darf der Prüfer alternative Eingabezeiten, Stärken und Kombinationen untersuchen.
+Er verwendet dafür vollständige Zustandskopien an den festgelegten Entscheidungspunkten.
+Ein Suchzweig enthält die bereits ausgeführten Aktionen, den erreichten Zustand und die verbleibende Hilfe.
+Eine Wiederholung eines Zweigs darf keine Hilfsdauer erneuern.
+
+Der vorgeschlagene erste Suchlauf behält höchstens 32 Zweige je Entscheidungspunkt.
+Er prüft pro Zweig höchstens die 24 Vorschläge aus Abschnitt 14.
+Er beendet eine vollständige Fahrt spätestens nach 18.000 äußeren Modellschritten, entsprechend 300 Sekunden.
+Der Prüfauftrag begrenzt zusätzlich die Gesamtzahl der Zweige und Modellschritte über alle Fälle je Profil.
+Die vorgeschlagenen Anfangsgrenzen betragen 4.096 gestartete Zweige und 2.000.000 äußere Modellschritte je Profil.
+Diese Gesamtgrenzen gehören vor dem Start in den Bericht. Ihr Ablauf beendet die Suche mit `incomplete`.
+Ein weiterer Lauf mit höheren Grenzen erhält einen neuen Prüfauftrag und eigene Ergebnisse.
+
+Die Auswahl der Zweige erfolgt zuerst nach vermiedenen Abstürzen und dann nach erreichtem Streckenfortschritt.
+Bei Gleichstand berücksichtigt sie den geringeren Verbrauch der Hilfe und anschließend die kürzere Fahrzeit.
+Eine gefundene Fahrt erhält eine vollständige Eingabefolge und eine Wiederholung vom regulären Start.
+Eine erfolglose begrenzte Suche beweist nicht, dass das Level unlösbar ist.
+
+Alle Pflichtfälle stehen vor der Suche fest.
+Der Prüfer darf schwierige Fälle nicht nachträglich aus der Liste entfernen.
+Nach einer Anpassung der Bewertungsregeln folgt eine getrennte Abnahme mit zuvor zurückgehaltenen Fällen.
+So prüft die Abnahme auch Zustände, die nicht zur Wahl der Gewichte und Suchwerte dienten.
+
+### Ergebnis und Abnahme
+
+| Status | Bedeutung |
+|---|---|
+| `passed` | Alle festgelegten Pflichtfälle lieferten ihr erwartetes Ergebnis und bestanden die Wiederholung. |
+| `failed` | Mindestens ein vollständig geprüfter Pflichtfall verletzt sein festgelegtes Sollverhalten. |
+| `incomplete` | Mindestens ein Pflichtfall bleibt ungeprüft, ohne gültige Grundlage oder außerhalb der Rechengrenze. |
+
+Ein vorsätzlich falscher Befehl darf einen Absturz ergeben und trotzdem seinen Testfall bestehen.
+Ein vorgesehener regulärer Durchlauf darf dies nicht.
+Der Bericht nennt deshalb für jeden Fall Sollverhalten und tatsächliches Ergebnis.
+Ein Fehler hat im Gesamtstatus Vorrang vor einer unvollständigen Prüfung.
+Ohne Fehler, aber mit offenen Pflichtfällen bleibt der Gesamtstatus `incomplete`.
+
+Der neue Abnahmebericht muss für `passed` mindestens eine vollständige reguläre Fahrt je gefordertem Hilfsprofil enthalten.
+Er bestätigt nur die bezeichneten Fälle und Bereiche.
+Der spätere neue Abnahmeweg übernimmt weder `failed` noch `incomplete` als erfolgreiche Freigabe.
+Die vorhandene Funktion `Verification.playable` prüft derzeit nur die passende Prüfsumme und `clean_completed`.
+Sie setzt die hier beschriebene umfassendere Abnahme noch nicht um.
+
+## 17 Prüfberichte und weitere Bewertungsverfahren
+
+Jeder Bericht enthält Level, Modellfassung, Hilfsprofil, Schrittweite und vollständige Fallliste.
+Er enthält außerdem Bewertungsfassung, Suchprofil, Folgeeingaberegel, Rechengrenzen und gegebenenfalls Zufallswerte.
+Zu jedem Fall gehören Ausgangszustand, Aktionen, Messwerte, Endegrund und nachspielbarer Verlauf.
+Erfolgreiche und fehlgeschlagene Fälle bleiben im Bericht erhalten.
+
+Eine gemeinsame Prüfsumme erfasst alle Dateien und Daten, die Bewegung, Auswahl oder Bewertung beeinflussen.
+Dazu gehören auch die Regeln für Zustandskopien und die Ausführung von Kombinationen.
+Eine Änderung dieser Grundlagen macht die betroffenen Bewertungen und Abnahmen ungültig.
+Ein reiner Austausch sichtbarer Modelle darf die Gültigkeit nur erhalten, wenn er keine geprüfte Fahr- oder Kollisionsgeometrie verändert.
+
+Gespeicherte Einzelbewertungen gelten zunächst nur für den vollständig passenden Zustand.
+Eine spätere Zusammenfassung ähnlicher Zustände braucht eigene Abweichungsgrenzen und Prüfungen.
+Eine einzelne erfolgreiche Probefahrt liefert keine Erfolgswahrscheinlichkeit.
+Der Anteil erfolgreicher Varianten beschreibt ausschließlich die angegebenen Varianten und ihre Verteilung.
+
+Jev, Clef oder ein späteres eigenes Modell dürfen zusätzliche Vorschläge vorbereiten.
+Eine weitere Möglichkeit wäre ein Modell, das die Ergebnisse vieler geprüfter Probefahrten nachbildet.
+Beide Erweiterungen brauchen einen Vergleich mit zurückgehaltenen Fahrfällen und eigene Zeitmessungen.
+Die erste Fassung benötigt weder externes Modelltraining noch Modellzugriffe im laufenden Spiel.
+Die Auswahlregeln und die ausdrückliche Anweisung bleiben von der Herkunft einer Bewertung unabhängig.
+
+## 18 Prüfung der vorhandenen Grundlage bei dieser Ergänzung
+
+Die folgenden bestehenden Programme liefen bei der Ergänzung erneut.
+Sie bestätigen vorhandene Grundlagen. Sie bestätigen keine Umsetzung der neuen Bewertung oder Levelprüfung.
+
+| Prüfung | Ergebnis |
+|---|---|
+| `tests/spatial/test_verification.gd` | 10 Bedingungen, 0 Fehler. |
+| `tests/spatial/test_boundaries.gd` | 11 Bedingungen, 0 Fehler. |
+
+Die erste Prüfung vergleicht wiederholte Fahrten und die Bewegung des Prüfprogramms mit dem tatsächlichen Spielmodell.
+Die zweite Prüfung untersucht unter anderem Sprungtempo, Landebreite, Aufprallgrenzen und verbrauchte Hilfsdauer.
+Beide Programme beendeten ihre Prüfungen mit Rückgabewert 0.
+Godot meldete erneut den Fehler beim Lesen der Systemzertifikate.
+Die neue automatische Prüfung beliebiger Level bleibt ein Entwurf.
