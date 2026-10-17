@@ -1,0 +1,16 @@
+extends RefCounted
+var position:=Vector3.ZERO
+var velocity:=Vector3.ZERO
+var basis:=Basis.IDENTITY
+var tick:=0
+var attempt_id:=0
+var element_id:=""
+var local_m:=0.0
+var distance_m:=0.0
+var mode:="grounded"
+var lateral_m:=0.0
+var lateral_speed:=0.0
+var speed_mps:float:
+	get:return velocity.length()
+func snapshot()->Dictionary:
+	return {"position":[position.x,position.y,position.z],"velocity":[velocity.x,velocity.y,velocity.z],"basis":[basis.x.x,basis.x.y,basis.x.z,basis.y.x,basis.y.y,basis.y.z,basis.z.x,basis.z.y,basis.z.z],"tick":tick,"attempt_id":attempt_id,"element_id":element_id,"local_m":local_m,"distance_m":distance_m,"mode":mode,"lateral_m":lateral_m,"lateral_speed":lateral_speed}
