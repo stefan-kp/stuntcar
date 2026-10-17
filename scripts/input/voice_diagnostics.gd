@@ -3,7 +3,7 @@ extends RefCounted
 const VoiceCalibration = preload("res://scripts/input/voice_calibration.gd")
 const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
 const MAX_RECORDS := 20000
-const PACKET_FIELDS := ["type", "seq", "epoch", "device", "mode", "command", "strength", "rms", "peak_rms", "level", "clipped", "state", "direction"]
+const PACKET_FIELDS := ["type", "seq", "epoch", "device", "mode", "command", "strength", "rms", "peak_rms", "level", "clipped", "state", "direction", "speech_seconds"]
 var file: FileAccess
 var origin_ms := 0
 var last_flush_ms := 0
@@ -67,7 +67,7 @@ func observe_command(packet: Dictionary, strength: float, accepted: bool, scene)
 	elif not VoiceCalibration.valid_signal(packet.get("peak_rms")): reason = "invalid_signal"
 	elif calibration.device != scene.voice.device_name: reason = "device_mismatch"
 	record("command_result", {"seq":packet.get("seq"), "epoch":packet.get("epoch"),
-		"command":packet.get("command"), "peak_rms":packet.get("peak_rms"),
+		"command":packet.get("command"), "peak_rms":packet.get("peak_rms"), "assisted":packet.get("assisted", false),
 		"fallback_strength":packet.get("strength"), "strength":strength,
 		"bars":VoiceStrength.bars(strength), "profile_reason":reason,
 		"accepted":accepted, "game_state":scene.session.state})

@@ -2,6 +2,7 @@ extends RefCounted
 
 const VoiceStrength = preload("res://scripts/input/voice_strength.gd")
 const VoicePractice = preload("res://scripts/input/voice_practice.gd")
+const VoiceCalibration = preload("res://scripts/input/voice_calibration.gd")
 
 signal action_requested(action: String)
 var model
@@ -26,6 +27,19 @@ var control_return := "MENU"
 var control_mode := "keys"
 var routes: Array[Dictionary] = []
 var catalog_errors: Array[String] = []
+
+func unrecognized_turn(packet: Dictionary, microphone: String) -> String:
+	if state != "RUNNING" or not voice_enabled or model.off_road or model.finished: return ""
+	var calibration = practice.calibration
+	if not VoiceCalibration.valid_levels(calibration.levels) or calibration.device != microphone: return ""
+	if not VoiceCalibration.valid_signal(packet.get("peak_rms")): return ""
+	var duration = packet.get("speech_seconds", 0.0)
+	if typeof(duration) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(duration)) or float(duration) < 0.15: return ""
+	var strength: float = calibration.strength_for(packet.peak_rms, 0.0, microphone)
+	if VoiceStrength.bars(strength) < 3: return ""
+	var curve: Dictionary = model.track.next_curve(model.distance_m)
+	if curve.is_empty() or model.distance_m < curve.start_m - model.input_window_m(): return ""
+	return "left" if curve.turn_sign < 0 else "right"
 
 func submit_voice(command: String, strength: float = VoiceStrength.NORMAL) -> bool:
 	match command:

@@ -42,7 +42,15 @@ class StreamingRecognizer:
         self.mode = getattr(engine, 'mode', 'checked')
         self.reset()
 
-    def reset(self):
+    def reset_call(self):
+        self.speech_seconds = 0.0
+        self.call_peak_rms = 0.0
+        self.call_silent_blocks = 0
+        self.call_has_command = False
+
+    def reset(self, preserve_call=False):
+        if not preserve_call:
+            self.reset_call()
         self.restricted_count = len(self.engine.recognizers) if self.mode == 'checked' else 0
         self.decoders = self.engine.recognizers + self.engine.fallback_recognizers
         for decoder in self.decoders:
@@ -124,12 +132,17 @@ class StreamingRecognizer:
             self.recent_clips.popleft()
         self.pre_roll.append(pcm)
         if rms >= 180:
+            self.speech_seconds += len(pcm) / 32000
+            self.call_peak_rms = max(self.call_peak_rms, rms)
+            self.call_silent_blocks = 0
             if not self.active:
                 self.parts = list(self.pre_roll)[:-1]
             self.active = True
             self.silent_blocks = 0
         elif self.active:
             self.silent_blocks += 1
+        if rms < 180 and self.speech_seconds > 0:
+            self.call_silent_blocks += 1
         if self.active and len(self.parts) < 300:
             self.parts.append(pcm)
         results = []
@@ -175,7 +188,16 @@ class StreamingRecognizer:
                     words = [{'command': chosen[0], 'text': chosen[1]}]
             events += self.new_commands(words, final=True)
             status['state'] = 'recognized' if self.emitted else 'unknown'
-            self.reset()
+            self.reset(preserve_call=True)
+        self.call_has_command = self.call_has_command or bool(events)
+        if self.speech_seconds > 0 and self.call_silent_blocks >= 6:
+            # Decoder endpoints can split one continuous call. Only an acoustic
+            # pause permits help, and any command in the whole call takes priority.
+            status['state'] = 'recognized' if self.call_has_command else 'unknown'
+            if not self.call_has_command:
+                status['peak_rms'] = self.call_peak_rms
+                status['speech_seconds'] = self.speech_seconds
+            self.reset_call()
         if events:
             # All commands released in this block share its available measurement.
             # Do not carry it into the next command.

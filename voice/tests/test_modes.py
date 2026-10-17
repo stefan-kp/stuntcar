@@ -137,6 +137,77 @@ class RecognitionModes(unittest.TestCase):
         # Cached command words must not hide unknown words in the full transcript.
         self.assertEqual(stream.confirmed([{'partial': 'not left', '_words': command_words('left')}]), [])
 
+    def test_unknown_retains_shout_peak_until_end_even_without_text(self):
+        for mode in ('direct', 'checked'):
+            for text in ('', 'updi dupdi'):
+                with self.subTest(mode=mode, text=text):
+                    stream, decoder, fallback = self.stream(mode)
+                    decoder.text = fallback.text = text
+                    stream.feed(array('h', [9000] * 800).tobytes())
+                    # The peak leaves the live meter before the utterance ends.
+                    for _ in range(12):
+                        events, status = stream.feed(array('h', [500] * 800).tobytes())
+                        self.assertEqual(events, [])
+                        self.assertEqual(status['state'], 'checking')
+                    for _ in range(6):
+                        events, status = stream.feed(bytes(1600))
+                        self.assertEqual(events, [])
+                    self.assertEqual(status['state'], 'unknown')
+                    self.assertEqual(status['peak_rms'], 9000)
+                    self.assertAlmostEqual(status.get('speech_seconds', -1), .65)
+                    for _ in range(10):
+                        _, status = stream.feed(bytes(1600))
+                        self.assertEqual(status['state'], 'listening')
+                    for _ in range(4):
+                        stream.feed(array('h', [500] * 800).tobytes())
+                    for _ in range(6):
+                        _, status = stream.feed(bytes(1600))
+                    self.assertEqual(status['state'], 'unknown')
+                    self.assertEqual(status['peak_rms'], 500)
+                    self.assertAlmostEqual(status['speech_seconds'], .2)
+
+    def test_recognized_word_does_not_end_as_unknown(self):
+        stream, decoder, _ = self.stream('direct')
+        events, _ = self.feed(stream, decoder, 'left')
+        self.assertEqual([event['command'] for event in events], ['left'])
+        decoder.text = 'updi dupdi'
+        for _ in range(6):
+            events, status = stream.feed(bytes(1600))
+            self.assertEqual(events, [])
+        self.assertEqual(status['state'], 'recognized')
+
+    def test_decoder_boundaries_do_not_split_one_call_into_several_assists(self):
+        stream, decoder, _ = self.stream('direct')
+        for level in (9000, 500):
+            for _ in range(3):
+                _, status = stream.feed(array('h', [level] * 800).tobytes())
+                self.assertEqual(status.get('speech_seconds', 0), 0)
+            decoder.final = True
+            _, status = stream.feed(array('h', [level] * 800).tobytes())
+            self.assertEqual(status.get('speech_seconds', 0), 0,
+                             'A decoder boundary is not a pause in a continuous call.')
+        for _ in range(6):
+            _, status = stream.feed(bytes(1600))
+        self.assertEqual(status['state'], 'unknown')
+        self.assertEqual(status['peak_rms'], 9000)
+        self.assertAlmostEqual(status['speech_seconds'], .4)
+        for _ in range(6):
+            _, status = stream.feed(bytes(1600))
+            self.assertEqual(status.get('speech_seconds', 0), 0)
+
+    def test_command_before_decoder_boundary_suppresses_call_assist(self):
+        stream, decoder, _ = self.stream('direct')
+        events, _ = self.feed(stream, decoder, 'left')
+        self.assertEqual([event['command'] for event in events], ['left'])
+        decoder.final = True
+        stream.feed(array('h', [9000] * 800).tobytes())
+        for _ in range(4):
+            stream.feed(array('h', [9000] * 800).tobytes())
+        for _ in range(6):
+            _, status = stream.feed(bytes(1600))
+        self.assertEqual(status['state'], 'recognized')
+        self.assertEqual(status.get('speech_seconds', 0), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

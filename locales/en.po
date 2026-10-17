@@ -600,7 +600,10 @@ msgid "I18N_PRACTICE_UNKNOWN"
 msgstr "Not recognized as a command."
 
 msgid "I18N_PRACTICE_WORD_FAST"
-msgstr "fast"
+msgstr "faster"
+
+msgid "I18N_VOICE_ASSIST_ACTION"
+msgstr "Voice help: %s · %d"
 
 msgid "I18N_PRACTICE_PROGRESS"
 msgstr "%d / %d"

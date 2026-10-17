@@ -47,8 +47,8 @@ func run() -> void:
 		match word:
 			"left": check(target.end.x <= cross.position.x, "Left steht am linken Pfeil.")
 			"right": check(target.position.x >= cross.end.x, "Right steht am rechten Pfeil.")
-			"faster": check(target.end.y <= cross.position.y and panel.prompt.text.to_lower() == "fast", "Fast steht am oberen Pfeil.")
-			"slower": check(target.position.y >= cross.end.y, "Slower steht am unteren Pfeil.")
+			"faster": check(target.end.y <= cross.position.y and panel.prompt.text.to_lower() == "faster", "Faster steht am oberen Pfeil.")
+			"slower": check(target.position.y >= cross.end.y and panel.prompt.text.to_lower() == "slower", "Slower steht am unteren Pfeil.")
 		session.practice.receive(word)
 	session.practice.step(0.3, true)
 	panel.render(session, true, "")

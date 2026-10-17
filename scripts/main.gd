@@ -152,7 +152,7 @@ func _physics_process(delta: float) -> void:
 			if voice_diagnostics != null: voice_diagnostics.observe_state(self)
 			sync_voice_context()
 		var feedback_events: Array[Dictionary] = voice.take_feedback_events()
-		if session.state == "PRACTICE":
+		if session.state in ["PRACTICE", "RUNNING"]:
 			events.append_array(feedback_events)
 			events.sort_custom(func(a, b): return a.seq < b.seq)
 		for packet in events:
@@ -162,7 +162,7 @@ func _physics_process(delta: float) -> void:
 			strength = session.practice.calibration.strength_for(packet.get("peak_rms"), strength, voice.device_name)
 			if session.state == "PRACTICE":
 				if packet.get("type", "") == "feedback":
-					session.practice.unrecognized(str(packet.heard))
+					if not str(packet.heard).is_empty(): session.practice.unrecognized(str(packet.heard))
 					sync_voice_context()
 				else:
 					var accepted: bool = session.practice.receive(packet.command)
@@ -171,11 +171,18 @@ func _physics_process(delta: float) -> void:
 						sync_voice_context()
 						ui.practice_panel.compass.confirm(packet.command, strength)
 				continue
+			if packet.get("type", "") == "feedback":
+				var assisted_command: String = session.unrecognized_turn(packet, voice.device_name)
+				if assisted_command.is_empty(): continue
+				packet = packet.duplicate()
+				packet["command"] = assisted_command
+				packet["assisted"] = true
+				word = assisted_command
 			var accepted: bool = session.submit_voice(packet.command, strength)
 			if voice_diagnostics != null: voice_diagnostics.observe_command(packet, strength, accepted, self)
 			if accepted:
 				voice_applied_count += 1
-				voice_action_text = tr("I18N_VOICE_ACTION") % [word, voice_applied_count]
+				voice_action_text = (tr("I18N_VOICE_ASSIST_ACTION") if packet.get("assisted", false) else tr("I18N_VOICE_ACTION")) % [word, voice_applied_count]
 				if packet.command in ["faster", "slower"]:
 					voice_action_text += "\n" + model.speed_feedback
 				if session.state == "RUNNING":

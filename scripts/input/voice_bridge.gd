@@ -179,11 +179,12 @@ func accept_packet(packet: Dictionary) -> void:
 			input_direction = direction if valid_level and direction in ["left", "right", "faster", "slower"] else ""
 			var heard := str(packet.get("heard", "")).left(70)
 			var state := str(packet.get("state", "listening"))
-			if state == "unknown" and not heard.is_empty():
+			if state == "unknown":
 				if feedback_events.size() >= 16:
 					fail(tr("I18N_VOICE_TOO_MANY"))
 					return
-				feedback_events.append({"type":"feedback", "epoch":epoch, "seq":last_seq, "heard":heard})
+				feedback_events.append({"type":"feedback", "epoch":epoch, "seq":last_seq, "heard":heard,
+					"peak_rms":input_peak_rms, "speech_seconds":packet.get("speech_seconds", 0.0)})
 			if not heard.is_empty() or Time.get_ticks_msec() - feedback_ms > 2000:
 				heard_text = heard
 				feedback_state = state

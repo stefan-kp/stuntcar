@@ -89,7 +89,13 @@ Say `faster` to move again after a full brake. A quiet command is sufficient. A 
 6. Say `okay` very loudly at the last step.
 7. Complete the word test that follows.
 
-The display tells you when to speak again. The word test asks for `left`, `right`, `fast`, and `slower`. It shows how many commands the game recognized.
+The display tells you when to speak again. The word test asks for `left`, `right`, `faster`, and `slower`. It shows how many commands the game recognized.
+
+During a drive, a loud call can help if the game recognizes no command.
+The game uses your microphone profile to check the volume.
+At the end of the call, it applies the direction for the current or next curve if the time is correct.
+Each call gives at most one command. The display shows `Voice help`.
+This help stays off in menus and during the voice exercise.
 
 The game saves your voice levels, keys, control mode, track, and sound levels. You do not need to set your voice levels after each start. Check the levels again if you change your microphone or its settings.
 
