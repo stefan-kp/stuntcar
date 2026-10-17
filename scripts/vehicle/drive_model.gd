@@ -36,6 +36,8 @@ var lateral := 0.0
 var hint_seconds := 5.0
 var manual_remaining := 0.0
 var manual_direction := 0
+var requested_direction := 0
+var steering_expires_at_s := -1.0
 var last_command := 0
 var completed_ids: Dictionary = {}
 var correction_remaining := 0.0
@@ -93,6 +95,8 @@ func reset(checkpoint_m: float = 0.0) -> void:
 	off_road = false
 	finished = false
 	lateral = 0.0
+	requested_direction = 0
+	steering_expires_at_s = -1.0
 	manual_remaining = 0.0
 	manual_direction = 0
 	last_command = 0
@@ -126,7 +130,7 @@ func refresh_assist() -> void:
 	if active_curve_id >= 0 and distance_m >= track.curves[active_curve_id].end_m + assist_profile.exit_distance_m:
 		completed_ids[active_curve_id] = true
 		completed_curves += 1
-		active_curve_id = -1
+		clear_steering_request()
 		last_command = 0
 		guide_offset = 0.0
 		sway_used = false
@@ -154,22 +158,45 @@ func take_assist_events() -> Array[Dictionary]:
 	assist_events.clear()
 	return result
 
+func clear_steering_request() -> void:
+	requested_direction = 0
+	steering_expires_at_s = -1.0
+	active_curve_id = -1
+	curve_assist.data.authorized = false
+	if curve_assist.data.phase == "active": curve_assist.data.phase = curve_assist.data.accepted_phase
+	steering_input = 0
+	recovery_remaining = 0
+	jump_assist_until = -1
+
+func set_steering_request(direction: int, expires_at_s: float) -> bool:
+	if off_road or finished or direction not in [-1,1] or not is_finite(expires_at_s) or expires_at_s <= elapsed_s: return false
+	if requested_direction != direction: clear_steering_request()
+	requested_direction = direction
+	steering_expires_at_s = expires_at_s
+	last_command = direction
+	steering_input = float(direction)
+	return true
+
 func request_assisted_turn(direction: int, unknown_call: bool, event_id: String) -> bool:
 	refresh_assist()
+	if off_road or finished or event_id.is_empty() or curve_assist.seen.has(event_id): return false
 	var was_authorized: bool = curve_assist.snapshot().authorized
-	if not curve_assist.request(direction, unknown_call, event_id):
-		var rejected: Dictionary = curve_assist.snapshot()
-		if not was_authorized and rejected.phase != "closed" and assist_id == "easy" and not unknown_call and direction in [-1,1] and direction != rejected.turn_sign:
-			rejection_until_s = elapsed_s + 2.0
-			_emit_assist("rejected", "wrong_direction")
-		return false
-	rejection_until_s = -1.0
+	var guided: bool = curve_assist.request(direction, unknown_call, event_id)
 	var state: Dictionary = curve_assist.snapshot()
+	if unknown_call:
+		if not guided: return false
+		direction = state.turn_sign
+	if direction not in [-1,1]: return false
+	var expiry: float = maxf(elapsed_s + 0.5, state.expires_at_s) if guided else elapsed_s + 0.5
+	if not set_steering_request(direction, minf(elapsed_s + 10.0, expiry)): return false
+	if not guided:
+		rejection_until_s = elapsed_s + 2.0 if state.phase != "closed" and direction != state.turn_sign else -1.0
+		return true
+	rejection_until_s = -1.0
+	curve_assist.data.authorized = true
+	curve_assist.data.phase = "active"
 	active_curve_id = state.curve_id
-	last_command = state.turn_sign
 	turn_strength = 1.0
-	steering_input = float(state.turn_sign)
-	manual_remaining = 0.0
 	if not was_authorized:
 		if state.accepted_phase in ["late", "rescue"]:
 			recovery_remaining = assist_profile.recovery_seconds * (2.0 if state.accepted_phase == "rescue" else 1.0)
@@ -180,13 +207,7 @@ func request_assisted_turn(direction: int, unknown_call: bool, event_id: String)
 func request_turn(direction: int, _strength: float = VoiceStrength.NORMAL, event_id: String = "") -> bool:
 	if off_road or finished or direction not in [-1,1]: return false
 	input_serial += 1
-	var accepted := request_assisted_turn(direction, false, event_id if not event_id.is_empty() else "key:%d:%d" % [attempt_id,input_serial])
-	var jump: Dictionary = track.jump_for_correction(distance_m)
-	if not jump.is_empty() and (absf(lateral) < 0.15 or signf(lateral) == -direction):
-		jump_assist_until = maxf(jump.end_m + 24.0, distance_m + 24.0)
-		turn_strength = 1.0
-		accepted = true
-	return accepted
+	return request_assisted_turn(direction, false, event_id if not event_id.is_empty() else "key:%d:%d" % [attempt_id,input_serial])
 
 func input_window_m() -> float:
 	return maxf(speed_mps, target_speed_mps) * hint_seconds
@@ -238,6 +259,7 @@ func effective_target_speed() -> float:
 func step(delta: float) -> void:
 	if off_road or finished:
 		return
+	if requested_direction != 0 and elapsed_s >= steering_expires_at_s: clear_steering_request()
 	refresh_assist()
 	elapsed_s += delta
 	speed_feedback_seconds = maxf(0.0, speed_feedback_seconds - delta)
@@ -270,7 +292,9 @@ func step(delta: float) -> void:
 	var rolling_steer := clampf(speed_mps / MIN_SPEED, 0.0, 1.0)
 	correction_remaining = maxf(0.0, correction_remaining - delta)
 	landing_pulse = maxf(0.0, landing_pulse - delta * 3.0)
-	if jump_assist_until > distance_m:
+	if requested_direction != 0 and active_curve_id < 0 and not airborne:
+		heading += requested_direction * assist_profile.manual_turn_rate_rad_s * rolling_steer * delta
+	elif jump_assist_until > distance_m:
 		var target: Dictionary = track.sample(distance_m + 10.0)
 		var offset: Vector3 = target.position - position
 		var desired := atan2(offset.x, -offset.z)

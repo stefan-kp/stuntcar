@@ -26,7 +26,7 @@ func _initialize()->void:
 	check(model.active_curve_id==0,"Die richtige Richtung gibt die Kurve frei.")
 	r.set_selected_assist("very_easy");r.restart();model.reset(70)
 	r.submit_voice("left")
-	check(model.active_curve_id==0,"Sehr leicht gleicht die falsche Richtung aus.")
+	check(model.active_curve_id==-1 and model.requested_direction==-1,"Sehr leicht erhaelt die gewaehlte Richtung.")
 	r.restart();model.reset(70)
 	r.submit_voice("faster")
 	check(model.active_curve_id==-1 and model.target_speed_mps>22,"Ein Tempobefehl lenkt nicht.")

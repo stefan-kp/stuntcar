@@ -25,7 +25,7 @@ func _initialize() -> void:
 				for i in range(12000):
 					var c: Dictionary = d.track.next_curve(d.distance_m)
 					if not c.is_empty() and d.distance_m >= c.start_m - 20 and not sent.has(c.id):
-						d.request_turn(-c.turn_sign if level == "very_easy" else c.turn_sign,0.1)
+						d.request_turn(c.turn_sign,0.1)
 						sent[c.id] = true
 					d.step(1.0/60.0)
 					if d.off_road or d.finished: break

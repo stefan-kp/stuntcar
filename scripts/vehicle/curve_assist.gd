@@ -59,7 +59,7 @@ func request(direction: int, unknown_call: bool, event_id: String) -> bool:
 	if data.phase == "closed": return false
 	if unknown_call:
 		if profile.id != "very_easy": return false
-	elif direction not in [-1,1] or (profile.id == "easy" and direction != data.turn_sign): return false
+	elif direction not in [-1,1] or direction != data.turn_sign: return false
 	if not data.authorized:
 		data.accepted_phase = data.phase
 		data.authorized = true

@@ -31,8 +31,11 @@ static func step(track,state,controls:Dictionary,assistance:Dictionary,dt:float)
 		movement=e.length_m-state.local_m
 		result.remaining_s=dt-used
 	var side_acceleration:float=GRAVITY.dot(frame.basis.x)-speed*speed*curvature.dot(frame.basis.x)
-	if controls.get("turn_authorized",false) or e.input.kind=="none":
+	var direction:int=controls.get("steering_direction",0)
+	if controls.get("turn_authorized",false) or (direction==0 and e.input.kind=="none"):
 		side_acceleration=clampf(-state.lateral_m*12.0-state.lateral_speed*6.0,-80,80)
+	elif direction!=0:
+		side_acceleration+=direction*minf(80,speed*float(controls.get("manual_turn_rate_rad_s",deg_to_rad(65.0))))
 	state.lateral_speed+=side_acceleration*used
 	state.lateral_m+=state.lateral_speed*used
 	state.local_m+=movement;state.distance_m=e.start_m+state.local_m

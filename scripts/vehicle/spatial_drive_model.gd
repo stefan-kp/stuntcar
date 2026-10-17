@@ -25,6 +25,7 @@ func reset(checkpoint_m:float=0)->void:
 	actual_boost=false;holding=false;last_acceleration=Vector3.ZERO;rejection_until_s=-1
 	motion="normal";steering_input=0;assist_speed_active=false;assist_target_mps=22;assist_reason=""
 	speed_feedback="";speed_feedback_seconds=0;landing_pulse=0;drift_angle=0
+	requested_direction=0;steering_expires_at_s=-1
 	manual_remaining=0;manual_direction=0;correction_remaining=0;guide_offset=0
 	sway_remaining=0;sway_used=false;speed_strength=1;turn_strength=1;jump_assist_until=-1
 	set_assist_level(assist_id);sync_fields()
@@ -44,7 +45,7 @@ func refresh_assist()->void:
 	if state==null:return
 	sync_fields()
 	if active_curve_id>=0 and distance_m>=track.curves[active_curve_id].end_m+assist_profile.exit_distance_m:
-		completed_ids[active_curve_id]=true;completed_curves+=1;active_curve_id=-1;last_command=0
+		completed_ids[active_curve_id]=true;completed_curves+=1;clear_steering_request();last_command=0
 	var curve:Dictionary={}
 	if active_curve_id>=0:curve=track.curves[active_curve_id]
 	else:
@@ -69,6 +70,7 @@ func step(delta:float)->void:
 	if delta<=0 or state.mode=="finished":return
 	if state.mode=="crashed":
 		state.velocity+=Surface.GRAVITY*delta;state.position+=state.velocity*delta;state.tick+=1;sync_fields();return
+	if requested_direction!=0 and elapsed_s>=steering_expires_at_s:clear_steering_request()
 	refresh_assist();state.tick+=1
 	boost_remaining=maxf(0,boost_remaining-delta);boost_cooldown=maxf(0,boost_cooldown-delta)
 	speed_feedback_seconds=maxf(0,speed_feedback_seconds-delta);landing_pulse=maxf(0,landing_pulse-delta*3)
@@ -94,8 +96,10 @@ func step(delta:float)->void:
 		var slice_boost:=false
 		if state.mode=="grounded":
 			var current:Dictionary=track.by_id[state.element_id]
-			var authorized:bool=current.input.kind=="none" or (active_curve_id>=0 and track.curves[active_curve_id].element_id==current.id)
-			outcome=Surface.step(track,state,{"target_speed_mps":effective_target_speed(),"turn_authorized":authorized},aid,slice)
+			var authorized:bool=active_curve_id>=0 and track.curves[active_curve_id].element_id==current.id
+			var direction:int=requested_direction
+			if active_curve_id>=0 and not authorized:direction=0
+			outcome=Surface.step(track,state,{"target_speed_mps":effective_target_speed(),"turn_authorized":authorized,"steering_direction":direction,"manual_turn_rate_rad_s":assist_profile.manual_turn_rate_rad_s},aid,slice)
 			hold_used=hold_used or outcome.hold_used>0
 		else:
 			if boost_remaining>0 and state.thrust_used<spatial_profile.thrust_seconds-0.000001:

@@ -22,7 +22,7 @@ func _initialize() -> void:
 		check(P.validate(profile).is_empty(), "Das Profil ist gueltig.")
 		c.update(curve, state, profile)
 		check(c.snapshot().phase == "early", "Der Hinweis oeffnet die fruehe Eingabe.")
-		check(c.request(-1, false, "first") == (level == "very_easy"), "Die Stufe bestimmt den Richtungsabgleich.")
+		check(not c.request(-1, false, "first"), "Die Stufe bestimmt den Richtungsabgleich.")
 		check(c.request(1, false, "second"), "Die richtige Richtung gibt die Kurve frei.")
 		check(not c.request(1, false, "second"), "Ein Ereignis wirkt nur einmal.")
 		var first: Dictionary = c.snapshot()

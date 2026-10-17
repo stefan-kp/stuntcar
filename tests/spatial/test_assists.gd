@@ -4,7 +4,7 @@ const Drive=preload("res://scripts/vehicle/spatial_drive_model.gd")
 func _initialize()->void:
 	var track=Fixtures.make(["straight_24","straight_24","straight_24","curve_right_45","straight_24","curve_left_45","straight_24"])
 	var easy=Drive.new(track);easy.set_assist_level("easy")
-	check(not easy.request_assisted_turn(-1,false,"wrong"),"easy rejects wrong direction")
+	check(easy.request_assisted_turn(-1,false,"wrong") and easy.active_curve_id==-1,"easy executes wrong direction without guidance")
 	check(not easy.request_assisted_turn(0,true,"call"),"easy rejects unknown call")
 	check(easy.request_assisted_turn(1,false,"right"),"easy accepts correct direction")
 	check(not easy.request_assisted_turn(1,false,"right"),"duplicate event rejected")

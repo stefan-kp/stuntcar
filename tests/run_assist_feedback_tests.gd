@@ -12,7 +12,7 @@ func check(ok: bool, text: String) -> void:
 func run() -> void:
 	var model = Drive.new(Track.new());var session = Router.new(model)
 	var ui = UI.new();root.add_child(ui);session.restart();model.reset(70.0)
-	model.request_turn(-1);ui.render(session)
+	model.request_turn(1);ui.render(session)
 	check("saved" in ui.hint_detail.text, "Die vorgemerkte Eingabe ist sichtbar.")
 	model.target_speed_mps = 46.0
 	var sway := false;var max_lateral := 0.0

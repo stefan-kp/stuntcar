@@ -1,10 +1,10 @@
 extends RefCounted
 # Endliche Spielparameter, keine physikalischen Sprunggrenzen.
-const VERSION := 1
+const VERSION := 2
 static func for_id(id: String) -> Dictionary:
 	return {"id":id if id in ["very_easy", "easy"] else "very_easy", "version":VERSION,
 		"late_lateral_m":0.75,"accept_lateral_m":2.4,"accept_heading_rad":deg_to_rad(20.0),
-		"exit_distance_m":16.0,"sway_limit_m":1.8,"max_turn_rate_rad_s":deg_to_rad(360.0),
+		"manual_turn_rate_rad_s":deg_to_rad(65.0),"exit_distance_m":16.0,"sway_limit_m":1.8,"max_turn_rate_rad_s":deg_to_rad(360.0),
 		"max_assist_accel_mps2":32.0,"max_assist_brake_mps2":120.0,"recovery_seconds":1.5}
 static func validate(profile: Dictionary) -> String:
 	if profile.get("id", "") not in ["very_easy", "easy"]: return "invalid_id"
