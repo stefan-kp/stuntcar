@@ -17,16 +17,33 @@ Die Angaben zu den ursprünglichen Khronos-Zeichen stehen in `car/KHRONOS-MARKS.
 
 Änderungen im Spiel:
 
-- Der Lack erhält eine orange Farbe.
+- Der Lack erhält eine orange Farbe, feine Metalldetails und eine klare Glanzschicht.
+- Die Karosserie und das Dach tragen eine erzeugte Lackgrafik mit dunklen Rennstreifen und silbernen Akzenten.
+- Die Grafik folgt gemeinsamen Bildkoordinaten über die einzelnen Karosserieteile hinweg.
 - Die Scheiben erhalten eine angepasste Transparenz.
 - Das Nummernschild erhält eine neutrale Oberfläche.
 - Die Reifen und die Felgen erhalten angepasste Oberflächen.
-- Das Spiel deaktiviert die zusätzlichen Normalenbilder und die mitgelieferte Abschattung des Autos.
+- Das Spiel stellt die feinen Oberflächendetails für den Lack und das Reifenprofil wieder her.
+- Es ergänzt die beim Import fehlende Größe der Texturmuster ausdrücklich.
+- Die Felgen nutzen die kostenlose Metalltextur „Metal 032“ von ambientCG.
+- Die übrigen zusätzlichen Normalenbilder und die mitgelieferte Abschattung bleiben deaktiviert.
 - Godot berechnet die räumliche Abschattung in der Szene.
 - Die Vorderräder stehen zu Beginn gerade.
 - Vier zusätzliche Drehpunkte verbinden die Räder mit der vorhandenen Fahrbewegung.
 
 Die ursprünglichen Modelldateien bleiben erhalten. Das Spiel ändert die Oberflächen beim Laden.
+
+Die Felgentextur stammt von [Metal 032, ambientCG](https://ambientcg.com/view?id=Metal032).
+Sie nutzt [CC0 1.0](https://docs.ambientcg.com/license/) und kostet nichts.
+Das Spiel verwendet die Farbe, die Oberflächenstruktur und die Rauheit mit 2048 × 2048 Bildpunkten.
+`car/metal/source.json` enthält die Downloadquelle und die Prüfsummen.
+`tests/capture_car_materials.gd` zeigt das Auto mit dem Licht der Spielszene aus zwei Blickwinkeln.
+
+Die Lackgrafik liegt in `car/livery/orange-stripes.png`.
+Das integrierte Werkzeug zur Bildgenerierung erzeugte sie am 17. Oktober 2026.
+`car/livery/prompt.txt` enthält die vollständige Beschreibung für die Bildgenerierung.
+Die Grafik enthält nur die Farben. Das Spiel berechnet die Spiegelungen und die Glanzschicht.
+Die ursprünglichen Dateien des Autos bleiben unverändert.
 
 ## Natur und Oberflächen
 
@@ -41,7 +58,8 @@ Diese Quellen verwenden [CC0](https://polyhaven.com/license):
 
 Das Spiel verändert die Größe und die Drehung der Kiefern.
 Die großen Kiefern sind vergrößerte Jungbäume.
-In den Alpen stehen diese Kiefern im Schnee. Die Äste besitzen noch keine eigene Schneeschicht.
+Die Alpen nutzen jetzt die Tannen aus `assets/forest` mit einer Schneeschicht.
+Die neuen Landschaften beschreibt `assets/landscapes/README.md`.
 Der Waldboden erhält eine dunklere Farbe.
 Der Asphalt folgt den Kurven, den Kuppen und den Steilkurven.
 

@@ -1,0 +1,35 @@
+{
+  "id": "sandy_gravel_02",
+  "url": "https://polyhaven.com/a/sandy_gravel_02",
+  "authors": {
+    "Dario Barresi": "All"
+  },
+  "license": "CC0-1.0",
+  "resolution": "4k",
+  "files": [
+    {
+      "path": "assets/landscapes/canyon/gravel/Diffuse.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/sandy_gravel_02/sandy_gravel_02_diff_4k.jpg",
+      "sha256": "d496e2080cf268b74c6d898f699490dab432772ef44153b37584292f71e33157",
+      "bytes": 16812608
+    },
+    {
+      "path": "assets/landscapes/canyon/gravel/Rough.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/sandy_gravel_02/sandy_gravel_02_rough_4k.jpg",
+      "sha256": "69a8ce6b916ec1cbf3c187495dac59acb7bb58e9b8b315898fd579a7db9b3f1f",
+      "bytes": 7684312
+    },
+    {
+      "path": "assets/landscapes/canyon/gravel/Displacement.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/sandy_gravel_02/sandy_gravel_02_disp_4k.jpg",
+      "sha256": "9a802132c46b239da4aafdb0c307b6412e4cf6c7fa9cfba03851f47511e60ebb",
+      "bytes": 4798007
+    },
+    {
+      "path": "assets/landscapes/canyon/gravel/nor_gl.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/4k/sandy_gravel_02/sandy_gravel_02_nor_gl_4k.jpg",
+      "sha256": "a3e24ffe00b7b717cf244f73552df3e18761a27a188e0aed85bc25b00643db6d",
+      "bytes": 21104384
+    }
+  ]
+}

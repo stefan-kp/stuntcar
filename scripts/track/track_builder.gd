@@ -5,6 +5,7 @@ const Landscape = preload("res://scripts/track/landscape.gd")
 const Post = preload("res://assets/stuntcar_kit/shared/road_post.tscn")
 const Support = preload("res://assets/stuntcar_kit/shared/bridge_support_8.tscn")
 const QualityAssets = preload("res://scripts/quality_assets.gd")
+const CanyonStudy = preload("res://scripts/track/canyon_study.gd")
 var landscape: Node3D
 var data
 
@@ -26,6 +27,7 @@ static func box(parent: Node3D, size: Vector3, pos: Vector3, color: Color) -> Me
 
 func build(track_data) -> void:
 	data = track_data
+	var study: bool = data.source_path == CanyonStudy.ROUTE
 	var deck := SurfaceTool.new()
 	deck.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var borders := SurfaceTool.new()
@@ -38,6 +40,7 @@ func build(track_data) -> void:
 		var rb: Vector3 = b.right
 		quad(deck, a.position - ra * 3, a.position + ra * 3, b.position + rb * 3, b.position - rb * 3, Color.WHITE,
 			[Vector2(0, i * 0.5), Vector2(3, i * 0.5), Vector2(3, (i + 1) * 0.5), Vector2(0, (i + 1) * 0.5)])
+		if study: continue
 		for sign_value in [-1.0, 1.0]:
 			var color := Color("edf4ed") if (i / 3) % 2 == 0 else Color("ef8055")
 			quad(borders, a.position + ra * 2.72 * sign_value + Vector3.UP * 0.015, a.position + ra * 3.0 * sign_value + Vector3.UP * 0.015, b.position + rb * 3.0 * sign_value + Vector3.UP * 0.015, b.position + rb * 2.72 * sign_value + Vector3.UP * 0.015, color)
@@ -49,14 +52,16 @@ func build(track_data) -> void:
 	var road := finish_mesh(deck, true)
 	road.name = "AsphaltRoad"
 	road.material_override = QualityAssets.road_material()
+	if study: road.material_override = CanyonStudy.road_material()
 	var body := StaticBody3D.new()
 	body.collision_layer = 1
 	var collision := CollisionShape3D.new()
 	collision.shape = road.mesh.create_trimesh_shape()
 	body.add_child(collision)
 	add_child(body)
-	finish_mesh(borders)
+	if not study: finish_mesh(borders)
 	for i in range(8, int(data.length_m) - 4, 8):
+		if study: continue
 		if not data.jump_at(float(i)).is_empty(): continue
 		var frame: Dictionary = data.sample(float(i))
 		for side in [-1.0, 1.0]:
@@ -65,6 +70,7 @@ func build(track_data) -> void:
 			post.position = frame.position + frame.right * 3.35 * side
 			post.rotation = Vector3(0, -frame.heading, frame.bank)
 	for i in range(12, int(data.length_m), 30):
+		if study: continue
 		if not data.jump_at(float(i)).is_empty(): continue
 		var frame: Dictionary = data.sample(float(i))
 		var pillar := Support.instantiate()
@@ -109,6 +115,19 @@ func make_gate(s: float, text: String, panel_color: Color, text_color: Color) ->
 	add_child(gate)
 	gate.position = frame.position
 	gate.rotation.y = -frame.heading
+	if data.source_path == CanyonStudy.ROUTE:
+		# Small roadside signs keep the same driving cues without an arcade gantry.
+		box(gate, Vector3(0.08, 2.0, 0.08), Vector3(4.4, 0.9, 0), Color("777b78"))
+		box(gate, Vector3(2.2, 0.55, 0.07), Vector3(4.4, 1.8, 0), Color("d8cab1"))
+		var sign := Label3D.new()
+		sign.text = text
+		sign.font_size = 50
+		sign.pixel_size = 0.0033
+		sign.modulate = Color("242725")
+		sign.outline_size = 0
+		sign.position = Vector3(4.4, 1.8, 0.045)
+		gate.add_child(sign)
+		return
 	for x in [-3.8, 3.8]:
 		box(gate, Vector3(0.18, 4.5, 0.18), Vector3(x, 2.25, 0), Color("244b58"))
 	box(gate, Vector3(7.9, 1.15, 0.18), Vector3(0, 4.1, 0), panel_color)

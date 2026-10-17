@@ -1,0 +1,27 @@
+[
+  {
+    "source": "namaqualand_boulder_02",
+    "source_triangles": 97964,
+    "prepared_triangles": 6999
+  },
+  {
+    "source": "namaqualand_boulder_03",
+    "source_triangles": 64826,
+    "prepared_triangles": 7000
+  },
+  {
+    "source": "quiver_tree_01",
+    "source_triangles": 150124,
+    "prepared_triangles": 23999
+  },
+  {
+    "source": "rock_07",
+    "source_triangles": 14844,
+    "prepared_triangles": 7000
+  },
+  {
+    "source": "shrub_02",
+    "source_triangles": 27254,
+    "prepared_triangles": 27254
+  }
+]

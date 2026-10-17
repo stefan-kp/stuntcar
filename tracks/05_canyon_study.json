@@ -1,0 +1,29 @@
+{
+  "format_version": 1,
+  "scenario": "canyon",
+  "name": "Canyon Study",
+  "description": "A 200 m drive through rock walls, past a mesa and under a rock arch.",
+  "length_m": 200,
+  "curves": [
+    {
+      "start_m": 65,
+      "end_m": 112,
+      "turn_sign": 1,
+      "radius": 95,
+      "checkpoint_m": 20,
+      "bank_degrees": 8
+    }
+  ],
+  "heights": [
+    {
+      "at_m": 0,
+      "height_m": 14
+    },
+    {
+      "at_m": 200,
+      "height_m": 14
+    }
+  ],
+  "jumps": [],
+  "preview": "previews/canyon-study.png"
+}

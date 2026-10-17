@@ -1,0 +1,30 @@
+[
+	{
+		"adapter": "Apple M4 Pro (Apple9)",
+		"build_ms": 1085,
+		"fps": 120.157205677428,
+		"frames": 720,
+		"mean_ms": 8.32243055555556,
+		"note": "Zwölf Positionen je Strecke. Je 30 Bilder Vorlauf und 60 Messbilder. Keine Bildaufnahme während der Messung. Vertikale Synchronisation aktiv.",
+		"p95_ms": 9.658,
+		"peak_draw_calls": 1008,
+		"peak_primitives": 5580032,
+		"renderer": "forward_plus",
+		"resolution": "1280x800",
+		"scenario": "alpine"
+	},
+	{
+		"adapter": "Apple M4 Pro (Apple9)",
+		"build_ms": 1459,
+		"fps": 119.901600752982,
+		"frames": 720,
+		"mean_ms": 8.34017222222223,
+		"note": "Zwölf Positionen je Strecke. Je 30 Bilder Vorlauf und 60 Messbilder. Keine Bildaufnahme während der Messung. Vertikale Synchronisation aktiv.",
+		"p95_ms": 9.982,
+		"peak_draw_calls": 1006,
+		"peak_primitives": 4134955,
+		"renderer": "forward_plus",
+		"resolution": "1280x800",
+		"scenario": "canyon"
+	}
+]

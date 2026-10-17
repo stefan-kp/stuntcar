@@ -1,0 +1,8 @@
+{
+  "generator": "Built-in image_gen",
+  "date": "2026-10-17",
+  "prompt": "prompt.txt",
+  "image": "orange-stripes.png",
+  "sha256": "970fcb05afacbbe5278296b9c52487b7ff88cacf1055f7e8620d0985fda15248",
+  "projection": "Car-space XZ, shared across body panels and roof; original source geometry unchanged."
+}

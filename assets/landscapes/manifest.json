@@ -1,0 +1,247 @@
+[
+  {
+    "path": "assets/landscapes/namaqualand_boulder_02/namaqualand_boulder_02.gltf",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/namaqualand_boulder_02/namaqualand_boulder_02_1k.gltf",
+    "bytes": 2818,
+    "md5": "0730814e31f50e85defd7b8833a02070",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/namaqualand_boulder_02/namaqualand_boulder_02.bin",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/namaqualand_boulder_02/namaqualand_boulder_02.bin",
+    "bytes": 2297768,
+    "md5": "aa8f2212633a07a7e9a805e90977f4fd",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/namaqualand_boulder_02/textures/namaqualand_boulder_02_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulder_02/namaqualand_boulder_02_nor_gl_1k.jpg",
+    "bytes": 1031460,
+    "md5": "afe526a6ff3161fd748834455f24fba4",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/namaqualand_boulder_02/textures/namaqualand_boulder_02_arm_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulder_02/namaqualand_boulder_02_arm_1k.jpg",
+    "bytes": 796910,
+    "md5": "e55ce7ca61d88db276528e7097a21a47",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/namaqualand_boulder_02/textures/namaqualand_boulder_02_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulder_02/namaqualand_boulder_02_diff_1k.jpg",
+    "bytes": 1010348,
+    "md5": "155c01a1e90b8e2a52b287ada98c52d0",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/namaqualand_boulder_03/namaqualand_boulder_03.gltf",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/namaqualand_boulder_03/namaqualand_boulder_03_1k.gltf",
+    "bytes": 2823,
+    "md5": "419d98b4512f1bc06245555c84f6effc",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/namaqualand_boulder_03/textures/namaqualand_boulder_03_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulder_03/namaqualand_boulder_03_diff_1k.jpg",
+    "bytes": 867015,
+    "md5": "d025cdf2d90fe94cbc2ae5a9784e7a03",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/namaqualand_boulder_03/textures/namaqualand_boulder_03_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulder_03/namaqualand_boulder_03_nor_gl_1k.jpg",
+    "bytes": 851531,
+    "md5": "d2d2c1459c74ae308eb895178e4757ed",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/namaqualand_boulder_03/namaqualand_boulder_03.bin",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/namaqualand_boulder_03/namaqualand_boulder_03.bin",
+    "bytes": 1450268,
+    "md5": "ded61ea310a66144546eac2a891b6dba",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/namaqualand_boulder_03/textures/namaqualand_boulder_03_arm_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/namaqualand_boulder_03/namaqualand_boulder_03_arm_1k.jpg",
+    "bytes": 607318,
+    "md5": "d474b780658e7038da53b4328725b4f1",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/quiver_tree_01/quiver_tree_01.gltf",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/quiver_tree_01/quiver_tree_01_1k.gltf",
+    "bytes": 5080,
+    "md5": "0899227b1eeee2f8cbaf2e4693fc7ded",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/quiver_tree_01/textures/quiver_tree_01_trunk_arm_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/quiver_tree_01/quiver_tree_01_trunk_arm_1k.jpg",
+    "bytes": 492139,
+    "md5": "b7b46a8529e62e706b9a0e3417af1309",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/quiver_tree_01/textures/quiver_tree_01_trunk_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/quiver_tree_01/quiver_tree_01_trunk_diff_1k.jpg",
+    "bytes": 741115,
+    "md5": "d112fb7af9fb2921d7e5ade4e84f5586",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/quiver_tree_01/textures/quiver_tree_01_leaf_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/quiver_tree_01/quiver_tree_01_leaf_nor_gl_1k.jpg",
+    "bytes": 898833,
+    "md5": "f954c80f430b126b7126fad32f381bb9",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/quiver_tree_01/textures/quiver_tree_01_trunk_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/quiver_tree_01/quiver_tree_01_trunk_nor_gl_1k.jpg",
+    "bytes": 940495,
+    "md5": "b592c0f7abdefab0c9e2f354b9274683",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/quiver_tree_01/textures/quiver_tree_01_leaf_arm_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/quiver_tree_01/quiver_tree_01_leaf_arm_1k.jpg",
+    "bytes": 737159,
+    "md5": "23212753d3e3464d7d74702ed6a1d178",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/quiver_tree_01/quiver_tree_01.bin",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/quiver_tree_01/quiver_tree_01.bin",
+    "bytes": 4413204,
+    "md5": "4d02b6a0e57a20fbaee31c6b7820b0f2",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/quiver_tree_01/textures/quiver_tree_01_leaf_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/quiver_tree_01/quiver_tree_01_leaf_diff_1k.jpg",
+    "bytes": 652456,
+    "md5": "ac7692d306b779c530177c14ddbba622",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/shrub_02/shrub_02.gltf",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/shrub_02/shrub_02_1k.gltf",
+    "bytes": 8083,
+    "md5": "8f7254d279c0c49c0b3edfe260aa5c86",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/shrub_02/textures/shrub_02_arm_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/shrub_02/shrub_02_arm_1k.jpg",
+    "bytes": 313715,
+    "md5": "28c218aeb7cab930d99ee16578984241",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/shrub_02/textures/shrub_02_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/shrub_02/shrub_02_nor_gl_1k.jpg",
+    "bytes": 490815,
+    "md5": "51a7f2db7e06a207171fd725585241d5",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/shrub_02/shrub_02.bin",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/shrub_02/shrub_02.bin",
+    "bytes": 758692,
+    "md5": "683b5475238310899eac1458520903e6",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/shrub_02/textures/shrub_02_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/shrub_02/shrub_02_diff_1k.jpg",
+    "bytes": 395120,
+    "md5": "3f4ae281928de030c7d4e41ad5b88a8b",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/rock_07/rock_07.gltf",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/rock_07/rock_07_1k.gltf",
+    "bytes": 2979,
+    "md5": "2bdb563c126a9d284e60e94951759e2f",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/rock_07/rock_07.bin",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/rock_07/rock_07.bin",
+    "bytes": 468936,
+    "md5": "817b2cfd1626cb06f18a825f87f58ec3",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/rock_07/textures/rock_07_arm_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rock_07/rock_07_arm_1k.jpg",
+    "bytes": 309735,
+    "md5": "530bfd2a510fe6f778bb1198a2395574",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/rock_07/textures/rock_07_diff_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rock_07/rock_07_diff_1k.jpg",
+    "bytes": 635452,
+    "md5": "b68ac1824bb3bd3867641b830ad02099",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/rock_07/textures/rock_07_nor_gl_1k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/rock_07/rock_07_nor_gl_1k.jpg",
+    "bytes": 766986,
+    "md5": "d3a2a0df0db0177c4df8ef644b003652",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/sand/color.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sand_01/sand_01_diff_2k.jpg",
+    "bytes": 1984816,
+    "md5": "e5b22b6d5c2bbe3b6ec0b9dfa137bea1",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/sand/normal.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sand_01/sand_01_nor_gl_2k.jpg",
+    "bytes": 2503853,
+    "md5": "b8298e9007b3983f9e10d35cd87a4b1f",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/sand/rough.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/sand_01/sand_01_rough_2k.jpg",
+    "bytes": 757435,
+    "md5": "ae89a58489a0cf49e899fb6abd5f65c9",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/snow/color.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/snow_02/snow_02_diff_2k.jpg",
+    "bytes": 1314409,
+    "md5": "5541e5601951b071691238ddc70632c0",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/snow/normal.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/snow_02/snow_02_nor_gl_2k.jpg",
+    "bytes": 4761595,
+    "md5": "ef128fbdf1b31932c792eb6472c84574",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/snow/rough.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/snow_02/snow_02_rough_2k.jpg",
+    "bytes": 628467,
+    "md5": "8b9787b4c7b1d7390a4b4a1ae67728b1",
+    "license": "CC0-1.0"
+  },
+  {
+    "path": "assets/landscapes/sky/environment.hdr",
+    "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr",
+    "bytes": 5451493,
+    "md5": "2eba3a4d7eeb23cbfbeca364c97e7980",
+    "license": "CC0-1.0"
+  }
+]

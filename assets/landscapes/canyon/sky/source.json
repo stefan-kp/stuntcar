@@ -1,0 +1,17 @@
+{
+  "id": "rogland_sunset",
+  "url": "https://polyhaven.com/a/rogland_sunset",
+  "authors": {
+    "Greg Zaal": "All"
+  },
+  "license": "CC0-1.0",
+  "resolution": "2k",
+  "files": [
+    {
+      "path": "assets/landscapes/canyon/sky/environment.hdr",
+      "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/rogland_sunset_2k.hdr",
+      "sha256": "27ee3f4e044688f3c46eea32a56e96188ab4dd0492f9e614f6764c4ac25defae",
+      "bytes": 6149597
+    }
+  ]
+}

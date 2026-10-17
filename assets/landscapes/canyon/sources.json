@@ -1,0 +1,32 @@
+{
+  "asset": "rock_face_03",
+  "url": "https://polyhaven.com/a/rock_face_03",
+  "authors": [
+    "Dario Barresi",
+    "Rico Cilliers"
+  ],
+  "license": "CC0-1.0",
+  "resolution": "4k",
+  "files": [
+    {
+      "path": "assets/landscapes/canyon/textures/Diffuse.jpg",
+      "sha256": "83148536c125cee3a2e2fc1368c8851ad4c87aef8b8bb35c5129d82d223effb3",
+      "bytes": 15319503
+    },
+    {
+      "path": "assets/landscapes/canyon/textures/Rough.jpg",
+      "sha256": "b6bf6baf88d605e6d4532a844c85b39eaf7141d57ec0e2b55ad0991b3200546c",
+      "bytes": 10380943
+    },
+    {
+      "path": "assets/landscapes/canyon/textures/Displacement.jpg",
+      "sha256": "44446dd462dc07ab8c62b9dcb752f4a6f2ed0c4dde9103559dcde31e5360aaff",
+      "bytes": 2365155
+    },
+    {
+      "path": "assets/landscapes/canyon/textures/nor_gl.jpg",
+      "sha256": "b479761c4d48511f3c0bb8a27d948082c6d88ab584e38ff3791ca395d27a16ea",
+      "bytes": 16283883
+    }
+  ]
+}

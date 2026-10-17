@@ -1,0 +1,30 @@
+{
+  "name": "Metal 032",
+  "author": "ambientCG",
+  "license": "CC0-1.0",
+  "source": "https://ambientcg.com/view?id=Metal032",
+  "download": "https://ambientcg.com/get?file=Metal032_2K-JPG.zip",
+  "resolution": "2k",
+  "files": [
+    {
+      "file": "color.jpg",
+      "sha256": "f444c07a08de291049d0dda880d6fca9faae4b172f293f604c87e5e96ad30370",
+      "bytes": 3843751
+    },
+    {
+      "file": "normal.jpg",
+      "sha256": "b84a0bfe4639b7e3fac36d04adf1844e0e2654f987a36ece5c966ad77921cd27",
+      "bytes": 1572994
+    },
+    {
+      "file": "roughness.jpg",
+      "sha256": "8a0570593c028cf0eca32a0107d7bc936817f0de7076f1b8b8f48ea7745aee27",
+      "bytes": 2105192
+    },
+    {
+      "file": "preview.png",
+      "sha256": "3647fa0bf225ee70fe835fc7c1943fffc8d2f1aef1b836e3a6599eefbe44e798",
+      "bytes": 210838
+    }
+  ]
+}

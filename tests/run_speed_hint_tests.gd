@@ -11,7 +11,10 @@ func _initialize() -> void:
 		var t = Track.new(route.path)
 		for c in t.curves:
 			var hint: Dictionary = t.speed_hint_at(c.start_m)
-			check(hint.kind == "curve" and hint.max_mps == 58.0 and hint.status == "assisted_tested", "Die Kurve nennt die Grenze mit Hilfe.")
+			if c.has("speed_hint"):
+				check(hint.kind == "curve" and hint.max_mps == 58.0 and hint.status == "assisted_tested", "Die Kurve nennt die Grenze mit Hilfe.")
+			else:
+				check(hint.kind == "curve" and hint.max_mps == null and hint.status == "unverified", "Eine neue Strecke ohne Tempoprüfung erhält keine erfundene Grenze.")
 		for j in t.jumps:
 			var hint: Dictionary = t.speed_hint_at(j.start_m)
 			check(hint.kind == "ramp" and hint.min_mps == null and hint.status == "unverified", "Die feste Sprungbahn hat keine erfundene Mindestgeschwindigkeit.")

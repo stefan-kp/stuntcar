@@ -55,6 +55,18 @@ The car uses a fixed jump path. The current model has no tested minimum jump spe
 
 The car jumps without a separate command. A direction command can help the car reach the centre of the track before it lands. The camera stays level with the horizon.
 
+## Desert and snow landscape
+
+The desert has sand dunes, rocks, quiver trees, and low shrubs.
+The snow landscape has mountain slopes, rocks, and fir trees with snow on the branches.
+The solid ground stops the car from falling through the landscape.
+The new models and surface images come from Poly Haven and use CC0.
+The [source list](assets/landscapes/README.md) gives the details.
+
+![The desert](tracks/previews/canyon.png)
+
+![The snow landscape](tracks/previews/alpine.png)
+
 ## Controls
 
 The menus and voice commands use English. Keyboard control also works with voice control. Tap a direction key to turn. Hold the acceleration or brake key to change speed. The car keeps its target speed after you release the key.

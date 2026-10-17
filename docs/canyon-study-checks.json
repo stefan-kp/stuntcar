@@ -1,0 +1,52 @@
+[
+  {
+    "test": "run_canyon_study_tests",
+    "exit": 0,
+    "output": [
+      "Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org",
+      "FELSSCHLUCHT: 12 Prüfungen, 0 Fehler"
+    ],
+    "log": "/tmp/canyon-upgrade-clearance-final.log"
+  },
+  {
+    "test": "run_biome_tests",
+    "exit": 0,
+    "output": [
+      "WÜSTE UND SCHNEE: 22 Prüfungen, 0 Fehler"
+    ],
+    "log": "/tmp/canyon-upgrade-biome2.log"
+  },
+  {
+    "test": "run_landscape_tests",
+    "exit": 0,
+    "output": [
+      "Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org",
+      "LANDSCHAFTEN: 44 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_selection_tests",
+    "exit": 0,
+    "output": [
+      "Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org",
+      "AUSWAHL: 13 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_track_tests",
+    "exit": 0,
+    "output": [
+      "Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org",
+      "STRECKEN: 105 Prüfungen, 0 Fehler"
+    ]
+  },
+  {
+    "test": "run_tests",
+    "exit": 0,
+    "output": [
+      "Godot Engine v4.5.1.stable.official.f62fdbde1 - https://godotengine.org",
+      "Geführte Fahrt: s=939.507331828916 seitlich=0.00072528317105 Richtung=1.20000004768372 Kurven=3",
+      "PRÜFUNGEN: 27, FEHLER: 0"
+    ]
+  }
+]

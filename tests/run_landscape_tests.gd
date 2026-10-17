@@ -21,12 +21,15 @@ func run() -> void:
 		check(scene.find_children("*", "WorldEnvironment", true, false).size() == 1, "Der Landschaftswechsel hinterlässt keine zweite Umgebung.")
 		var landscape = scene.builder.landscape
 		var road = scene.builder.get_node_or_null("AsphaltRoad")
-		check(road != null and road.material_override.albedo_texture != null, "Die Straße verwendet den Asphalt aus der Qualitätsprobe.")
+		var road_texture = null
+		if road != null:
+			road_texture = road.material_override.get_shader_parameter("color_map") if road.material_override is ShaderMaterial else road.material_override.albedo_texture
+		check(road_texture != null, "Die Straße verwendet eine Asphaltoberfläche.")
 		if road != null:
 			var arrays: Array = road.mesh.surface_get_arrays(0)
 			check(arrays[Mesh.ARRAY_TEX_UV].size() == arrays[Mesh.ARRAY_VERTEX].size(), "Die Asphaltoberfläche folgt der ganzen Straße.")
 		if route.scenario == "alpine":
-			check(not landscape.scenery.find_children("DetailedPine*", "MeshInstance3D", true, false).is_empty(), "Die Strecke nutzt die Kiefern aus der Qualitätsprobe.")
+			check(not landscape.scenery.find_children("SnowFir*", "Node3D", true, false).is_empty(), "Die Schneelandschaft nutzt die Tannen mit einer Schneeschicht.")
 		check(landscape.scenery.get_child_count() > 10, "Die Landschaft enthält sichtbare Modelle: " + route.name)
 		var blocks_road := false
 		for item in landscape.scenery.get_children():

@@ -1,0 +1,12 @@
+{
+	"adapter": "Apple M4 Pro (Apple9)",
+	"finished": true,
+	"frames": 273,
+	"mean_ms": 8.35567032967033,
+	"note": "Automatische Fahrt mit 30 Simulationsschritten pro Sekunde. 60 Bilder Vorlauf. Bildausgabe mit aktiver vertikaler Synchronisation. Bei Filmaufnahme enthält die Messung auch die Aufnahmezeit.",
+	"off_road": false,
+	"p95_ms": 9.621,
+	"peak_draws": 847,
+	"peak_primitives": 5863838,
+	"resolution": "1280x800"
+}

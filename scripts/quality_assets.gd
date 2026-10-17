@@ -1,6 +1,7 @@
 extends RefCounted
 
 const ROOT := "res://assets/quality/"
+const CarLivery = preload("res://scripts/vehicle/car_livery.gd")
 static var car_scene: PackedScene
 static var pine_meshes: Array[Mesh] = []
 static var asphalt: StandardMaterial3D
@@ -20,6 +21,9 @@ static func create_car() -> Node3D:
 		for i in range(mesh.mesh.get_surface_count()):
 			var original: Material = mesh.mesh.surface_get_material(i)
 			if not original is StandardMaterial3D:
+				continue
+			if CarLivery.applies_to(mesh, original):
+				mesh.set_surface_override_material(i, CarLivery.material_for(mesh, model))
 				continue
 			if not materials.has(original):
 				materials[original] = car_material(original)
@@ -53,21 +57,32 @@ static func car_material(original: StandardMaterial3D) -> StandardMaterial3D:
 	var mat: StandardMaterial3D = original.duplicate()
 	var key := original.resource_name
 	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
-	# The source uses per-texture UV transforms. Clean surfaces avoid the
-	# artifacts observed in Godot; the environment supplies contact shading.
+	# Godot imports these glTF materials without their per-texture transforms.
+	# Restore the supported detail maps below with the source scale explicitly.
 	mat.normal_enabled = false
 	mat.ao_enabled = false
 	if key.begins_with("Paint 1"):
-		mat.albedo_color = Color("e65d19")
-		mat.metallic = 0.65
-		mat.roughness = 0.24
+		mat.albedo_color = Color("ef7c25")
+		mat.metallic = 0.8
+		mat.roughness = 0.22
+		mat.normal_enabled = true
+		mat.normal_texture = load(ROOT + "car/Powdercoat_N.png")
+		mat.normal_scale = 0.09
+		mat.uv1_scale = Vector3(30, 30, 1)
 		mat.clearcoat_enabled = true
 		mat.clearcoat = 1.0
-		mat.clearcoat_roughness = 0.16
+		mat.clearcoat_roughness = 0.1
 	elif key.begins_with("Paint 2"):
-		mat.albedo_color = Color("202a2d")
-		mat.metallic = 0.7
-		mat.roughness = 0.27
+		mat.albedo_color = Color("303b42")
+		mat.metallic = 0.75
+		mat.roughness = 0.3
+		mat.normal_enabled = true
+		mat.normal_texture = load(ROOT + "car/Powdercoat_N.png")
+		mat.normal_scale = 0.06
+		mat.uv1_scale = Vector3(30, 30, 1)
+		mat.clearcoat_enabled = true
+		mat.clearcoat = 0.8
+		mat.clearcoat_roughness = 0.14
 	elif key == "Glass":
 		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 		mat.albedo_color = Color(0.18, 0.25, 0.28, 0.42)
@@ -76,14 +91,29 @@ static func car_material(original: StandardMaterial3D) -> StandardMaterial3D:
 		mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 		mat.refraction_enabled = false
 	elif key in ["Tireside", "Tiretread"]:
-		mat.albedo_color = Color("17191a")
+		mat.albedo_color = Color("292b2e")
 		mat.albedo_texture = null
 		mat.metallic = 0.0
-		mat.roughness = 0.78
+		mat.roughness = 0.72
+		mat.normal_enabled = true
+		mat.normal_scale = 0.65
+		if key == "Tiretread":
+			mat.uv1_scale = Vector3(1, 4, 1)
+			mat.uv1_offset = Vector3(0, 1.5, 0)
 	elif key in ["Rim1", "Rim2"]:
 		mat.emission_enabled = false
-		mat.metallic = 0.85
-		mat.roughness = 0.3
+		mat.albedo_color = Color("7e8a94") if key == "Rim1" else Color("e0e5ea")
+		mat.albedo_texture = load(ROOT + "car/metal/color.jpg")
+		mat.normal_enabled = true
+		mat.normal_texture = load(ROOT + "car/metal/normal.jpg")
+		mat.normal_scale = 0.12
+		mat.roughness_texture = load(ROOT + "car/metal/roughness.jpg")
+		mat.roughness_texture_channel = BaseMaterial3D.TEXTURE_CHANNEL_RED
+		mat.metallic = 1.0
+		mat.roughness = 0.7
+		# Project in local metres so all four wheels keep the same fine grain.
+		mat.uv1_triplanar = true
+		mat.uv1_scale = Vector3.ONE * 4.0
 	elif key == "License":
 		mat.albedo_texture = null
 		mat.albedo_color = Color("111b20")
