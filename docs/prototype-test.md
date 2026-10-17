@@ -128,3 +128,16 @@ Der mittlere Wert der 15 Befehle beträgt 351 ms. Der höchste Wert beträgt 764
 Die Rohwerte stehen in `voice-latency.json`. Die Prüfung läuft mit `tests/measure_voice_latency.gd`. Das Hilfsprogramm `voice/tests/replay_microphone.py` ersetzt nur die Mikrofonquelle.
 
 Ein Test mit Stefans Stimme und seinem tatsächlichen Sprechtempo bleibt erforderlich. Die sichtbare Rückmeldung unterstützt diesen Test. Allgemeine Umgebungsgeräusche und andere Mikrofone brauchen weitere Prüfungen.
+
+## Gemeinsame Steuerung prüfen
+
+Nutze die Anleitung unter `docs/control-integration.md`.
+Prüfe beide Hilfestufen mit Links, Rechts, Gas und Bremse.
+Prüfe eine ausdrückliche falsche Richtung vor einer Kurve.
+Die Bewegung und die Bestätigung müssen diese Richtung erhalten.
+Prüfe den kalibrierten Ruf auf Sehr leicht.
+Prüfe Pause, Fortsetzung, Tastenfreigabe und den Verlust des Mikrofons.
+Eine alte gehaltene Taste darf nach der Pause keine Aktion starten.
+Eine neue Fahrt darf keine alte Anweisung übernehmen.
+Erfasse die verwendete Godot-Fassung und das tatsächliche Ergebnis.
+Eine automatische Paketprüfung ersetzt keine menschliche Sprachprobe.

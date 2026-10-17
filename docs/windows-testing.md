@@ -65,3 +65,16 @@ The log is normally in:
 The package has no digital signature.
 Windows can show a message about an unknown publisher.
 If this occurs, report the message before you change any security setting.
+
+## Gemeinsame Steuerung prüfen
+
+Nutze die Anleitung unter `docs/control-integration.md`.
+Prüfe beide Hilfestufen mit Links, Rechts, Gas und Bremse.
+Prüfe eine ausdrückliche falsche Richtung vor einer Kurve.
+Die Bewegung und die Bestätigung müssen diese Richtung erhalten.
+Prüfe den kalibrierten Ruf auf Sehr leicht.
+Prüfe Pause, Fortsetzung, Tastenfreigabe und den Verlust des Mikrofons.
+Eine alte gehaltene Taste darf nach der Pause keine Aktion starten.
+Eine neue Fahrt darf keine alte Anweisung übernehmen.
+Erfasse die verwendete Godot-Fassung und das tatsächliche Ergebnis.
+Eine automatische Paketprüfung ersetzt keine menschliche Sprachprobe.

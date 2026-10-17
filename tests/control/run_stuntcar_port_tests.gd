@@ -13,6 +13,9 @@ func _initialize()->void:
  var m=Drive.new(Track.new());var p=Port.new(m);p.reset("s1")
  check(Contract.validate_catalog(p.describe_actions()).is_empty(),"Valid six action catalog")
  check(p.describe_actions().actions.size()==6 and Contract.action_definition(p.describe_actions(),"jump").is_empty(),"No fake jump action")
+ var substituted=decision([F.action("turn_left")],"substitute","substitute")
+ substituted.actions=[F.action("turn_right")]
+ check(p.apply(substituted,0).result=="rejected" and m.requested_direction==0,"Port rejects replacement of explicit direction")
  var target=m.target_speed_mps
  check(p.apply(decision([F.action("speed_up"),F.action("missing")]),0).result=="rejected" and m.target_speed_mps==target,"Combination has no partial start")
  var d=decision([F.action("speed_up")]);check(p.apply(d,0).result=="applied","Pulse applies")
@@ -40,6 +43,11 @@ func _initialize()->void:
  check(m.active_pedal==0 and m.requested_direction==1,"Combination members have separate ends")
  p.cancel({"session_id":"s1","scope":"session"},312)
  check(m.requested_direction==0,"Session cancellation clears pending steering")
+ p.reset("s1")
+ var older=decision([F.action("turn_left")],"old-same","old-same");older.intent.source_id="voice"
+ p.apply(older,400);p.apply(decision([F.action("turn_left")],"new-same","new-same"),401)
+ p.cancel({"session_id":"s1","scope":"source","source_id":"voice"},402)
+ check(m.requested_direction==-1,"Cancellation of an older same direction preserves the new owner")
  for spatial in [false,true]:
   var model=Spatial.new(Fixtures.make(["straight_24","jump_launch"])) if spatial else Drive.new(Track.new())
   model.target_speed_mps=0;model.set_active_pedal(-1)

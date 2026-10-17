@@ -27,12 +27,12 @@ func accept(intent: Dictionary, now_ms: int) -> Dictionary:
   accepted.required_actions=accepted.required_actions.filter(func(a):return not control.retired.has(a.action_id))
   if intent.kind=="explicit" and accepted.required_actions.is_empty(): return {"status":"stale","reason_code":"retired_members"}
  return {"status":"accepted","intent":accepted}
-func retire(control_id: String) -> void:
+func retire(control_id: String, source_id:String="") -> void:
  for record in controls.values():
-  if record.id==control_id: record.ended=true
-func retire_members(control_id: String, action_ids: Array) -> void:
+  if record.id==control_id and (source_id.is_empty() or record.source==source_id): record.ended=true
+func retire_members(control_id: String, action_ids: Array, source_id:String="") -> void:
  for record in controls.values():
-  if record.id==control_id:
+  if record.id==control_id and (source_id.is_empty() or record.source==source_id):
    for id in action_ids: record.retired[id]=true
 func retire_source(source_id: String) -> void:
  for record in controls.values():

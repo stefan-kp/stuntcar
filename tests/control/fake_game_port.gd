@@ -6,8 +6,12 @@ var cancelled: Array = []
 var position = 0
 var stale_count = 0
 var applied_ids = {}
-func describe_actions() -> Dictionary: return F.catalog()
+var extra_actions=[]
+var queries=[]
+func describe_actions() -> Dictionary:
+ var catalog=F.catalog();catalog.actions.append_array(extra_actions);return catalog
 func assess(request: Dictionary) -> Dictionary:
+ queries.append(request.duplicate(true))
  var result = answer.duplicate(true)
  result.session_id = request.session_id
  result.assist_profile_id = request.profile.profile_id

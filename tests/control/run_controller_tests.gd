@@ -41,6 +41,7 @@ func _initialize() -> void:
  controller.submit(F.intent({"session_id":"other","event_id":"other","control_id":"other"}));controller.step(20)
  check(port.position==-1,"test_foreign_session")
  var before=port.applied.size();controller.read_hints(20)
+ check(port.queries[-1].query_only,"Hint read explicitly marks query-only request")
  check(port.applied.size()==before,"test_read_hints_never_applies")
  controller.submit(F.intent({"event_id":"pair","control_id":"pair","required_actions":[F.action("turn_left"),F.action("brake",100)]}))
  controller.submit(F.intent({"event_id":"right","control_id":"right","required_actions":[F.action("turn_right")]}));controller.step(20)
@@ -56,4 +57,13 @@ func _initialize() -> void:
  var retry_port=Port.new();retry_port.stale_count=2
  var retry=C.new(retry_port,F.profile());retry.begin_session("s1");retry.submit(left);retry.step(0)
  check(retry_port.position==-1 and retry_port.applied.size()==1,"two stale assessments fall back to original action once")
+ var held_port=Port.new()
+ var gas=F.catalog().actions[2].duplicate(true);gas.action_id="gas";held_port.extra_actions=[gas]
+ var held_control=C.new(held_port,F.profile());held_control.begin_session("s1")
+ held_control.submit(F.intent({"event_id":"brake","control_id":"brake","required_actions":[F.action("brake",100)]}));held_control.step(0)
+ held_port.answer=F.assessment({}, {"proposals":[F.proposal("pair",[F.action("turn_left"),F.action("gas",100)],0.9),F.proposal("left",[F.action("turn_left")],0.6)]})
+ held_control.submit(F.intent({"event_id":"left2","control_id":"left2"}));held_control.step(10)
+ check(held_port.applied[-1].actions.size()==1,"Helper cannot oppose active explicit brake")
+ held_control.submit(F.intent({"event_id":"left3","control_id":"left3"}));held_control.step(101)
+ check(held_port.applied[-1].actions.size()==2,"Expired explicit brake no longer blocks a helper")
  done()
