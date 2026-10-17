@@ -114,7 +114,8 @@ func _input(event: InputEvent) -> void:
 		return
 	if code == KEY_ESCAPE:
 		pending.clear()
-		if session.state == "PRACTICE": session.close_practice()
+		if session.state == "CALL_PRACTICE": session.close_call_practice()
+		elif session.state == "PRACTICE": session.close_practice()
 		else: session.pause()
 	elif keyboard_action(code) == "left":
 		pending.append(-1)
@@ -149,11 +150,21 @@ func _physics_process(delta: float) -> void:
 		if session.state == "RUNNING" and binding_stage == 0 and model.assist_id == "very_easy":
 			if session.CallProfile.validate(session.call_profile, voice.device_name).is_empty():
 				call_opportunity = model.assist_state().opportunity_id if model.assist_state().phase not in ["closed", "inactive"] else -1
-		voice.configure_call(session.call_profile if call_opportunity >= 0 else {}, call_opportunity)
+		voice.configure_call(session.call_profile if call_opportunity >= 0 else {}, call_opportunity, session.state == "CALL_PRACTICE")
 		if voice_diagnostics != null: voice_diagnostics.observe_state(self)
 		var events: Array[Dictionary] = voice.take_commands()
 		for level_event in voice.take_level_events():
 			if level_event.epoch != voice.epoch: continue
+			if session.state == "CALL_PRACTICE":
+				if not voice.is_ready or session.call_practice.device != voice.device_name:
+					session.call_practice.reset()
+				else:
+					var seconds = level_event.get("sample_seconds", 0.0)
+					if track.number(seconds) and seconds > 0.0 and seconds <= 0.2:
+						session.call_practice.receive(level_event, seconds)
+						if session.call_practice.phase == "done" and session.call_profile != session.call_practice.profile_data():
+							session.call_profile = session.call_practice.profile_data()
+							save_settings()
 			session.practice.capture_level(level_event.rms, level_event.peak_rms, level_event.clipped, level_event.speech_end)
 			if voice_diagnostics != null: voice_diagnostics.observe_state(self)
 			sync_voice_context()
@@ -246,6 +257,7 @@ func sync_voice_context() -> void:
 		ui.practice_panel.compass.clear()
 
 func on_voice_unavailable(_message: String) -> void:
+	session.call_practice.reset()
 	session.voice_enabled = false
 	if session.state == "PRACTICE": session.practice.prepare(session.voice_mode)
 	session.pause()
@@ -274,6 +286,7 @@ func _process(delta: float) -> void:
 	var personal_level: float = session.practice.calibration.strength_for(voice.input_rms, voice.input_level, voice.device_name)
 	ui.voice_compass.set_input(voice.input_direction, personal_level)
 	ui.practice_panel.compass.set_input(voice.input_direction, personal_level)
+	ui.call_practice_panel.input_rms = voice.input_rms
 	ui.render(session, message)
 
 func _notification(what: int) -> void:
@@ -281,6 +294,7 @@ func _notification(what: int) -> void:
 		if session.state == "PRACTICE":
 			session.practice.prepare(session.voice_mode)
 			sync_voice_context()
+		session.call_practice.reset()
 		session.pause()
 		held.clear()
 		pending.clear()
@@ -290,6 +304,11 @@ func on_action(action: String) -> void:
 		select_track(action.trim_prefix("track:"))
 		return
 	match action:
+		"call_start":
+			if voice.is_ready:
+				voice.invalidate()
+				session.call_practice.begin(voice.device_name)
+			elif not voice.enabled: voice.start(session.voice_mode)
 		"practice_open":
 			session.voice_enabled = true
 			if not voice.enabled or voice.recognition_mode != session.voice_mode:

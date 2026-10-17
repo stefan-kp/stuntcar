@@ -98,9 +98,9 @@ func invalidate() -> void:
 	if peer != null and authenticated:
 		peer.put_data((JSON.stringify({"type":"context", "epoch":epoch}) + "\n").to_utf8_buffer())
 
-func configure_call(profile: Dictionary, opportunity_id: int) -> void:
+func configure_call(profile: Dictionary, opportunity_id: int, practice: bool = false) -> void:
 	if peer == null or not authenticated or not is_ready: return
-	var message := {"type":"call_context","epoch":epoch,"profile":profile,"opportunity_id":opportunity_id}
+	var message := {"type":"call_context","epoch":epoch,"profile":profile,"opportunity_id":opportunity_id,"practice":practice}
 	var encoded := JSON.stringify(message)
 	if encoded == call_context_key: return
 	call_context_key = encoded
@@ -183,7 +183,7 @@ func accept_packet(packet: Dictionary) -> void:
 				if level_events.size() >= 64:
 					fail(tr("I18N_VOICE_TOO_MANY"))
 					return
-				level_events.append({"epoch":epoch, "rms":input_rms, "peak_rms":input_peak_rms, "clipped":typeof(packet.get("clipped")) == TYPE_BOOL and packet.get("clipped", false), "speech_end":packet.get("state", "") in ["recognized", "unknown"]})
+				level_events.append({"epoch":epoch, "sample_seconds":packet.get("sample_seconds", 0.0), "rms":input_rms, "peak_rms":input_peak_rms, "clipped":typeof(packet.get("clipped")) == TYPE_BOOL and packet.get("clipped", false), "speech_end":packet.get("state", "") in ["recognized", "unknown"]})
 			level_ms = Time.get_ticks_msec()
 			var direction := str(packet.get("direction", ""))
 			input_direction = direction if valid_level and direction in ["left", "right", "faster", "slower"] else ""

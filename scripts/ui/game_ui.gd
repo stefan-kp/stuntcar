@@ -4,6 +4,8 @@ signal menu_selected(index: int)
 const TrackSelection = preload("res://scripts/ui/track_selection.gd")
 const VoiceCompass = preload("res://scripts/ui/voice_compass.gd")
 const PracticePanel = preload("res://scripts/ui/voice_practice_panel.gd")
+const CallPracticePanel = preload("res://scripts/ui/call_practice_panel.gd")
+var call_practice_panel: PanelContainer
 var practice_panel: PanelContainer
 var track_selection: PanelContainer
 const INK := Color("142f3e")
@@ -143,6 +145,9 @@ func _ready() -> void:
 	menu_footer = label("", 15, MINT)
 	menu_footer.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	content.add_child(menu_footer)
+	call_practice_panel = CallPracticePanel.new()
+	root.add_child(call_practice_panel)
+	call_practice_panel.selected.connect(func(index): menu_selected.emit(index))
 	practice_panel = PracticePanel.new()
 	root.add_child(practice_panel)
 	practice_panel.selected.connect(func(index): menu_selected.emit(index))
@@ -174,9 +179,14 @@ func label(text: String, size: int, color: Color) -> Label:
 	return result
 
 func render(session, rebind_message: String = "") -> void:
+	call_practice_panel.visible = session.state == "CALL_PRACTICE"
 	practice_panel.visible = session.state == "PRACTICE"
 	track_selection.visible = session.state == "TRACKS"
-	hud.visible = session.state not in ["TRACKS", "PRACTICE"]
+	hud.visible = session.state not in ["TRACKS", "PRACTICE", "CALL_PRACTICE"]
+	if session.state == "CALL_PRACTICE":
+		menu_panel.visible = false
+		call_practice_panel.render(session, voice_ready, voice_text)
+		return
 	if session.state == "PRACTICE":
 		menu_panel.visible = false
 		practice_panel.render(session, voice_ready, voice_text)
@@ -286,7 +296,7 @@ func render(session, rebind_message: String = "") -> void:
 			var button := Button.new()
 			button.text = entries[i]
 			button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-			button.custom_minimum_size = Vector2(0, 46)
+			button.custom_minimum_size = Vector2(0, 38 if state == "SETTINGS" else 46)
 			button.focus_mode = Control.FOCUS_NONE
 			button.add_theme_font_size_override("font_size", 20)
 			button.add_theme_stylebox_override("hover", style(Color("bfe8d8")))

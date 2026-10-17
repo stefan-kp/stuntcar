@@ -236,8 +236,8 @@ def run_microphone(connection, device=None, mode='checked'):
                 continue
             for command in commands:
                 connection.send('command', **command)
-            if now - last_feedback >= .1 or commands or feedback['state'] in ('recognized', 'unknown'):
-                connection.send('feedback', **feedback)
+            if context.get('practice', False) or now - last_feedback >= .1 or commands or feedback['state'] in ('recognized', 'unknown'):
+                connection.send('feedback', sample_seconds=len(pcm) / 32000, **feedback)
                 last_feedback = now
 
 

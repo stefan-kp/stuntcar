@@ -668,3 +668,28 @@ msgstr "This drive: %s. Next start: %s."
 msgid "I18N_CALL_RETRY"
 msgstr "Please try again. Move the microphone closer or reduce the room noise."
 
+
+msgid "I18N_CALL_TITLE"
+msgstr "Quiet call practice"
+
+msgid "I18N_CALL_START"
+msgstr "Start a new sample"
+
+msgid "I18N_CALL_READY"
+msgstr "Use a comfortable, quiet sound. You do not need to speak loudly."
+
+msgid "I18N_CALL_NOISE"
+msgstr "Stay quiet for two seconds. We measure the room noise."
+
+msgid "I18N_CALL_SOUND"
+msgstr "Make a comfortable sound. Then pause. Sample %d of 3."
+
+msgid "I18N_CALL_PAUSE"
+msgstr "Pause before the next sound."
+
+msgid "I18N_CALL_DONE"
+msgstr "Your quiet call profile is saved. Very easy can use it before each curve."
+
+msgid "I18N_CALL_WAIT"
+msgstr "Wait for the microphone. Then start a new sample."
+

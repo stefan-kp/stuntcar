@@ -80,7 +80,7 @@ func submit_voice(command: String, strength: float = VoiceStrength.NORMAL, event
 			if state not in ["MENU", "FINISHED"]: return false
 			restart()
 		"next", "select":
-			if state not in ["MENU", "PAUSED", "FINISHED", "SETTINGS", "CONTROL", "TRACKS", "AUDIO"]: return false
+			if state not in ["MENU", "PAUSED", "FINISHED", "SETTINGS", "CONTROL", "TRACKS", "AUDIO", "CALL_PRACTICE"]: return false
 			press(-1 if command == "next" else 1)
 		_: return false
 	return true
@@ -94,7 +94,8 @@ func entries() -> Array[String]:
 		"MENU": return [tr("I18N_MENU_START"), tr("I18N_MENU_TRACKS"), tr("I18N_MENU_SETTINGS"), tr("I18N_MENU_QUIT")]
 		"PAUSED": return [tr("I18N_MENU_CONTINUE"), tr("I18N_MENU_RESTART"), tr("I18N_MENU_SETTINGS"), voice_entry, tr("I18N_MENU_QUIT")]
 		"FINISHED": return [tr("I18N_MENU_AGAIN"), tr("I18N_MENU_MAIN"), tr("I18N_MENU_TRACKS"), tr("I18N_MENU_QUIT")]
-		"SETTINGS": return [tr("I18N_HINT_SECONDS") % int(model.hint_seconds), tr("I18N_SOUND_ON") if sound_enabled else tr("I18N_SOUND_OFF"), tr("I18N_KEYS_CHANGE"), voice_entry, tr("I18N_MENU_VOLUME"), tr("I18N_MENU_VOICE_PRACTICE"), tr("I18N_ASSIST_SELECT") % assist_name(selected_assist_id), tr("I18N_MENU_BACK")]
+		"SETTINGS": return [tr("I18N_HINT_SECONDS") % int(model.hint_seconds), tr("I18N_SOUND_ON") if sound_enabled else tr("I18N_SOUND_OFF"), tr("I18N_KEYS_CHANGE"), voice_entry, tr("I18N_MENU_VOLUME"), tr("I18N_MENU_VOICE_PRACTICE"), tr("I18N_ASSIST_SELECT") % assist_name(selected_assist_id), tr("I18N_CALL_TITLE"), tr("I18N_MENU_BACK")]
+		"CALL_PRACTICE": return [tr("I18N_CALL_START"), tr("I18N_MENU_BACK")]
 		"PRACTICE": return [tr("I18N_PRACTICE_START"), tr("I18N_PRACTICE_MODE_ONE") if voice_mode == "direct" else tr("I18N_PRACTICE_MODE_TWO"), tr("I18N_PRACTICE_BACK")]
 		"AUDIO": return [tr("I18N_VOLUME_ENGINE") % roundi(engine_volume * 100), tr("I18N_VOLUME_ENVIRONMENT") % roundi(environment_volume * 100), tr("I18N_VOLUME_HINTS") % roundi(hint_volume * 100), tr("I18N_MENU_BACK")]
 		"CONTROL": return [tr("I18N_CONTROL_KEYS"), tr("I18N_CONTROL_VOICE")]
@@ -162,9 +163,18 @@ func activate(index: int) -> void:
 				action_requested.emit("practice_open")
 			elif index == 6:
 				set_selected_assist("easy" if selected_assist_id == "very_easy" else "very_easy")
+			elif index == 7:
+				state = "CALL_PRACTICE"
+				menu_index = 0
+				call_practice.reset()
+				action_requested.emit("practice_open")
 			else:
 				state = previous_state
 				menu_index = 0
+
+		"CALL_PRACTICE":
+			if index == 0: action_requested.emit("call_start")
+			else: close_call_practice()
 
 		"PRACTICE":
 			if index == 0: action_requested.emit("practice_start")
@@ -196,6 +206,12 @@ func activate(index: int) -> void:
 					state = "CONTROL"
 			elif index == routes.size(): open_settings()
 			else: action_requested.emit("quit")
+
+func close_call_practice() -> void:
+	call_practice.reset()
+	state = "SETTINGS"
+	menu_index = 7
+	action_requested.emit("practice_closed")
 
 func close_practice() -> void:
 	practice.prepare(voice_mode)
