@@ -57,7 +57,8 @@ func run() -> void:
 		scene.model.reset(curve.start_m - 10.0)
 		scene.model.speed_mps = 40.0
 		scene.model.target_speed_mps = 40.0
-		scene.model.request_turn(curve.turn_sign)
+		scene.session.ensure_controls()
+		scene.session.press(curve.turn_sign)
 		for i in range(90): scene._physics_process(1.0/60.0)
 		check(absf(scene.car.body.rotation.y) > deg_to_rad(3.0) and scene.car.effects.smoke[0].emitting, "Die echte Karosserie driftet mit Reifenrauch durch die schnelle Kurve.")
 		scene.model.airborne = true
