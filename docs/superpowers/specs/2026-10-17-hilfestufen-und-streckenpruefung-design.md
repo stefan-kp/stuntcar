@@ -2,6 +2,9 @@
 
 Datum: 17. Oktober 2026. Status: Entwurf zur Prüfung durch Stefan.
 
+Ergänzung vom 17. Oktober 2026: Leise Rufe gehören ausdrücklich zur Rufhilfe.
+Stefans Ergänzung sieht außerdem sichtbares Schlingern trotz sicherer Kurvenführung auf „Sehr leicht“ vor.
+
 Dieser Entwurf beschreibt die Architektur und die Abnahme. Er enthält keinen ausführlichen Umsetzungsplan.
 Er ändert keinen Spielcode. Stefan hat diesen schriftlichen Entwurf noch nicht bestätigt.
 
@@ -131,6 +134,12 @@ Die Gelegenheit schließt bei der ersten erreichten Positions-, Zeit- oder Zusta
 Ein unterstützter Zustand muss bis zum Kurvenende mit den erlaubten Kräften rettbar bleiben.
 Die spätere Parametertabelle nennt diese Grenzen je Hilfsprofil und Kurve. Sie darf keinen unbegrenzten Ersatzwert enthalten.
 
+Auf „Sehr leicht“ umfasst dieses Versprechen auch weitere erlaubte Tempobefehle nach einer gültigen Kurvenfreigabe.
+Volles Beschleunigen darf die angenommene Kurve nicht nachträglich unrettbar machen.
+Die Hilfe muss dafür sämtliche erlaubten Tempowerte einschließlich Turbo berücksichtigen.
+Sie darf die garantierte Hilfe nicht durch eine unangekündigte Zustandsgrenze entziehen.
+Die endlichen Eingabegrenzen gelten weiterhin vor der Freigabe. Ein fehlender Lenkbefehl bleibt ein Fehler.
+
 Der Hinweis öffnet den Eingabebereich genau einmal.
 Die vorhandene Vorlaufwahl mit 3, 5 oder 8 Sekunden bildet den Ausgangspunkt für die Erprobung.
 Eine Berechnung aus dem aktuellen Tempo darf den bereits geöffneten Bereich nicht nachträglich schließen oder neu öffnen.
@@ -164,10 +173,21 @@ Nach einem Ruf braucht die Erkennung eine neue, getrennte Äußerung für eine w
 Ein wiederholtes, eindeutig bestätigtes Richtungswort darf als neue Eingabe zählen. Ein unveränderter Dauerlaut darf das nicht.
 Die Tests müssen diese Unterscheidung mit Geräuschen und längeren Lauten prüfen.
 
-Ein festgestelltes Signal beweist keine Absicht. Die persönliche Rufübung muss deshalb die Erkennung und mögliche Fehlauslösungen sichtbar machen.
-Die bisherige Pflicht zur höchsten Lautstärkestufe ist keine feste Produktregel für den Ausbau.
-Auch ein gut unterscheidbarer, leiser persönlicher Ruf soll genügen. Die Prüfung muss das gegen Raumgeräusche absichern.
-Ohne gültiges Mikrofonprofil bleibt die Rufhilfe aus. Erkannte Wörter und die Tastatur bleiben nutzbar.
+**Bestätigte Vorgabe:** Auch Menschen mit einer leisen Stimme sollen die Rufhilfe nutzen können.
+Ein leiser, vom Raumgeräusch unterscheidbarer Laut muss auf „Sehr leicht“ genügen.
+Das Wort „Ruf“ verlangt keine hohe Lautstärke. Das Spiel darf weder lautes Sprechen noch drei verschiedene Lautstärken voraussetzen.
+
+**Entwurfsentscheidung:** Die Rufübung erhält ein eigenes persönliches Rufprofil.
+Sie erfasst zuerst das Raumgeräusch. Danach gibt der Spieler mehrere kurze Laute in einer angenehmen Lautstärke ab.
+Das Profil verwendet deren Abstand zum Raumgeräusch sowie deren Dauer und Pausen.
+Es verlangt keine höchste Lautstärkestufe aus der bisherigen Kalibrierung.
+Die Signalverarbeitung muss diese leisen Laute bis zur Rufprüfung erhalten. Ein nachträglich niedrigerer Grenzwert allein genügt nicht.
+
+Ein festgestelltes Signal beweist keine Absicht. Die Rufübung zeigt deshalb erkannte Laute und mögliche Fehlauslösungen.
+Bei unzureichendem Abstand zum Raumgeräusch erklärt sie das Problem. Sie verlangt nicht einfach einen lauteren Ruf.
+Eine erneute Übung mit anderer Mikrofonposition oder geringerem Raumgeräusch kann helfen.
+Das Spiel darf kein verlässliches Ergebnis versprechen, wenn das Mikrofon den Laut nicht ausreichend vom Geräusch trennt.
+Ohne gültiges Rufprofil bleibt die Rufhilfe aus. Erkannte Wörter und die Tastatur bleiben nutzbar.
 
 ## 5. Tempo, Rettung und sichtbare Bewegung
 
@@ -183,6 +203,9 @@ Das Spiel braucht zunächst nur Zusatzschub und starke Bremsung. Andere Rettungs
 
 Die vorhandene Lautstärkewirkung auf Tempobefehle bleibt zunächst erhalten.
 Sie nutzt die persönliche Kalibrierung. Sie verändert weiterhin keine Lenkstärke auf den unteren Stufen.
+Das neue Rufprofil funktioniert unabhängig von dieser Kalibrierung.
+Auch leise erkannte Tempobefehle müssen durch Wiederholung den gesamten normalen Tempobereich erreichen können.
+Eine laute Stimme darf keine Voraussetzung für eine erfolgreiche Fahrt auf den unteren Stufen sein.
 Der normale Turbo bleibt ein Effekt eines Tempobefehls. Ein Rettungsschub erhält einen eigenen Grund und eine eigene Anzeige.
 Nach der Rettung folgt das Auto wieder dem Zieltempo des Spielers.
 
@@ -200,6 +223,28 @@ Außerhalb eines angekündigten Hilfsbereichs darf das Auto stehen bleiben.
 Die Kurvenhilfe lenkt nur mit Freigabe. Die Tempohilfe darf ohne Freigabe bremsen, aber keine passende Fahrtrichtung herstellen.
 Auch nach einem Tempohilfseingriff bleibt eine Kurve ohne Lenkbefehl verpasst.
 Die Hilfe darf eine solche Fahrt nicht durch endloses Warten vor jeder Kurve ersetzen.
+
+### Sichtbare Spannung bei sicherer Kurvenführung
+
+**Stefans Vorschlag:** Auf „Sehr leicht“ darf starkes Beschleunigen in einer freigegebenen Kurve spektakulär aussehen.
+Das Auto darf kurz schlingern und anschließend aus der Kurve beschleunigen.
+Der Spieler braucht dabei keine schnelle Gegenbewegung. Die Hilfe führt das Auto sicher durch diese Kurve.
+
+**Entwurfsentscheidung:** Das Schlingern folgt einem tatsächlichen Auslöser, etwa starkem Beschleunigen in einer Kurve.
+Das Modell begrenzt die seitliche Bewegung auf eine sichere Spur innerhalb der Fahrbahn.
+Die sichtbare Drehung der Karosserie, die Vorderreifen, der Ton und gegebenenfalls der Reifenrauch verstärken diese Bewegung.
+Die Kamera muss dafür nicht stark wackeln. Die Fahrbahn und die nächste Ankündigung bleiben gut erkennbar.
+Das Spiel versetzt das Auto weder unsichtbar zurück noch erzeugt es einen zufälligen Absturz.
+
+Die Hilfe darf das Tempo bei Bedarf begrenzen oder kurz bremsen. Sie lässt den Beschleunigungswunsch anschließend wieder wirken.
+Die Anzeige unterscheidet den Tempobefehl von einem solchen Hilfseingriff.
+Die Einführung erklärt: Eine gültige Eingabe sichert die Kurvenführung auf „Sehr leicht“.
+Das Schlingern vermittelt Bewegung und Spannung. Es verlangt keine weitere Eingabe und behauptet keine zusätzliche Gefahr.
+
+Eine sichere Schauwirkung zählt nicht automatisch als Rettung mit Zeitverlust.
+Die tatsächliche späte Kurvenrettung bleibt davon getrennt. Für sie gilt der folgende Vorschlag zum Zeitverlust.
+Der Simulator muss später die sichere Spur und die tatsächlichen Tempoeingriffe prüfen.
+Die Frage, ob das Schlingern spannend und verständlich wirkt, braucht zusätzlich einen Spielversuch.
 
 ### Zeitverlust als Entwurfsentscheidung
 
@@ -253,6 +298,7 @@ Sie nennen jeweils Tempo, Eingabezeitpunkt, Stufe, Vorlaufwahl und Ausgangszusta
 | Keine Eingabe | Das Auto beginnt keine Lenkaktion und verpasst die Kurve. |
 | Genau eine Eingabe | Die Hilfe führt höchstens durch die zugeordnete Kurve. Die nächste Kurve braucht eine neue Eingabe. |
 | Sehr leicht: richtige Richtung, falsche Richtung, unbekannter geeigneter Ruf | Jede dieser Eingaben kann dieselbe Kurve freigeben. |
+| Leise persönliche Laute ohne laute Kalibrierungsprobe | Die Rufhilfe erkennt geeignete Laute. Raumgeräusche und Dauerlaute geben keine späteren Kurven frei. |
 | Leicht: falsche Richtung oder unbekannter Ruf | Keine Freigabe. Eine rechtzeitige richtige Eingabe bleibt möglich. |
 | Frühe, passende, späte und sehr späte Eingabe | Die Bewegung und der Zeitverlust entsprechen dem angekündigten Abschnitt. |
 | Grenzen der Rettung | Tests unmittelbar vor, auf und nach jeder Grenze zeigen eine eindeutige Entscheidung. |
@@ -261,6 +307,8 @@ Sie nennen jeweils Tempo, Eingabezeitpunkt, Stufe, Vorlaufwahl und Ausgangszusta
 | Stille, Dauerlaut, Dauertaste, wiederholtes Paket | Keine automatische Freigabe späterer Kurven. |
 | Erkanntes `faster` oder `slower` samt späterer Rückmeldung | Genau die vorgesehenen Tempobefehle wirken. Keine zusätzliche Ruflenkung. |
 | Gleiche Richtung bei verschiedenen persönlichen Lautstärken | Die unteren Stufen erzeugen dieselbe Lenkhilfe. |
+| Sehr leicht: volles Beschleunigen nach gültiger Kurvenfreigabe | Das Auto bleibt bis zum Kurvenende sicher. Der Spieler braucht keine weitere Korrektur. |
+| Schlingern bei hohem Tempo | Die seitliche Bewegung bleibt innerhalb der sicheren Spur. Darstellung und tatsächliche Bewegung stimmen zusammen. |
 | Pause, Neustart, Streckenwechsel und Mikrofonwechsel | Kein alter Befehl wirkt in einem neuen Zusammenhang. |
 | Saubere und gerettete Vergleichsfahrt | Die Rettung erzeugt keinen Zeitvorteil. Effekte erklären die tatsächliche Bewegung. |
 
@@ -352,6 +400,8 @@ Eine Änderung der Strecke, Fahrregeln oder Hilfsprofile macht den bisherigen Be
 - Dieselben Eingaben liefern im Spiel und Simulator übereinstimmende Ergebnisse.
 - Die Prüfung nennt mindestens eine saubere Gesamtfahrt je freigegebener Strecke und unterer Hilfestufe.
 - Die Prüfung nennt die getesteten rettbaren Fehler und die Grenzen der Hilfe.
+- Auf „Sehr leicht“ prüft sie auch volle Beschleunigung und wechselnde Tempobefehle innerhalb einer freigegebenen Kurve.
+- Sie prüft, dass das Schlingern die sichere Spur auch beim höchsten erlaubten Tempo nicht verlässt.
 - Die Prüfung erfasst Übergänge zwischen Kurven, Rampen und Landungen ohne künstlichen Neustart des Fahrzeugzustands.
 - Wiederholtes absichtliches Bremsen vor Rampen liefert in den Vergleichsfahrten keinen Zeitgewinn.
 - Veränderte Streckendaten oder Fahrregeln verwerfen den alten Bericht.
