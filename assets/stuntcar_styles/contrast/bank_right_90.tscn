@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/stuntcar_kit/track/bank_right_90.tscn" id="1"]
+[sub_resource type="StandardMaterial3D" id="Material"]
+albedo_color = Color(0.26, 0.4, 0.48, 1)
+roughness = 0.8
+
+[node name="bank_right_90" instance=ExtResource("1")]
+[node name="Road" parent="." index=0]
+material_override = SubResource("Material")

@@ -1,0 +1,221 @@
+{
+  "version": 1,
+  "models": {
+    "neutral/bank_left_90": {
+      "id": "neutral/bank_left_90",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/neutral/bank_left_90.tscn",
+      "role": "road",
+      "form_id": "bank_left_90",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/bank_left_90"
+    },
+    "neutral/bank_right_90": {
+      "id": "neutral/bank_right_90",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/neutral/bank_right_90.tscn",
+      "role": "road",
+      "form_id": "bank_right_90",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/bank_right_90"
+    },
+    "neutral/curve_left_45": {
+      "id": "neutral/curve_left_45",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/neutral/curve_left_45.tscn",
+      "role": "road",
+      "form_id": "curve_left_45",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/curve_left_45"
+    },
+    "neutral/curve_right_45": {
+      "id": "neutral/curve_right_45",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/neutral/curve_right_45.tscn",
+      "role": "road",
+      "form_id": "curve_right_45",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/curve_right_45"
+    },
+    "neutral/hill_32": {
+      "id": "neutral/hill_32",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/neutral/hill_32.tscn",
+      "role": "road",
+      "form_id": "hill_32",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/hill_32"
+    },
+    "neutral/jump_landing": {
+      "id": "neutral/jump_landing",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/neutral/jump_landing.tscn",
+      "role": "road",
+      "form_id": "jump_landing",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/jump_landing"
+    },
+    "neutral/jump_launch": {
+      "id": "neutral/jump_launch",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/neutral/jump_launch.tscn",
+      "role": "road",
+      "form_id": "jump_launch",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/jump_launch"
+    },
+    "neutral/loop_12": {
+      "id": "neutral/loop_12",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/neutral/loop_12.tscn",
+      "role": "road",
+      "form_id": "loop_12",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/loop_12"
+    },
+    "neutral/straight_24": {
+      "id": "neutral/straight_24",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/neutral/straight_24.tscn",
+      "role": "road",
+      "form_id": "straight_24",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/straight_24"
+    },
+    "contrast/bank_left_90": {
+      "id": "contrast/bank_left_90",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/contrast/bank_left_90.tscn",
+      "role": "road",
+      "form_id": "bank_left_90",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/bank_left_90"
+    },
+    "contrast/bank_right_90": {
+      "id": "contrast/bank_right_90",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/contrast/bank_right_90.tscn",
+      "role": "road",
+      "form_id": "bank_right_90",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/bank_right_90"
+    },
+    "contrast/curve_left_45": {
+      "id": "contrast/curve_left_45",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/contrast/curve_left_45.tscn",
+      "role": "road",
+      "form_id": "curve_left_45",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/curve_left_45"
+    },
+    "contrast/curve_right_45": {
+      "id": "contrast/curve_right_45",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/contrast/curve_right_45.tscn",
+      "role": "road",
+      "form_id": "curve_right_45",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/curve_right_45"
+    },
+    "contrast/hill_32": {
+      "id": "contrast/hill_32",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/contrast/hill_32.tscn",
+      "role": "road",
+      "form_id": "hill_32",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/hill_32"
+    },
+    "contrast/jump_landing": {
+      "id": "contrast/jump_landing",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/contrast/jump_landing.tscn",
+      "role": "road",
+      "form_id": "jump_landing",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/jump_landing"
+    },
+    "contrast/jump_launch": {
+      "id": "contrast/jump_launch",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/contrast/jump_launch.tscn",
+      "role": "road",
+      "form_id": "jump_launch",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/jump_launch"
+    },
+    "contrast/loop_12": {
+      "id": "contrast/loop_12",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/contrast/loop_12.tscn",
+      "role": "road",
+      "form_id": "loop_12",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/loop_12"
+    },
+    "contrast/straight_24": {
+      "id": "contrast/straight_24",
+      "model_version": 1,
+      "scene_path": "res://assets/stuntcar_styles/contrast/straight_24.tscn",
+      "role": "road",
+      "form_id": "straight_24",
+      "form_version": 1,
+      "surface_meshes": [
+        "Road"
+      ],
+      "fallback_id": "canonical/straight_24"
+    }
+  }
+}

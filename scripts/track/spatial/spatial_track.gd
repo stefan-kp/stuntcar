@@ -94,3 +94,11 @@ func triangles(id:String)->Array[Dictionary]:
 		result.append({"a":a,"b":c,"c":b,"normal":normal,"local_m":e.distances[i]})
 		result.append({"a":a,"b":d,"c":c,"normal":normal,"local_m":e.distances[i]})
 	return result
+
+func surface_point(id:String,local:float,lateral:float)->Vector3:
+	var e:Dictionary=by_id[id];var ds:PackedFloat64Array=e.distances
+	var s:=clampf(local,0,e.length_m);var i:=clampi(ds.bsearch(s)-1,0,ds.size()-2)
+	var t:float=(s-ds[i])/(ds[i+1]-ds[i]);var r:=clampf((lateral+3.0)/6.0,0,1)
+	var a:Vector3=e.points[i]-e.bases[i].x*3;var b:Vector3=e.points[i]+e.bases[i].x*3
+	var c:Vector3=e.points[i+1]+e.bases[i+1].x*3;var d:Vector3=e.points[i+1]-e.bases[i+1].x*3
+	return a*(1-r)+b*(r-t)+c*t if r>=t else a*(1-t)+d*(t-r)+c*r
