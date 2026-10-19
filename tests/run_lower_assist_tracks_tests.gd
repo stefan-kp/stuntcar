@@ -20,7 +20,7 @@ func run_drive(track, level: String, hint: float, speed: float, timing: String, 
 			var state: Dictionary = d.assist_state()
 			var ready: bool = state.phase in ["early","clean"] if timing == "early" else (state.phase == timing if timing in ["late", "rescue"] else d.distance_m >= curve.start_m-20.0)
 			if ready:
-				var accepted: bool = d.request_assisted_turn(-curve.turn_sign if level == "very_easy" else curve.turn_sign,false,"input:%d"%curve.id)
+				var accepted: bool = d.request_assisted_turn(0 if level == "very_easy" else curve.turn_sign,level == "very_easy","input:%d"%curve.id)
 				sent[curve.id]=true
 				events.append({"curve":curve.id,"at_m":d.distance_m,"time_s":d.elapsed_s,"lateral":d.lateral,"heading":d.heading,"phase":state.phase,"accepted":accepted})
 		if d.active_curve_id >= 0:
