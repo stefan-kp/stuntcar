@@ -1,8 +1,14 @@
 extends RefCounted
 
 # An audio model only. It does not change the car's movement or controls.
-const RATIOS := [3.2, 2.2, 1.6, 1.22, 1.0]
+# Gears step by about 10%, so each shift dips the revs by a few hundred RPM.
+# Gear 1 sits near 2600 RPM at 14 m/s and gear 4 near 6400 RPM at 46 m/s.
+const RATIOS := [1.481, 1.346, 1.223, 1.113]
 const WHEEL_RPM_PER_MPS := 125.0
+# Wheel RPM at which each gear shifts up, and at which the next gear down is
+# selected. The down thresholds sit below the post-shift RPM to avoid hunting.
+const UP_RPM := [3500.0, 4300.0, 5250.0]
+const DOWN_RPM := [2800.0, 3440.0, 4200.0]
 const IDLE_RPM := 950.0
 const MAX_RPM := 6800.0
 const SHIFT_SECONDS := 0.24
@@ -34,7 +40,7 @@ func step(speed: float, target_speed: float, slope: float, airborne: bool, delta
 	if delta <= 0: return
 	speed = maxf(0, speed)
 	if not initialized:
-		while gear < RATIOS.size() and wheel_rpm(speed) > 5200:
+		while gear < RATIOS.size() and wheel_rpm(speed) > UP_RPM[gear - 1]:
 			gear += 1
 		rpm = maxf(IDLE_RPM, wheel_rpm(speed))
 		last_speed = speed
@@ -51,10 +57,10 @@ func step(speed: float, target_speed: float, slope: float, airborne: bool, delta
 	if was_airborne and not airborne:
 		landing_recovery = 1.0
 	if not airborne and shift_cooldown <= 0:
-		if wheel_rpm(speed) > 5200 and gear < RATIOS.size() and throttle > 0.1:
+		if gear < RATIOS.size() and wheel_rpm(speed) > UP_RPM[gear - 1] and throttle > 0.1:
 			gear += 1
 			begin_shift()
-		elif wheel_rpm(speed) < 3000 and gear > 1:
+		elif gear > 1 and wheel_rpm(speed) < DOWN_RPM[gear - 2]:
 			gear -= 1
 			begin_shift()
 	var desired := wheel_rpm(speed) - 500 + throttle * 1100
