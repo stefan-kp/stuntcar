@@ -234,7 +234,7 @@ msgid "I18N_TRACK_CANYON_DESCRIPTION"
 msgstr "Two jumps, high turns and a long slope down."
 
 msgid "I18N_TRACK_CANYON_GAUNTLET_DESCRIPTION"
-msgstr "Eight tight banked curves, three of them back to back, and two long jumps."
+msgstr "Eight tight banked curves in quick succession and two long jumps."
 
 msgid "I18N_TRACK_CANYON_GAUNTLET_NAME"
 msgstr "Canyon Gauntlet"
