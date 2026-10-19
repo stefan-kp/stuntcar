@@ -1,0 +1,41 @@
+{
+  "format_version": 1,
+  "scenario": "canyon",
+  "name": "I18N_TRACK_CANYON_GAUNTLET_NAME",
+  "description": "I18N_TRACK_CANYON_GAUNTLET_DESCRIPTION",
+  "length_m": 1480,
+  "curves": [
+    {"start_m": 100, "end_m": 170, "turn_sign": 1, "radius": 22, "checkpoint_m": 5, "bank_degrees": 35},
+    {"start_m": 240, "end_m": 310, "turn_sign": -1, "radius": 22, "checkpoint_m": 180, "bank_degrees": 40},
+    {"start_m": 540, "end_m": 615, "turn_sign": 1, "radius": 20, "checkpoint_m": 480, "bank_degrees": 42},
+    {"start_m": 685, "end_m": 755, "turn_sign": -1, "radius": 20, "checkpoint_m": 620, "bank_degrees": 40},
+    {"start_m": 825, "end_m": 895, "turn_sign": 1, "radius": 22, "checkpoint_m": 760, "bank_degrees": 45},
+    {"start_m": 1100, "end_m": 1170, "turn_sign": -1, "radius": 20, "checkpoint_m": 1015, "bank_degrees": 42},
+    {"start_m": 1240, "end_m": 1310, "turn_sign": 1, "radius": 20, "checkpoint_m": 1175, "bank_degrees": 45},
+    {"start_m": 1380, "end_m": 1450, "turn_sign": -1, "radius": 22, "checkpoint_m": 1315, "bank_degrees": 40}
+  ],
+  "heights": [
+    {"at_m": 0, "height_m": 14},
+    {"at_m": 90, "height_m": 14},
+    {"at_m": 230, "height_m": 26},
+    {"at_m": 330, "height_m": 30},
+    {"at_m": 400, "height_m": 38},
+    {"at_m": 440, "height_m": 26},
+    {"at_m": 520, "height_m": 18},
+    {"at_m": 690, "height_m": 22},
+    {"at_m": 820, "height_m": 34},
+    {"at_m": 900, "height_m": 36},
+    {"at_m": 960, "height_m": 44},
+    {"at_m": 1006, "height_m": 30},
+    {"at_m": 1090, "height_m": 20},
+    {"at_m": 1220, "height_m": 34},
+    {"at_m": 1350, "height_m": 24},
+    {"at_m": 1420, "height_m": 16},
+    {"at_m": 1480, "height_m": 14}
+  ],
+  "jumps": [
+    {"start_m": 400, "end_m": 440, "height_m": 9},
+    {"start_m": 960, "end_m": 1006, "height_m": 12}
+  ],
+  "preview": "previews/canyon_gauntlet.png"
+}

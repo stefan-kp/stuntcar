@@ -5,7 +5,7 @@ extends SceneTree
 # godot --path . --script res://tests/capture_track_preview.gd -- <track.json> [distance_m] [output.png]
 #
 # Example
-# godot --path . --script res://tests/capture_track_preview.gd -- res://tracks/05_schluchtjagd.json 520 res://tracks/previews/canyon_gauntlet.png
+# godot --path . --script res://tests/capture_track_preview.gd -- res://tracks/07_schluchtjagd.json 520 res://tracks/previews/canyon_gauntlet.png
 
 func _initialize() -> void:
 	call_deferred("run")
