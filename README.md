@@ -47,7 +47,7 @@ Four tracks take you through a forest, a mountain pass, a canyon, and a wet coas
 
 Give one input before each curve. The help guides that curve and its exit. The next curve needs a new input.
 
-Select “Very easy” or “Easy” in Settings. A new drive uses the selected level. “Very easy” accepts either direction and can use a quiet call. “Easy” needs the correct direction. Late input causes help with a loss of speed. Input outside the finite help window cannot recover the car.
+Select “Very easy” or “Easy” in Settings. A new drive uses the selected level. “Very easy” also accepts a quiet call instead of a word. A spoken direction always counts as said: the wrong direction takes the car off the track. “Easy” needs the correct direction word. Late input causes help with a loss of speed. Input outside the finite help window cannot recover the car.
 
 Full acceleration after a valid input stays safe on the existing curves. “Very easy” adds one short sway in a fast curve. The speed display separates your target from the help target.
 
