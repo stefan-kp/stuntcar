@@ -1,0 +1,26 @@
+{
+  "format_version": 3,
+  "name": "I18N_TRACK_STUNT_CIRCUIT_NAME",
+  "description": "I18N_TRACK_STUNT_CIRCUIT_DESCRIPTION",
+  "scenario": "forest",
+  "preview": "previews/stunt_circuit.png",
+  "report": "reports/08_stunt_circuit.json",
+  "start": {
+    "height_m": 12
+  },
+  "pieces": [
+    {"type": "straight", "length_m": 70},
+    {"type": "hill", "length_m": 40, "height_m": 3},
+    {"type": "straight", "length_m": 40},
+    {"type": "curve", "direction": "right", "angle_deg": 180, "radius_m": 40, "bank_deg": 35},
+    {"type": "straight", "length_m": 60, "rise_m": 8},
+    {"type": "straight", "length_m": 40},
+    {"type": "curve", "direction": "left", "angle_deg": 45, "radius_m": 30, "bank_deg": 15},
+    {"type": "straight", "length_m": 70},
+    {"type": "curve", "direction": "right", "angle_deg": 45, "radius_m": 30, "bank_deg": 15},
+    {"type": "straight", "length_m": 40},
+    {"type": "curve", "direction": "right", "angle_deg": 180, "radius_m": 73.5355, "bank_deg": 35},
+    {"type": "straight", "length_m": 60, "rise_m": -8},
+    {"type": "straight", "length_m": 21.9239}
+  ]
+}

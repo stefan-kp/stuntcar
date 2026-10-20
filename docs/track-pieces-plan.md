@@ -1,6 +1,6 @@
 # Tracks from parametric pieces
 
-Status: step 1 done. Decided with Stefan on 20 October 2026.
+Status: steps 1 and 2 done. Decided with Stefan on 20 October 2026.
 
 Every track becomes a chain of pieces with parameters, such as "curve left, 90°, radius 30 m, bank 25°".
 A generator turns the pieces into the drive form, the collision surface and the road mesh.
@@ -60,7 +60,8 @@ An open circuit reports how far the end is from the start.
 | --- | --- |
 | `scripts/track/pieces/piece_generator.gd` | Checks the limits of one piece and builds its form: centre points, up vectors, entry and exit pose |
 | `scripts/track/pieces/circuit_builder.gd` | Chains the pieces, checks that the circuit closes, and creates a `SpatialTrack` |
-| `tests/pieces/test_pieces.gd` | Rebuilds the fixed forms from parameters, checks the limits and the circuit, and drives one lap in both assist levels |
+| `scripts/track/visuals/road_mesh.gd` | Builds the visible road and the pillars from the drive form; the drive form alone decides contact |
+| `tests/pieces/test_pieces.gd` | Rebuilds the fixed forms from parameters, checks the limits and the circuit, drives one lap in both assist levels, and checks the Stunt Circuit, its report and its road |
 
 The forms use the layout of `tracks/forms/stunt_v1.json`, so `SpatialTrack`, the surface and flight motion and the curve assist work unchanged.
 
@@ -69,7 +70,7 @@ The forms use the layout of `tracks/forms/stunt_v1.json`, so `SpatialTrack`, the
 Each step is one pull request and keeps the game playable.
 
 1. **Straight, curve and hill from parameters.** Done. The parameters rebuild `straight_24`, `curve_left_45`, `curve_right_45`, `hill_32` and both `bank_*_90` forms within 2 mm.
-2. **Procedural road with pillars.** Mesh and collision come from the drive form. The first format 3 track appears in the menu.
+2. **Procedural road with pillars.** Done. `scripts/track/visuals/road_mesh.gd` sweeps the deck, edge lines and red barriers along the drive form and puts a pillar under the road every 12 m. The first format 3 track, `tracks/08_stunt_circuit.json`, is in the menu.
 3. **Ramp, bumps, loop and wall curve.** A flight can land on any following piece, not only on a fixed landing target. A check tool computes the speed windows per track and writes the drive report.
 4. **One curve assist and the landscapes.** The two assist levels run on the spatial model only. Forest, alpine, canyon and coast use the new centre line. The drive matrix runs on format 3. Curves pass their real radius to the assist instead of the fixed 28 m in `spatial_track.gd`.
 5. **New tracks, old formats removed.** Four or five new circuits in the four landscapes. Then format 1, the fixed format 2 forms and their tests go away.

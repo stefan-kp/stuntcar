@@ -239,6 +239,12 @@ msgstr "Eight tight banked curves in quick succession and two long jumps."
 msgid "I18N_TRACK_CANYON_GAUNTLET_NAME"
 msgstr "Canyon Gauntlet"
 
+msgid "I18N_TRACK_STUNT_CIRCUIT_DESCRIPTION"
+msgstr "A circuit on pillars with two banked hairpins, a hill and an S-bend."
+
+msgid "I18N_TRACK_STUNT_CIRCUIT_NAME"
+msgstr "Stunt Circuit"
+
 msgid "I18N_TRACK_CANYON_NAME"
 msgstr "Jump Track"
 

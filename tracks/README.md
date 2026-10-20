@@ -145,3 +145,14 @@ Die Fahrfläche liefert die tatsächliche Breite und Länge.
 Nach Änderungen an Fahrdaten oder Fahrberechnung erzeugt `tools/spatial/check_drives.gd` einen neuen Bericht.
 Ein reiner Modelltausch braucht nur eine neue Modellprüfung.
 Die vier alten Strecken verwenden weiterhin Format 1.
+
+## Format 3: circuits from pieces
+
+New tracks use format 3. A file lists a start height and a chain of pieces with parameters. The game builds the road, the pillars and the drive surface from them. Every format 3 track is a closed circuit: the last piece must end exactly where the first one starts.
+
+`08_stunt_circuit.json` is the first example. The piece types, their parameters and limits are in [the plan](../docs/track-pieces-plan.md).
+
+1. Write the pieces into a new JSON file with `"format_version": 3`.
+2. Run `tools/check_tracks.gd`. An open circuit reports how far its end misses the start.
+3. Write the drive report: `Godot --headless --path . --script tools/spatial/check_drives.gd -- --track res://tracks/<file>.json --output res://tracks/reports/<file>.json`.
+4. Set `"report"` to that report. The menu only offers a track whose report matches the current file and code.

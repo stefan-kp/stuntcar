@@ -426,7 +426,7 @@ func select_track(path: String) -> void:
 		session.catalog_errors.append(path.get_file() + ": " + str(loaded.errors))
 		return
 	var replacement = loaded.track
-	if loaded.format_version == 2 and not Verification.playable(replacement, StuntAssist.profile(session.selected_assist_id)):
+	if loaded.format_version >= 2 and not Verification.playable(replacement, StuntAssist.profile(session.selected_assist_id)):
 		session.open_tracks()
 		session.catalog_errors.append(tr("I18N_STUNT_UNVERIFIED"))
 		return
