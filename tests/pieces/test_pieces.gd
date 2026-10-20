@@ -3,6 +3,11 @@ const Pieces = preload("res://scripts/track/pieces/piece_generator.gd")
 const Builder = preload("res://scripts/track/pieces/circuit_builder.gd")
 const Forms = preload("res://scripts/track/spatial/form_library.gd")
 const Cases = preload("res://tests/spatial/full_drive_cases.gd")
+const Factory = preload("res://scripts/track/track_factory.gd")
+const Catalog = preload("res://scripts/track/track_data.gd")
+const Verification = preload("res://scripts/track/spatial/verification.gd")
+const Assist = preload("res://scripts/vehicle/spatial/stunt_assist.gd")
+const Road = preload("res://scripts/track/visuals/road_mesh.gd")
 const MATCH_M := 0.02
 const MATCH_DEG := 1.0
 
@@ -18,6 +23,7 @@ func _initialize() -> void:
 	check_generated_forms_are_valid()
 	check_limits()
 	check_circuit()
+	check_stunt_circuit()
 	done()
 
 func match_form(reference: Dictionary, piece: Dictionary, name: String) -> void:
@@ -121,3 +127,24 @@ func check_circuit() -> void:
 		check(drive.finished, "%s: the car drives one lap with one input per curve (%s at %s)" % [level, drive.mode, drive.element])
 	var wrong: Dictionary = Cases.record(track, "easy", 22, "wrong")
 	check(not wrong.finished and wrong.mode == "crashed", "The wrong direction takes the car off the circuit")
+
+func check_stunt_circuit() -> void:
+	var path := "res://tracks/08_stunt_circuit.json"
+	var loaded: Dictionary = Factory.load_track(path)
+	check(loaded.errors.is_empty() and loaded.format_version == 3, "The Stunt Circuit loads as format 3 " + str(loaded.errors))
+	if not loaded.errors.is_empty(): return
+	var track = loaded.track
+	check(Catalog.catalog().any(func(r): return r.path == path and r.curves == 4), "The track menu lists the Stunt Circuit with four curves")
+	for level in ["very_easy", "easy"]:
+		check(Verification.playable(track, Assist.profile(level)), "%s: the drive report matches the current track and code" % level)
+	check(track.preview_path == "res://tracks/previews/stunt_circuit.png", "The Stunt Circuit uses its own preview")
+	var road: Node3D = Road.build_element(track.elements[3], "neutral")
+	check(road.get_child_count() == 4 and road.get_children().all(func(m): return m.mesh.get_surface_count() == 1), "A curve gets a surface, deck, edge lines and barriers")
+	road.free()
+	var pillars: Node3D = Road.build_pillars(track, "neutral")
+	check(pillars.get_child_count() >= 60, "Pillars carry the road around the circuit (%d)" % pillars.get_child_count())
+	var grounded := true
+	for pillar in pillars.get_children():
+		grounded = grounded and is_equal_approx(pillar.position.y - pillar.transform.basis.y.length() * 0.5, Road.GROUND_Y)
+	check(grounded, "Every pillar stands on the ground")
+	pillars.free()
