@@ -169,6 +169,7 @@ We develop the game on a Mac and build the Windows package with GitHub Actions. 
 - [Add an interface language](locales/README.md).
 - [Add a track](tracks/README.md).
 - [Build the Windows package](tools/release/README.md).
+- [Tracks from parametric pieces](docs/track-pieces-plan.md) (work in progress).
 
 Some detailed project notes are still in German.
 
@@ -178,6 +179,7 @@ Use these checks from the project folder on a Mac:
 .tools/voice-env/bin/python -m unittest discover -s voice/tests
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_tests.gd
 .tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/run_voice_runtime_tests.gd
+.tools/Godot.app/Contents/MacOS/Godot --headless --path . --script tests/pieces/test_pieces.gd
 ```
 
 ## License
