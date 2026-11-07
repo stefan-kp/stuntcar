@@ -50,6 +50,11 @@ static func scan_catalog(folder: String = "res://tracks") -> Dictionary:
 				preview = Scenarios.preview(landscape)
 		var length:float=d.get("length_m",0)
 		var curve_count:int=d.get("curves",[]).size();var jump_count:int=d.get("jumps",[]).size()
+		if d.get("format_version",1)==3:
+			var built:Dictionary=load("res://scripts/track/pieces/circuit_builder.gd").load_track(d,path)
+			if built.track==null:
+				errors.append(file+": "+", ".join(built.errors));continue
+			length=built.track.length_m;curve_count=built.track.curves.size();jump_count=built.track.jumps.size()
 		if d.get("format_version",1)==2:
 			var forms:Dictionary=load("res://scripts/track/spatial/form_library.gd").load_file("res://tracks/forms/stunt_v1.json")
 			var spatial=load("res://scripts/track/spatial/spatial_track.gd").new(d,forms.forms)
@@ -63,6 +68,8 @@ static func catalog() -> Array[Dictionary]:
 	return scan_catalog().routes
 
 static func validate_definition(d) -> String:
+	if d is Dictionary and d.get("format_version")==3:
+		return ", ".join(load("res://scripts/track/pieces/circuit_builder.gd").build(d).errors)
 	if d is Dictionary and d.get("format_version")==2:
 		var forms:Dictionary=load("res://scripts/track/spatial/form_library.gd").load_file("res://tracks/forms/stunt_v1.json")
 		if not forms.errors.is_empty():return str(forms.errors)
