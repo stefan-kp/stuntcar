@@ -1,6 +1,6 @@
 {
 	"limits": [
-		"Discrete samples only; no continuous speed envelope proven.",
+		"Speed windows are held-speed runs with correct curve calls, bisected to 0.1 m/s; not a continuous envelope.",
 		"No human microphone or comfort trial."
 	],
 	"profiles": {
@@ -202,14 +202,14 @@
 				"seconds": 43.0499999999999972,
 				"trace_digest": "77bbf9ccc5a12c46c686a67155ec963f355720a55953cb200d7fd81afd731a00"
 			},
-			"digest": "b630680b0ce970631a53771cb93b079c7b77fc9e8759a386b3a525f4f5654b51",
+			"digest": "b5dfa078a7fe10f37f0df77ed4709026c869bfa5d87f12ebeb2e6e7d2c29b801",
 			"samples": [
 				{
 					"condition": "01fc626597ce48ac2b0405fbbfbbd74041c9d43b0f59607ead482e8b8e004396",
 					"element_id": "e1",
 					"lateral_m": 0.0,
-					"max_mps": null,
-					"min_mps": null,
+					"max_mps": 36.1899999999999977,
+					"min_mps": 3.56000000000000005,
 					"mode": "grounded",
 					"speed_mps": 11.0000009536743164,
 					"target_mps": 11.0
@@ -218,8 +218,8 @@
 					"condition": "ad94671f5ede73986ffd1c67ca38090f5bfcc4b453acd7017d3412c0d28aebce",
 					"element_id": "e3",
 					"lateral_m": 0.0,
-					"max_mps": null,
-					"min_mps": null,
+					"max_mps": 58.0,
+					"min_mps": 7.8100000000000005,
 					"mode": "grounded",
 					"speed_mps": 22.0,
 					"target_mps": 22.0
@@ -228,8 +228,8 @@
 					"condition": "06c4d866182d36a65baa355277f5a0cff8711173f375720abe715047ee004d27",
 					"element_id": "e6",
 					"lateral_m": 0.0,
-					"max_mps": null,
-					"min_mps": null,
+					"max_mps": 58.0,
+					"min_mps": 2.68999999999999995,
 					"mode": "grounded",
 					"speed_mps": 22.0,
 					"target_mps": 22.0
@@ -238,8 +238,8 @@
 					"condition": "84b0fbca5328fd40442166e9b83af7ef29ba182a92cdbb2d9ee5731e3a9491ee",
 					"element_id": "e8",
 					"lateral_m": 0.0,
-					"max_mps": null,
-					"min_mps": null,
+					"max_mps": 58.0,
+					"min_mps": 2.68999999999999995,
 					"mode": "grounded",
 					"speed_mps": 22.0000019073486328,
 					"target_mps": 22.0
@@ -248,14 +248,46 @@
 					"condition": "b71880dc8071129e4665f41eaf99db980997634d11f5a585de45c190800c180e",
 					"element_id": "e10",
 					"lateral_m": 0.0,
-					"max_mps": null,
-					"min_mps": null,
+					"max_mps": 43.3100000000000023,
+					"min_mps": 13.0600000000000005,
 					"mode": "grounded",
 					"speed_mps": 22.0,
 					"target_mps": 22.0
 				}
 			],
-			"status": "tested_samples"
+			"status": "tested_samples",
+			"windows": {
+				"e1": {
+					"max_mps": 36.1899999999999977,
+					"min_mps": 3.56000000000000005,
+					"passes": true,
+					"target_mps": 11.0
+				},
+				"e10": {
+					"max_mps": 43.3100000000000023,
+					"min_mps": 13.0600000000000005,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e3": {
+					"max_mps": 58.0,
+					"min_mps": 7.8100000000000005,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e6": {
+					"max_mps": 58.0,
+					"min_mps": 2.68999999999999995,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e8": {
+					"max_mps": 58.0,
+					"min_mps": 2.68999999999999995,
+					"passes": true,
+					"target_mps": 22.0
+				}
+			}
 		},
 		"very_easy": {
 			"clean_completed": true,
@@ -455,14 +487,14 @@
 				"seconds": 43.1000000000000014,
 				"trace_digest": "f95f4bccf90e322f136b70651194ecd72f77f8377e8f1638cf0ad1ec35949060"
 			},
-			"digest": "abdd8afe56c5a01cb42d9eb5cca1b752d3cb254048e0e2a12ab778babf4ff62f",
+			"digest": "2cb8907e427a54d08d45b0b5f7ed8a28a0245145c5a3abf319675cbe54c92fab",
 			"samples": [
 				{
 					"condition": "a43a7112ca40f6afe54b9dfc8e17c873056687d46c34798c3d6f768dc311d477",
 					"element_id": "e1",
 					"lateral_m": 0.0,
-					"max_mps": null,
-					"min_mps": null,
+					"max_mps": 36.8800000000000026,
+					"min_mps": 3.56000000000000005,
 					"mode": "grounded",
 					"speed_mps": 11.0,
 					"target_mps": 11.0
@@ -471,8 +503,8 @@
 					"condition": "9394f08b6242947f9730b857b532739deb683b2badfd299d6ca8aa9b8d2877b0",
 					"element_id": "e3",
 					"lateral_m": 0.0,
-					"max_mps": null,
-					"min_mps": null,
+					"max_mps": 58.0,
+					"min_mps": 7.8100000000000005,
 					"mode": "grounded",
 					"speed_mps": 22.0,
 					"target_mps": 22.0
@@ -481,8 +513,8 @@
 					"condition": "e2285755e16cd41cb8edf3d08a9442d1179bb5c16ee44d7ded2ba26d54dac2f5",
 					"element_id": "e6",
 					"lateral_m": 0.0,
-					"max_mps": null,
-					"min_mps": null,
+					"max_mps": 58.0,
+					"min_mps": 2.68999999999999995,
 					"mode": "grounded",
 					"speed_mps": 22.0000019073486328,
 					"target_mps": 22.0
@@ -491,8 +523,8 @@
 					"condition": "6ddb59068961f96de51285a43bfb329064b7fc82eeb8281afa6d5d5b8e1b8a0d",
 					"element_id": "e8",
 					"lateral_m": 0.0,
-					"max_mps": null,
-					"min_mps": null,
+					"max_mps": 58.0,
+					"min_mps": 2.68999999999999995,
 					"mode": "grounded",
 					"speed_mps": 22.0,
 					"target_mps": 22.0
@@ -501,14 +533,46 @@
 					"condition": "a713e382ff9543d08544e051e9d2a7bc9ee11dd7266910842e72f993fef322d2",
 					"element_id": "e10",
 					"lateral_m": 0.0,
-					"max_mps": null,
-					"min_mps": null,
+					"max_mps": 43.3100000000000023,
+					"min_mps": 13.0600000000000005,
 					"mode": "grounded",
 					"speed_mps": 22.0,
 					"target_mps": 22.0
 				}
 			],
-			"status": "tested_samples"
+			"status": "tested_samples",
+			"windows": {
+				"e1": {
+					"max_mps": 36.8800000000000026,
+					"min_mps": 3.56000000000000005,
+					"passes": true,
+					"target_mps": 11.0
+				},
+				"e10": {
+					"max_mps": 43.3100000000000023,
+					"min_mps": 13.0600000000000005,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e3": {
+					"max_mps": 58.0,
+					"min_mps": 7.8100000000000005,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e6": {
+					"max_mps": 58.0,
+					"min_mps": 2.68999999999999995,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e8": {
+					"max_mps": 58.0,
+					"min_mps": 2.68999999999999995,
+					"passes": true,
+					"target_mps": 22.0
+				}
+			}
 		}
 	},
 	"version": 1

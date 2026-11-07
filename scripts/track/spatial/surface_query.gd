@@ -1,5 +1,6 @@
 extends RefCounted
-static func sweep(track,a:Vector3,b:Vector3,ids:Array[String])->Dictionary:
+# Faces of `skip_id` that start before `skip_until_m` are ignored: the road the car just left.
+static func sweep(track,a:Vector3,b:Vector3,ids:Array[String],skip_id:String="",skip_until_m:float=-1.0)->Dictionary:
 	var result:Dictionary={};var nearest:=INF
 	var direction:=b-a
 	if direction.length_squared()<0.0000000001:return result
@@ -7,6 +8,7 @@ static func sweep(track,a:Vector3,b:Vector3,ids:Array[String])->Dictionary:
 		if not track.by_id.has(id):continue
 		for face in track.triangles(id):
 			if direction.dot(face.normal)>=-0.000001:continue
+			if id==skip_id and face.local_m<skip_until_m:continue
 			var hit=Geometry3D.segment_intersects_triangle(a,b,face.a,face.b,face.c)
 			if hit==null:continue
 			var t:float=(hit-a).dot(direction)/direction.length_squared()

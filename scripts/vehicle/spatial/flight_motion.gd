@@ -1,11 +1,15 @@
 extends RefCounted
 const Query=preload("res://scripts/track/spatial/surface_query.gd")
 const GRAVITY:=Vector3(0,-9.81,0)
+# Landing limits after the car lifts off a crest or a bump, where no jump sets its own.
+const LIFT_OFF_LANDING:={"max_angle_degrees":30.0,"max_impact_mps":10.0}
+# After a lift-off the car cannot land on the next metre of the road it left.
+const LIFT_OFF_SKIP_M:=1.0
 static func step(track,state,assistance:Dictionary,dt:float)->Dictionary:
 	var result:={"landed":false,"crashed":false,"impact_mps":0.0,"remaining_s":0.0}
 	if dt<=0 or state.mode!="airborne":return result
-	var candidates:Array[String]=track.landing_candidates(state.element_id)
-	var rules:Dictionary={}
+	var candidates:Array[String]=track.flight_candidates(state.element_id)
+	var rules:Dictionary=LIFT_OFF_LANDING
 	for l in track.definition.landings:
 		if l.launch_id==state.element_id:rules=l;break
 	var acceleration:Vector3=GRAVITY+assistance.get("thrust_world_mps2",Vector3.ZERO)
@@ -13,7 +17,7 @@ static func step(track,state,assistance:Dictionary,dt:float)->Dictionary:
 	while remaining>0.0000001:
 		var slice:=minf(remaining,1.0/120.0)
 		var next:Vector3=state.position+state.velocity*slice+acceleration*slice*slice*0.5
-		var hit:Dictionary=Query.sweep(track,state.position,next,candidates)
+		var hit:Dictionary=Query.sweep(track,state.position,next,candidates,state.element_id,state.local_m+LIFT_OFF_SKIP_M)
 		var used:float=slice if hit.is_empty() else slice*hit.fraction
 		state.velocity+=acceleration*used
 		if state.velocity.length()>0.001:

@@ -86,6 +86,19 @@ func landing_candidates(id:String)->Array[String]:
 		if l.launch_id==id:result.assign(l.target_ids)
 	return result
 
+# Where a flight may land: a jump's landing targets, or after a lift-off the element
+# it left; then every following element that starts within FLIGHT_REACH_M.
+const FLIGHT_REACH_M:=150.0
+func flight_candidates(id:String)->Array[String]:
+	var result:Array[String]=landing_candidates(id)
+	if result.is_empty():result.append(id)
+	var first:Dictionary=by_id.get(result[-1],{})
+	if first.is_empty():return result
+	for i in range(first.index+1,elements.size()):
+		if elements[i].start_m-first.end_m>FLIGHT_REACH_M:break
+		if elements[i].id not in result:result.append(elements[i].id)
+	return result
+
 func triangles(id:String)->Array[Dictionary]:
 	if triangle_cache.has(id):return triangle_cache[id]
 	var e:Dictionary=by_id[id];var result:Array[Dictionary]=[]

@@ -245,6 +245,12 @@ msgstr "A circuit on pillars with two banked hairpins, a hill and an S-bend."
 msgid "I18N_TRACK_STUNT_CIRCUIT_NAME"
 msgstr "Stunt Circuit"
 
+msgid "I18N_TRACK_STUNT_PARK_DESCRIPTION"
+msgstr "Two loops, a jump over a gap, a bump run and a wall curve."
+
+msgid "I18N_TRACK_STUNT_PARK_NAME"
+msgstr "Stunt Park"
+
 msgid "I18N_TRACK_CANYON_NAME"
 msgstr "Jump Track"
 
