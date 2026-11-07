@@ -1,0 +1,29 @@
+{
+  "format_version": 3,
+  "name": "I18N_TRACK_STUNT_PARK_NAME",
+  "description": "I18N_TRACK_STUNT_PARK_DESCRIPTION",
+  "scenario": "forest",
+  "preview": "previews/stunt_park.png",
+  "report": "reports/09_stunt_park.json",
+  "start": {
+    "height_m": 12
+  },
+  "pieces": [
+    {"type": "straight", "length_m": 50},
+    {"type": "loop", "radius_m": 12, "offset_m": 8},
+    {"type": "straight", "length_m": 80},
+    {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 30, "bank_deg": 25},
+    {"type": "straight", "length_m": 40},
+    {"type": "ramp", "gap_m": 20, "takeoff_deg": 18, "height_m": 0},
+    {"type": "straight", "length_m": 24},
+    {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 30, "bank_deg": 25},
+    {"type": "straight", "length_m": 60},
+    {"type": "loop", "radius_m": 10, "offset_m": 8},
+    {"type": "straight", "length_m": 60},
+    {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 30, "bank_deg": 25},
+    {"type": "straight", "length_m": 30},
+    {"type": "bumps", "length_m": 80, "count": 6, "height_m": 0.6},
+    {"type": "straight", "length_m": 20},
+    {"type": "bank", "direction": "right", "angle_deg": 90, "radius_m": 20, "bank_deg": 80}
+  ]
+}

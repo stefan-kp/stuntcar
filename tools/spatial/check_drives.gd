@@ -4,6 +4,7 @@ const Drive=preload("res://scripts/vehicle/spatial_drive_model.gd")
 const Runner=preload("res://scripts/vehicle/spatial/drive_runner.gd")
 const Assist=preload("res://scripts/vehicle/spatial/stunt_assist.gd")
 const Verification=preload("res://scripts/track/spatial/verification.gd")
+const Windows=preload("res://tools/spatial/speed_windows.gd")
 func _initialize()->void:
 	var args:=OS.get_cmdline_user_args();var path:="res://tracks/06_stuntlabor.json";var output:="user://stunt-report.json"
 	for i in range(args.size()-1):
@@ -14,6 +15,7 @@ func _initialize()->void:
 	var track=loaded.track;var profiles:Dictionary={};var passed:=true
 	for id in ["very_easy","easy"]:
 		var profile:=Assist.profile(id);var model=Drive.new(track);model.set_assist_level(id);model.reset(5.0)
+		var windows:Dictionary=Windows.compute(track,profile)
 		var controls:Dictionary=Runner.create_controls(model)
 		var inputs:Array[Dictionary]=[];var samples:Array[Dictionary]=[];var seen:Dictionary={}
 		for tick in range(18000):
@@ -24,17 +26,21 @@ func _initialize()->void:
 			var e:Dictionary=track.by_id[model.state.element_id]
 			var limits:Dictionary=Assist.limits(e)
 			if not seen.has(e.id) and not limits.is_empty():
-				seen[e.id]=true;samples.append({"condition":Verification.condition(model),"element_id":e.id,"speed_mps":model.speed_mps,"lateral_m":model.lateral,"mode":model.state.mode,"min_mps":null,"max_mps":null,"target_mps":limits.target_mps})
+				seen[e.id]=true;samples.append({"condition":Verification.condition(model),"element_id":e.id,"speed_mps":model.speed_mps,"lateral_m":model.lateral,"mode":model.state.mode,"min_mps":windows[e.id].min_mps,"max_mps":windows[e.id].max_mps,"target_mps":limits.target_mps})
 			Runner.step_controls(controls,tick)
 			model.step(1.0/60.0);model.take_motion_events()
 			if model.state.mode in ["finished","crashed"]:break
 		inputs.assign(controls.recorded)
 		var result:Dictionary=Runner.run(track,profile,inputs,18000,{"distance_m":5.0})
 		result.erase("trace")
-		profiles[id]={"digest":Verification.digest(track,profile),"status":"tested_samples","clean_completed":result.finished,"samples":samples,"clean_run":result}
+		profiles[id]={"digest":Verification.digest(track,profile),"status":"tested_samples","clean_completed":result.finished,"samples":samples,"windows":windows,"clean_run":result}
 		passed=passed and result.finished
 		print("%s: %s at %.2f m, %.2f s"%[id,result.mode,result.final.distance_m,result.seconds])
+		for element_id in windows:
+			var w:Dictionary=windows[element_id]
+			print("  %s: %s, target %.1f m/s"%[element_id,"%.2f-%.2f m/s"%[w.min_mps,w.max_mps] if w.passes else "no passing speed",w.target_mps])
+			passed=passed and w.passes
 	var file:=FileAccess.open(output,FileAccess.WRITE)
 	if file==null:printerr("Cannot write report");quit(1);return
-	file.store_string(JSON.stringify({"version":1,"profiles":profiles,"limits":["Discrete samples only; no continuous speed envelope proven.","No human microphone or comfort trial."]},"\t",true,true)+"\n")
+	file.store_string(JSON.stringify({"version":1,"profiles":profiles,"limits":["Speed windows are held-speed runs with correct curve calls, bisected to 0.1 m/s; not a continuous envelope.","No human microphone or comfort trial."]},"\t",true,true)+"\n")
 	quit(0 if passed else 1)
