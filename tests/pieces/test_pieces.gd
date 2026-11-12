@@ -13,6 +13,7 @@ const State = preload("res://scripts/vehicle/spatial/drive_state.gd")
 const Surface = preload("res://scripts/vehicle/spatial/surface_motion.gd")
 const Flight = preload("res://scripts/vehicle/spatial/flight_motion.gd")
 const Drive = preload("res://scripts/vehicle/spatial_drive_model.gd")
+const Runner = preload("res://scripts/vehicle/spatial/drive_runner.gd")
 const MATCH_M := 0.02
 const MATCH_DEG := 1.0
 
@@ -36,6 +37,7 @@ func _initialize() -> void:
 	check_lift_off_lands_on_next_piece()
 	check_stunt_circuit()
 	check_stunt_park()
+	check_road_is_solid()
 	done()
 
 func match_form(reference: Dictionary, piece: Dictionary, name: String, key: String = "form") -> void:
@@ -269,3 +271,47 @@ func bumps_ride(track) -> Dictionary:
 		if model.state.distance_m > bumps.end_m + 5.0: break
 	counts.finished = model.state.mode == "grounded"
 	return counts
+
+func falling(track, position: Vector3, velocity: Vector3, element_id: String, local_m: float):
+	var state = State.new()
+	state.position = position
+	state.velocity = velocity
+	state.element_id = element_id
+	state.local_m = local_m
+	state.mode = "airborne"
+	for tick in range(600):
+		Flight.step(track, state, {}, 1.0 / 60.0)
+		if state.mode != "airborne": break
+	return state
+
+# A car in flight cannot pass through the road, from above or from below.
+func check_road_is_solid() -> void:
+	var track = Factory.load_track("res://tracks/09_stunt_park.json").track
+	var loop: Dictionary = track.by_id.e1
+	var top: Dictionary = track.sample_element("e1", loop.length_m * 0.5)
+	var entry: Dictionary = track.sample_element("e1", 1.0)
+	var dropped = falling(track, Vector3(entry.position.x, top.position.y - 1.0, entry.position.z), Vector3.ZERO, "e1", loop.length_m * 0.5)
+	check(dropped.mode == "crashed" and dropped.resting and absf(dropped.position.y - entry.position.y) < 0.2,
+		"A car that drops from the top of the loop is wrecked on the road below, not under it (%s, y %.2f)" % [dropped.mode, dropped.position.y])
+	var straight: Dictionary = track.sample_element("e2", 40.0)
+	var below = falling(track, straight.position + Vector3(0, -3, 0), Vector3(0, 30, 0), "e0", 0.0)
+	check(below.mode == "crashed" and below.position.y < straight.position.y + 0.01, "A car cannot come up through the road from below (y %.2f)" % below.position.y)
+	var behind = falling(track, straight.position + Vector3(0, 3, 0), Vector3(0, -4, 0) - straight.basis.z * 20.0, "e0", 0.0)
+	check(behind.mode == "grounded" and behind.element_id == "e2", "A flight may land on any piece, also one far from where it left the road")
+	for level in ["very_easy", "easy"]:
+		for brake_tick in [60, 90, 120, 150]:
+			var model = Drive.new(track)
+			model.set_assist_level(level)
+			model.reset(20.0)
+			var controls: Dictionary = Runner.create_controls(model)
+			var lowest := INF
+			var lane := true
+			for tick in range(1500):
+				if tick == brake_tick: Runner.apply_input(model, {"tick": tick, "kind": "held_speed", "value": -1, "event_id": "brake"}, controls)
+				Runner.step_controls(controls, tick)
+				model.step(1.0 / 60.0)
+				model.take_motion_events()
+				# Below the road the car may only be in the gap between the loop's two lanes.
+				if model.state.position.y < 11.5 and (absf(model.state.position.x) < 2.9 or absf(model.state.position.x - 8.0) < 2.9): lane = false
+				if model.state.mode == "finished" or model.state.mode == "crashed" and model.state.resting: break
+			check(lane and model.state.mode == "crashed", "%s: braking in the loop from tick %d wrecks the car and never takes it through the road (%s)" % [level, brake_tick, model.state.mode])

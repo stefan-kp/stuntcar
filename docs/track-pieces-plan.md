@@ -40,7 +40,9 @@ A loop gets the tested window of the 12 m loop (24–32 m/s, target 26), scaled 
 
 ## Flights
 
-A flight can land on any element from the one it left (or a jump's landing ramp) to 150 m beyond it. After a lift-off from a crest or a bump the landing may be at most 10 m/s hard and 30° off; a jump keeps its own limits (12 m/s, 20°).
+The road is solid for a car in flight. It can land on any element. After a lift-off from a crest or a bump the landing may be at most 10 m/s hard and 30° off; a jump keeps its own limits (12 m/s, 20°).
+A harder or skewed landing, or a hit from below, wrecks the car where it hits. A wreck stays on the road; a car that leaves the road sideways falls until it meets a road or the ground.
+A car that comes to a stop on a road steeper than about 45° is wrecked. Overhead, in a loop, it drops off and falls onto whatever is below.
 
 ## Format 3
 

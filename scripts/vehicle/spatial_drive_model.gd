@@ -2,6 +2,7 @@ extends "res://scripts/vehicle/drive_model.gd"
 const State=preload("res://scripts/vehicle/spatial/drive_state.gd")
 const Surface=preload("res://scripts/vehicle/spatial/surface_motion.gd")
 const Flight=preload("res://scripts/vehicle/spatial/flight_motion.gd")
+const SurfaceQuery=preload("res://scripts/track/spatial/surface_query.gd")
 const StuntAssist=preload("res://scripts/vehicle/spatial/stunt_assist.gd")
 var hint_report:Dictionary={}
 var hint_digest:=""
@@ -69,7 +70,14 @@ func take_motion_events()->Array[Dictionary]:
 func step(delta:float)->void:
 	if delta<=0 or state.mode=="finished":return
 	if state.mode=="crashed":
-		state.velocity+=Surface.GRAVITY*delta;state.position+=state.velocity*delta;state.tick+=1;sync_fields();return
+		if not state.resting:
+			# A wreck falls until it meets the road or the ground.
+			state.velocity+=Surface.GRAVITY*delta
+			var next:Vector3=state.position+state.velocity*delta
+			var hit:Dictionary=SurfaceQuery.sweep(track,state.position+state.basis.y*0.05,next,track.flight_candidates(state.element_id),state.element_id,state.local_m-Flight.LIFT_OFF_SKIP_M,state.local_m+Flight.LIFT_OFF_SKIP_M)
+			state.position=next if hit.is_empty() else hit.position
+			if not hit.is_empty() or state.position.y< -5:state.resting=true;state.velocity=Vector3.ZERO
+		state.tick+=1;sync_fields();return
 	if requested_direction!=0 and elapsed_s>=steering_expires_at_s:clear_steering_request()
 	refresh_assist();state.tick+=1
 	boost_remaining=maxf(0,boost_remaining-delta);boost_cooldown=maxf(0,boost_cooldown-delta)

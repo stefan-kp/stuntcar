@@ -1,5 +1,8 @@
 extends RefCounted
 const GRAVITY:=Vector3(0,-9.81,0)
+# A car this slow cannot stay on a road steeper than STALL_SLOPE (up.y below it).
+const STALL_MPS:=1.0
+const STALL_UP_Y:=0.7
 static func step(track,state,controls:Dictionary,assistance:Dictionary,dt:float)->Dictionary:
 	var result:={"remaining_s":0.0,"hold_used":0.0,"normal_accel":0.0}
 	if dt<=0 or state.mode!="grounded":return result
@@ -17,6 +20,11 @@ static func step(track,state,controls:Dictionary,assistance:Dictionary,dt:float)
 		state.mode="crashed";return result
 	if normal < -float(assistance.get("hold_mps2",0)):
 		state.mode="airborne";result.remaining_s=dt;return result
+	if speed<STALL_MPS and frame.basis.y.y<STALL_UP_Y and float(assistance.get("target_speed_mps",controls.get("target_speed_mps",speed)))<STALL_MPS:
+		# Overhead the car drops off the road; on a steep wall it slides back and is wrecked.
+		if frame.basis.y.y<0:state.mode="airborne";result.remaining_s=dt
+		else:state.mode="crashed";state.resting=true;state.velocity=Vector3.ZERO
+		return result
 	result.hold_used=maxf(0,-normal)
 	var target:float=assistance.get("target_speed_mps",controls.get("target_speed_mps",speed))
 	var cap:float=assistance.get("accel_cap_mps2",10) if target>=speed else assistance.get("brake_cap_mps2",18)

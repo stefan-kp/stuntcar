@@ -5,6 +5,7 @@ var forms:Dictionary
 var elements:Array[Dictionary]=[]
 var by_id:Dictionary={}
 var triangle_cache:Dictionary={}
+var bounds_cache:Dictionary={}
 var length_m:=0.0
 var format_version:=2
 var source_path:=""
@@ -86,18 +87,21 @@ func landing_candidates(id:String)->Array[String]:
 		if l.launch_id==id:result.assign(l.target_ids)
 	return result
 
-# Where a flight may land: a jump's landing targets, or after a lift-off the element
-# it left; then every following element that starts within FLIGHT_REACH_M.
-const FLIGHT_REACH_M:=150.0
+# Every element is solid for a car in flight. A jump's landing targets come first.
 func flight_candidates(id:String)->Array[String]:
 	var result:Array[String]=landing_candidates(id)
-	if result.is_empty():result.append(id)
-	var first:Dictionary=by_id.get(result[-1],{})
-	if first.is_empty():return result
-	for i in range(first.index+1,elements.size()):
-		if elements[i].start_m-first.end_m>FLIGHT_REACH_M:break
-		if elements[i].id not in result:result.append(elements[i].id)
+	for e in elements:
+		if e.id not in result:result.append(e.id)
 	return result
+
+# Box around an element's road surface, for a cheap first test in a sweep.
+func bounds(id:String)->AABB:
+	if bounds_cache.has(id):return bounds_cache[id]
+	var e:Dictionary=by_id[id];var box:=AABB(e.points[0],Vector3.ZERO)
+	for i in range(e.points.size()):
+		box=box.expand(e.points[i]-e.bases[i].x*3).expand(e.points[i]+e.bases[i].x*3)
+	bounds_cache[id]=box.grow(0.5)
+	return bounds_cache[id]
 
 func triangles(id:String)->Array[Dictionary]:
 	if triangle_cache.has(id):return triangle_cache[id]

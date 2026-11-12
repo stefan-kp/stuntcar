@@ -345,7 +345,7 @@
 				"seconds": 36.75,
 				"trace_digest": "36eda439f06e0987a27a3df1a269e3951c2af804c0560a864336391a5d350d57"
 			},
-			"digest": "d7bfc2b9b05afb7d59bd5076f103428e70c35a2f25c64fa2265972cb9b9eb0bc",
+			"digest": "a699842caa5dd3ec1350e02834b81813d0c7f6f68b8c7f21b4249186250c6b9e",
 			"samples": [
 				{
 					"condition": "7d8c8da6161c9d25800fc7607c29a62ff872d0f762e99144adfd966da46cfb43",
@@ -805,7 +805,7 @@
 				"seconds": 36.7666666666666657,
 				"trace_digest": "90610e62c8d15c73da3d80a178d91334ed995b585e7026e7d602114ffba23561"
 			},
-			"digest": "49a46bcfb62658cf056529ade116fc76f41aafbf3796384b27fa49449422c0e7",
+			"digest": "d78d8d4e1cf4447f541c25e36e44e9c948e9253e6ee62c2519096b2e39427ed3",
 			"samples": [
 				{
 					"condition": "0900a01941c7c96e2e907e235bdaf7f631cfdee0510eb30d258139cd0245d448",

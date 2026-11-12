@@ -3,8 +3,8 @@ const Query=preload("res://scripts/track/spatial/surface_query.gd")
 const GRAVITY:=Vector3(0,-9.81,0)
 # Landing limits after the car lifts off a crest or a bump, where no jump sets its own.
 const LIFT_OFF_LANDING:={"max_angle_degrees":30.0,"max_impact_mps":10.0}
-# After a lift-off the car cannot land on the next metre of the road it left.
-const LIFT_OFF_SKIP_M:=1.0
+# After a lift-off the car cannot touch the road this close to where it left it.
+const LIFT_OFF_SKIP_M:=1.5
 static func step(track,state,assistance:Dictionary,dt:float)->Dictionary:
 	var result:={"landed":false,"crashed":false,"impact_mps":0.0,"remaining_s":0.0}
 	if dt<=0 or state.mode!="airborne":return result
@@ -17,7 +17,7 @@ static func step(track,state,assistance:Dictionary,dt:float)->Dictionary:
 	while remaining>0.0000001:
 		var slice:=minf(remaining,1.0/120.0)
 		var next:Vector3=state.position+state.velocity*slice+acceleration*slice*slice*0.5
-		var hit:Dictionary=Query.sweep(track,state.position,next,candidates,state.element_id,state.local_m+LIFT_OFF_SKIP_M)
+		var hit:Dictionary=Query.sweep(track,state.position,next,candidates,state.element_id,state.local_m-LIFT_OFF_SKIP_M,state.local_m+LIFT_OFF_SKIP_M)
 		var used:float=slice if hit.is_empty() else slice*hit.fraction
 		state.velocity+=acceleration*used
 		if state.velocity.length()>0.001:
@@ -31,13 +31,14 @@ static func step(track,state,assistance:Dictionary,dt:float)->Dictionary:
 			var impact:float=maxf(0,-state.velocity.dot(hit.normal))
 			var angle:float=state.basis.get_rotation_quaternion().angle_to(frame.basis.get_rotation_quaternion())
 			result.impact_mps=impact;result.remaining_s=remaining
-			if impact>float(rules.get("max_impact_mps",0)) or rad_to_deg(angle)>float(rules.get("max_angle_degrees",0)) or state.velocity.dot(-frame.basis.z)<=0:
-				state.mode="crashed";result.crashed=true;return result
+			# The road is solid: a hit from below, too hard, too skewed or backwards wrecks the car where it hits.
+			if hit.underside or impact>float(rules.get("max_impact_mps",0)) or rad_to_deg(angle)>float(rules.get("max_angle_degrees",0)) or state.velocity.dot(-frame.basis.z)<=0:
+				state.mode="crashed";state.resting=true;state.velocity=Vector3.ZERO;result.crashed=true;return result
 			state.mode="grounded";state.element_id=hit.element_id;state.local_m=hit.local_m;state.distance_m=frame.distance_m
 			state.lateral_m=(state.position-frame.position).dot(frame.basis.x);state.lateral_speed=state.velocity.dot(frame.basis.x)
 			state.velocity-=hit.normal*state.velocity.dot(hit.normal);state.basis=frame.basis
 			result.landed=true;return result
 		state.position=next
 		if state.position.y< -5:
-			state.mode="crashed";result.crashed=true;return result
+			state.mode="crashed";state.resting=true;state.velocity=Vector3.ZERO;result.crashed=true;return result
 	return result
