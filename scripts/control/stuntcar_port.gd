@@ -57,7 +57,8 @@ func apply(decision:Dictionary,now_ms:int)->Dictionary:
   if intent.get("kind")=="activate" and (model.assist_id!="very_easy" or intent.get("opportunity_id")!=model.assist_state().opportunity_id):return reject("activation_context")
  if retired.has(key):return reject("retired")
  for a in actions:
-  if a.action_id.begins_with("turn_") and model.airborne:return reject("airborne_steering")
+ # In the air the car cannot steer, but a call for the open curve still counts.
+  if a.action_id.begins_with("turn_") and model.airborne and model.assist_state().phase=="closed":return reject("airborne_steering")
  # Complete preflight precedes every model change.
  var record:Dictionary=executions.get(key,{"source_id":intent.get("source_id",""),"members":{}})
  for a in actions:

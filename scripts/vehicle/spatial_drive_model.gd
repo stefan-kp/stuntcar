@@ -13,6 +13,8 @@ var last_acceleration:=Vector3.ZERO
 var actual_boost:=false
 var holding:=false
 var event_serial:=0
+# Elements whose curve the player has called: the car follows the road there.
+var cleared_elements:Dictionary={}
 func _init(track_data)->void:
 	super(track_data)
 	reset()
@@ -20,7 +22,7 @@ func reset(checkpoint_m:float=0)->void:
 	state=State.new();attempt_id+=1;state.attempt_id=attempt_id
 	var f:Dictionary=track.sample(checkpoint_m)
 	state.position=f.position;state.basis=f.basis;state.velocity=-f.basis.z*22;state.element_id=f.element_id;state.local_m=f.local_m;state.distance_m=f.distance_m
-	active_curve_id=-1;completed_curves=0;completed_ids.clear();last_command=0;input_serial=0
+	active_curve_id=-1;completed_curves=0;completed_ids.clear();last_command=0;input_serial=0;cleared_elements.clear()
 	target_speed_mps=22;boost_remaining=0;boost_cooldown=0;emergency_braking=false;recovery_remaining=0
 	curve_assist.reset(attempt_id);assist_events.clear();motion_events.clear();event_serial=0
 	actual_boost=false;holding=false;last_acceleration=Vector3.ZERO;rejection_until_s=-1
@@ -45,13 +47,19 @@ func sync_fields()->void:
 func refresh_assist()->void:
 	if state==null:return
 	sync_fields()
-	if active_curve_id>=0 and distance_m>=track.curves[active_curve_id].end_m+assist_profile.exit_distance_m:
-		completed_ids[active_curve_id]=true;completed_curves+=1;clear_steering_request();last_command=0
+	if active_curve_id>=0:
+		# A curve called in time is settled once the car is in it, so the next curve can be called
+		# while this one is still being driven. A late call keeps the curve until the car has left it.
+		var called:Dictionary=track.curves[active_curve_id]
+		cleared_elements[called.element_id]=true
+		var in_time:bool=curve_assist.data.accepted_phase in ["early","clean"]
+		if distance_m>=(called.start_m if in_time else called.end_m+assist_profile.exit_distance_m):
+			completed_ids[active_curve_id]=true;completed_curves+=1;clear_steering_request();last_command=0
 	var curve:Dictionary={}
 	if active_curve_id>=0:curve=track.curves[active_curve_id]
 	else:
 		for c in track.curves:
-			if distance_m<c.end_m:curve=c;break
+			if distance_m<c.end_m and not completed_ids.has(c.id):curve=c;break
 	var before:Dictionary=curve_assist.snapshot()
 	curve_assist.update(curve,{"distance_m":distance_m,"speed_mps":speed_mps,"target_speed_mps":target_speed_mps,"elapsed_s":elapsed_s,"hint_seconds":hint_seconds,"lateral":lateral,"gap":absf(lateral),"heading_error_rad":atan2(state.lateral_speed,maxf(speed_mps,0.1)),"off_road":off_road,"finished":finished},assist_profile)
 	var after:Dictionary=curve_assist.snapshot()
@@ -104,7 +112,7 @@ func step(delta:float)->void:
 		var slice_boost:=false
 		if state.mode=="grounded":
 			var current:Dictionary=track.by_id[state.element_id]
-			var authorized:bool=active_curve_id>=0 and track.curves[active_curve_id].element_id==current.id
+			var authorized:bool=cleared_elements.has(current.id) or active_curve_id>=0 and track.curves[active_curve_id].element_id==current.id
 			var direction:int=requested_direction
 			if active_curve_id>=0 and not authorized:direction=0
 			outcome=Surface.step(track,state,{"target_speed_mps":effective_target_speed(),"turn_authorized":authorized,"steering_direction":direction,"manual_turn_rate_rad_s":assist_profile.manual_turn_rate_rad_s},aid,slice)
