@@ -1,0 +1,32 @@
+{
+  "format_version": 3,
+  "name": "I18N_TRACK_HARBOUR_GAPS_NAME",
+  "description": "I18N_TRACK_HARBOUR_GAPS_DESCRIPTION",
+  "scenario": "coast",
+  "preview": "previews/harbour_gaps.png",
+  "report": "reports/15_harbour_gaps.json",
+  "start": {"height_m": 14},
+  "pieces": [
+    {"type": "straight", "length_m": 110},
+    {"type": "ramp", "gap_m": 14, "takeoff_deg": 22, "height_m": 0},
+    {"type": "straight", "length_m": 100},
+    {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 35, "bank_deg": 25},
+    {"type": "straight", "length_m": 90},
+    {"type": "bank", "direction": "right", "angle_deg": 90, "radius_m": 22, "bank_deg": 70},
+    {"type": "straight", "length_m": 60},
+    {"type": "bumps", "length_m": 50, "count": 4, "height_m": 0.5},
+    {"type": "straight", "length_m": 50},
+    {"type": "curve", "direction": "left", "angle_deg": 90, "radius_m": 35, "bank_deg": 20},
+    {"type": "straight", "length_m": 40},
+    {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 35, "bank_deg": 20},
+    {"type": "straight", "length_m": 60},
+    {"type": "hill", "length_m": 40, "height_m": 3, "assist": {"min_mps": 0, "max_mps": 17, "target_mps": 15, "approach_m": 60}},
+    {"type": "straight", "length_m": 50},
+    {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 35, "bank_deg": 25},
+    {"type": "straight", "length_m": 60},
+    {"type": "ramp", "gap_m": 14, "takeoff_deg": 22, "height_m": 0},
+    {"type": "straight", "length_m": "fit"},
+    {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 35, "bank_deg": 25},
+    {"type": "straight", "length_m": "fit"}
+  ]
+}

@@ -251,6 +251,54 @@ msgstr "Two loops, a jump over a gap, a bump run and a wall curve."
 msgid "I18N_TRACK_STUNT_PARK_NAME"
 msgstr "Stunt Park"
 
+msgid "I18N_TRACK_FIRST_HOP_DESCRIPTION"
+msgstr "One small jump, wide banked curves, a low hill and gentle bumps."
+
+msgid "I18N_TRACK_FIRST_HOP_NAME"
+msgstr "First Hop"
+
+msgid "I18N_TRACK_TRIPLE_GAP_DESCRIPTION"
+msgstr "Three short gaps in a row, two S-bends and a bump run."
+
+msgid "I18N_TRACK_TRIPLE_GAP_NAME"
+msgstr "Triple Gap"
+
+msgid "I18N_TRACK_CAMEL_RIDGE_DESCRIPTION"
+msgstr "A ten metre hump, a bump run and a hairpin between two tight curves."
+
+msgid "I18N_TRACK_CAMEL_RIDGE_NAME"
+msgstr "Camel Ridge"
+
+msgid "I18N_TRACK_CANYON_LEAP_DESCRIPTION"
+msgstr "A long climb to a ramp, a forty metre gap and two S-bends on the way back."
+
+msgid "I18N_TRACK_CANYON_LEAP_NAME"
+msgstr "Canyon Leap"
+
+msgid "I18N_TRACK_TOWER_DROP_DESCRIPTION"
+msgstr "A climb to the top of the tower, a steep run-in and a long jump down."
+
+msgid "I18N_TRACK_TOWER_DROP_NAME"
+msgstr "Tower Drop"
+
+msgid "I18N_TRACK_HARBOUR_GAPS_DESCRIPTION"
+msgstr "Two steep jumps over short gaps, a wall curve and a tight chicane."
+
+msgid "I18N_TRACK_HARBOUR_GAPS_NAME"
+msgstr "Harbour Gaps"
+
+msgid "I18N_TRACK_UPPER_DECK_DESCRIPTION"
+msgstr "A jump up to the high level, two hairpins, bumps and a deep dip."
+
+msgid "I18N_TRACK_UPPER_DECK_NAME"
+msgstr "Upper Deck"
+
+msgid "I18N_TRACK_SWITCHBACK_DESCRIPTION"
+msgstr "Two and a half kilometres of hills, dips, bumps and banked curves."
+
+msgid "I18N_TRACK_SWITCHBACK_NAME"
+msgstr "Switchback"
+
 msgid "I18N_TRACK_CANYON_NAME"
 msgstr "Jump Track"
 

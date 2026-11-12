@@ -34,9 +34,21 @@ A curve is a flat circular arc. Its bank follows sin² over the arc, so it is ze
 Bumps are a row of full cosine waves. Above a certain speed the car lifts off at each crest and lands on the next slope.
 A loop is a vertical circle whose road moves sideways by the offset (smoothstep), so the exit passes beside the entry.
 
-A ramp is two 18 m parabolic ramps with a gap between them. `height_m` is the level of the road after the jump against the level before it.
-The landing ramp starts at the angle of the flight path that just reaches it. The design speed carries the car 6 m onto the landing ramp; the builder makes it the jump's speed window (±0.5 m/s).
+A ramp is a parabolic take-off ramp of 18 m, a gap and a parabolic landing ramp. The landing ramp is 18 m long, or three quarters of the gap if that is more. `height_m` is the level of the road after the jump against the level before it.
+The landing ramp starts at the angle of the flight path that just reaches it. The design speed carries the car a third of the way down the landing ramp; the builder makes it the jump's speed window (±0.5 m/s).
 A loop gets the tested window of the 12 m loop (24–32 m/s, target 26), scaled with the square root of its radius.
+
+## Closing a circuit
+
+Two straights may have `"length_m": "fit"`. The builder then chooses both lengths so the circuit closes. The two straights must not be parallel, and each fitted length must stay within the limits of a straight.
+One straight may have `"rise_m": "fit"`. It takes the rise that brings the road back to the start height.
+
+`tools/spatial/inspect_track.gd` prints a design report for a track: the elements, places where the road comes close to itself, the speed windows of the stunts and test laps. One lap calls every curve at once, one calls 1.5 s after the hint, as a voice player does, and one does so at 30 m/s.
+
+## Curve calls
+
+A call for the open curve counts while the car is in the air. The car steers when it is back on the road.
+A curve called in time is settled when the car enters it. The hint for the next curve can then open while the car is still in the first one, so an S-bend needs no long straight between its curves. A late call keeps the curve until the car has left it.
 
 ## Flights
 
@@ -86,7 +98,7 @@ Each step is one pull request and keeps the game playable.
 2. **Procedural road with pillars.** Done. `scripts/track/visuals/road_mesh.gd` sweeps the deck, edge lines and red barriers along the drive form and puts a pillar under the road every 12 m. The first format 3 track, `tracks/08_stunt_circuit.json`, is in the menu.
 3. **Ramp, bumps, loop and wall curve.** Done. The parameters also rebuild `loop_12`, `jump_launch` and `jump_landing`. A flight can land on any following piece. `tools/spatial/speed_windows.gd` computes the speed windows, and the drive report lists them. `tracks/09_stunt_park.json` uses all four new pieces.
 4. **One curve assist and the landscapes.** The two assist levels run on the spatial model only. Forest, alpine, canyon and coast use the new centre line. The drive matrix runs on format 3. Curves pass their real radius to the assist instead of the fixed 28 m in `spatial_track.gd`.
-5. **New tracks, old formats removed.** Four or five new circuits in the four landscapes. Then format 1, the fixed format 2 forms and their tests go away.
+5. **New tracks, old formats removed.** The eight long circuits `10_first_hop.json` to `17_switchback.json` are done: 1.2 to 2.5 km, each built around one kind of stunt, from one small jump to a lap of hills and dips. Format 1, the fixed format 2 forms and their tests still have to go.
 
 ## Open questions
 

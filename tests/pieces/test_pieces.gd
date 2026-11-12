@@ -14,6 +14,7 @@ const Surface = preload("res://scripts/vehicle/spatial/surface_motion.gd")
 const Flight = preload("res://scripts/vehicle/spatial/flight_motion.gd")
 const Drive = preload("res://scripts/vehicle/spatial_drive_model.gd")
 const Runner = preload("res://scripts/vehicle/spatial/drive_runner.gd")
+const Inspect = preload("res://tools/spatial/inspect_track.gd")
 const MATCH_M := 0.02
 const MATCH_DEG := 1.0
 
@@ -38,6 +39,10 @@ func _initialize() -> void:
 	check_stunt_circuit()
 	check_stunt_park()
 	check_road_is_solid()
+	check_fit()
+	check_long_jump()
+	check_slow_calls()
+	check_new_circuits()
 	done()
 
 func match_form(reference: Dictionary, piece: Dictionary, name: String, key: String = "form") -> void:
@@ -315,3 +320,86 @@ func check_road_is_solid() -> void:
 				if model.state.position.y < 11.5 and (absf(model.state.position.x) < 2.9 or absf(model.state.position.x - 8.0) < 2.9): lane = false
 				if model.state.mode == "finished" or model.state.mode == "crashed" and model.state.resting: break
 			check(lane and model.state.mode == "crashed", "%s: braking in the loop from tick %d wrecks the car and never takes it through the road (%s)" % [level, brake_tick, model.state.mode])
+
+# "fit" lets the builder choose two straight lengths and one rise so the circuit closes.
+func check_fit() -> void:
+	var right := {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 30}
+	var pieces := [{"type": "straight", "length_m": 80}, {"type": "straight", "length_m": 60, "rise_m": 5}, right, {"type": "straight", "length_m": 70}, right,
+		{"type": "straight", "length_m": "fit", "rise_m": "fit"}, right, {"type": "straight", "length_m": "fit"}, right]
+	var built: Dictionary = Builder.build(circuit(pieces))
+	check(built.errors.is_empty(), "A circuit with two fitted straights closes " + str(built.errors))
+	var fitted: Array = Builder.fit(pieces, [] as Array[String])
+	check(is_equal_approx(fitted[5].length_m, 140.0) and is_equal_approx(fitted[7].length_m, 70.0), "The fitted straights get the lengths of the opposite sides (%s, %s)" % [fitted[5].length_m, fitted[7].length_m])
+	check(is_equal_approx(fitted[5].rise_m, -5.0), "The fitted rise brings the road back to the start height (%s)" % fitted[5].rise_m)
+	var one := pieces.duplicate(true)
+	one[7].length_m = 70
+	check(Builder.build(circuit(one)).errors == ["fit: exactly two straights need \"length_m\": \"fit\", found 1"], "One fitted straight alone is rejected")
+	var parallel := pieces.duplicate(true)
+	parallel[7].length_m = 70
+	parallel[0].length_m = "fit"
+	check(Builder.build(circuit(parallel)).errors == ["fit: the two fitted straights are parallel"], "Two parallel fitted straights are rejected")
+	var long := pieces.duplicate(true)
+	long[0].length_m = 180
+	var errors: Array = Builder.build(circuit(long)).errors
+	check(errors.size() == 1 and errors[0] == "fit: piece 5 would need a length of 240.0 m", "A fitted length outside the limits is rejected " + str(errors))
+	var curve := pieces.duplicate(true)
+	curve[2] = {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": "fit"}
+	check(Builder.build(circuit(curve)).errors == ["piece 2 (curve): radius_m"], "Only straights can be fitted " + str(Builder.build(circuit(curve)).errors))
+
+# A long jump gets a longer landing ramp, which widens its speed window.
+func check_long_jump() -> void:
+	var jump: Dictionary = Pieces.generate({"type": "ramp", "gap_m": 40, "takeoff_deg": 20, "height_m": -6})
+	check(is_equal_approx(Forms.pose(jump.landing_form.exit).origin.z, -30.0), "A 40 m jump has a 30 m landing ramp")
+	var track = Factory.load_track("res://tracks/13_canyon_leap.json").track
+	var launch: Dictionary = track.elements.filter(func(e): return e.kind == "launch")[0]
+	var w: Dictionary = Windows.compute(track, Assist.profile("easy"))[launch.id]
+	check(w.passes and w.max_mps - w.min_mps >= 1.5, "The 40 m jump passes over at least 1.5 m/s of held speed (%s-%s)" % [w.min_mps, w.max_mps])
+
+# A voice player calls a curve about 1.5 s after the hint. That call must still count
+# when the car is in the air, and when the curve before is still being driven.
+func check_slow_calls() -> void:
+	for path in ["res://tracks/09_stunt_park.json", "res://tracks/11_triple_gap.json"]:
+		var track = Factory.load_track(path).track
+		for level in ["very_easy", "easy"]:
+			var lap: Dictionary = Inspect.drive(track, level, Inspect.SLOW_CALL_S, 22.0)
+			check(lap.mode == "finished" and lap.late == 0, "%s, %s: a lap with slow calls finishes without a late call (%s at %s, %d late)" % [path.get_file(), level, lap.mode, lap.element, lap.late])
+	var right := {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 30, "bank_deg": 20}
+	var bend := [{"type": "straight", "length_m": 40}, {"type": "curve", "direction": "left", "angle_deg": 60, "radius_m": 35, "bank_deg": 15}, {"type": "straight", "length_m": 30},
+		{"type": "curve", "direction": "right", "angle_deg": 60, "radius_m": 35, "bank_deg": 15}, {"type": "straight", "length_m": "fit"}, right, {"type": "straight", "length_m": "fit"}, right,
+		{"type": "straight", "length_m": 100}, {"type": "straight", "length_m": 150}, right, {"type": "straight", "length_m": 100}, right]
+	var loaded: Dictionary = Builder.load_track(circuit(bend))
+	check(loaded.errors.is_empty(), "The S-bend circuit builds " + str(loaded.errors))
+	if not loaded.errors.is_empty(): return
+	var model = Drive.new(loaded.track)
+	model.set_assist_level("easy")
+	var controls: Dictionary = Runner.create_controls(model)
+	var second_called_at := -1.0
+	var first: Dictionary = loaded.track.curves[0]
+	for tick in range(3000):
+		model.refresh_assist()
+		var hint: Dictionary = model.assist_state()
+		if hint.phase in ["early", "clean"] and model.active_curve_id < 0:
+			if hint.curve_id == loaded.track.curves[1].id and second_called_at < 0: second_called_at = model.distance_m
+			Runner.apply_input(model, {"tick": tick, "kind": "turn", "value": hint.turn_sign, "event_id": "turn:%d" % hint.opportunity_id}, controls)
+		Runner.step_controls(controls, tick)
+		model.step(1.0 / 60.0)
+		if model.off_road or model.completed_curves >= 2 and model.distance_m > loaded.track.curves[1].end_m + 20: break
+	check(second_called_at >= first.start_m and second_called_at < first.end_m, "The second curve of an S-bend can be called while the first is driven (called at %.1f m, first curve %.1f-%.1f m)" % [second_called_at, first.start_m, first.end_m])
+	check(not model.off_road and model.completed_curves >= 2, "The car drives through the S-bend (%s)" % model.state.mode)
+
+# The eight long circuits: each is at least 1.2 km, never comes close to itself,
+# has a current drive report and finishes a lap with slow calls.
+func check_new_circuits() -> void:
+	var files := ["10_first_hop", "11_triple_gap", "12_camel_ridge", "13_canyon_leap", "14_tower_drop", "15_harbour_gaps", "16_upper_deck", "17_switchback"]
+	for file in files:
+		var loaded: Dictionary = Factory.load_track("res://tracks/%s.json" % file)
+		check(loaded.errors.is_empty() and loaded.format_version == 3, "%s loads as format 3 %s" % [file, str(loaded.errors)])
+		if not loaded.errors.is_empty(): continue
+		var track = loaded.track
+		check(track.length_m >= 1200.0 and track.curves.size() >= 6, "%s is a long circuit (%.0f m, %d curves)" % [file, track.length_m, track.curves.size()])
+		check(Inspect.near_misses(track).is_empty(), "%s never comes close to itself" % file)
+		check(track.preview_path == "res://tracks/previews/%s.png" % file.substr(3) and FileAccess.file_exists(track.preview_path), "%s has its own preview" % file)
+		for level in ["very_easy", "easy"]:
+			check(Verification.playable(track, Assist.profile(level)), "%s, %s: the drive report matches the current track and code" % [file, level])
+		var lap: Dictionary = Inspect.drive(track, "easy", Inspect.SLOW_CALL_S, 22.0)
+		check(lap.mode == "finished", "%s: a lap with slow calls finishes (%s at %s)" % [file, lap.mode, lap.element])

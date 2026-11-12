@@ -150,13 +150,14 @@ Die vier alten Strecken verwenden weiterhin Format 1.
 
 New tracks use format 3. A file lists a start height and a chain of pieces with parameters. The game builds the road, the pillars and the drive surface from them. Every format 3 track is a closed circuit: the last piece must end exactly where the first one starts.
 
-`08_stunt_circuit.json` is the first example. `09_stunt_park.json` uses the stunt pieces: loops, a jump, bumps and a wall curve. The piece types, their parameters and limits are in [the plan](../docs/track-pieces-plan.md).
+`08_stunt_circuit.json` is the first example. `09_stunt_park.json` uses the stunt pieces: loops, a jump, bumps and a wall curve. `10_first_hop.json` to `17_switchback.json` are long circuits of 1.2 to 2.5 km, each built around one kind of stunt. The piece types, their parameters and limits are in [the plan](../docs/track-pieces-plan.md).
 
 A `ramp` becomes two elements: the take-off ramp keeps the piece id, and the landing ramp gets `<id>_landing`. A jump must not be the last piece. Loops and jumps get a speed window from the builder; a piece can set its own with `"assist": {"min_mps", "max_mps", "target_mps", "approach_m"}`.
 
-1. Write the pieces into a new JSON file with `"format_version": 3`.
+1. Write the pieces into a new JSON file with `"format_version": 3`. Give two straights that are not parallel `"length_m": "fit"`, and the builder closes the circuit for you. `"rise_m": "fit"` on one straight brings the road back to the start height.
 2. Run `tools/check_tracks.gd`. An open circuit reports how far its end misses the start.
-3. Write the drive report: `Godot --headless --path . --script tools/spatial/check_drives.gd -- --track res://tracks/<file>.json --output res://tracks/reports/<file>.json`.
-4. Set `"report"` to that report. The menu only offers a track whose report matches the current file and code.
+3. Run `Godot --headless --path . --script tools/spatial/inspect_track.gd -- --track res://tracks/<file>.json`. It fails when the road comes close to itself, a stunt has no passing speed, or a test lap does not finish.
+4. Write the drive report: `Godot --headless --path . --script tools/spatial/check_drives.gd -- --track res://tracks/<file>.json --output res://tracks/reports/<file>.json`.
+5. Set `"report"` to that report. The menu only offers a track whose report matches the current file and code.
 
 The drive report also lists, per assist level, the held speeds at which the car gets across every element with a speed window (`tools/spatial/speed_windows.gd`). The check fails when the target speed of such an element does not get across.

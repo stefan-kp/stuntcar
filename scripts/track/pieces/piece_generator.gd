@@ -5,10 +5,8 @@ extends RefCounted
 const STEP_M := 0.3
 const WIDTH_M := 6.0
 const GRAVITY := 9.81
-# Both ramps of a jump are this long; the take-off and landing ramp are parabolas.
+# The take-off ramp of a jump is this long, and the landing ramp at least; both are parabolas.
 const RAMP_M := 18.0
-# A jump is aimed this far into the landing ramp, so a slightly slow car still lands on it.
-const AIM_M := 6.0
 const LIMITS := {
 	"straight": {"length_m": [8.0, 200.0], "max_slope_deg": 15.0},
 	"hill": {"length_m": [20.0, 80.0], "height_m": [-10.0, 10.0], "max_slope_deg": 30.0},
@@ -114,50 +112,56 @@ static func loop_form(radius: float, offset: float) -> Dictionary:
 
 # Take-off ramp: a parabola that leaves level ground and ends pitched up by `angle`.
 # With a negative angle it is the landing ramp: it starts pitched down and ends level.
-static func ramp_form(kind: String, angle: float) -> Dictionary:
+static func ramp_form(kind: String, angle: float, length_m: float = RAMP_M) -> Dictionary:
 	var points: Array = []
 	var ups: Array = []
-	var n := samples(RAMP_M)
+	var n := samples(length_m)
 	var slope := tan(absf(angle))
 	var up_ramp := angle > 0
 	for i in range(n + 1):
-		var u := RAMP_M * float(i) / n
-		var y := slope * u * u / (2.0 * RAMP_M) if up_ramp else -slope * u + slope * u * u / (2.0 * RAMP_M)
-		var dy := slope * u / RAMP_M if up_ramp else -slope * (1.0 - u / RAMP_M)
+		var u := length_m * float(i) / n
+		var y := slope * u * u / (2.0 * length_m) if up_ramp else -slope * u + slope * u * u / (2.0 * length_m)
+		var dy := slope * u / length_m if up_ramp else -slope * (1.0 - u / length_m)
 		points.append([0.0, y, -u])
 		ups.append(vec(Vector3(0, 1, dy).normalized()))
 	var end_y: float = points[-1][1]
 	var pitch := Basis(Vector3.RIGHT, absf(angle))
 	var entry := Transform3D.IDENTITY if up_ramp else Transform3D(pitch.inverse(), Vector3.ZERO)
-	var exit := Transform3D(pitch, Vector3(0, end_y, -RAMP_M)) if up_ramp else Transform3D(Basis.IDENTITY, Vector3(0, end_y, -RAMP_M))
+	var exit := Transform3D(pitch, Vector3(0, end_y, -length_m)) if up_ramp else Transform3D(Basis.IDENTITY, Vector3(0, end_y, -length_m))
 	var form := make_form(kind, points, ups, exit)
 	form.entry = pose(entry)
 	return form
 
+# A long jump gets a longer landing ramp, so a car that is a little too fast still lands on it.
+static func landing_length(gap_m: float) -> float:
+	return maxf(RAMP_M, 0.75 * gap_m)
+
 # A jump over a gap. The landing ramp starts at the angle of the flight path that
-# just reaches it. The design speed carries the car AIM_M further, onto the ramp.
+# just reaches it. The design speed carries the car a third of the way down the landing ramp.
 static func ramp(piece: Dictionary, errors: Array[String]) -> Dictionary:
 	var takeoff := deg_to_rad(piece.takeoff_deg)
 	var rise := RAMP_M * tan(takeoff) * 0.5
 	var gap: float = piece.gap_m
+	var length := landing_length(gap)
+	var aim := length / 3.0
 	var landing := takeoff
 	for i in range(200):
-		var start_y: float = piece.height_m + RAMP_M * tan(landing) * 0.5
+		var start_y: float = piece.height_m + length * tan(landing) * 0.5
 		var speed_sq := flight_speed_sq(rise, takeoff, gap, start_y)
 		if speed_sq <= 0: break
 		var descent := GRAVITY * gap / (speed_sq * pow(cos(takeoff), 2)) - tan(takeoff)
 		landing = lerpf(landing, clampf(atan(descent), 0.0, deg_to_rad(60.0)), 0.5)
 	var slope := tan(landing)
-	var aim_y: float = piece.height_m + RAMP_M * slope * 0.5 - slope * AIM_M + slope * AIM_M * AIM_M / (2.0 * RAMP_M)
-	var design_sq := flight_speed_sq(rise, takeoff, gap + AIM_M, aim_y)
+	var aim_y: float = piece.height_m + length * slope * 0.5 - slope * aim + slope * aim * aim / (2.0 * length)
+	var design_sq := flight_speed_sq(rise, takeoff, gap + aim, aim_y)
 	if design_sq <= 0:
 		errors.append("height_m")
 		return {"form": {}, "errors": errors}
 	if rad_to_deg(landing) > LIMITS.ramp.max_landing_deg:
 		errors.append("landing_angle")
 		return {"form": {}, "errors": errors}
-	return {"form": ramp_form("launch", takeoff), "landing_form": ramp_form("landing", -landing),
-		"landing_origin": Vector3(0, piece.height_m + RAMP_M * slope * 0.5, -RAMP_M - gap), "design_mps": sqrt(design_sq), "errors": errors}
+	return {"form": ramp_form("launch", takeoff), "landing_form": ramp_form("landing", -landing, length),
+		"landing_origin": Vector3(0, piece.height_m + length * slope * 0.5, -RAMP_M - gap), "design_mps": sqrt(design_sq), "errors": errors}
 
 # Squared speed at which a car leaving the take-off ramp end (height `rise`, angle `takeoff`)
 # passes `reach` metres further at height `y`; zero or less if no speed does.
