@@ -30,7 +30,7 @@ static func assess(model,request:Dictionary,hints:Array[Dictionary],now_ms:int)-
   seen[key]=true
   var rating=rate(actions,hints)
   var available=not model.off_road and not model.finished
-  if model.airborne:
+  if model.airborne and model.assist_state().phase=="closed":
    for a in actions:
     if a.action_id.begins_with("turn_"):available=false
   if not available:rating={"rating_status":"unknown","utility":null,"reason_code":"unavailable"}

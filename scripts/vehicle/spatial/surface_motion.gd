@@ -1,5 +1,11 @@
 extends RefCounted
 const GRAVITY:=Vector3(0,-9.81,0)
+# A car this slow cannot stay on a road steeper than STALL_SLOPE (up.y below it).
+const STALL_MPS:=1.0
+const STALL_UP_Y:=0.7
+# Tyres hold a side force of at most GRIP times the force that presses the car onto the road.
+# On a bank steeper than 45 degrees a car that is too slow slides down the wall.
+const GRIP:=1.0
 static func step(track,state,controls:Dictionary,assistance:Dictionary,dt:float)->Dictionary:
 	var result:={"remaining_s":0.0,"hold_used":0.0,"normal_accel":0.0}
 	if dt<=0 or state.mode!="grounded":return result
@@ -17,6 +23,11 @@ static func step(track,state,controls:Dictionary,assistance:Dictionary,dt:float)
 		state.mode="crashed";return result
 	if normal < -float(assistance.get("hold_mps2",0)):
 		state.mode="airborne";result.remaining_s=dt;return result
+	if speed<STALL_MPS and frame.basis.y.y<STALL_UP_Y and float(assistance.get("target_speed_mps",controls.get("target_speed_mps",speed)))<STALL_MPS:
+		# Overhead the car drops off the road; on a steep wall it slides back and is wrecked.
+		if frame.basis.y.y<0:state.mode="airborne";result.remaining_s=dt
+		else:state.mode="crashed";state.resting=true;state.velocity=Vector3.ZERO
+		return result
 	result.hold_used=maxf(0,-normal)
 	var target:float=assistance.get("target_speed_mps",controls.get("target_speed_mps",speed))
 	var cap:float=assistance.get("accel_cap_mps2",10) if target>=speed else assistance.get("brake_cap_mps2",18)
@@ -31,8 +42,12 @@ static func step(track,state,controls:Dictionary,assistance:Dictionary,dt:float)
 		movement=e.length_m-state.local_m
 		result.remaining_s=dt-used
 	var side_acceleration:float=GRAVITY.dot(frame.basis.x)-speed*speed*curvature.dot(frame.basis.x)
+	var downhill:float=GRAVITY.dot(frame.basis.x)
+	var slide:float=absf(side_acceleration)-GRIP*maxf(normal,0)
 	var direction:int=controls.get("steering_direction",0)
-	if controls.get("turn_authorized",false) or (direction==0 and e.input.kind=="none"):
+	if slide>0 and frame.basis.y.y<STALL_UP_Y and side_acceleration*downhill>0:
+		side_acceleration=signf(downhill)*slide
+	elif controls.get("turn_authorized",false) or (direction==0 and e.input.kind=="none"):
 		side_acceleration=clampf(-state.lateral_m*12.0-state.lateral_speed*6.0,-80,80)
 	elif direction!=0:
 		side_acceleration+=direction*minf(80,speed*float(controls.get("manual_turn_rate_rad_s",deg_to_rad(65.0))))

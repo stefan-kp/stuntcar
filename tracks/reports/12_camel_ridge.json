@@ -1,0 +1,1121 @@
+{
+	"limits": [
+		"Speed windows are held-speed runs with correct curve calls, bisected to 0.1 m/s; not a continuous envelope.",
+		"No human microphone or comfort trial."
+	],
+	"profiles": {
+		"easy": {
+			"clean_completed": true,
+			"clean_run": {
+				"crashed": false,
+				"error": "",
+				"events": [
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:919:1",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.989389, 0.145293)",
+						"position": "(0.0, 14.42286, -273.7028)",
+						"tick": 919,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:954:2",
+						"magnitude": 4.30138969421386719,
+						"normal": "(0.0, 0.997907, 0.064662)",
+						"position": "(0.0, 14.57456, -286.733)",
+						"tick": 954,
+						"type": "landing"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:954:3",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.997907, 0.064662)",
+						"position": "(0.0, 14.57456, -286.733)",
+						"tick": 954,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:981:4",
+						"magnitude": 6.15238332748413086,
+						"normal": "(0.0, 0.987225, 0.159334)",
+						"position": "(0.0, 14.31021, -296.3132)",
+						"tick": 981,
+						"type": "landing"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:984:5",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.989573, 0.144035)",
+						"position": "(0.0, 14.42795, -297.071)",
+						"tick": 984,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1019:6",
+						"magnitude": 5.13956069946289062,
+						"normal": "(0.0, 0.99332, 0.115393)",
+						"position": "(0.0, 14.50708, -309.3371)",
+						"tick": 1019,
+						"type": "landing"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1019:7",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.99332, 0.115393)",
+						"position": "(0.0, 14.50708, -309.3371)",
+						"tick": 1019,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1051:8",
+						"magnitude": 5.90665817260742188,
+						"normal": "(0.0, 0.988014, 0.154366)",
+						"position": "(0.0, 14.37323, -320.0425)",
+						"tick": 1051,
+						"type": "landing"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1052:9",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.989056, 0.147544)",
+						"position": "(0.0, 14.41378, -320.3071)",
+						"tick": 1052,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1087:10",
+						"magnitude": 5.88078880310058594,
+						"normal": "(0.0, 0.988636, 0.150332)",
+						"position": "(0.0, 14.40002, -331.882)",
+						"tick": 1087,
+						"type": "landing"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1087:11",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.988636, 0.150332)",
+						"position": "(0.0, 14.40002, -331.882)",
+						"tick": 1087,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e4",
+						"id": "3:1129:12",
+						"magnitude": 4.00821495056152344,
+						"normal": "(0.0, 1.0, 0.0)",
+						"position": "(0.0, 14.0, -344.871)",
+						"tick": 1129,
+						"type": "landing"
+					}
+				],
+				"final": {
+					"attempt_id": 3,
+					"basis": [
+						1.0,
+						0.0,
+						0.00000017881394853702659,
+						0.0,
+						1.0,
+						0.0,
+						-0.00000017881394853702659,
+						0.0,
+						1.0
+					],
+					"distance_m": 1361.1798509657383,
+					"element_id": "e19",
+					"help_used": {
+						"e1": 9.0,
+						"e15": 6.69999999999998153
+					},
+					"lateral_m": -0.0,
+					"lateral_speed": 0.0,
+					"local_m": 62.8317010104656219,
+					"mode": "finished",
+					"position": [
+						-0.000003814697265625,
+						14.0,
+						0.0
+					],
+					"thrust_used": 0.0,
+					"tick": 4027,
+					"velocity": [
+						0.00000393390700992313214,
+						0.0,
+						-22.0
+					]
+				},
+				"finished": true,
+				"help_used": {
+					"e1": 9.0,
+					"e15": 6.69999999999998153
+				},
+				"initial": {
+					"attempt_id": 3,
+					"basis": [
+						1.0,
+						0.0,
+						0.0,
+						0.0,
+						1.0,
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					],
+					"distance_m": 5.0,
+					"element_id": "e0",
+					"help_used": {
+
+					},
+					"lateral_m": 0.0,
+					"lateral_speed": 0.0,
+					"local_m": 5.0,
+					"mode": "grounded",
+					"position": [
+						0.0,
+						14.0,
+						-5.0
+					],
+					"thrust_used": 0.0,
+					"tick": 0,
+					"velocity": [
+						0.0,
+						0.0,
+						-22.0
+					]
+				},
+				"inputs": [
+					{
+						"event_id": "recorded:turn:30001",
+						"kind": "intent",
+						"tick": 981,
+						"value": {
+							"captured_at_ms": 16350,
+							"control_id": "replay:replay:control:1",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30001",
+							"expires_at_ms": 16600,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_right",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30002",
+						"kind": "intent",
+						"tick": 1344,
+						"value": {
+							"captured_at_ms": 22400,
+							"control_id": "replay:replay:control:2",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30002",
+							"expires_at_ms": 22650,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_right",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30003",
+						"kind": "intent",
+						"tick": 1679,
+						"value": {
+							"captured_at_ms": 27983,
+							"control_id": "replay:replay:control:3",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30003",
+							"expires_at_ms": 28233,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_left",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30004",
+						"kind": "intent",
+						"tick": 1979,
+						"value": {
+							"captured_at_ms": 32983,
+							"control_id": "replay:replay:control:4",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30004",
+							"expires_at_ms": 33233,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_right",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30005",
+						"kind": "intent",
+						"tick": 2389,
+						"value": {
+							"captured_at_ms": 39817,
+							"control_id": "replay:replay:control:5",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30005",
+							"expires_at_ms": 40067,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_left",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30006",
+						"kind": "intent",
+						"tick": 3161,
+						"value": {
+							"captured_at_ms": 52683,
+							"control_id": "replay:replay:control:6",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30006",
+							"expires_at_ms": 52933,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_right",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30007",
+						"kind": "intent",
+						"tick": 3556,
+						"value": {
+							"captured_at_ms": 59267,
+							"control_id": "replay:replay:control:7",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30007",
+							"expires_at_ms": 59517,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_right",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					}
+				],
+				"mode": "finished",
+				"seconds": 67.11666666666666,
+				"trace_digest": "e7d905dac4ce155aa6ed13cc6c3db387087a9f27cefe4c4762952bb484cfa612"
+			},
+			"digest": "21b97732009c7e1221c197b9ade92000aaec00e5d9a074524695a49c8c7828da",
+			"samples": [
+				{
+					"condition": "fbaa6d29e19a3b2378c66d51ea0802561852327e1c046786e2a6d1368f9a8882",
+					"element_id": "e1",
+					"lateral_m": 0.0,
+					"max_mps": 17.8099999999999987,
+					"min_mps": 5.69000000000000039,
+					"mode": "grounded",
+					"speed_mps": 15.0000009536743164,
+					"target_mps": 15.0
+				},
+				{
+					"condition": "ced30c25fed13dfdd1f9be8fee87ffeb893d9e2ee686fdf581d7d6c6943e10a6",
+					"element_id": "e5",
+					"lateral_m": -0.000000000103927155870047673,
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "21a9463bb22e6d27b425bcbb067b9f7373c952e40eee2b667b237e340cfd6776",
+					"element_id": "e7",
+					"lateral_m": 0.00000000000000000048286659574808,
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "502db2d8ae51281d70c955b57ba50a9121b1f9470f1c77478151e818ba3b698d",
+					"element_id": "e9",
+					"lateral_m": -0.00000000000000000000000001121914,
+					"max_mps": 58.0,
+					"min_mps": 4.25,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "5270bb29810b8a475aacdf741d403f8fe8afe6212ec489329102b1ab415a4bb8",
+					"element_id": "e11",
+					"lateral_m": -0.00000000000000000000000000000001,
+					"max_mps": 58.0,
+					"min_mps": 7.8100000000000005,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "0e794e0fc6352f9a265ae776ad3b0d11e26760700489e8beba112c0df4d6fd87",
+					"element_id": "e13",
+					"lateral_m": -0.0,
+					"max_mps": 58.0,
+					"min_mps": 4.25,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "f7d964102dc44bc4572967c827b393dac3e3963ba8acc17c71b9207973c50fa7",
+					"element_id": "e15",
+					"lateral_m": 0.0,
+					"max_mps": 29.9400000000000013,
+					"min_mps": 4.0600000000000005,
+					"mode": "grounded",
+					"speed_mps": 15.0000009536743164,
+					"target_mps": 15.0
+				},
+				{
+					"condition": "17da81bbd845b768f3eb2205ed659a2c8196103e0d66246cd46a817bb5c47b84",
+					"element_id": "e17",
+					"lateral_m": 0.0,
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"mode": "grounded",
+					"speed_mps": 22.0000019073486328,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "c66091126846724174133d020e3e569620745d38b0a33bfa4e7bb88d72849719",
+					"element_id": "e19",
+					"lateral_m": -0.0,
+					"max_mps": 58.0,
+					"min_mps": 3.18999999999999995,
+					"mode": "grounded",
+					"speed_mps": 22.0000019073486328,
+					"target_mps": 22.0
+				}
+			],
+			"status": "tested_samples",
+			"windows": {
+				"e1": {
+					"max_mps": 17.8099999999999987,
+					"min_mps": 5.69000000000000039,
+					"passes": true,
+					"target_mps": 15.0
+				},
+				"e11": {
+					"max_mps": 58.0,
+					"min_mps": 7.8100000000000005,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e13": {
+					"max_mps": 58.0,
+					"min_mps": 4.25,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e15": {
+					"max_mps": 29.9400000000000013,
+					"min_mps": 4.0600000000000005,
+					"passes": true,
+					"target_mps": 15.0
+				},
+				"e17": {
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e19": {
+					"max_mps": 58.0,
+					"min_mps": 3.18999999999999995,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e5": {
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e7": {
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e9": {
+					"max_mps": 58.0,
+					"min_mps": 4.25,
+					"passes": true,
+					"target_mps": 22.0
+				}
+			}
+		},
+		"very_easy": {
+			"clean_completed": true,
+			"clean_run": {
+				"crashed": false,
+				"error": "",
+				"events": [
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:930:1",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.989598, 0.143863)",
+						"position": "(0.0, 14.42864, -273.7424)",
+						"tick": 930,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:965:2",
+						"magnitude": 4.29637289047241211,
+						"normal": "(0.0, 0.997706, 0.067698)",
+						"position": "(0.0, 14.57158, -286.6933)",
+						"tick": 965,
+						"type": "landing"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:965:3",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.997706, 0.067698)",
+						"position": "(0.0, 14.57158, -286.6933)",
+						"tick": 965,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:992:4",
+						"magnitude": 6.15764045715332031,
+						"normal": "(0.0, 0.987239, 0.159247)",
+						"position": "(0.0, 14.30604, -296.2873)",
+						"tick": 992,
+						"type": "landing"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:994:5",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.988224, 0.153013)",
+						"position": "(0.0, 14.38222, -296.7672)",
+						"tick": 994,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1030:6",
+						"magnitude": 5.14517545700073242,
+						"normal": "(0.0, 0.993482, 0.113993)",
+						"position": "(0.0, 14.50984, -309.3608)",
+						"tick": 1030,
+						"type": "landing"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1030:7",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.993482, 0.113993)",
+						"position": "(0.0, 14.50984, -309.3608)",
+						"tick": 1030,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1062:8",
+						"magnitude": 5.90431594848632812,
+						"normal": "(0.0, 0.98786, 0.155349)",
+						"position": "(0.0, 14.3667, -320.0004)",
+						"tick": 1062,
+						"type": "landing"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1063:9",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.988576, 0.150725)",
+						"position": "(0.0, 14.39741, -320.1985)",
+						"tick": 1063,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1099:10",
+						"magnitude": 5.88038539886474609,
+						"normal": "(0.0, 0.98833, 0.152331)",
+						"position": "(0.0, 14.38675, -331.7964)",
+						"tick": 1099,
+						"type": "landing"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e3",
+						"id": "3:1100:11",
+						"magnitude": 0.0,
+						"normal": "(0.0, 0.98953, 0.144325)",
+						"position": "(0.0, 14.42678, -332.063)",
+						"tick": 1100,
+						"type": "contact_lost"
+					},
+					{
+						"attempt_id": 3,
+						"element_id": "e4",
+						"id": "3:1140:12",
+						"magnitude": 3.9567866325378418,
+						"normal": "(0.0, 1.0, 0.0)",
+						"position": "(0.0, 14.0, -344.6177)",
+						"tick": 1140,
+						"type": "landing"
+					}
+				],
+				"final": {
+					"attempt_id": 3,
+					"basis": [
+						1.0,
+						0.0,
+						0.00000017881394853702659,
+						0.0,
+						1.0,
+						0.0,
+						-0.00000017881394853702659,
+						0.0,
+						1.0
+					],
+					"distance_m": 1361.1798509657383,
+					"element_id": "e19",
+					"help_used": {
+						"e1": 9.51666666666671901,
+						"e15": 6.69999999999998153
+					},
+					"lateral_m": -0.0,
+					"lateral_speed": 0.0,
+					"local_m": 62.8317010104656219,
+					"mode": "finished",
+					"position": [
+						-0.000003814697265625,
+						14.0,
+						0.0
+					],
+					"thrust_used": 0.0,
+					"tick": 4039,
+					"velocity": [
+						0.00000393390700992313214,
+						0.0,
+						-22.0000019073486328
+					]
+				},
+				"finished": true,
+				"help_used": {
+					"e1": 9.51666666666671901,
+					"e15": 6.69999999999998153
+				},
+				"initial": {
+					"attempt_id": 3,
+					"basis": [
+						1.0,
+						0.0,
+						0.0,
+						0.0,
+						1.0,
+						0.0,
+						0.0,
+						0.0,
+						1.0
+					],
+					"distance_m": 5.0,
+					"element_id": "e0",
+					"help_used": {
+
+					},
+					"lateral_m": 0.0,
+					"lateral_speed": 0.0,
+					"local_m": 5.0,
+					"mode": "grounded",
+					"position": [
+						0.0,
+						14.0,
+						-5.0
+					],
+					"thrust_used": 0.0,
+					"tick": 0,
+					"velocity": [
+						0.0,
+						0.0,
+						-22.0
+					]
+				},
+				"inputs": [
+					{
+						"event_id": "recorded:turn:30001",
+						"kind": "intent",
+						"tick": 992,
+						"value": {
+							"captured_at_ms": 16533,
+							"control_id": "replay:replay:control:1",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30001",
+							"expires_at_ms": 16783,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_right",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30002",
+						"kind": "intent",
+						"tick": 1355,
+						"value": {
+							"captured_at_ms": 22583,
+							"control_id": "replay:replay:control:2",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30002",
+							"expires_at_ms": 22833,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_right",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30003",
+						"kind": "intent",
+						"tick": 1690,
+						"value": {
+							"captured_at_ms": 28167,
+							"control_id": "replay:replay:control:3",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30003",
+							"expires_at_ms": 28417,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_left",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30004",
+						"kind": "intent",
+						"tick": 1990,
+						"value": {
+							"captured_at_ms": 33167,
+							"control_id": "replay:replay:control:4",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30004",
+							"expires_at_ms": 33417,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_right",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30005",
+						"kind": "intent",
+						"tick": 2401,
+						"value": {
+							"captured_at_ms": 40017,
+							"control_id": "replay:replay:control:5",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30005",
+							"expires_at_ms": 40267,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_left",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30006",
+						"kind": "intent",
+						"tick": 3173,
+						"value": {
+							"captured_at_ms": 52883,
+							"control_id": "replay:replay:control:6",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30006",
+							"expires_at_ms": 53133,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_right",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					},
+					{
+						"event_id": "recorded:turn:30007",
+						"kind": "intent",
+						"tick": 3568,
+						"value": {
+							"captured_at_ms": 59467,
+							"control_id": "replay:replay:control:7",
+							"control_revision": 1,
+							"event_id": "recorded:turn:30007",
+							"expires_at_ms": 59717,
+							"forbidden_actions": [],
+							"kind": "explicit",
+							"opportunity_id": null,
+							"phase": "begin",
+							"required_actions": [
+								{
+									"action_id": "turn_right",
+									"duration_ms": 0,
+									"parameters": {
+										"strength": 0.5
+									}
+								}
+							],
+							"schema_version": 1,
+							"session_id": "replay",
+							"source_id": "replay"
+						}
+					}
+				],
+				"mode": "finished",
+				"seconds": 67.3166666666666629,
+				"trace_digest": "16db259b8bdf5b05d763be19541e0274e395657a686b0b83a9ea1ed539c1eefb"
+			},
+			"digest": "aac5d7aa2d954e947e9be0f6a76b12e7c447e2d699619d745cab9cf29206340d",
+			"samples": [
+				{
+					"condition": "5be572a4389cf0764b50546383b764ed0d47b043517cc5636c0f0c8695f00cd4",
+					"element_id": "e1",
+					"lateral_m": 0.0,
+					"max_mps": 17.8099999999999987,
+					"min_mps": 5.69000000000000039,
+					"mode": "grounded",
+					"speed_mps": 15.0,
+					"target_mps": 15.0
+				},
+				{
+					"condition": "85a67512cc81181729a42b025cd15938017d839691d3886f275f520685778e9d",
+					"element_id": "e5",
+					"lateral_m": -0.000000000171782269614927707,
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "38959a3e1d8c6626c8c9d43e483453a703f578a0073989f15ddb60763b46cbfb",
+					"element_id": "e7",
+					"lateral_m": 0.00000000000000000082619857882724,
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"mode": "grounded",
+					"speed_mps": 22.0000019073486328,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "4cd5543ad94c734edf5a68f5296b0ba2e2fa94450eeecae6ee4a7da57b672684",
+					"element_id": "e9",
+					"lateral_m": -0.00000000000000000000000001941462,
+					"max_mps": 58.0,
+					"min_mps": 4.25,
+					"mode": "grounded",
+					"speed_mps": 21.9999980926513672,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "c22ce2def598889fa1045da22957b22af85a23cd53fc9bfc27918c262731f3c3",
+					"element_id": "e11",
+					"lateral_m": -0.00000000000000000000000000000002,
+					"max_mps": 58.0,
+					"min_mps": 7.8100000000000005,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "a69bd560bc0912c861f4c02842cb0c3145bcd397a2dbba788d648c2d2d669e45",
+					"element_id": "e13",
+					"lateral_m": -0.0,
+					"max_mps": 58.0,
+					"min_mps": 4.25,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "1d78a6f429441adf82aadad52c9c6629dfd899ecb65bc81eaf7813461a307fb9",
+					"element_id": "e15",
+					"lateral_m": 0.0,
+					"max_mps": 29.9400000000000013,
+					"min_mps": 4.0600000000000005,
+					"mode": "grounded",
+					"speed_mps": 15.0000009536743164,
+					"target_mps": 15.0
+				},
+				{
+					"condition": "e4668eb5c7bd0122618631f6bdc5c4f2dcf870e6bb874c48419554c310945e42",
+					"element_id": "e17",
+					"lateral_m": 0.0,
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				},
+				{
+					"condition": "13410884fc3eeccf6002eacf3056ad1865f836192904780623a9daebc22ca1bc",
+					"element_id": "e19",
+					"lateral_m": -0.0,
+					"max_mps": 58.0,
+					"min_mps": 3.18999999999999995,
+					"mode": "grounded",
+					"speed_mps": 22.0,
+					"target_mps": 22.0
+				}
+			],
+			"status": "tested_samples",
+			"windows": {
+				"e1": {
+					"max_mps": 17.8099999999999987,
+					"min_mps": 5.69000000000000039,
+					"passes": true,
+					"target_mps": 15.0
+				},
+				"e11": {
+					"max_mps": 58.0,
+					"min_mps": 7.8100000000000005,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e13": {
+					"max_mps": 58.0,
+					"min_mps": 4.25,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e15": {
+					"max_mps": 29.9400000000000013,
+					"min_mps": 4.0600000000000005,
+					"passes": true,
+					"target_mps": 15.0
+				},
+				"e17": {
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e19": {
+					"max_mps": 58.0,
+					"min_mps": 3.18999999999999995,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e5": {
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e7": {
+					"max_mps": 58.0,
+					"min_mps": 4.69000000000000039,
+					"passes": true,
+					"target_mps": 22.0
+				},
+				"e9": {
+					"max_mps": 58.0,
+					"min_mps": 4.25,
+					"passes": true,
+					"target_mps": 22.0
+				}
+			}
+		}
+	},
+	"version": 1
+}

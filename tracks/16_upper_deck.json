@@ -1,0 +1,33 @@
+{
+  "format_version": 3,
+  "name": "I18N_TRACK_UPPER_DECK_NAME",
+  "description": "I18N_TRACK_UPPER_DECK_DESCRIPTION",
+  "scenario": "canyon",
+  "preview": "previews/upper_deck.png",
+  "report": "reports/16_upper_deck.json",
+  "start": {"height_m": 14},
+  "pieces": [
+    {"type": "straight", "length_m": 130},
+    {"type": "ramp", "gap_m": 18, "takeoff_deg": 25, "height_m": 4},
+    {"type": "straight", "length_m": 80},
+    {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 40, "bank_deg": 25},
+    {"type": "straight", "length_m": 90, "rise_m": -4},
+    {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 40, "bank_deg": 25},
+    {"type": "straight", "length_m": 50},
+    {"type": "curve", "direction": "left", "angle_deg": 120, "radius_m": 30, "bank_deg": 25},
+    {"type": "straight", "length_m": 40},
+    {"type": "curve", "direction": "right", "angle_deg": 120, "radius_m": 30, "bank_deg": 25},
+    {"type": "straight", "length_m": 50},
+    {"type": "bumps", "length_m": 60, "count": 5, "height_m": 0.6},
+    {"type": "straight", "length_m": 50},
+    {"type": "hill", "length_m": 60, "height_m": -5, "assist": {"min_mps": 0, "max_mps": 17, "target_mps": 16, "approach_m": 60}},
+    {"type": "straight", "length_m": "fit"},
+    {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 40, "bank_deg": 25},
+    {"type": "straight", "length_m": 50},
+    {"type": "curve", "direction": "right", "angle_deg": 60, "radius_m": 35, "bank_deg": 15},
+    {"type": "straight", "length_m": 30},
+    {"type": "curve", "direction": "left", "angle_deg": 60, "radius_m": 35, "bank_deg": 15},
+    {"type": "straight", "length_m": "fit"},
+    {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 40, "bank_deg": 25}
+  ]
+}

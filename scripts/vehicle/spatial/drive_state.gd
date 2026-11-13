@@ -10,6 +10,8 @@ var distance_m:=0.0
 var mode:="grounded"
 var lateral_m:=0.0
 var lateral_speed:=0.0
+# A wreck that hit the road stays there; one that left the road keeps falling.
+var resting:=false
 var speed_mps:float:
 	get:return velocity.length()
 func snapshot()->Dictionary:

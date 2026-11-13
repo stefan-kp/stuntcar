@@ -5,7 +5,8 @@ static func profile(id:String)->Dictionary:
 	var p:Dictionary=data[id]
 	for key in ["version","accel_mps2","brake_mps2","max_mps","assist_accel_mps2","assist_brake_mps2","hold_mps2","help_seconds","thrust_mps2","thrust_seconds"]:
 		var v=p.get(key)
-		if typeof(v) not in [TYPE_INT,TYPE_FLOAT] or not is_finite(float(v)) or v<=0:return {}
+		# No level holds the car on the road any more; a hold of zero is valid.
+		if typeof(v) not in [TYPE_INT,TYPE_FLOAT] or not is_finite(float(v)) or v<0 or (v==0 and key!="hold_mps2"):return {}
 	return p
 static func limits(element:Dictionary)->Dictionary:
 	var defaults:={"hill":[0.0,12.0,11.0],"curve":[0.0,30.0,22.0],"bank":[0.0,30.0,22.0],"launch":[19.0,21.0,20.0],"loop":[24.0,32.0,26.0]}
