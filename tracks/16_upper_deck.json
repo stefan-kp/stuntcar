@@ -20,7 +20,7 @@
     {"type": "straight", "length_m": 50},
     {"type": "bumps", "length_m": 60, "count": 5, "height_m": 0.6},
     {"type": "straight", "length_m": 50},
-    {"type": "hill", "length_m": 60, "height_m": -5, "assist": {"min_mps": 0, "max_mps": 21, "target_mps": 19, "approach_m": 60}},
+    {"type": "hill", "length_m": 60, "height_m": -5, "assist": {"min_mps": 0, "max_mps": 17, "target_mps": 16, "approach_m": 60}},
     {"type": "straight", "length_m": "fit"},
     {"type": "curve", "direction": "right", "angle_deg": 90, "radius_m": 40, "bank_deg": 25},
     {"type": "straight", "length_m": 50},

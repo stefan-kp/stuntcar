@@ -171,13 +171,13 @@
 				"seconds": 32.7833333333333314,
 				"trace_digest": "90fd89d48de0a7be81abb13e5cbf07036fd48267e17bc44cbc79c557a85aea12"
 			},
-			"digest": "98171287e9b3138fb9f22c740925b35e5c890ea44c96b6b65d0653dbb2859a6d",
+			"digest": "b2dcee7f7031f1b7eb70a4edc290cdef67453cbcc04e26d27925d73561c2f742",
 			"samples": [
 				{
 					"condition": "cbd5f4960f2caa6277629820da47857d2bf24aa7e6906b625b6f12df41d82a4f",
 					"element_id": "e3",
 					"lateral_m": 0.0,
-					"max_mps": 29.379999999999999,
+					"max_mps": 29.0600000000000023,
 					"min_mps": 3.18999999999999995,
 					"mode": "grounded",
 					"speed_mps": 11.0000009536743164,
@@ -208,7 +208,7 @@
 					"element_id": "e16",
 					"lateral_m": -0.000000000000348612220394117125,
 					"max_mps": 58.0,
-					"min_mps": 7.8100000000000005,
+					"min_mps": 10.5,
 					"mode": "grounded",
 					"speed_mps": 26.0,
 					"target_mps": 26.0
@@ -234,7 +234,7 @@
 				},
 				"e16": {
 					"max_mps": 58.0,
-					"min_mps": 7.8100000000000005,
+					"min_mps": 10.5,
 					"passes": true,
 					"target_mps": 26.0
 				},
@@ -245,7 +245,7 @@
 					"target_mps": 22.0
 				},
 				"e3": {
-					"max_mps": 29.379999999999999,
+					"max_mps": 29.0600000000000023,
 					"min_mps": 3.18999999999999995,
 					"passes": true,
 					"target_mps": 11.0
@@ -425,13 +425,13 @@
 				"seconds": 32.7999999999999972,
 				"trace_digest": "533fd6ebd5ce8e8ffa406941f5763a55e2b0867a03448de48f5e887f8fb86526"
 			},
-			"digest": "a2fc3fa74f3b794b6daccdd3b5794ba096bd82a60198c7c6042df531e57b1b98",
+			"digest": "26a71467c851f06e07c4f149788eb26041d591a43b03878f0666d0aaa8e792fc",
 			"samples": [
 				{
 					"condition": "d61a1e7bae8680a1ea46d6966b770fd04a1842627b2934f0835a21fe97d3adfd",
 					"element_id": "e3",
 					"lateral_m": 0.0,
-					"max_mps": 29.8100000000000023,
+					"max_mps": 29.0600000000000023,
 					"min_mps": 3.18999999999999995,
 					"mode": "grounded",
 					"speed_mps": 11.0,
@@ -462,7 +462,7 @@
 					"element_id": "e16",
 					"lateral_m": 0.0000000000246502186184943662,
 					"max_mps": 58.0,
-					"min_mps": 5.3100000000000005,
+					"min_mps": 10.5,
 					"mode": "grounded",
 					"speed_mps": 26.0000019073486328,
 					"target_mps": 26.0
@@ -488,7 +488,7 @@
 				},
 				"e16": {
 					"max_mps": 58.0,
-					"min_mps": 5.3100000000000005,
+					"min_mps": 10.5,
 					"passes": true,
 					"target_mps": 26.0
 				},
@@ -499,7 +499,7 @@
 					"target_mps": 22.0
 				},
 				"e3": {
-					"max_mps": 29.8100000000000023,
+					"max_mps": 29.0600000000000023,
 					"min_mps": 3.18999999999999995,
 					"passes": true,
 					"target_mps": 11.0

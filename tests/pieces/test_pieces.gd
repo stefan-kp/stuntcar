@@ -43,6 +43,7 @@ func _initialize() -> void:
 	check_long_jump()
 	check_slow_calls()
 	check_new_circuits()
+	check_strict_physics()
 	done()
 
 func match_form(reference: Dictionary, piece: Dictionary, name: String, key: String = "form") -> void:
@@ -319,7 +320,9 @@ func check_road_is_solid() -> void:
 				# Below the road the car may only be in the gap between the loop's two lanes.
 				if model.state.position.y < 11.5 and (absf(model.state.position.x) < 2.9 or absf(model.state.position.x - 8.0) < 2.9): lane = false
 				if model.state.mode == "finished" or model.state.mode == "crashed" and model.state.resting: break
-			check(lane and model.state.mode == "crashed", "%s: braking in the loop from tick %d wrecks the car and never takes it through the road (%s)" % [level, brake_tick, model.state.mode])
+			# The car is wrecked, or it stands with its brakes on where the road is not too steep.
+			var stands: bool = model.state.mode == "grounded" and model.speed_mps < 0.5 and model.state.basis.y.y >= Surface.STALL_UP_Y
+			check(lane and (model.state.mode == "crashed" or stands), "%s: braking in the loop from tick %d never takes the car through the road (%s on %s, %.1f m/s, up %.2f)" % [level, brake_tick, model.state.mode, model.state.element_id, model.speed_mps, model.state.basis.y.y])
 
 # "fit" lets the builder choose two straight lengths and one rise so the circuit closes.
 func check_fit() -> void:
@@ -403,3 +406,25 @@ func check_new_circuits() -> void:
 			check(Verification.playable(track, Assist.profile(level)), "%s, %s: the drive report matches the current track and code" % [file, level])
 		var lap: Dictionary = Inspect.drive(track, "easy", Inspect.SLOW_CALL_S, 22.0)
 		check(lap.mode == "finished", "%s: a lap with slow calls finishes (%s at %s)" % [file, lap.mode, lap.element])
+
+# No assist level holds the car on the road. A loop and a wall curve need real speed,
+# and the assist brings the car to that speed on its own.
+func check_strict_physics() -> void:
+	var track = Factory.load_track("res://tracks/09_stunt_park.json").track
+	var loop: Dictionary = track.elements.filter(func(e): return e.kind == "loop")[0]
+	var wall: Dictionary = track.elements.filter(func(e): return e.kind == "bank")[0]
+	for level in ["very_easy", "easy"]:
+		var profile: Dictionary = Assist.profile(level)
+		check(not profile.is_empty() and profile.hold_mps2 == 0, "%s: nothing holds the car on the road" % level)
+		check(not Windows.crosses(track, profile, loop, 8.0) and Windows.crosses(track, profile, loop, 12.0), "%s: the 12 m loop fails at 8 m/s and passes at 12 m/s" % level)
+		check(not Windows.crosses(track, profile, wall, 5.0) and Windows.crosses(track, profile, wall, 12.0), "%s: the car slides down the wall curve at 5 m/s and holds at 12 m/s" % level)
+		var model = Drive.new(track)
+		model.set_assist_level(level)
+		model.reset(loop.start_m - 55.0)
+		model.target_speed_mps = 8.0
+		model.state.velocity = model.state.velocity.normalized() * 8.0
+		for tick in range(1200):
+			model.step(1.0 / 60.0)
+			if model.off_road or model.distance_m > loop.end_m + 5.0: break
+		check(not model.off_road and model.distance_m > loop.end_m, "%s: the assist speeds a slow car up for the loop (%s at %.0f m)" % [level, model.state.mode, model.distance_m])
+	check(float(Assist.limits(wall).min_mps) > 7.6, "The wall curve asks for more speed than the slide limit (%s m/s)" % Assist.limits(wall).min_mps)

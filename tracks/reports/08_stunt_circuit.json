@@ -202,13 +202,13 @@
 				"seconds": 43.0499999999999972,
 				"trace_digest": "77bbf9ccc5a12c46c686a67155ec963f355720a55953cb200d7fd81afd731a00"
 			},
-			"digest": "e924f2b290e5fb3d7792af89d29dc7a6af37487060914b99c14dfdb2beacb1e7",
+			"digest": "0b805e7968a606cd39b32c8bdd6d396814d66cf53ab9907ff81aad588cfea112",
 			"samples": [
 				{
 					"condition": "01fc626597ce48ac2b0405fbbfbbd74041c9d43b0f59607ead482e8b8e004396",
 					"element_id": "e1",
 					"lateral_m": 0.0,
-					"max_mps": 36.1899999999999977,
+					"max_mps": 35.8100000000000023,
 					"min_mps": 3.56000000000000005,
 					"mode": "grounded",
 					"speed_mps": 11.0000009536743164,
@@ -258,7 +258,7 @@
 			"status": "tested_samples",
 			"windows": {
 				"e1": {
-					"max_mps": 36.1899999999999977,
+					"max_mps": 35.8100000000000023,
 					"min_mps": 3.56000000000000005,
 					"passes": true,
 					"target_mps": 11.0
@@ -487,13 +487,13 @@
 				"seconds": 43.1000000000000014,
 				"trace_digest": "f95f4bccf90e322f136b70651194ecd72f77f8377e8f1638cf0ad1ec35949060"
 			},
-			"digest": "fa35f9744437212de77cf402a4f022a30d8e661767248a800ab14019b319f0c1",
+			"digest": "451f98e78ed67536de3dcb5b637e0ccde14a5d6e5ff7f5a5644af2154264daf8",
 			"samples": [
 				{
 					"condition": "a43a7112ca40f6afe54b9dfc8e17c873056687d46c34798c3d6f768dc311d477",
 					"element_id": "e1",
 					"lateral_m": 0.0,
-					"max_mps": 36.8800000000000026,
+					"max_mps": 35.8100000000000023,
 					"min_mps": 3.56000000000000005,
 					"mode": "grounded",
 					"speed_mps": 11.0,
@@ -543,7 +543,7 @@
 			"status": "tested_samples",
 			"windows": {
 				"e1": {
-					"max_mps": 36.8800000000000026,
+					"max_mps": 35.8100000000000023,
 					"min_mps": 3.56000000000000005,
 					"passes": true,
 					"target_mps": 11.0

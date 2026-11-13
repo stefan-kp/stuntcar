@@ -140,6 +140,10 @@ static func default_assist(piece: Dictionary, generated: Dictionary) -> Dictiona
 		var scale := sqrt(piece.radius_m / 12.0)
 		return {"min_mps": snappedf(LOOP_12_MPS.min_mps * scale, 0.1), "max_mps": snappedf(LOOP_12_MPS.max_mps * scale, 0.1),
 			"target_mps": snappedf(LOOP_12_MPS.target_mps * scale, 0.1), "approach_m": 60.0}
+	if piece.type == "bank" and piece.bank_deg > 45.0:
+		# Below this speed the car slides down the wall (grip 1, so 45 degrees hold at any speed).
+		var slide_mps := sqrt(Pieces.GRAVITY * piece.radius_m * tan(deg_to_rad(piece.bank_deg - 45.0)))
+		return {"min_mps": snappedf(slide_mps + 3.0, 0.1), "max_mps": 30.0, "target_mps": 22.0, "approach_m": 60.0}
 	return {}
 
 static func load_track(data: Dictionary, source_path: String = "") -> Dictionary:

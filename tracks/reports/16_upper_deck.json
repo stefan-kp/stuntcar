@@ -113,62 +113,22 @@
 					{
 						"attempt_id": 3,
 						"element_id": "e11",
-						"id": "3:2239:11",
+						"id": "3:2240:11",
 						"magnitude": 0.0,
-						"normal": "(0.0, 0.989388, -0.145297)",
-						"position": "(294.641, 14.40439, -80.35789)",
-						"tick": 2239,
+						"normal": "(0.0, 0.990813, -0.135242)",
+						"position": "(294.641, 14.44698, -80.05791)",
+						"tick": 2240,
 						"type": "contact_lost"
 					},
 					{
 						"attempt_id": 3,
 						"element_id": "e12",
-						"id": "3:2279:12",
-						"magnitude": 3.94324445724487305,
+						"id": "3:2277:12",
+						"magnitude": 3.79244756698608398,
 						"normal": "(0.0, 1.0, 0.0)",
-						"position": "(294.641, 14.0, -67.51929)",
-						"tick": 2279,
+						"position": "(294.641, 14.0, -69.15411)",
+						"tick": 2277,
 						"type": "landing"
-					},
-					{
-						"attempt_id": 3,
-						"element_id": "e13",
-						"id": "3:2423:13",
-						"magnitude": 0.0,
-						"normal": "(0.0, 0.999995, 0.003259)",
-						"position": "(294.641, 13.99951, -21.91961)",
-						"tick": 2423,
-						"type": "hold_start"
-					},
-					{
-						"attempt_id": 3,
-						"element_id": "e13",
-						"id": "3:2428:14",
-						"magnitude": 0.0,
-						"normal": "(0.0, 0.998925, 0.046355)",
-						"position": "(294.641, 13.96014, -20.33666)",
-						"tick": 2428,
-						"type": "hold_end"
-					},
-					{
-						"attempt_id": 3,
-						"element_id": "e13",
-						"id": "3:2613:15",
-						"magnitude": 0.0,
-						"normal": "(0.0, 0.999801, -0.019975)",
-						"position": "(294.641, 13.99241, 37.23195)",
-						"tick": 2613,
-						"type": "hold_start"
-					},
-					{
-						"attempt_id": 3,
-						"element_id": "e14",
-						"id": "3:2617:16",
-						"magnitude": 0.0,
-						"normal": "(0.0, 1.0, 0.0)",
-						"position": "(294.641, 14.0, 38.49982)",
-						"tick": 2617,
-						"type": "hold_end"
 					}
 				],
 				"final": {
@@ -188,7 +148,7 @@
 					"element_id": "e21",
 					"help_used": {
 						"e1": 5.7502990312091713,
-						"e13": 6.30536519065852552
+						"e13": 7.42203185732518822
 					},
 					"lateral_m": 0.0,
 					"lateral_speed": 0.0,
@@ -200,7 +160,7 @@
 						0.000003814697265625
 					],
 					"thrust_used": 0.0,
-					"tick": 3684,
+					"tick": 3754,
 					"velocity": [
 						0.0,
 						0.0,
@@ -210,7 +170,7 @@
 				"finished": true,
 				"help_used": {
 					"e1": 5.7502990312091713,
-					"e13": 6.30536519065852552
+					"e13": 7.42203185732518822
 				},
 				"initial": {
 					"attempt_id": 3,
@@ -363,13 +323,13 @@
 					{
 						"event_id": "recorded:turn:30005",
 						"kind": "intent",
-						"tick": 2341,
+						"tick": 2356,
 						"value": {
-							"captured_at_ms": 39017,
+							"captured_at_ms": 39267,
 							"control_id": "replay:replay:control:5",
 							"control_revision": 1,
 							"event_id": "recorded:turn:30005",
-							"expires_at_ms": 39267,
+							"expires_at_ms": 39517,
 							"forbidden_actions": [],
 							"kind": "explicit",
 							"opportunity_id": null,
@@ -391,13 +351,13 @@
 					{
 						"event_id": "recorded:turn:30006",
 						"kind": "intent",
-						"tick": 2688,
+						"tick": 2758,
 						"value": {
-							"captured_at_ms": 44800,
+							"captured_at_ms": 45967,
 							"control_id": "replay:replay:control:6",
 							"control_revision": 1,
 							"event_id": "recorded:turn:30006",
-							"expires_at_ms": 45050,
+							"expires_at_ms": 46217,
 							"forbidden_actions": [],
 							"kind": "explicit",
 							"opportunity_id": null,
@@ -419,13 +379,13 @@
 					{
 						"event_id": "recorded:turn:30007",
 						"kind": "intent",
-						"tick": 2988,
+						"tick": 3058,
 						"value": {
-							"captured_at_ms": 49800,
+							"captured_at_ms": 50967,
 							"control_id": "replay:replay:control:7",
 							"control_revision": 1,
 							"event_id": "recorded:turn:30007",
-							"expires_at_ms": 50050,
+							"expires_at_ms": 51217,
 							"forbidden_actions": [],
 							"kind": "explicit",
 							"opportunity_id": null,
@@ -447,13 +407,13 @@
 					{
 						"event_id": "recorded:turn:30008",
 						"kind": "intent",
-						"tick": 3212,
+						"tick": 3283,
 						"value": {
-							"captured_at_ms": 53533,
+							"captured_at_ms": 54717,
 							"control_id": "replay:replay:control:8",
 							"control_revision": 1,
 							"event_id": "recorded:turn:30008",
-							"expires_at_ms": 53783,
+							"expires_at_ms": 54967,
 							"forbidden_actions": [],
 							"kind": "explicit",
 							"opportunity_id": null,
@@ -474,10 +434,10 @@
 					}
 				],
 				"mode": "finished",
-				"seconds": 61.3999999999999986,
-				"trace_digest": "87eb8839a6ef59a6e60cbf4ab62b887456d1c58c66050283962cf79b675fb22a"
+				"seconds": 62.56666666666667,
+				"trace_digest": "dd3cebefa96682f2a1c093afbc64aee52e2818bd1fbf7d9291d2c9545a1fde62"
 			},
-			"digest": "a0b9492fcf20c369f535c2612631233f0ce9ba65de57ab1e7031602e55216194",
+			"digest": "58c3ae93d00fefc6afc5bbeeb90ae9167b64628a586ae4adc161d857f64767b2",
 			"samples": [
 				{
 					"condition": "69b3e549df232f93f5308f1a4c530dc00978ebf6c4894e741b1fddaad7dbce66",
@@ -530,37 +490,37 @@
 					"target_mps": 22.0
 				},
 				{
-					"condition": "a07f73321b9ac8c26193e6d5a7dd71fc163cd59cdbdcf57479b300547b79c10a",
+					"condition": "21bbb6b1b4c8ed407a2b584721c10adb3b306f53d29ab061df0fdcdd2d023ab6",
 					"element_id": "e13",
 					"lateral_m": 0.0,
-					"max_mps": 29.6900000000000013,
+					"max_mps": 18.879999999999999,
 					"min_mps": 4.5600000000000005,
 					"mode": "grounded",
-					"speed_mps": 19.0000019073486328,
-					"target_mps": 19.0
+					"speed_mps": 16.0,
+					"target_mps": 16.0
 				},
 				{
-					"condition": "ceb4bd133ff4a8df818b807e39303b8fa011be6b2af0fa0aa686d14c4e0113a4",
+					"condition": "c23c43a62b6542b27d2918a9c622114acfe2f3443d4bec5e83f2f31b543d688c",
 					"element_id": "e15",
 					"lateral_m": 0.0,
 					"max_mps": 58.0,
 					"min_mps": 4.69000000000000039,
 					"mode": "grounded",
-					"speed_mps": 22.0000019073486328,
+					"speed_mps": 22.0,
 					"target_mps": 22.0
 				},
 				{
-					"condition": "6d5550c0819957a2cee2b1bb2a7eb87cb0d61918f726170b954c7392cbbbc8c3",
+					"condition": "9bd256b8df85ca6fcf0c87c8d502dbdc9c666497e42054cbf3ff49024e5944fc",
 					"element_id": "e17",
 					"lateral_m": 0.0,
 					"max_mps": 58.0,
 					"min_mps": 3.37999999999999989,
 					"mode": "grounded",
-					"speed_mps": 22.0000019073486328,
+					"speed_mps": 22.0,
 					"target_mps": 22.0
 				},
 				{
-					"condition": "031a9eb11f7f1b624c4e726e1e5afd74eb7f4235c08d296a545cc4a4fcbef2a5",
+					"condition": "70137fa46165df260368b4378a38b5d9d9e8105335bfe7b58bea4b3701c59581",
 					"element_id": "e19",
 					"lateral_m": 0.0,
 					"max_mps": 58.0,
@@ -570,13 +530,13 @@
 					"target_mps": 22.0
 				},
 				{
-					"condition": "01e7cfe2d885ba7f9e282e4c5a9785de01e0cb2fd3abe15717a5428782699c63",
+					"condition": "d4ea608d1fd0b61c38095691d397bcf427963a267838ba8a334bff40133e2029",
 					"element_id": "e21",
 					"lateral_m": 0.0,
 					"max_mps": 58.0,
 					"min_mps": 3.18999999999999995,
 					"mode": "grounded",
-					"speed_mps": 22.0000019073486328,
+					"speed_mps": 22.0,
 					"target_mps": 22.0
 				}
 			],
@@ -589,10 +549,10 @@
 					"target_mps": 18.1999999999999993
 				},
 				"e13": {
-					"max_mps": 29.6900000000000013,
+					"max_mps": 18.879999999999999,
 					"min_mps": 4.5600000000000005,
 					"passes": true,
-					"target_mps": 19.0
+					"target_mps": 16.0
 				},
 				"e15": {
 					"max_mps": 58.0,
@@ -755,60 +715,20 @@
 						"element_id": "e11",
 						"id": "3:2240:11",
 						"magnitude": 0.0,
-						"normal": "(0.0, 0.990577, -0.136956)",
-						"position": "(294.641, 14.44149, -80.09893)",
+						"normal": "(0.0, 0.990463, -0.137776)",
+						"position": "(294.6411, 14.43886, -80.11855)",
 						"tick": 2240,
 						"type": "contact_lost"
 					},
 					{
 						"attempt_id": 3,
 						"element_id": "e12",
-						"id": "3:2279:12",
-						"magnitude": 3.92624592781066895,
+						"id": "3:2277:12",
+						"magnitude": 3.73773074150085449,
 						"normal": "(0.0, 1.0, 0.0)",
-						"position": "(294.641, 14.0, -67.59572)",
-						"tick": 2279,
+						"position": "(294.6411, 14.0, -69.84874)",
+						"tick": 2277,
 						"type": "landing"
-					},
-					{
-						"attempt_id": 3,
-						"element_id": "e13",
-						"id": "3:2423:13",
-						"magnitude": 0.0,
-						"normal": "(0.0, 0.999998, 0.00192)",
-						"position": "(294.641, 13.99971, -21.96845)",
-						"tick": 2423,
-						"type": "hold_start"
-					},
-					{
-						"attempt_id": 3,
-						"element_id": "e13",
-						"id": "3:2428:14",
-						"magnitude": 0.0,
-						"normal": "(0.0, 0.998985, 0.045041)",
-						"position": "(294.641, 13.96233, -20.38548)",
-						"tick": 2428,
-						"type": "hold_end"
-					},
-					{
-						"attempt_id": 3,
-						"element_id": "e13",
-						"id": "3:2613:15",
-						"magnitude": 0.0,
-						"normal": "(0.0, 0.999773, -0.021308)",
-						"position": "(294.641, 13.9914, 37.18312)",
-						"tick": 2613,
-						"type": "hold_start"
-					},
-					{
-						"attempt_id": 3,
-						"element_id": "e14",
-						"id": "3:2617:16",
-						"magnitude": 0.0,
-						"normal": "(0.0, 1.0, 0.0)",
-						"position": "(294.641, 14.0, 38.45097)",
-						"tick": 2617,
-						"type": "hold_end"
 					}
 				],
 				"final": {
@@ -828,9 +748,9 @@
 					"element_id": "e21",
 					"help_used": {
 						"e1": 5.75193407707930948,
-						"e13": 6.30385776232859385
+						"e13": 7.45385776232858976
 					},
-					"lateral_m": 0.0,
+					"lateral_m": -0.0,
 					"lateral_speed": 0.0,
 					"local_m": 62.8317064940929413,
 					"mode": "finished",
@@ -840,17 +760,17 @@
 						0.000003814697265625
 					],
 					"thrust_used": 0.0,
-					"tick": 3684,
+					"tick": 3756,
 					"velocity": [
 						0.0,
 						0.0,
-						-22.0000019073486328
+						-22.0
 					]
 				},
 				"finished": true,
 				"help_used": {
 					"e1": 5.75193407707930948,
-					"e13": 6.30385776232859385
+					"e13": 7.45385776232858976
 				},
 				"initial": {
 					"attempt_id": 3,
@@ -1003,13 +923,13 @@
 					{
 						"event_id": "recorded:turn:30005",
 						"kind": "intent",
-						"tick": 2341,
+						"tick": 2358,
 						"value": {
-							"captured_at_ms": 39017,
+							"captured_at_ms": 39300,
 							"control_id": "replay:replay:control:5",
 							"control_revision": 1,
 							"event_id": "recorded:turn:30005",
-							"expires_at_ms": 39267,
+							"expires_at_ms": 39550,
 							"forbidden_actions": [],
 							"kind": "explicit",
 							"opportunity_id": null,
@@ -1031,13 +951,13 @@
 					{
 						"event_id": "recorded:turn:30006",
 						"kind": "intent",
-						"tick": 2688,
+						"tick": 2760,
 						"value": {
-							"captured_at_ms": 44800,
+							"captured_at_ms": 46000,
 							"control_id": "replay:replay:control:6",
 							"control_revision": 1,
 							"event_id": "recorded:turn:30006",
-							"expires_at_ms": 45050,
+							"expires_at_ms": 46250,
 							"forbidden_actions": [],
 							"kind": "explicit",
 							"opportunity_id": null,
@@ -1059,13 +979,13 @@
 					{
 						"event_id": "recorded:turn:30007",
 						"kind": "intent",
-						"tick": 2988,
+						"tick": 3060,
 						"value": {
-							"captured_at_ms": 49800,
+							"captured_at_ms": 51000,
 							"control_id": "replay:replay:control:7",
 							"control_revision": 1,
 							"event_id": "recorded:turn:30007",
-							"expires_at_ms": 50050,
+							"expires_at_ms": 51250,
 							"forbidden_actions": [],
 							"kind": "explicit",
 							"opportunity_id": null,
@@ -1087,13 +1007,13 @@
 					{
 						"event_id": "recorded:turn:30008",
 						"kind": "intent",
-						"tick": 3212,
+						"tick": 3285,
 						"value": {
-							"captured_at_ms": 53533,
+							"captured_at_ms": 54750,
 							"control_id": "replay:replay:control:8",
 							"control_revision": 1,
 							"event_id": "recorded:turn:30008",
-							"expires_at_ms": 53783,
+							"expires_at_ms": 55000,
 							"forbidden_actions": [],
 							"kind": "explicit",
 							"opportunity_id": null,
@@ -1114,10 +1034,10 @@
 					}
 				],
 				"mode": "finished",
-				"seconds": 61.3999999999999986,
-				"trace_digest": "266689c7b9789bf96536125c52235eb924cc6b953fed0e6334e72e4a874e37d8"
+				"seconds": 62.6000000000000014,
+				"trace_digest": "c18679ddc53f972e2d786537c00a65960d12b6571e655f8f286dfe2c39c57141"
 			},
-			"digest": "7d7ea5df2bda319dd0461181bbda437c00edd59347cca03d480d6e55488ec34c",
+			"digest": "2a04473b76c91b0603acc86a35853d6101923ea05090c553c3b8c0754549452e",
 			"samples": [
 				{
 					"condition": "ebdeb5c412ec1e917c67dc2357c9c0b17936cb3419218ed92d82c32a7a43618b",
@@ -1170,29 +1090,29 @@
 					"target_mps": 22.0
 				},
 				{
-					"condition": "a58cabfee699f0d3a6dcd7ebd5a6cb170993e6cde2e400fc5f19a50c2983da82",
+					"condition": "32de0301ad993b224b586ff4377e85c22e21dbd0804cc8c80538d946cff7f035",
 					"element_id": "e13",
-					"lateral_m": 0.0,
-					"max_mps": 29.6900000000000013,
+					"lateral_m": 0.00000000388632079080991806,
+					"max_mps": 18.879999999999999,
 					"min_mps": 4.5600000000000005,
 					"mode": "grounded",
-					"speed_mps": 19.0,
-					"target_mps": 19.0
+					"speed_mps": 16.0,
+					"target_mps": 16.0
 				},
 				{
-					"condition": "f93255e0453db91baf47372ad955743430d0ba82ff8e4b902e1c45247bfdc9d8",
+					"condition": "98cfa00f82a3cf3258330f23961d10b1e110a14e7441038c1021c3dabde715f8",
 					"element_id": "e15",
-					"lateral_m": 0.0,
+					"lateral_m": -0.00000000000000061367768580158362,
 					"max_mps": 58.0,
 					"min_mps": 4.69000000000000039,
 					"mode": "grounded",
-					"speed_mps": 22.0000019073486328,
+					"speed_mps": 22.0,
 					"target_mps": 22.0
 				},
 				{
-					"condition": "8fbf0e8b25fe853c316c47b94efe49c2a85aa3c4480abd2c8971075f405142cd",
+					"condition": "c02f8ee827fc48bc87956d926234908fe5dab8408a27d9362aea9cfff31aaefd",
 					"element_id": "e17",
-					"lateral_m": 0.0,
+					"lateral_m": -0.00000000000000000000001492202125,
 					"max_mps": 58.0,
 					"min_mps": 3.37999999999999989,
 					"mode": "grounded",
@@ -1200,9 +1120,9 @@
 					"target_mps": 22.0
 				},
 				{
-					"condition": "127176bb89aacfee185c561af9a817647ed2074ea88811208a614ea2cdcdd055",
+					"condition": "85fa9c3da41b69d8e35f4aff53fb6edccd103d46770c65d23523409d150c980c",
 					"element_id": "e19",
-					"lateral_m": 0.0,
+					"lateral_m": -0.00000000000000000000000000517981,
 					"max_mps": 58.0,
 					"min_mps": 3.37999999999999989,
 					"mode": "grounded",
@@ -1210,7 +1130,7 @@
 					"target_mps": 22.0
 				},
 				{
-					"condition": "f4354ad9c18e8b5db69e1be9d7e52b0a40efbb6b3e1a76e0a48a206d92c1fd98",
+					"condition": "81b47a527ec4d8e4f2c0e66c876bea3e98d366a0bf47dfe2cc5523f6a19ded82",
 					"element_id": "e21",
 					"lateral_m": 0.0,
 					"max_mps": 58.0,
@@ -1229,10 +1149,10 @@
 					"target_mps": 18.1999999999999993
 				},
 				"e13": {
-					"max_mps": 29.6900000000000013,
+					"max_mps": 18.879999999999999,
 					"min_mps": 4.5600000000000005,
 					"passes": true,
-					"target_mps": 19.0
+					"target_mps": 16.0
 				},
 				"e15": {
 					"max_mps": 58.0,

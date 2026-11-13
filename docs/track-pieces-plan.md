@@ -50,6 +50,12 @@ One straight may have `"rise_m": "fit"`. It takes the rise that brings the road 
 A call for the open curve counts while the car is in the air. The car steers when it is back on the road.
 A curve called in time is settled when the car enters it. The hint for the next curve can then open while the car is still in the first one, so an S-bend needs no long straight between its curves. A late call keeps the curve until the car has left it.
 
+## Grip
+
+No assist level holds the car on the road. The car leaves the road wherever the road falls away faster than gravity pulls the car down: over a crest, at the entry of a dip and at the top of a loop that is driven too slowly. A 12 m loop needs about 10.5 m/s.
+On a bank steeper than 45° the tyres hold a side force of at most the force that presses the car onto the road. A car that is too slow slides down the wall and off the road. The builder gives such a wall curve a minimum speed 3 m/s above that limit.
+The assist brings the car to the speed window of the next stunt on its own, in both levels, for as long as the help time of the level lasts.
+
 ## Flights
 
 The road is solid for a car in flight. It can land on any element. After a lift-off from a crest or a bump the landing may be at most 10 m/s hard and 30° off; a jump keeps its own limits (12 m/s, 20°).
@@ -104,4 +110,4 @@ Each step is one pull request and keeps the game playable.
 
 - Do we count laps and measure a time?
 - Is 1.5 s at top speed enough distance between two pieces with an input?
-- Do we need a third level without ground hold, or do we stay with two levels?
+- Do we need a third level in which the player sets every speed alone, or do we stay with two levels?

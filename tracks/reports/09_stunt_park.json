@@ -345,14 +345,14 @@
 				"seconds": 36.75,
 				"trace_digest": "878cb2e3ee1785f972b4134f794f7fff21da7511e963c14f22d9eb3900244886"
 			},
-			"digest": "76618531a6b9188908914af63ca35d07970b4d1338531efc6a00ed2126d808ba",
+			"digest": "15ac28128a729254bda9d19747b27ee25559c349d560471951ebb227057d4898",
 			"samples": [
 				{
 					"condition": "7d8c8da6161c9d25800fc7607c29a62ff872d0f762e99144adfd966da46cfb43",
 					"element_id": "e1",
 					"lateral_m": 0.0,
 					"max_mps": 58.0,
-					"min_mps": 7.8100000000000005,
+					"min_mps": 10.4399999999999995,
 					"mode": "grounded",
 					"speed_mps": 26.0,
 					"target_mps": 26.0
@@ -392,7 +392,7 @@
 					"element_id": "e9",
 					"lateral_m": 0.00000000000000001962115557231228,
 					"max_mps": 58.0,
-					"min_mps": 7.14000000000000057,
+					"min_mps": 9.64000000000000057,
 					"mode": "grounded",
 					"speed_mps": 22.0,
 					"target_mps": 23.7000000000000028
@@ -412,7 +412,7 @@
 					"element_id": "e15",
 					"lateral_m": 0.00000000539713362344172022,
 					"max_mps": 58.0,
-					"min_mps": 1.63000000000000012,
+					"min_mps": 7.5600000000000005,
 					"mode": "grounded",
 					"speed_mps": 22.0,
 					"target_mps": 22.0
@@ -422,7 +422,7 @@
 			"windows": {
 				"e1": {
 					"max_mps": 58.0,
-					"min_mps": 7.8100000000000005,
+					"min_mps": 10.4399999999999995,
 					"passes": true,
 					"target_mps": 26.0
 				},
@@ -434,7 +434,7 @@
 				},
 				"e15": {
 					"max_mps": 58.0,
-					"min_mps": 1.63000000000000012,
+					"min_mps": 7.5600000000000005,
 					"passes": true,
 					"target_mps": 22.0
 				},
@@ -458,7 +458,7 @@
 				},
 				"e9": {
 					"max_mps": 58.0,
-					"min_mps": 7.14000000000000057,
+					"min_mps": 9.64000000000000057,
 					"passes": true,
 					"target_mps": 23.7000000000000028
 				}
@@ -805,14 +805,14 @@
 				"seconds": 36.7666666666666657,
 				"trace_digest": "29d8fe5217166e9fbec4236387fc13126d83887c3a1134639d262408fdbe7db2"
 			},
-			"digest": "d6d37b6d34448157ec78dc0ae38ff69696d57cfea2d364329f50a2e7e86ae1e1",
+			"digest": "2b31d0502c14585e0d86d50bbfef2de9d300a87318cc6a81bb27e25e9d4ce0ca",
 			"samples": [
 				{
 					"condition": "0900a01941c7c96e2e907e235bdaf7f631cfdee0510eb30d258139cd0245d448",
 					"element_id": "e1",
 					"lateral_m": 0.0,
 					"max_mps": 58.0,
-					"min_mps": 5.3100000000000005,
+					"min_mps": 10.4399999999999995,
 					"mode": "grounded",
 					"speed_mps": 25.9999980926513672,
 					"target_mps": 26.0
@@ -852,7 +852,7 @@
 					"element_id": "e9",
 					"lateral_m": 0.00000000000000001947971084004129,
 					"max_mps": 58.0,
-					"min_mps": 4.70000000000000018,
+					"min_mps": 9.64000000000000057,
 					"mode": "grounded",
 					"speed_mps": 22.0000019073486328,
 					"target_mps": 23.7000000000000028
@@ -872,7 +872,7 @@
 					"element_id": "e15",
 					"lateral_m": -0.0000000130775753971889293,
 					"max_mps": 58.0,
-					"min_mps": 1.63000000000000012,
+					"min_mps": 7.5600000000000005,
 					"mode": "grounded",
 					"speed_mps": 22.0000019073486328,
 					"target_mps": 22.0
@@ -882,7 +882,7 @@
 			"windows": {
 				"e1": {
 					"max_mps": 58.0,
-					"min_mps": 5.3100000000000005,
+					"min_mps": 10.4399999999999995,
 					"passes": true,
 					"target_mps": 26.0
 				},
@@ -894,7 +894,7 @@
 				},
 				"e15": {
 					"max_mps": 58.0,
-					"min_mps": 1.63000000000000012,
+					"min_mps": 7.5600000000000005,
 					"passes": true,
 					"target_mps": 22.0
 				},
@@ -918,7 +918,7 @@
 				},
 				"e9": {
 					"max_mps": 58.0,
-					"min_mps": 4.70000000000000018,
+					"min_mps": 9.64000000000000057,
 					"passes": true,
 					"target_mps": 23.7000000000000028
 				}
